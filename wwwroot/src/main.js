@@ -17,6 +17,6 @@ new Vue({
   components: { App }
 })
 
-Vue.http.get('http://localhost:52812/api/values').then((response) => {
+Vue.http.get('http://localhost:52812/api/propertyoverview').then((response) => {
   console.log(response.data)
 })
