@@ -9,14 +9,14 @@ using Model;
 namespace Landlords.Migrations
 {
     [DbContext(typeof(LLContext))]
-    [Migration("20170409044220_initial")]
-    partial class initial
+    [Migration("20170413033708_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
-                .HasAnnotation("ProductVersion", "1.1.0-rtm-22752");
+                .HasAnnotation("ProductVersion", "1.1.1")
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Model.PropertyOverview", b =>
                 {

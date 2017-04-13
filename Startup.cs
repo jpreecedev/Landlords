@@ -31,7 +31,7 @@
             services.AddMvc();
 
             var sqlConnectionString = Configuration.GetConnectionString("LLContext");
-            services.AddDbContext<LLContext>(options => options.UseNpgsql(sqlConnectionString));
+            services.AddDbContext<LLContext>(options => options.UseSqlServer(sqlConnectionString));
 
             services.AddScoped<IDataAccessProvider, DataAccessProvider>();
             services.AddScoped<IDataContext, LLContext>();

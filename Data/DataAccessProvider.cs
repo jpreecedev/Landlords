@@ -5,7 +5,7 @@
 
     public class DataAccessProvider : IDataAccessProvider
     {
-        private IDataContext _dataContext;
+        private readonly IDataContext _dataContext;
 
         public DataAccessProvider(IDataContext dataContext)
         {
