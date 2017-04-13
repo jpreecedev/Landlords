@@ -10,5 +10,6 @@ namespace Landlords.Data
         }
 
         public DbSet<PropertyOverview> PropertyOverview { get; set; }
+
     }
 }

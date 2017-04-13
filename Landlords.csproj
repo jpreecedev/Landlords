@@ -12,9 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="wwwroot\npm-debug - Copy.log.1160507546">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
     <Content Include="wwwroot\npm-debug - Copy.log.1853603894">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
