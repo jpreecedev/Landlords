@@ -12,4 +12,5 @@
 * Open `Landlords.sln` in Visual Studio, press `F5` to start.
 * Open `wwwroot` in VS Code
   * Open the terminal tab (`Ctrl + '`)
+  * Run `npm install`
   * Run `npm start`
