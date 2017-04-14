@@ -1,21 +1,41 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Dashboard from '@/components/Dashboard'
-import Registration from '@/components/Registration'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
+  mode: 'history',
   routes: [
-    {
-      path: '/',
-      name: 'dashboard',
-      component: Dashboard
-    },
     {
       path: '/registration',
       name: 'registration',
-      component: Registration
+      component: function (resolve) {
+        require(['@/components/Registration.vue'], resolve)
+      }
+    },
+    {
+      path: '/',
+      name: 'dashboard',
+      component: function (resolve) {
+        require(['@/components/Dashboard.vue'], resolve)
+      }
+      // beforeEnter: guardRoute
     }
   ]
 })
+
+// function guardRoute (to, from, next) {
+//   // work-around to get to the Vuex store (as of Vue 2.0)
+//   const auth = router.app.$options.store.state.auth
+
+//   if (!auth.isLoggedIn) {
+//     next({
+//       path: '/login',
+//       query: { redirect: to.fullPath }
+//     })
+//   } else {
+//     next()
+//   }
+// }
+
+export default router
