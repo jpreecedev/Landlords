@@ -6,13 +6,13 @@ import store from './store'
  * @var{string} LOGIN_URL The endpoint for logging in. This endpoint should be proxied by Webpack dev server
  *    and maybe nginx in production (cleaner calls and avoids CORS issues).
  */
-const LOGIN_URL = 'http://localhost:52812/connect/token'
+const LOGIN_URL = '/auth'
 
 /**
  * @var{string} REFRESH_TOKEN_URL The endpoint for refreshing an access_token. This endpoint should be proxied
  *    by Webpack dev server and maybe nginx in production (cleaner calls and avoids CORS issues).
  */
-const REFRESH_TOKEN_URL = 'http://localhost:52812/connect/token'
+const REFRESH_TOKEN_URL = '/auth'
 
 /**
  * TODO: This is here to demonstrate what an OAuth server will want. Ultimately you don't want to
@@ -78,14 +78,9 @@ export default {
    * @return {Promise}
    */
   login (creds, redirect) {
-    // const params = { 'grant_type': 'password', 'username': creds.username, 'password': creds.password }
-    const params = 'grant_type=client_credentials&scope=customAPI.read&client_id=oauthClient&client_secret=superSecretPassword'
+    const params = { 'grant_type': 'password', 'username': creds.username, 'password': creds.password }
 
-    return Vue.http.post(LOGIN_URL, params, {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }
-    })
+    return Vue.http.post(LOGIN_URL, params, AUTH_BASIC_HEADERS)
       .then((response) => {
         this._storeToken(response)
 
@@ -123,7 +118,7 @@ export default {
     request.headers.set('Authorization', 'Bearer ' + store.state.auth.accessToken)
     // The demo Oauth2 server we are using requires this param, but normally you only set the header.
     /* eslint-disable camelcase */
-    // request.params.access_token = store.state.auth.accessToken
+    request.params.access_token = store.state.auth.accessToken
   },
 
   /**
@@ -184,7 +179,6 @@ export default {
    * @return {void}
    */
   _storeToken (response) {
-    debugger
     const auth = store.state.auth
     const user = store.state.user
 

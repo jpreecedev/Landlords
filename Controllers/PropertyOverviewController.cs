@@ -1,6 +1,7 @@
 ﻿namespace Landlords.Controllers
 {
     using System;
+    using System.Linq;
     using Data;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
@@ -16,10 +17,14 @@
             _dataAccessProvider = dataAccessProvider;
         }
         
-        [Authorize(Policy = "myproject:resource:read")]
+        [Authorize]
         [HttpGet]
         public PropertyOverview Get()
         {
+            var claims = User.Claims.ToList();
+            var identities = User.Identities.ToList();
+            var identiyu = User.Identity;
+
             return _dataAccessProvider.GetPropertyOverview();
         }
         
