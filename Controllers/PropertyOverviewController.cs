@@ -2,6 +2,7 @@
 {
     using System;
     using Data;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Model;
 
@@ -16,6 +17,7 @@
         }
         
         [HttpGet]
+        [Authorize(Policy = "DisneyUser")]
         public PropertyOverview Get()
         {
             return _dataAccessProvider.GetPropertyOverview();
