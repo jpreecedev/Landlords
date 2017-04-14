@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div onload="load()">
     <h3>Sign In</h3>
     <form role="form">
       <div class="form-group row">
@@ -14,7 +14,7 @@
           <input type="password" class="form-control" id="passwordField" placeholder="Password">
         </div>
       </div>
-      <button type="submit" class="btn btn-sm btn-default">Log in</button>
+      <button type="button" v-on:click="trigger()" class="btn btn-sm btn-default">Log in</button>
     </form>
     </div>
   </div>
@@ -22,7 +22,21 @@
 
 <script>
 export default {
-  name: 'loginform'
+  name: 'loginform',
+  methods: {
+    trigger: function () {
+      const credentials = {
+        username: 'scott',
+        password: 'password'
+      }
+
+      this.$auth.login(credentials).then((response) => {
+        this.$http.get('http://localhost:52812/api/PropertyOverview').then(response => {
+          debugger
+        })
+      })
+    }
+  }
 }
 </script>
 

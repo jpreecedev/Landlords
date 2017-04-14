@@ -11,8 +11,10 @@ import './assets/styles/app.scss'
 import App from './components/App'
 
 Vue.config.productionTip = false
-
 Vue.use(VueResource)
+
+import Auth from './auth'
+Vue.use(Auth)
 
 new Vue({
   el: '#app',

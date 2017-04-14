@@ -5,7 +5,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Model;
-
+    
     [Route("api/[controller]")]
     public class PropertyOverviewController : Controller
     {
@@ -16,17 +16,17 @@
             _dataAccessProvider = dataAccessProvider;
         }
         
+        [Authorize(Policy = "myproject:resource:read")]
         [HttpGet]
-        [Authorize(Policy = "DisneyUser")]
         public PropertyOverview Get()
         {
             return _dataAccessProvider.GetPropertyOverview();
         }
         
         [HttpPost]
-        public void Post([FromBody] PropertyOverview value)
+        public void Post()
         {
-            _dataAccessProvider.SavePropertyOverview(value);
+            //_dataAccessProvider.SavePropertyOverview(value);
         }
     }
 }
