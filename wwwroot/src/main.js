@@ -16,7 +16,3 @@ new Vue({
   template: '<App/>',
   components: { App }
 })
-
-Vue.http.get('http://localhost:52812/api/propertyoverview').then((response) => {
-  console.log(response.data)
-})
