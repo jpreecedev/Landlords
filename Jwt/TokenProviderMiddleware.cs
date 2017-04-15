@@ -29,7 +29,7 @@
         public Task Invoke(HttpContext context)
         {
             // If the request path doesn't match, skip
-            if (!context.Request.Path.Equals(_options.Path, StringComparison.Ordinal))
+            if (!context.Request.Path.Equals(_options.TokenPath, StringComparison.Ordinal))
                 return _next(context);
 
             // Request must be POST with Content-Type: application/x-www-form-urlencoded
