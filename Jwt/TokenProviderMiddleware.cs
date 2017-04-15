@@ -5,17 +5,23 @@
     using Newtonsoft.Json;
     using System;
     using System.IdentityModel.Tokens.Jwt;
+    using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
+    using Landlords.Database;
 
     public class TokenProviderMiddleware
     {
         private readonly RequestDelegate _next;
+        private readonly LLDbContext _dataContext;
+        private readonly ApplicationUserManager _userManager;
         private readonly TokenProviderOptions _options;
 
-        public TokenProviderMiddleware(RequestDelegate next, IOptions<TokenProviderOptions> options)
+        public TokenProviderMiddleware(RequestDelegate next, IOptions<TokenProviderOptions> options, LLDbContext dataContext, ApplicationUserManager userManager)
         {
             _next = next;
+            _dataContext = dataContext;
+            _userManager = userManager;
             _options = options.Value;
         }
 
@@ -86,16 +92,24 @@
             await context.Response.WriteAsync(JsonConvert.SerializeObject(response, new JsonSerializerSettings { Formatting = Formatting.Indented }));
         }
 
-        private Task<ClaimsIdentity> GetIdentity(string username, string password)
+        private async Task<ClaimsIdentity> GetIdentity(string username, string password)
         {
-            // DON'T do this in production, obviously!
-            if (username == "TEST" && password == "TEST123")
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
-                return Task.FromResult(new ClaimsIdentity());
+                return await Task.FromResult<ClaimsIdentity>(null);
+            }
+
+            var user = _dataContext.Users.FirstOrDefault(u => string.Equals(u.Email.Replace(" ", "").Trim(), username, StringComparison.CurrentCultureIgnoreCase));
+            if (user != null)
+            {
+                if (!await _userManager.CheckPasswordAsync(user, password))
+                {
+                    return await Task.FromResult(new ClaimsIdentity());
+                }
             }
 
             // Credentials are invalid, or account doesn't exist
-            return Task.FromResult<ClaimsIdentity>(null);
+            return await Task.FromResult<ClaimsIdentity>(null);
         }
     }
 }

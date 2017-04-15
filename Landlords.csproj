@@ -6,15 +6,13 @@
 
   <ItemGroup>
     <Compile Remove="Model\**" />
+    <Compile Remove="wwwroot\**" />
     <Content Remove="Model\**" />
+    <Content Remove="wwwroot\**" />
     <EmbeddedResource Remove="Model\**" />
+    <EmbeddedResource Remove="wwwroot\**" />
     <None Remove="Model\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="wwwroot\npm-debug - Copy.log.1853603894">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
+    <None Remove="wwwroot\**" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />

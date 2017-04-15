@@ -1,4 +1,4 @@
-﻿namespace Landlords.Data
+﻿namespace Landlords.Database
 {
     using Model;
 

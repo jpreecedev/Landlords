@@ -1,6 +1,5 @@
 ﻿namespace Landlords
 {
-    using Data;
     using Landlords.Jwt;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -12,6 +11,9 @@
     using Microsoft.IdentityModel.Tokens;
     using System;
     using System.Text;
+    using Database;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
     public class Startup
     {
@@ -27,8 +29,7 @@
         }
 
         public IConfigurationRoot Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
+        
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
@@ -38,13 +39,23 @@
             services.AddDbContext<LLDbContext>(options => options.UseSqlServer(sqlConnectionString));
 
             services.AddScoped<IDataAccessProvider, DataAccessProvider>();
-            services.AddScoped<IDataContext, LLDbContext>();
-        }
+            
+            services.AddOptions();
+            services.Configure<JwtConfiguration>(Configuration.GetSection(("Jwt")));
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+            services
+                .AddIdentity<ApplicationUser, ApplicationRole>()
+                .AddEntityFrameworkStores<LLDbContext, Guid>()
+                .AddUserManager<ApplicationUserManager>()
+                .AddUserStore<ApplicationUserStore>()
+                .AddDefaultTokenProviders();
+        }
+        
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IOptions<JwtConfiguration> jwtConfiguration)
         {
-            app.UseCors(builder => builder.WithOrigins("http://localhost:8080", "chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop").AllowAnyHeader().AllowAnyMethod());
+#if DEBUG
+            app.UseCors(builder => builder.WithOrigins("http://localhost:8080").AllowAnyHeader().AllowAnyMethod());
+#endif
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -54,48 +65,39 @@
                 scope.ServiceProvider.GetRequiredService<LLDbContext>().Database.Migrate();
             }
 
-            // secretKey contains a secret passphrase only your server knows
-            var secretKey = "mysupersecret_secretkey!123";
-            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
-
-            var tokenValidationParameters = new TokenValidationParameters
-            {
-                // The signing key must match!
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = signingKey,
-
-                // Validate the JWT Issuer (iss) claim
-                ValidateIssuer = true,
-                ValidIssuer = "ExampleIssuer",
-
-                // Validate the JWT Audience (aud) claim
-                ValidateAudience = true,
-                ValidAudience = "ExampleAudience",
-
-                // Validate the token expiry
-                ValidateLifetime = true,
-
-                // If you want to allow a certain amount of clock drift, set that here:
-                ClockSkew = TimeSpan.Zero
-            };
-
+            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtConfiguration.Value.Secret));
+            
             app.UseJwtBearerAuthentication(new JwtBearerOptions
             {
                 AutomaticAuthenticate = true,
                 AutomaticChallenge = true,
-                TokenValidationParameters = tokenValidationParameters
+                TokenValidationParameters = GetTokenValidationParameters(jwtConfiguration, signingKey)
             });
 
             var options = new TokenProviderOptions
             {
-                Audience = "ExampleAudience",
-                Issuer = "ExampleIssuer",
+                Audience = jwtConfiguration.Value.Audience,
+                Issuer = jwtConfiguration.Value.Issuer,
                 SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256),
             };
 
             app.UseMiddleware<TokenProviderMiddleware>(Options.Create(options));
-
             app.UseMvc();
+        }
+
+        private static TokenValidationParameters GetTokenValidationParameters(IOptions<JwtConfiguration> jwtConfiguration, SymmetricSecurityKey signingKey)
+        {
+            return new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = signingKey,
+                ValidateIssuer = true,
+                ValidIssuer = jwtConfiguration.Value.Issuer,
+                ValidateAudience = true,
+                ValidAudience = jwtConfiguration.Value.Audience,
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero
+            };
         }
     }
 }

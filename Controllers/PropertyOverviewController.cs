@@ -1,12 +1,10 @@
 ﻿namespace Landlords.Controllers
 {
-    using System;
-    using System.Linq;
-    using Data;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Model;
-    
+    using Landlords.Database;
+
     [Route("api/[controller]")]
     public class PropertyOverviewController : Controller
     {

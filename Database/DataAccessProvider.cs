@@ -1,13 +1,13 @@
-﻿namespace Landlords.Data
+﻿namespace Landlords.Database
 {
     using System.Linq;
     using Model;
 
     public class DataAccessProvider : IDataAccessProvider
     {
-        private readonly IDataContext _dataContext;
+        private readonly LLDbContext _dataContext;
 
-        public DataAccessProvider(IDataContext dataContext)
+        public DataAccessProvider(LLDbContext dataContext)
         {
             _dataContext = dataContext;
         }
