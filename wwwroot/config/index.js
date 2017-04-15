@@ -29,12 +29,12 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/token': {
-        target: 'http://localhost:52812/token',
+        target: 'http://localhost:52812/',
         changeOrigin: true,
         ws: true
       },
       '/api': {
-        target: 'http://localhost:52812/token', // api server
+        target: 'http://localhost:52812/', // api server
         changeOrigin: true, // needed for virtual hosted sites
         ws: true,
       }
