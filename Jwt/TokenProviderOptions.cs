@@ -11,7 +11,7 @@
 
         public string Audience { get; set; }
 
-        public TimeSpan Expiration { get; set; } = TimeSpan.FromDays(7);
+        public TimeSpan Expiration { get; set; } = TimeSpan.FromDays(30);
 
         public SigningCredentials SigningCredentials { get; set; }
     }

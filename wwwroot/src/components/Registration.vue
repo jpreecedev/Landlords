@@ -1,10 +1,15 @@
 <template>
-  <div class="row">
-    <div class="col-12 col-md-5">
-      <loginform />
+  <div>
+    <div class="alert alert-danger" v-if="expired">
+      Your session has expired, please log in again.
     </div>
-    <div class="col-12 col-md-7">
-      <registerform />
+    <div class="row">
+      <div class="col-12 col-md-5">
+        <loginform />
+      </div>
+      <div class="col-12 col-md-7">
+        <registerform />
+      </div>
     </div>
   </div>
 </template>
@@ -19,6 +24,11 @@
     components: {
       'loginform': LoginForm,
       'registerform': RegisterForm
+    },
+    data () {
+      return {
+        expired: this.$route.query.expired
+      }
     }
   }
 

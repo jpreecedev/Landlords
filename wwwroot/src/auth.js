@@ -56,7 +56,8 @@ export default {
 
       next((response) => {
         if (this._isInvalidToken(response)) {
-          return this._refreshToken(request)
+          this.logout()
+          return response
         }
       })
     })
@@ -99,7 +100,7 @@ export default {
    */
   logout () {
     store.commit('CLEAR_ALL_DATA')
-    router.push({ name: 'login' })
+    router.push({ name: 'registration', query: { expired: true } })
   },
 
   /**
@@ -159,17 +160,6 @@ export default {
     store.commit('UPDATE_AUTH', auth)
     store.commit('UPDATE_USER', user)
   },
-
-  /**
-   * Refresh the access token
-   *
-   * Make an ajax call to the OAuth2 server to refresh the access token (using our refresh token).
-   *
-   * @private
-   * @param {Request} request Vue-resource Request instance, the original request that we'll retry.
-   * @return {Promise}
-   */
-  _refreshToken (response) {},
 
   /**
    * Check if the Vue-resource Response is an invalid token response.
