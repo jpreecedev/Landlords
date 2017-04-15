@@ -6,13 +6,7 @@ import store from './store'
  * @var{string} LOGIN_URL The endpoint for logging in. This endpoint should be proxied by Webpack dev server
  *    and maybe nginx in production (cleaner calls and avoids CORS issues).
  */
-const LOGIN_URL = '/auth'
-
-/**
- * @var{string} REFRESH_TOKEN_URL The endpoint for refreshing an access_token. This endpoint should be proxied
- *    by Webpack dev server and maybe nginx in production (cleaner calls and avoids CORS issues).
- */
-const REFRESH_TOKEN_URL = '/auth'
+const LOGIN_URL = '/login'
 
 /**
  * TODO: This is here to demonstrate what an OAuth server will want. Ultimately you don't want to
@@ -27,7 +21,8 @@ const REFRESH_TOKEN_URL = '/auth'
  */
 const AUTH_BASIC_HEADERS = {
   headers: {
-    'Authorization': 'Basic ZGVtb2FwcDpkZW1vcGFzcw==' // Base64(client_id:client_secret) "demoapp:demopass"
+    'Authorization': 'Basic bGFuZGxvcmRzOmxhbmRsb3Jkcw==',
+    'Content-Type': 'application/x-www-form-urlencoded'
   },
   emulateJSON: true
 }
@@ -154,7 +149,7 @@ export default {
   _refreshToken (request) {
     const params = { 'grant_type': 'refresh_token', 'refresh_token': store.state.auth.refreshToken }
 
-    return Vue.http.post(REFRESH_TOKEN_URL, params, AUTH_BASIC_HEADERS)
+    return Vue.http.post(LOGIN_URL, params, AUTH_BASIC_HEADERS)
       .then((result) => {
         this._storeToken(result)
         return this._retry(request)

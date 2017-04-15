@@ -64,13 +64,20 @@
         {
             app.UseCors(builder => builder.WithOrigins("http://localhost:8080", "chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop").AllowAnyHeader().AllowAnyMethod());
 
-            app.UseJwtBearerAuthentication(new JwtBearerOptions()
+            //app.UseJwtBearerAuthentication(new JwtBearerOptions()
+            //{
+            //    Audience = "http://localhost:52812/resources",
+            //    Authority = "http://localhost:52812/",
+            //    AutomaticAuthenticate = false,
+            //    AutomaticChallenge = true,
+            //    RequireHttpsMetadata = false
+            //});
+
+            app.UseOpenIdConnectAuthentication(new OpenIdConnectOptions
             {
-                Audience = "http://localhost:52812/resources",
-                Authority = "http://localhost:52812/",
-                AutomaticAuthenticate = true,
-                AutomaticChallenge = true,
-                RequireHttpsMetadata = false
+                ClientId = "openIdConnectClient",
+                Authority = "https://localhost:44350/",
+                SignInScheme = "cookie"
             });
 
             InitializeDbTestData(app);
