@@ -9,8 +9,8 @@ using Model;
 namespace Landlords.Migrations
 {
     [DbContext(typeof(LLDbContext))]
-    [Migration("20170414115709_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20170415063016_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

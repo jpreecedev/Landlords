@@ -26,12 +26,15 @@ export default {
   methods: {
     trigger: function () {
       const credentials = {
-        username: 'scott',
-        password: 'password'
+        username: 'TEST',
+        password: 'TEST123'
       }
 
+      debugger
+
       this.$auth.login(credentials).then((response) => {
-        this.$http.get('http://localhost:52812/api/PropertyOverview').then(response => {
+        debugger
+        this.$http.get('/api/PropertyOverview').then(response => {
           debugger
         })
       })

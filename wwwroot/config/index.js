@@ -28,15 +28,15 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/login': {
-        target: 'http://localhost:52812/connect/token',
+      '/token': {
+        target: 'http://localhost:52812/token',
         changeOrigin: true,
         ws: true
       },
       '/api': {
-        target: 'http://localhost:52812', // api server
+        target: 'http://localhost:52812/token', // api server
         changeOrigin: true, // needed for virtual hosted sites
-        ws: true
+        ws: true,
       }
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"

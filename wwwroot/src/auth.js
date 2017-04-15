@@ -6,7 +6,7 @@ import store from './store'
  * @var{string} LOGIN_URL The endpoint for logging in. This endpoint should be proxied by Webpack dev server
  *    and maybe nginx in production (cleaner calls and avoids CORS issues).
  */
-const LOGIN_URL = '/login'
+const LOGIN_URL = '/token'
 
 /**
  * TODO: This is here to demonstrate what an OAuth server will want. Ultimately you don't want to
@@ -21,7 +21,6 @@ const LOGIN_URL = '/login'
  */
 const AUTH_BASIC_HEADERS = {
   headers: {
-    'Authorization': 'Basic bGFuZGxvcmRzOmxhbmRsb3Jkcw==',
     'Content-Type': 'application/x-www-form-urlencoded'
   },
   emulateJSON: true
@@ -57,7 +56,8 @@ export default {
 
       next((response) => {
         if (this._isInvalidToken(response)) {
-          return this._refreshToken(request)
+          debugger
+          return
         }
       })
     })
@@ -73,9 +73,9 @@ export default {
    * @return {Promise}
    */
   login (creds, redirect) {
-    const params = { 'grant_type': 'password', 'username': creds.username, 'password': creds.password }
+    const body = 'username=' + creds.username + '&password=' + creds.password
 
-    return Vue.http.post(LOGIN_URL, params, AUTH_BASIC_HEADERS)
+    return Vue.http.post(LOGIN_URL, body, AUTH_BASIC_HEADERS)
       .then((response) => {
         this._storeToken(response)
 
@@ -86,6 +86,7 @@ export default {
         return response
       })
       .catch((errorResponse) => {
+        debugger
         return errorResponse
       })
   },
@@ -127,38 +128,15 @@ export default {
    */
   _retry (request) {
     this.setAuthHeader(request)
-
+    debugger
     return Vue.http(request)
       .then((response) => {
+        debugger
         return response
       })
       .catch((response) => {
+        debugger
         return response
-      })
-  },
-
-  /**
-   * Refresh the access token
-   *
-   * Make an ajax call to the OAuth2 server to refresh the access token (using our refresh token).
-   *
-   * @private
-   * @param {Request} request Vue-resource Request instance, the original request that we'll retry.
-   * @return {Promise}
-   */
-  _refreshToken (request) {
-    const params = { 'grant_type': 'refresh_token', 'refresh_token': store.state.auth.refreshToken }
-
-    return Vue.http.post(LOGIN_URL, params, AUTH_BASIC_HEADERS)
-      .then((result) => {
-        this._storeToken(result)
-        return this._retry(request)
-      })
-      .catch((errorResponse) => {
-        if (this._isInvalidToken(errorResponse)) {
-          this.logout()
-        }
-        return errorResponse
       })
   },
 

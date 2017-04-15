@@ -16,22 +16,18 @@
         {
             _dataAccessProvider = dataAccessProvider;
         }
-        
-        [Authorize]
+
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public PropertyOverview Get()
         {
-            var claims = User.Claims.ToList();
-            var identities = User.Identities.ToList();
-            var identiyu = User.Identity;
-
             return _dataAccessProvider.GetPropertyOverview();
         }
         
         [HttpPost]
-        public void Post()
+        public void Post([FromBody] PropertyOverview value)
         {
-            //_dataAccessProvider.SavePropertyOverview(value);
+            _dataAccessProvider.SavePropertyOverview(value);
         }
     }
 }
