@@ -1,6 +1,9 @@
 <template>
   <div>
     <h3>Register</h3>
+    <div class="alert alert-danger" v-if="error">
+      {{ error }}
+    </div>
     <form role="form" class="form-horizontal">
       <fieldset>
 
@@ -8,7 +11,7 @@
         <div class="form-group row">
           <label class="col-3 col-form-label" for="firstName">First name</label>
           <div class="col-9">
-            <input class="form-control" id="firstName" name="firstName" type="text" placeholder="John" required="">
+            <input data-id="register.firstname" v-model="newUser.firstName" class="form-control" id="firstName" name="firstName" type="text" placeholder="Your first name" required="">
           </div>
         </div>
 
@@ -16,7 +19,7 @@
         <div class="form-group row">
           <label class="col-3 col-form-label" for="lastName">Last name</label>
           <div class="col-9">
-            <input id="lastName" name="lastName" type="text" placeholder="Smith" class="form-control input-md" required="">
+            <input data-id="register.lastName" v-model="newUser.lastName" id="lastName" name="lastName" type="text" placeholder="Your last name" class="form-control input-md" required="">
           </div>
         </div>
 
@@ -24,7 +27,7 @@
         <div class="form-group row">
           <label class="col-3 col-form-label" for="email">E-mail</label>
           <div class="col-9">
-            <input id="email" name="email" type="text" placeholder="john.smith@mail.com" class="form-control input-md" required="">
+            <input data-id="register.emailAddress" v-model="newUser.emailAddress" id="email" name="email" type="text" placeholder="you@email.com" class="form-control input-md" required="">
           </div>
         </div>
 
@@ -32,7 +35,7 @@
         <div class="form-group row">
           <label class="col-3 col-form-label" for="password">Password</label>
           <div class="col-9">
-            <input id="password" name="password" type="password" placeholder="Enter your password" class="form-control input-md" required="">
+            <input data-id="register.password" v-model="newUser.password" id="password" name="password" type="password" placeholder="Enter your password" class="form-control input-md" required="">
 
           </div>
         </div>
@@ -41,14 +44,13 @@
         <div class="form-group row">
           <label class="col-3 col-form-label" for="repeatPassword">Repeat password </label>
           <div class="col-9">
-            <input id="repeatPassword" name="repeatPassword" type="password" placeholder="Repeat your password" class="form-control input-md" required="">
+            <input data-id="register.repeatPassword" v-model="newUser.repeatPassword" id="repeatPassword" name="repeatPassword" type="password" placeholder="Repeat your password" class="form-control input-md" required="">
           </div>
         </div>
 
         <!-- Button -->              
         <div class="text-center">
-          <button id="register" name="register" class="btn btn-primary">Register</button>
-          <button id="login" name="login" class="btn btn-secondary">Go to login page</button>
+          <button @click="submit()" v-bind:disabled="registering" id="register" name="register" class="btn btn-primary">Register</button>
         </div>
 
       </fieldset>
@@ -57,9 +59,43 @@
 </template>
 
 <script>
-export default {
-  name: 'registerform'
-}
+  import utils from '@/utils'
+
+  export default {
+    name: 'registerform',
+    data () {
+      return {
+        newUser: {
+          firstName: '',
+          lastName: '',
+          emailAddress: '',
+          password: '',
+          repeatPassword: ''
+        },
+        registering: false,
+        error: ''
+      }
+    },
+    methods: {
+      submit () {
+        this.registering = true
+
+        const registrationDetails = {
+          firstName: this.newUser.firstName,
+          lastName: this.newUser.lastName,
+          emailAddress: this.newUser.emailAddress,
+          password: this.newUser.password
+        }
+
+        this.$http.post('/api/register', registrationDetails).then((response) => {
+          this.registering = false
+          debugger
+          this.error = utils.getError(response)
+        })
+      }
+    }
+  }
+
 </script>
   
 <style lang="scss" scoped>

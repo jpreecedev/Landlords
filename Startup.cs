@@ -12,8 +12,7 @@
     using System;
     using System.Text;
     using Database;
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+    using Repositories;
 
     public class Startup
     {
@@ -39,7 +38,9 @@
             services.AddDbContext<LLDbContext>(options => options.UseSqlServer(sqlConnectionString));
 
             services.AddScoped<IDataAccessProvider, DataAccessProvider>();
-            
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ILLDbContext, LLDbContext>();
+
             services.AddOptions();
             services.Configure<JwtConfiguration>(Configuration.GetSection(("Jwt")));
 
@@ -48,6 +49,7 @@
                 .AddEntityFrameworkStores<LLDbContext, Guid>()
                 .AddUserManager<ApplicationUserManager>()
                 .AddUserStore<ApplicationUserStore>()
+                .AddRoleManager<ApplicationRoleManager>()
                 .AddDefaultTokenProviders();
         }
         
@@ -62,7 +64,8 @@
 
             using (var scope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
-                scope.ServiceProvider.GetRequiredService<LLDbContext>().Database.Migrate();
+                var context = scope.ServiceProvider.GetRequiredService<LLDbContext>();
+                context.Database.Migrate();
             }
 
             var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtConfiguration.Value.Secret));

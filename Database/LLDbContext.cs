@@ -5,7 +5,7 @@
     using Microsoft.EntityFrameworkCore;
     using Model;
 
-    public class LLDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
+    public class LLDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>, ILLDbContext
     {
         public LLDbContext(DbContextOptions options) : base(options)
         {
