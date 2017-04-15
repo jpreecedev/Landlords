@@ -1,42 +1,56 @@
 <template>
-  <div onload="load()">
+  <div>
     <h3>Sign In</h3>
+    <div class="alert alert-danger" v-if="error">
+      {{ error }}
+    </div>
     <form role="form">
       <div class="form-group row">
         <label for="emailAddressField" class="col-3">Email Address</label>
         <div class="col-9">
-          <input type="email" class="form-control" id="emailAddressField" placeholder="Enter email">
+          <input data-id="login.username" type="email" class="form-control" id="emailAddressField" placeholder="Enter your email" v-model="credentials.username">
         </div>
       </div>
       <div class="form-group row">
         <label for="passwordField" class="col-3">Password</label>
         <div class="col-9">
-          <input type="password" class="form-control" id="passwordField" placeholder="Password">
+          <input type="password" class="form-control" id="passwordField" placeholder="Password" v-model="credentials.password">
         </div>
       </div>
-      <button type="button" v-on:click="trigger()" class="btn btn-sm btn-default">Log in</button>
+      <button @click="submit()" v-bind:disabled="loggingIn" class="btn btn-primary">Log in</button>
     </form>
     </div>
   </div>
 </template>
 
 <script>
+
+import utils from '@/utils'
+
 export default {
   name: 'loginform',
+  data () {
+    return {
+      credentials: {
+        username: '',
+        password: ''
+      },
+      loggingIn: false,
+      error: ''
+    }
+  },
   methods: {
-    trigger: function () {
+    submit () {
+      this.loggingIn = true
+
       const credentials = {
-        username: 'TEST',
-        password: 'TEST123'
+        username: this.credentials.username,
+        password: this.credentials.password
       }
 
-      debugger
-
-      this.$auth.login(credentials).then((response) => {
-        debugger
-        this.$http.get('/api/PropertyOverview').then(response => {
-          debugger
-        })
+      this.$auth.login(credentials, 'dashboard').then((response) => {
+        this.loggingIn = false
+        this.error = utils.getError(response)
       })
     }
   }

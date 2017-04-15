@@ -18,24 +18,23 @@ const router = new Router({
       name: 'dashboard',
       component: function (resolve) {
         require(['@/components/Dashboard.vue'], resolve)
-      }
-      // beforeEnter: guardRoute
+      },
+      beforeEnter: guardRoute
     }
   ]
 })
 
-// function guardRoute (to, from, next) {
-//   // work-around to get to the Vuex store (as of Vue 2.0)
-//   const auth = router.app.$options.store.state.auth
+function guardRoute (to, from, next) {
+  const auth = router.app.$options.store.state.auth
 
-//   if (!auth.isLoggedIn) {
-//     next({
-//       path: '/login',
-//       query: { redirect: to.fullPath }
-//     })
-//   } else {
-//     next()
-//   }
-// }
+  if (!auth.isLoggedIn) {
+    next({
+      path: '/registration',
+      query: { redirect: to.fullPath }
+    })
+  } else {
+    next()
+  }
+}
 
 export default router

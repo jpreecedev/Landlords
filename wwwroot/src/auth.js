@@ -56,7 +56,6 @@ export default {
 
       next((response) => {
         if (this._isInvalidToken(response)) {
-          debugger
           return
         }
       })
@@ -86,7 +85,6 @@ export default {
         return response
       })
       .catch((errorResponse) => {
-        debugger
         return errorResponse
       })
   },
@@ -128,14 +126,11 @@ export default {
    */
   _retry (request) {
     this.setAuthHeader(request)
-    debugger
     return Vue.http(request)
       .then((response) => {
-        debugger
         return response
       })
       .catch((response) => {
-        debugger
         return response
       })
   },
