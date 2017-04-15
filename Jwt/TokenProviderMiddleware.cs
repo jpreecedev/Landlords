@@ -9,6 +9,7 @@
     using System.Security.Claims;
     using System.Threading.Tasks;
     using Landlords.Database;
+    using System.Collections.Generic;
 
     public class TokenProviderMiddleware
     {
@@ -47,8 +48,8 @@
             var username = context.Request.Form["username"];
             var password = context.Request.Form["password"];
 
-            var identity = await GetIdentity(username, password);
-            if (identity == null)
+            var jwtIdentity = await GetIdentity(username, password);
+            if (jwtIdentity == null)
             {
                 context.Response.StatusCode = 400;
                 await context.Response.WriteAsync("Invalid username or password.");
@@ -59,17 +60,13 @@
 
             // Specifically add the jti (random nonce), iat (issued timestamp), and sub (subject/user) claims.
             // You can add other claims here, if you want:
-            var claims = new Claim[]
+            var claims = new List<Claim>(jwtIdentity.ClaimsIdentity.Claims)
             {
                 new Claim(JwtRegisteredClaimNames.Sub, username),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Iat, now.Ticks.ToString(), ClaimValueTypes.Integer64),
-                new Claim(ClaimTypes.Name, "Jon"),
-                new Claim(ClaimTypes.Surname, "Preece"),
-                new Claim(ClaimTypes.Email, "jon@jpreecedev.com"),
-                new Claim(ClaimTypes.Role, "Admin")
+                new Claim(JwtRegisteredClaimNames.Iat, now.Ticks.ToString(), ClaimValueTypes.Integer64)
             };
-
+            
             // Create the JWT and write it to a string
             var jwt = new JwtSecurityToken(
                 issuer: _options.Issuer,
@@ -92,11 +89,11 @@
             await context.Response.WriteAsync(JsonConvert.SerializeObject(response, new JsonSerializerSettings { Formatting = Formatting.Indented }));
         }
 
-        private async Task<ClaimsIdentity> GetIdentity(string username, string password)
+        private async Task<JwtIdentity> GetIdentity(string username, string password)
         {
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
-                return await Task.FromResult<ClaimsIdentity>(null);
+                return await Task.FromResult<JwtIdentity>(null);
             }
 
             var user = _dataContext.Users.FirstOrDefault(u => string.Equals(u.Email.Replace(" ", "").Trim(), username, StringComparison.CurrentCultureIgnoreCase));
@@ -104,12 +101,24 @@
             {
                 if (!await _userManager.CheckPasswordAsync(user, password))
                 {
-                    return await Task.FromResult(new ClaimsIdentity());
+                    var userRoles = await _userManager.GetRolesAsync(user);
+                    var claims = new List<Claim>();
+
+                    foreach (var role in userRoles)
+                    {
+                        claims.Add(new Claim(ClaimTypes.Role, role));
+                    }
+
+                    return await Task.FromResult(new JwtIdentity
+                    {
+                        User = user,
+                        ClaimsIdentity = new ClaimsIdentity(claims)
+                    });
                 }
             }
 
             // Credentials are invalid, or account doesn't exist
-            return await Task.FromResult<ClaimsIdentity>(null);
+            return await Task.FromResult<JwtIdentity>(null);
         }
     }
 }

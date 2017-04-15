@@ -15,7 +15,7 @@
             _dataAccessProvider = dataAccessProvider;
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = ApplicationRoles.Landlord)]
         [HttpGet]
         public PropertyOverview Get()
         {

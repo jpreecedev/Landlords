@@ -2,8 +2,8 @@
 {
     public static class ApplicationRoles
     {
-        public static string Administrator = "Administrator";
-        public static string Agency = "Agency";
-        public static string Landlord = "Landlord";
+        public const string Administrator = "Administrator";
+        public const string Agency = "Agency";
+        public const string Landlord = "Landlord";
     }
 }

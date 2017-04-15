@@ -56,7 +56,7 @@ export default {
 
       next((response) => {
         if (this._isInvalidToken(response)) {
-          return
+          return this._refreshToken(request)
         }
       })
     })
@@ -161,6 +161,17 @@ export default {
   },
 
   /**
+   * Refresh the access token
+   *
+   * Make an ajax call to the OAuth2 server to refresh the access token (using our refresh token).
+   *
+   * @private
+   * @param {Request} request Vue-resource Request instance, the original request that we'll retry.
+   * @return {Promise}
+   */
+  _refreshToken (response) {},
+
+  /**
    * Check if the Vue-resource Response is an invalid token response.
    *
    * @private
@@ -169,8 +180,8 @@ export default {
    */
   _isInvalidToken (response) {
     const status = response.status
-    const error = response.data.error
+    const error = response.statusText
 
-    return (status === 401 && (error === 'invalid_token' || error === 'expired_token'))
+    return (status === 401 && error === 'Unauthorized')
   }
 }
