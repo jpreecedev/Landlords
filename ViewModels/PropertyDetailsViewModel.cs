@@ -3,6 +3,7 @@
     using System;
     using System.ComponentModel.DataAnnotations;
     using Model;
+    using Model.DataTypes;
 
     public class PropertyDetailsViewModel
     {
@@ -13,7 +14,7 @@
         public PropertyDetailsViewModel(PropertyDetails propertyDetails)
         {
         }
-        
+
         [Required]
         public string Reference { get; set; }
 
@@ -30,5 +31,11 @@
         public DateTime? PurchaseDate { get; set; }
 
         public decimal PurchasePrice { get; set; }
+
+        public string[] DefaultPropertyTypes { get; } = Model.DataTypes.PropertyType.GetDefaultPropertyTypes();
+
+        public string[] DefaultPaymentTerms { get; } = PaymentTerms.GetDefaultPaymentTerms();
+
+        public string[] DefaultFurnishings { get; } = PropertyFurnishing.GetDefaultFurnishings();
     }
 }

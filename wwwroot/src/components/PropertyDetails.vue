@@ -95,9 +95,9 @@ export default {
   components: { Datepicker },
   data () {
     return {
-      propertyTypes: [ 'Detached', 'Bungalow', 'Semi-detached' ],
-      paymentTerms: ['Monthly', 'Weekly', 'Annually'],
-      furnishings: [ 'Fully', 'Part', 'None' ],
+      propertyTypes: [],
+      paymentTerms: [],
+      furnishings: [],
       propertyDetails: {
         reference: '',
         propertyType: '',
@@ -112,6 +112,13 @@ export default {
         isAvailableForLetting: true
       }
     }
+  },
+  created () {
+    this.$http.get('/api/propertydetails/viewdata').then(response => {
+      this.propertyTypes = response.data.defaultPropertyTypes
+      this.paymentTerms = response.data.defaultPaymentTerms
+      this.furnishings = response.data.defaultFurnishings
+    })
   },
   methods: {
     save () {

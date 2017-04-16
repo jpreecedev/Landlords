@@ -17,6 +17,12 @@
             _propertyDataProvider = dataAccessProvider;
         }
 
+        [HttpGet("ViewData")]
+        public PropertyDetailsViewModel GetViewData()
+        {
+            return new PropertyDetailsViewModel();
+        }
+
         [HttpGet]
         public PropertyDetails Get(Guid propertyId)
         {
