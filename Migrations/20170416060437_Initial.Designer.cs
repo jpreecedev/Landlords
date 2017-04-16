@@ -4,12 +4,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Landlords.Database;
-using Model;
 
 namespace Landlords.Migrations
 {
     [DbContext(typeof(LLDbContext))]
-    [Migration("20170415114232_Initial")]
+    [Migration("20170416060437_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -172,18 +171,54 @@ namespace Landlords.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Model.PropertyOverview", b =>
+            modelBuilder.Entity("Model.PropertyDetails", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime?>("ConstructionDate");
 
-                    b.Property<int>("Furnishing");
+                    b.Property<DateTime?>("Deleted");
 
-                    b.Property<decimal>("TargetRent");
+                    b.Property<string>("Furnishing");
 
-                    b.Property<int>("Type");
+                    b.Property<bool>("Garage");
+
+                    b.Property<bool>("HouseAlarm");
+
+                    b.Property<bool>("IsAvailableForLetting");
+
+                    b.Property<string>("Notes");
+
+                    b.Property<int>("ParkingSpaces");
+
+                    b.Property<string>("PaymentTerm");
+
+                    b.Property<string>("PropertyCountry");
+
+                    b.Property<string>("PropertyCountyOrRegion");
+
+                    b.Property<string>("PropertyPostcode");
+
+                    b.Property<string>("PropertyStreetAddress");
+
+                    b.Property<string>("PropertyTownOrCity");
+
+                    b.Property<string>("PropertyType");
+
+                    b.Property<DateTime?>("PurchaseDate");
+
+                    b.Property<decimal?>("PurchasePrice");
+
+                    b.Property<string>("Reference");
+
+                    b.Property<DateTime?>("SellingDate");
+
+                    b.Property<decimal>("SellingPrice");
+
+                    b.Property<int>("SmokeAlarms");
+
+                    b.Property<decimal?>("TargetRent");
 
                     b.HasKey("Id");
 

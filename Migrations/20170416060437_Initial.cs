@@ -66,12 +66,29 @@ namespace Landlords.Migrations
                 name: "PropertyOverview",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<Guid>(nullable: false),
                     ConstructionDate = table.Column<DateTime>(nullable: true),
-                    Furnishing = table.Column<int>(nullable: false),
-                    TargetRent = table.Column<decimal>(nullable: false),
-                    Type = table.Column<int>(nullable: false)
+                    Deleted = table.Column<DateTime>(nullable: true),
+                    Furnishing = table.Column<string>(nullable: true),
+                    Garage = table.Column<bool>(nullable: false),
+                    HouseAlarm = table.Column<bool>(nullable: false),
+                    IsAvailableForLetting = table.Column<bool>(nullable: false),
+                    Notes = table.Column<string>(nullable: true),
+                    ParkingSpaces = table.Column<int>(nullable: false),
+                    PaymentTerm = table.Column<string>(nullable: true),
+                    PropertyCountry = table.Column<string>(nullable: true),
+                    PropertyCountyOrRegion = table.Column<string>(nullable: true),
+                    PropertyPostcode = table.Column<string>(nullable: true),
+                    PropertyStreetAddress = table.Column<string>(nullable: true),
+                    PropertyTownOrCity = table.Column<string>(nullable: true),
+                    PropertyType = table.Column<string>(nullable: true),
+                    PurchaseDate = table.Column<DateTime>(nullable: true),
+                    PurchasePrice = table.Column<decimal>(nullable: true),
+                    Reference = table.Column<string>(nullable: true),
+                    SellingDate = table.Column<DateTime>(nullable: true),
+                    SellingPrice = table.Column<decimal>(nullable: false),
+                    SmokeAlarms = table.Column<int>(nullable: false),
+                    TargetRent = table.Column<decimal>(nullable: true)
                 },
                 constraints: table =>
                 {

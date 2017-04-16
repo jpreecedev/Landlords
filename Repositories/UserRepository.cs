@@ -23,7 +23,7 @@
             _userManager = userManager;
             _roleManager = roleManager;
         }
-
+        
         public async Task<IdentityResult> AddToRole(ApplicationUser user, string role)
         {
             if (!_roleManager.Roles.Any())

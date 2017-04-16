@@ -12,7 +12,11 @@
     using System;
     using System.Text;
     using Database;
+    using DataProviders;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc.Authorization;
     using Repositories;
+    using Landlords.Core;
 
     public class Startup
     {
@@ -31,19 +35,21 @@
         
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc(config =>
+            {
+                var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+                config.Filters.Add(new AuthorizeFilter(policy));
+            });
+
             services.AddCors();
 
             var sqlConnectionString = Configuration.GetConnectionString("LLDbContext");
             services.AddDbContext<LLDbContext>(options => options.UseSqlServer(sqlConnectionString));
-
-            services.AddScoped<IDataAccessProvider, DataAccessProvider>();
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<ILLDbContext, LLDbContext>();
-
+            
+            services.RegisterDI();
             services.AddOptions();
             services.Configure<JwtConfiguration>(Configuration.GetSection(("Jwt")));
-
+            
             services
                 .AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<LLDbContext, Guid>()

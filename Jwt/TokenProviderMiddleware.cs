@@ -66,7 +66,7 @@
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.Iat, now.Ticks.ToString(), ClaimValueTypes.Integer64)
             };
-            
+
             // Create the JWT and write it to a string
             var jwt = new JwtSecurityToken(
                 issuer: _options.Issuer,
@@ -102,7 +102,10 @@
                 if (!await _userManager.CheckPasswordAsync(user, password))
                 {
                     var userRoles = await _userManager.GetRolesAsync(user);
-                    var claims = new List<Claim>();
+                    var claims = new List<Claim>()
+                    {
+                        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+                    };
 
                     foreach (var role in userRoles)
                     {
