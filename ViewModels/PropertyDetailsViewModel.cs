@@ -21,10 +21,14 @@
 
         public string Furnishing { get; set; }
 
-        public DateTime ConstructionDate { get; set; }
+        public DateTime? ConstructionDate { get; set; }
 
         public decimal TargetRent { get; set; }
 
         public string PaymentTerm { get; set; }
+
+        public DateTime? PurchaseDate { get; set; }
+
+        public decimal PurchasePrice { get; set; }
     }
 }

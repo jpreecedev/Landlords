@@ -19,11 +19,22 @@
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-12 col-form-label" for="constructionDate">Construction Date</label>          
+          <label class="col-12 col-form-label" for="furnishing">Furnishing</label>
           <div class="col-12">
-            <datepicker v-model="propertyDetails.constructionDate" name="constructionDate" placeholder="Select date..." input-class="form-control"></datepicker>
+            <select data-id="propertyDetails.furnishing" v-model="propertyDetails.furnishing" class="form-control" id="furnishing" name="furnishing" required>
+              <option disabled value="">Select a furnishing type</option>
+              <option v-for="furnishing in furnishings" v-bind:value="furnishing.split(' ').join('')">{{ furnishing }}</option>
+            </select>
           </div>
         </div>
+        <div class="form-group row">
+          <label class="col-12 col-form-label" for="constructionDate">Construction Date</label>          
+          <div class="col-12">
+            <datepicker v-model="propertyDetails.constructionDate" id="constructionDate" name="constructionDate" placeholder="Select date..." input-class="form-control"></datepicker>
+          </div>
+        </div>
+      </div>
+      <div class="col">
         <div class="card">
           <div class="card-block">
             <h4 class="card-title">Projected Rent</h4>
@@ -47,12 +58,28 @@
             </div>
           </div>
         </div>
-      </div>
-      <div class="col">
-      
+        <div class="card mt-3">
+          <div class="card-block">
+            <h4 class="card-title">Purchase Details</h4>
+            <div class="form-group row">
+              <div class="col">
+                <label class="col-form-label" for="purchaseDate">Purchase Date</label>
+                <div>
+                  <datepicker v-model="propertyDetails.purchaseDate" id="purchaseDate" name="purchaseDate" placeholder="Select date..." input-class="form-control"></datepicker>
+                </div>
+              </div>
+              <div class="col">
+                <label class="col-form-label" for="purchasePrice">Purchase Price</label>
+                <div>
+                  <input data-id="propertyDetails.purchasePrice" v-model="propertyDetails.purchasePrice" class="form-control" id="purchasePrice" name="purchasePrice" type="number" required>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="row mt-4">
+    <div class="row mt-3">
       <div class="col">
         <button @click="save()" class="btn btn-primary">Save</button>
       </div>
@@ -70,6 +97,7 @@ export default {
     return {
       propertyTypes: [ 'Detached', 'Bungalow', 'Semi-detached' ],
       paymentTerms: ['Monthly', 'Weekly', 'Annually'],
+      furnishings: [ 'Fully', 'Part', 'None' ],
       propertyDetails: {
         reference: '',
         propertyType: '',
