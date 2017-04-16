@@ -56,7 +56,7 @@ export default {
 
       next((response) => {
         if (this._isInvalidToken(response)) {
-          this.logout()
+          this.logout(true)
           return response
         }
       })
@@ -96,11 +96,20 @@ export default {
    * Clear all data in our Vuex store (which resets logged-in status) and redirect back
    * to login form.
    *
+   * @param {Expired} expired States if the session expired or not
    * @return {void}
    */
-  logout () {
+  logout (expired) {
     store.commit('CLEAR_ALL_DATA')
-    router.push({ name: 'registration', query: { expired: true } })
+
+    var query
+    if (expired) {
+      query = { expired: true }
+    } else {
+      query = { loggedOut: true }
+    }
+
+    router.push({ name: 'registration', query })
   },
 
   /**

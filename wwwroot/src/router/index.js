@@ -14,12 +14,17 @@ const router = new Router({
       }
     },
     {
-      path: '/',
+      path: '/dashboard',
       name: 'dashboard',
       component: function (resolve) {
         require(['@/components/Dashboard.vue'], resolve)
       },
       beforeEnter: guardRoute
+    },
+    {
+      path: '/',
+      name: 'default',
+      redirect: '/dashboard'
     }
   ]
 })

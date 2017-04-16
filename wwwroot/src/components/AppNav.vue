@@ -7,12 +7,15 @@
 
     <div class="collapse navbar-collapse" id="navbar-collapse">
       <ul class="navbar-nav mr-auto">
-        <router-link tag="li" to="/" active-class="active" class="nav-item" exact>
+        <router-link tag="li" to="/dashboard" active-class="active" class="nav-item">
           <a class="nav-link">Dashboard <span class="sr-only">(current)</span></a>
         </router-link>
-        <router-link tag="li" to="/registration" active-class="active" class="nav-item" exact>
+        <router-link v-if="!isLoggedIn" tag="li" to="/registration" active-class="active" class="nav-item">
           <a class="nav-link">Registration</a>
         </router-link>
+        <li v-if="isLoggedIn" class="nav-item">
+          <a class="pointer nav-link" @click="logout()">Log Out</a>
+        </li>
       </ul>
     </div>
   </nav>
@@ -22,6 +25,19 @@
 export default {
   data () {
     return {
+      isLoggedIn: this.$store.state.auth.isLoggedIn
+    }
+  },
+  mounted () {
+    this.$store.watch((state) => {
+      return state.auth.isLoggedIn
+    }, (isLoggedIn) => {
+      this.isLoggedIn = isLoggedIn
+    })
+  },
+  methods: {
+    logout () {
+      this.$auth.logout(false)
     }
   }
 }
