@@ -13,6 +13,9 @@
         <router-link v-if="!isLoggedIn" tag="li" to="/registration" active-class="active" class="nav-item">
           <a class="nav-link">Registration</a>
         </router-link>
+        <router-link v-if="isLoggedIn" tag="li" to="/propertyDetails" active-class="active" class="nav-item">
+          <a class="nav-link">Property Details</a>
+        </router-link>
         <li v-if="isLoggedIn" class="nav-item">
           <a class="pointer nav-link" @click="logout()">Log Out</a>
         </li>

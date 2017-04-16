@@ -51,7 +51,10 @@
             services.Configure<JwtConfiguration>(Configuration.GetSection(("Jwt")));
             
             services
-                .AddIdentity<ApplicationUser, ApplicationRole>()
+                .AddIdentity<ApplicationUser, ApplicationRole>(options =>
+                {
+                    options.Password.RequireNonAlphanumeric = false;
+                })
                 .AddEntityFrameworkStores<LLDbContext, Guid>()
                 .AddUserManager<ApplicationUserManager>()
                 .AddUserStore<ApplicationUserStore>()

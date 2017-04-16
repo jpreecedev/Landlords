@@ -22,6 +22,6 @@
             base.OnConfiguring(optionsBuilder);
         }
 
-        public DbSet<PropertyDetails> PropertyOverview { get; set; }
+        public DbSet<PropertyDetails> PropertyDetails { get; set; }
     }
 }

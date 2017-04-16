@@ -8,7 +8,7 @@ using Landlords.Database;
 namespace Landlords.Migrations
 {
     [DbContext(typeof(LLDbContext))]
-    [Migration("20170416060437_Initial")]
+    [Migration("20170416061457_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -222,7 +222,7 @@ namespace Landlords.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PropertyOverview");
+                    b.ToTable("PropertyDetails");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<System.Guid>", b =>

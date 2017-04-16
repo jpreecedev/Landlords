@@ -63,7 +63,7 @@ namespace Landlords.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PropertyOverview",
+                name: "PropertyDetails",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -92,7 +92,7 @@ namespace Landlords.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PropertyOverview", x => x.Id);
+                    table.PrimaryKey("PK_PropertyDetails", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -237,7 +237,7 @@ namespace Landlords.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "PropertyOverview");
+                name: "PropertyDetails");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

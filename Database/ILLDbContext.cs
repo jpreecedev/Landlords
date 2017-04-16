@@ -5,7 +5,7 @@
 
     public interface ILLDbContext
     {
-        DbSet<PropertyDetails> PropertyOverview { get; set; }
+        DbSet<PropertyDetails> PropertyDetails { get; set; }
 
         DbSet<ApplicationUser> Users { get; set; }
     }

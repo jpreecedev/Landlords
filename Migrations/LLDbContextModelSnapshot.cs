@@ -221,7 +221,7 @@ namespace Landlords.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PropertyOverview");
+                    b.ToTable("PropertyDetails");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<System.Guid>", b =>
