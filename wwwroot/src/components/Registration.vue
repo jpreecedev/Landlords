@@ -3,6 +3,9 @@
     <div class="alert alert-danger" v-if="expired">
       Your session has expired, please log in again.
     </div>
+    <div class="alert alert-success" v-if="loggedOut">
+      You have been logged out
+    </div>
     <div class="row">
       <div class="col-12 col-md-5">
         <loginform />
@@ -27,7 +30,8 @@
     },
     data () {
       return {
-        expired: this.$route.query.expired
+        expired: this.$route.query.expired,
+        loggedOut: this.$route.query.loggedOut
       }
     }
   }
