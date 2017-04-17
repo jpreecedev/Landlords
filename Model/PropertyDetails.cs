@@ -1,11 +1,10 @@
 ﻿namespace Model
 {
     using System;
-    using DataTypes;
 
     //EF Core does not support complex types
 
-    public class PropertyDetails : BaseModel
+    public class PropertyDetails : BaseModel, IPropertyDetails
     {
         public string Reference { get; set; }
 
@@ -25,7 +24,7 @@
 
         public DateTime? SellingDate { get; set; }
 
-        public decimal SellingPrice { get; set; }
+        public decimal? SellingPrice { get; set; }
 
         public string PropertyStreetAddress { get; set; }
 
@@ -36,16 +35,6 @@
         public string PropertyPostcode { get; set; }
 
         public string PropertyCountry { get; set; }
-
-        public int ParkingSpaces { get; set; }
-
-        public bool Garage { get; set; }
-
-        public int SmokeAlarms { get; set; }
-
-        public bool HouseAlarm { get; set; }
-
-        public string Notes { get; set; }
 
         public bool IsAvailableForLetting { get; set; }
     }

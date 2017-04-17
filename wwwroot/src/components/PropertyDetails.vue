@@ -1,94 +1,165 @@
 <template>
   <div>
     <h2>Property Details</h2>
-    <div class="row">
-      <div class="col">
-        <div class="form-group row">
-          <label class="col-12 col-form-label" for="reference">Property Reference</label>
-          <div class="col-12">
-            <input data-id="propertyDetails.reference" v-model="propertyDetails.reference" class="form-control" id="reference" name="reference" type="text" required>
+    <hr>
+    <form v-on:submit.prevent="submitForm()" role="form" novalidate>
+      <div class="row">
+        <div class="col">
+          <h3>Overview</h3>
+          <div class="form-group row">
+            <label class="col-12 col-form-label" for="reference">Property Reference</label>
+            <div class="col-12">
+              <input v-model="propertyDetails.reference" class="form-control" id="reference" name="reference" type="text" required>
+            </div>
+          </div>
+          <div class="form-group row" v-bind:class="{ 'has-danger': validationErrors && validationErrors.propertyDetails && validationErrors.propertyDetails.propertyType }">
+            <label class="col-12 col-form-label" for="propertyType">Property Type</label>
+            <div class="col-12">
+              <select v-model="propertyDetails.propertyType" class="form-control" id="propertyType" name="propertyType" v-bind:class="{ 'form-control-danger': validationErrors && validationErrors.propertyDetails && validationErrors.propertyDetails.propertyType }" required>
+                <option disabled value="">Select a property type</option>
+                <option v-for="propertyType in propertyTypes" v-bind:value="propertyType">{{ propertyType }}</option>
+              </select>
+              <div v-if="validationErrors && validationErrors.propertyDetails && validationErrors.propertyDetails.propertyType" class="form-control-feedback">
+                <p v-for="message in validationErrors.propertyDetails.propertyType.messages">{{ message }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-12 col-form-label" for="furnishing">Furnishing</label>
+            <div class="col-12">
+              <select v-model="propertyDetails.furnishing" class="custom-select" id="furnishing" name="furnishing" required>
+                <option disabled value="">Select a furnishing type</option>
+                <option v-for="furnishing in furnishings" v-bind:value="furnishing">{{ furnishing }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-12 col-form-label" for="constructionDate">Construction Date</label>          
+            <div class="col-12">
+              <datepicker v-model="propertyDetails.constructionDate" id="constructionDate" name="constructionDate" placeholder="Select date..." input-class="form-control"></datepicker>
+            </div>
+          </div>
+          <h3 class="mt-5">Address</h3>
+          <div class="form-group row">
+            <label class="col-12 col-form-label" for="propertyStreetAddress">Street address</label>
+            <div class="col-12">
+              <textarea v-model="propertyDetails.propertyStreetAddress" class="form-control" id="propertyStreetAddress" name="propertyStreetAddress" required>
+              </textarea>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-12 col-form-label" for="propertyTownOrCity">Town or City</label>
+            <div class="col-12">
+              <input v-model="propertyDetails.propertyTownOrCity" class="form-control" id="propertyTownOrCity" name="propertyTownOrCity" type="text" required>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-12 col-form-label" for="propertyCountyOrRegion">County or Region</label>
+            <div class="col-12">
+              <input v-model="propertyDetails.propertyCountyOrRegion" class="form-control" id="propertyCountyOrRegion" name="propertyCountyOrRegion" type="text" required>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-12 col-form-label" for="propertyPostcode">Postcode</label>          
+            <div class="col-12">
+              <input v-model="propertyDetails.propertyPostcode" class="form-control" id="propertyPostcode" name="propertyPostcode" type="text" required>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-12 col-form-label" for="propertyCountry">Country</label>          
+            <div class="col-12">
+              <select v-model="propertyDetails.propertyCountry" class="custom-select" id="propertyCountry" name="propertyCountry" required>
+                <option disabled value="">Select a Country</option>
+                <option v-for="propertyCountry in countries" v-bind:value="propertyCountry">{{ propertyCountry }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row mt-4">
+            <div class="form-check col">
+              <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" v-model="propertyDetails.isAvailableForLetting" id="isAvailableForLetting" name="isAvailableForLetting">
+                  This property is available for letting
+              </label>
+            </div>
           </div>
         </div>
-        <div class="form-group row">
-          <label class="col-12 col-form-label" for="propertyType">Property Type</label>
-          <div class="col-12">
-            <select data-id="propertyDetails.propertyType" v-model="propertyDetails.propertyType" class="form-control" id="propertyType" name="propertyType" required>
-              <option disabled value="">Select a property type</option>
-              <option v-for="propertyType in propertyTypes" v-bind:value="propertyType.split(' ').join('')">{{ propertyType }}</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-12 col-form-label" for="furnishing">Furnishing</label>
-          <div class="col-12">
-            <select data-id="propertyDetails.furnishing" v-model="propertyDetails.furnishing" class="form-control" id="furnishing" name="furnishing" required>
-              <option disabled value="">Select a furnishing type</option>
-              <option v-for="furnishing in furnishings" v-bind:value="furnishing.split(' ').join('')">{{ furnishing }}</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-12 col-form-label" for="constructionDate">Construction Date</label>          
-          <div class="col-12">
-            <datepicker v-model="propertyDetails.constructionDate" id="constructionDate" name="constructionDate" placeholder="Select date..." input-class="form-control"></datepicker>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card">
-          <div class="card-block">
-            <h4 class="card-title">Projected Rent</h4>
-            <h6 class="card-subtitle mb-2 text-muted">Enter expected rents for this property.</h6>
-            <div class="form-group row">
-              <div class="col">
-                <label class="col-form-label" for="targetRent">Target Rent</label>
-                <div>
-                  <input data-id="propertyDetails.targetRent" v-model="propertyDetails.targetRent" class="form-control" id="targetRent" name="targetRent" type="number" required>
+        <div class="col">
+          <div class="card">
+            <div class="card-block">
+              <h4 class="card-title">Purchase Details</h4>
+              <div class="form-group row">
+                <div class="col">
+                  <label class="col-form-label" for="purchaseDate">Purchase Date</label>
+                  <div>
+                    <datepicker v-model="propertyDetails.purchaseDate" id="purchaseDate" name="purchaseDate" placeholder="Select date..." input-class="form-control"></datepicker>
+                  </div>
+                </div>
+                <div class="col">
+                  <label class="col-form-label" for="purchasePrice">Purchase Price</label>
+                  <div>
+                    <input v-model="propertyDetails.purchasePrice" class="form-control" id="purchasePrice" name="purchasePrice" type="number" required>
+                  </div>
                 </div>
               </div>
-              <div class="col">
-                <label class="col-form-label" for="paymentTerm">Payment Term</label>
-                <div>
-                  <select data-id="propertyDetails.paymentTerm" v-model="propertyDetails.paymentTerm" class="form-control" id="paymentTerm" name="paymentTerm" required>
-                    <option disabled value="">Select a payment term</option>
-                    <option v-for="paymentTerm in paymentTerms" v-bind:value="paymentTerm.split(' ').join('')">{{ paymentTerm }}</option>
-                  </select>
+            </div>
+          </div>
+          <div class="card mt-3">
+            <div class="card-block">
+              <h4 class="card-title">Projected Rent</h4>
+              <h6 class="card-subtitle mb-2 text-muted">Enter expected rents for this property.</h6>
+              <div class="form-group row">
+                <div class="col">
+                  <label class="col-form-label" for="targetRent">Target Rent</label>
+                  <div>
+                    <input v-model="propertyDetails.targetRent" class="form-control" id="targetRent" name="targetRent" type="number" required>
+                  </div>
+                </div>
+                <div class="col">
+                  <label class="col-form-label" for="paymentTerm">Payment Term</label>
+                  <div>
+                    <select v-model="propertyDetails.paymentTerm" class="custom-select" id="paymentTerm" name="paymentTerm" required>
+                      <option disabled value="">Select a payment term</option>
+                      <option v-for="paymentTerm in paymentTerms" v-bind:value="paymentTerm">{{ paymentTerm }}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card mt-3">
+            <div class="card-block">
+              <h4 class="card-title">Selling Details</h4>
+              <div class="form-group row">
+                <div class="col">
+                  <label class="col-form-label" for="sellingDate">Selling Date</label>
+                  <div>
+                    <datepicker v-model="propertyDetails.sellingDate" id="sellingDate" name="sellingDate" placeholder="Select date..." input-class="form-control"></datepicker>
+                  </div>
+                </div>
+                <div class="col">
+                  <label class="col-form-label" for="sellingPrice">Selling Price</label>
+                  <div>
+                    <input v-model="propertyDetails.sellingPrice" class="form-control" id="sellingPrice" name="sellingPrice" type="number" required>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="card mt-3">
-          <div class="card-block">
-            <h4 class="card-title">Purchase Details</h4>
-            <div class="form-group row">
-              <div class="col">
-                <label class="col-form-label" for="purchaseDate">Purchase Date</label>
-                <div>
-                  <datepicker v-model="propertyDetails.purchaseDate" id="purchaseDate" name="purchaseDate" placeholder="Select date..." input-class="form-control"></datepicker>
-                </div>
-              </div>
-              <div class="col">
-                <label class="col-form-label" for="purchasePrice">Purchase Price</label>
-                <div>
-                  <input data-id="propertyDetails.purchasePrice" v-model="propertyDetails.purchasePrice" class="form-control" id="purchasePrice" name="purchasePrice" type="number" required>
-                </div>
-              </div>
-            </div>
-          </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col">
+          <button type="submit" class="btn btn-primary">Save</button>
+          <input type="reset" class="btn btn-secondary" value="Reset" />
         </div>
       </div>
-    </div>
-    <div class="row mt-3">
-      <div class="col">
-        <button @click="save()" class="btn btn-primary">Save</button>
-      </div>
-    </div>
+    </form>
   </div>
 </template>
 
 <script>
 import Datepicker from 'vuejs-datepicker'
+import utils from '@/utils'
 
 export default {
   name: 'propertyDetails',
@@ -98,6 +169,8 @@ export default {
       propertyTypes: [],
       paymentTerms: [],
       furnishings: [],
+      countries: [],
+      validationErrors: {},
       propertyDetails: {
         reference: '',
         propertyType: '',
@@ -109,7 +182,12 @@ export default {
         purchasePrice: '',
         sellingDate: '',
         sellingPrice: '',
-        isAvailableForLetting: true
+        isAvailableForLetting: true,
+        propertyStreetAddress: '',
+        propertyTownOrCity: '',
+        propertyCountyOrRegion: '',
+        propertyPostcode: '',
+        propertyCountry: ''
       }
     }
   },
@@ -118,11 +196,15 @@ export default {
       this.propertyTypes = response.data.defaultPropertyTypes
       this.paymentTerms = response.data.defaultPaymentTerms
       this.furnishings = response.data.defaultFurnishings
+      this.countries = response.data.defaultCountries
     })
   },
   methods: {
-    save () {
-      this.$http.post('/api/propertyDetails', { ...this.propertyDetails })
+    submitForm () {
+      this.$http.post('/api/propertyDetails', { ...this.propertyDetails }).catch(response => {
+        this.validationErrors.propertyDetails = utils.getFormValidationErrors(response, this.validationErrors.propertyDetails)
+        this.$forceUpdate()
+      })
     }
   }
 }

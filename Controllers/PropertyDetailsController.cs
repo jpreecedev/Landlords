@@ -4,8 +4,10 @@
     using Microsoft.AspNetCore.Mvc;
     using Model;
     using System;
+    using System.Linq;
     using Landlords.Core;
     using Landlords.ViewModels;
+    using Newtonsoft.Json;
 
     [Route("api/[controller]")]
     public class PropertyDetailsController : Controller
@@ -37,7 +39,8 @@
                 _propertyDataProvider.Create(User.GetUserId(), value);
                 return Ok();
             }
-            return BadRequest();
+            
+            return BadRequest(new { Errors = ModelState.Errors() });
         }
     }
 }
