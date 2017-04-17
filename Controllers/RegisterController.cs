@@ -1,12 +1,11 @@
 ﻿namespace Landlords.Controllers
 {
-    using System;
     using System.Threading.Tasks;
-    using Database;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Repositories;
     using ViewModels;
+    using Model.Database;
 
     [Route("api/[controller]")]
     [AllowAnonymous]

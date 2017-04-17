@@ -12,11 +12,10 @@
     using System;
     using System.Text;
     using Database;
-    using DataProviders;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc.Authorization;
-    using Repositories;
     using Landlords.Core;
+    using Model.Database;
 
     public class Startup
     {

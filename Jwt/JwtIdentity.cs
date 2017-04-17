@@ -1,7 +1,7 @@
 ﻿namespace Landlords.Jwt
 {
     using System.Security.Claims;
-    using Database;
+    using Model.Database;
 
     public class JwtIdentity
     {

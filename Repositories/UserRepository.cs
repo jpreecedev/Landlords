@@ -4,6 +4,7 @@
     using Database;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;
+    using Model.Database;
 
     public interface IUserRepository
     {

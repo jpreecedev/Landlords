@@ -5,7 +5,8 @@
     using Model;
     using Model.DataTypes;
 
-    public class PropertyDetailsViewModel : IPropertyDetails
+    //TODO: Use automapper
+    public class PropertyDetailsViewModel : IPropertyDetails, IEntity<PropertyDetails>
     {
         public PropertyDetailsViewModel()
         {
@@ -83,5 +84,28 @@
         public string[] DefaultFurnishings { get; } = PropertyFurnishing.GetDefaultFurnishings();
 
         public string[] DefaultCountries { get; } = Countries.GetDefaultCountries();
+
+        public PropertyDetails Map()
+        {
+            return new PropertyDetails
+            {
+                Reference = Reference,
+                Furnishing = Furnishing,
+                PropertyType = PropertyType,
+                ConstructionDate = ConstructionDate,
+                TargetRent = TargetRent,
+                PaymentTerm = PaymentTerm,
+                PurchaseDate = PurchaseDate,
+                PurchasePrice = PurchasePrice,
+                SellingDate = SellingDate,
+                SellingPrice = SellingPrice,
+                PropertyStreetAddress = PropertyStreetAddress,
+                PropertyTownOrCity = PropertyTownOrCity,
+                PropertyCountyOrRegion = PropertyCountyOrRegion,
+                PropertyPostcode = PropertyPostcode,
+                PropertyCountry = PropertyCountry,
+                IsAvailableForLetting = IsAvailableForLetting
+            };
+        }
     }
 }

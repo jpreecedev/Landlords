@@ -1,4 +1,4 @@
-﻿namespace Landlords.Database
+﻿namespace Model.Database
 {
     public static class ApplicationRoles
     {

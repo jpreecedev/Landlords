@@ -8,6 +8,7 @@
     using Landlords.Core;
     using Landlords.ViewModels;
     using Newtonsoft.Json;
+    using System.Threading.Tasks;
 
     [Route("api/[controller]")]
     public class PropertyDetailsController : Controller
@@ -26,17 +27,18 @@
         }
 
         [HttpGet]
-        public PropertyDetails Get(Guid propertyId)
+        public async Task<PropertyDetailsViewModel> Get(Guid propertyId)
         {
-            return _propertyDataProvider.GetDetails(User.GetUserId(), propertyId);
+            var propertyDetails = await _propertyDataProvider.GetDetailsAsync(User.GetUserId(), propertyId);
+            return new PropertyDetailsViewModel(propertyDetails);
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] PropertyDetailsViewModel value)
+        public async Task<IActionResult> Post([FromBody] PropertyDetailsViewModel value)
         {
             if (ModelState.IsValid)
             {
-                _propertyDataProvider.Create(User.GetUserId(), value);
+                await _propertyDataProvider.CreateAsync(User, value);
                 return Ok();
             }
             

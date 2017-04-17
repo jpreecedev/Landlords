@@ -9,6 +9,7 @@
     using Microsoft.Extensions.DependencyInjection;
     using Repositories;
     using System.Linq;
+    using Model.Database;
 
     public static class Extensions
     {
@@ -22,6 +23,17 @@
                 var success = Guid.TryParse(nameIdentifier, out Guid result);
                 if (success)
                     return result;
+            }
+
+            throw new InvalidOperationException("Unable to determine User");
+        }
+
+        public static ApplicationUser GetApplicationUser(this ClaimsPrincipal claimsPrincipal, LLDbContext context)
+        {
+            var userId = claimsPrincipal.GetUserId();
+            if (userId != default(Guid))
+            {
+                return context.Users.FirstOrDefault(c => c.Id == userId);
             }
 
             throw new InvalidOperationException("Unable to determine User");

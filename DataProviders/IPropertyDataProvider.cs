@@ -2,11 +2,13 @@
 {
     using Model;
     using System;
+    using System.Security.Claims;
     using ViewModels;
+    using System.Threading.Tasks;
 
     public interface IPropertyDataProvider
     {
-        PropertyDetails GetDetails(Guid userId, Guid propertyId);
-        void Create(Guid userId, PropertyDetailsViewModel viewModel);
+        Task CreateAsync(ClaimsPrincipal user, PropertyDetailsViewModel viewModel);
+        Task<PropertyDetails> GetDetailsAsync(Guid userId, Guid propertyId);
     }
 }

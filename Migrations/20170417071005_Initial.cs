@@ -10,6 +10,20 @@ namespace Landlords.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "AspNetUserTokens",
+                columns: table => new
+                {
+                    UserId = table.Column<Guid>(nullable: false),
+                    LoginProvider = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
+                    Value = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
                 {
@@ -46,53 +60,6 @@ namespace Landlords.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUserTokens",
-                columns: table => new
-                {
-                    UserId = table.Column<Guid>(nullable: false),
-                    LoginProvider = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: false),
-                    Value = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PropertyDetails",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    ConstructionDate = table.Column<DateTime>(nullable: true),
-                    Deleted = table.Column<DateTime>(nullable: true),
-                    Furnishing = table.Column<string>(nullable: true),
-                    Garage = table.Column<bool>(nullable: false),
-                    HouseAlarm = table.Column<bool>(nullable: false),
-                    IsAvailableForLetting = table.Column<bool>(nullable: false),
-                    Notes = table.Column<string>(nullable: true),
-                    ParkingSpaces = table.Column<int>(nullable: false),
-                    PaymentTerm = table.Column<string>(nullable: true),
-                    PropertyCountry = table.Column<string>(nullable: true),
-                    PropertyCountyOrRegion = table.Column<string>(nullable: true),
-                    PropertyPostcode = table.Column<string>(nullable: true),
-                    PropertyStreetAddress = table.Column<string>(nullable: true),
-                    PropertyTownOrCity = table.Column<string>(nullable: true),
-                    PropertyType = table.Column<string>(nullable: true),
-                    PurchaseDate = table.Column<DateTime>(nullable: true),
-                    PurchasePrice = table.Column<decimal>(nullable: true),
-                    Reference = table.Column<string>(nullable: true),
-                    SellingDate = table.Column<DateTime>(nullable: true),
-                    SellingPrice = table.Column<decimal>(nullable: false),
-                    SmokeAlarms = table.Column<int>(nullable: false),
-                    TargetRent = table.Column<decimal>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PropertyDetails", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -181,22 +148,41 @@ namespace Landlords.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "RoleNameIndex",
-                table: "AspNetRoles",
-                column: "NormalizedName",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "EmailIndex",
-                table: "AspNetUsers",
-                column: "NormalizedEmail");
-
-            migrationBuilder.CreateIndex(
-                name: "UserNameIndex",
-                table: "AspNetUsers",
-                column: "NormalizedUserName",
-                unique: true);
+            migrationBuilder.CreateTable(
+                name: "PropertyDetails",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    ConstructionDate = table.Column<DateTime>(nullable: true),
+                    Created = table.Column<DateTime>(nullable: false),
+                    Deleted = table.Column<DateTime>(nullable: true),
+                    Furnishing = table.Column<string>(nullable: true),
+                    IsAvailableForLetting = table.Column<bool>(nullable: false),
+                    PaymentTerm = table.Column<string>(nullable: true),
+                    PropertyCountry = table.Column<string>(nullable: true),
+                    PropertyCountyOrRegion = table.Column<string>(nullable: true),
+                    PropertyPostcode = table.Column<string>(nullable: true),
+                    PropertyStreetAddress = table.Column<string>(nullable: true),
+                    PropertyTownOrCity = table.Column<string>(nullable: true),
+                    PropertyType = table.Column<string>(nullable: true),
+                    PurchaseDate = table.Column<DateTime>(nullable: true),
+                    PurchasePrice = table.Column<decimal>(nullable: true),
+                    Reference = table.Column<string>(nullable: true),
+                    SellingDate = table.Column<DateTime>(nullable: true),
+                    SellingPrice = table.Column<decimal>(nullable: true),
+                    TargetRent = table.Column<decimal>(nullable: true),
+                    UserId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PropertyDetails", x => x.Id);
+                    table.ForeignKey(
+                        name: "ForeignKey_User_PropertyDetails",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -217,6 +203,29 @@ namespace Landlords.Migrations
                 name: "IX_AspNetUserRoles_RoleId",
                 table: "AspNetUserRoles",
                 column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "RoleNameIndex",
+                table: "AspNetRoles",
+                column: "NormalizedName",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "EmailIndex",
+                table: "AspNetUsers",
+                column: "NormalizedEmail");
+
+            migrationBuilder.CreateIndex(
+                name: "UserNameIndex",
+                table: "AspNetUsers",
+                column: "NormalizedUserName",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PropertyDetails_UserId",
+                table: "PropertyDetails",
+                column: "UserId",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

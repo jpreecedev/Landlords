@@ -2,6 +2,7 @@
 {
     using Microsoft.EntityFrameworkCore;
     using Model;
+    using Model.Database;
 
     public interface ILLDbContext
     {

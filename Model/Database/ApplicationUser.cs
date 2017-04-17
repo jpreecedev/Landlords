@@ -1,4 +1,4 @@
-﻿namespace Landlords.Database
+﻿namespace Model.Database
 {
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using System;

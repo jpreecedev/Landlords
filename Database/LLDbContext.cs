@@ -4,6 +4,7 @@
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
     using Model;
+    using Model.Database;
 
     public class LLDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>, ILLDbContext
     {
@@ -14,6 +15,11 @@
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<PropertyDetails>()
+                .HasOne(p => p.User)
+                .WithOne()
+                .HasConstraintName("ForeignKey_User_PropertyDetails");
+
             base.OnModelCreating(builder);
         }
 

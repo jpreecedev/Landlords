@@ -1,11 +1,18 @@
 ﻿namespace Model
 {
+    using Model.Database;
     using System;
     using System.ComponentModel.DataAnnotations.Schema;
-
+    
     public class BaseModel
     {
         public Guid Id { get; set; }
+
+        public Guid UserId { get; set; }
+
+        public ApplicationUser User { get; set; }
+
+        public DateTime Created { get; set; }
 
         public DateTime? Deleted { get; set; }
 
