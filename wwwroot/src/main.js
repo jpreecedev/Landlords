@@ -16,6 +16,9 @@ Vue.use(VueResource)
 import Auth from './auth'
 Vue.use(Auth)
 
+import VeeValidate from 'vee-validate'
+Vue.use(VeeValidate)
+
 new Vue({
   el: '#app',
   created: function () {
