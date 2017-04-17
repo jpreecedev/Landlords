@@ -3,6 +3,7 @@
     using System;
     using System.ComponentModel.DataAnnotations;
     using Model;
+    using Model.Database;
     using Model.DataTypes;
 
     //TODO: Use automapper
@@ -14,6 +15,8 @@
 
         public PropertyDetailsViewModel(PropertyDetails propertyDetails)
         {
+            Id = propertyDetails.Id;
+            UserId = propertyDetails.User;
             ConstructionDate = propertyDetails.ConstructionDate;
             Furnishing = propertyDetails.Furnishing;
             IsAvailableForLetting = propertyDetails.IsAvailableForLetting;
@@ -29,6 +32,7 @@
             Reference = propertyDetails.Reference;
             SellingDate = propertyDetails.SellingDate;
             TargetRent = propertyDetails.TargetRent;
+            SellingPrice = propertyDetails.SellingPrice;
         }
 
         public DateTime? ConstructionDate { get; set; }
@@ -84,6 +88,10 @@
         public string[] DefaultFurnishings { get; } = PropertyFurnishing.GetDefaultFurnishings();
 
         public string[] DefaultCountries { get; } = Countries.GetDefaultCountries();
+
+        public Guid Id { get; private set; }
+
+        public ApplicationUser UserId { get; private set; }
 
         public PropertyDetails Map()
         {

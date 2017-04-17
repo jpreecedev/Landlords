@@ -30,6 +30,14 @@ const router = new Router({
       beforeEnter: guardRoute
     },
     {
+      path: '/propertyList',
+      name: 'propertyList',
+      component: function (resolve) {
+        require(['@/components/PropertyList.vue'], resolve)
+      },
+      beforeEnter: guardRoute
+    },
+    {
       path: '/',
       name: 'default',
       redirect: '/dashboard'

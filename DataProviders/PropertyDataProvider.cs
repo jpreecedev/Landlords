@@ -9,6 +9,8 @@
     using Core;
     using Microsoft.EntityFrameworkCore;
     using Model.Database;
+    using System.Collections.Generic;
+    using System.Linq;
 
     public class PropertyDataProvider : BaseDataProvider<PropertyDetails>, IPropertyDataProvider
     {
@@ -31,15 +33,23 @@
             await _dataContext.PropertyDetails.AddAsync(entity);
             await _dataContext.SaveChangesAsync();
         }
-        
+
         public async Task<PropertyDetails> GetDetailsAsync(Guid userId, Guid propertyId)
         {
             return await _dataContext.PropertyDetails.FirstOrDefaultAsync(c => c.UserId == userId && c.Id == propertyId);
         }
 
-        public Task<PropertyDetails> GetDetails(ApplicationUser user, Guid propertyId)
+        public async Task<ICollection<PropertyDetails>> GetListAsync(Guid userId)
         {
-            throw new NotImplementedException();
+            return await _dataContext.PropertyDetails
+                .Where(c => c.UserId == userId)
+                .Select(c => new PropertyDetails
+                {
+                    Id = c.Id,
+                    Reference = c.Reference,
+                    PropertyStreetAddress = c.PropertyStreetAddress
+                })
+                .ToListAsync();
         }
     }
 }

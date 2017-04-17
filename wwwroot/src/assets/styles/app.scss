@@ -12,3 +12,11 @@
 .form-control-feedback {
   display: block;
 }
+
+a {
+  &:not([href]) {
+    &:not([tabindex]) {
+      text-decoration: underline;
+    }
+  }
+}

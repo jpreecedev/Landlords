@@ -197,11 +197,8 @@ export default {
     }
   },
   created () {
-    this.$http.get('/api/propertydetails/viewdata').then(response => {
-      this.propertyTypes = response.data.defaultPropertyTypes
-      this.paymentTerms = response.data.defaultPaymentTerms
-      this.furnishings = response.data.defaultFurnishings
-      this.countries = response.data.defaultCountries
+    this.$http.get(`/api/propertydetails/${this.$route.query.propertyId ? this.$route.query.propertyId : 'viewdata'}`).then(response => {
+      Object.assign(this, utils.mapEntity(response.data, 'propertyDetails', !this.$route.query.propertyId))
     })
   },
   methods: {

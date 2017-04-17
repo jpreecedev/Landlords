@@ -9,6 +9,7 @@
     using Landlords.ViewModels;
     using Newtonsoft.Json;
     using System.Threading.Tasks;
+    using System.Collections.Generic;
 
     [Route("api/[controller]")]
     public class PropertyDetailsController : Controller
@@ -27,6 +28,13 @@
         }
 
         [HttpGet]
+        public async Task<PropertyDetailsViewModel[]> Get()
+        {
+            var properties = await _propertyDataProvider.GetListAsync(User.GetUserId());
+            return properties.Select(property => new PropertyDetailsViewModel(property)).ToArray();
+        }
+
+        [HttpGet("{propertyId}")]
         public async Task<PropertyDetailsViewModel> Get(Guid propertyId)
         {
             var propertyDetails = await _propertyDataProvider.GetDetailsAsync(User.GetUserId(), propertyId);

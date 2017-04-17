@@ -40,6 +40,42 @@ module.exports = {
     }
 
     return result
+  },
+
+  /**
+   * Maps the entity data so it can be displayed on the client
+   */
+  mapEntity: function (entityData, wrapperName, defaultsOnly) {
+    if (!entityData) {
+      return {}
+    }
+
+    var defaults = {}
+    var props = {}
+
+    for (var key in entityData) {
+      if (key.substring(0, 7) === 'default') {
+        defaults[key.substr(7, 1).toLowerCase() + key.substring(8)] = entityData[key]
+      } else {
+        props[key] = entityData[key]
+      }
+    }
+
+    // TODO: Tidy up, spread operator not working
+
+    var returnValue = {}
+    for (var d in defaults) {
+      returnValue[d] = defaults[d]
+    }
+
+    if (!defaultsOnly) {
+      returnValue[wrapperName] = {}
+      for (var p in props) {
+        returnValue[wrapperName][p] = props[p]
+      }
+    }
+
+    return returnValue
   }
 
 }
