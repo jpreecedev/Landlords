@@ -224,8 +224,7 @@ namespace Landlords.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_PropertyDetails_UserId",
                 table: "PropertyDetails",
-                column: "UserId",
-                unique: true);
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

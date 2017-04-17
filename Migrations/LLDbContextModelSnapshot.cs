@@ -215,8 +215,7 @@ namespace Landlords.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
                     b.ToTable("PropertyDetails");
                 });
@@ -261,8 +260,8 @@ namespace Landlords.Migrations
             modelBuilder.Entity("Model.PropertyDetails", b =>
                 {
                     b.HasOne("Model.Database.ApplicationUser", "User")
-                        .WithOne()
-                        .HasForeignKey("Model.PropertyDetails", "UserId")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .HasConstraintName("ForeignKey_User_PropertyDetails")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

@@ -8,7 +8,7 @@ using Landlords.Database;
 namespace Landlords.Migrations
 {
     [DbContext(typeof(LLDbContext))]
-    [Migration("20170417071005_Initial")]
+    [Migration("20170417125953_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -216,8 +216,7 @@ namespace Landlords.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
                     b.ToTable("PropertyDetails");
                 });
@@ -262,8 +261,8 @@ namespace Landlords.Migrations
             modelBuilder.Entity("Model.PropertyDetails", b =>
                 {
                     b.HasOne("Model.Database.ApplicationUser", "User")
-                        .WithOne()
-                        .HasForeignKey("Model.PropertyDetails", "UserId")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .HasConstraintName("ForeignKey_User_PropertyDetails")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

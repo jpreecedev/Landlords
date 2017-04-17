@@ -219,6 +219,9 @@ export default {
         window.scrollTo(0, 0)
       })
     }
+  },
+  watch: {
+    '$route' (to, from) {}
   }
 }
 </script>

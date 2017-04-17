@@ -17,7 +17,7 @@
         {
             builder.Entity<PropertyDetails>()
                 .HasOne(p => p.User)
-                .WithOne()
+                .WithMany()
                 .HasConstraintName("ForeignKey_User_PropertyDetails");
 
             base.OnModelCreating(builder);
