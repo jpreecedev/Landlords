@@ -45,6 +45,18 @@ const router = new Router({
   ]
 })
 
+router.beforeEach((to, from, next) => {
+  var state = Object.assign(router.app.$options.store.state.app, { isLoading: true })
+  router.app.$options.store.commit('APP_LOADING', state)
+
+  next()
+})
+
+router.afterEach((to, from, next) => {
+  const state = Object.assign(router.app.$options.store.state.app, { isLoading: false })
+  router.app.$options.store.commit('APP_LOADING', state)
+})
+
 function guardRoute (to, from, next) {
   const auth = router.app.$options.store.state.auth
 

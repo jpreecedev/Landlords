@@ -10,6 +10,10 @@ export const APPNAV_SEARCH = (state, searchData) => {
   state.appnav = searchData
 }
 
+export const APP_LOADING = (state, appData) => {
+  state.app = appData
+}
+
 /**
  * Clear each property, one by one, so reactivity still works.
  *

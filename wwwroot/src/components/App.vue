@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <app-nav></app-nav>
-      <div v-if="isLoading" class="sk-fading-circle">
+      <div v-if="app.isLoading" class="sk-fading-circle">
         <div class="sk-circle1 sk-circle"></div>
         <div class="sk-circle2 sk-circle"></div>
         <div class="sk-circle3 sk-circle"></div>
@@ -32,7 +32,7 @@ export default {
   components: { AppNav, AppFooter },
   data () {
     return {
-      isLoading: true
+      app: this.$store.state.app
     }
   }
 }
