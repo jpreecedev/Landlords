@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <main class="container">
     <h2>Property Details</h2>
     <hr>
     <div id="errorMessage" class="alert alert-danger" v-show="errors.any()">
@@ -159,7 +159,7 @@
         </div>
       </div>
     </form>
-  </div>
+  </main>
 </template>
 
 <script>

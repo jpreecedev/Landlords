@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <main class="container">
     <h2>Property List</h2>
     <hr>
     <grid :data="data" :columns="columns" v-on:rowclick="rowClicked" />
-  </div>
+  </main>
 </template>
 
 <script>

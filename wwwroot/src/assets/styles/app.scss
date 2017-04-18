@@ -20,3 +20,16 @@ a {
     }
   }
 }
+
+main, footer {
+  margin-top: 5rem;
+}
+
+.jumbotron {
+  margin-top: 1.5rem;
+  margin-bottom: 0;
+}
+
+.jumbotron ~ main {
+  margin-top: 3rem;
+}
