@@ -2,59 +2,49 @@
   <div class="card">
     <div class="card-block">
       <h3 class="card-title">Register</h3>
-      <div class="alert alert-danger" v-if="error">
-        {{ error }}
+      <div id="errorMessage" class="alert alert-danger" v-show="errors.any()">
+        <span v-show="!errors.has('GenericError')">Please fix validation errors highlighted in red and try and submit the form again</span>
+        <span v-show="errors.has('GenericError')">{{ errors.first('GenericError') }}</span>
       </div>
-      <form role="form" class="form-horizontal">
+      <form @submit.prevent="validateBeforeSubmit" role="form" novalidate>
         <fieldset>
-
-          <!-- Text input-->
-          <div class="form-group row">
+          <div class="form-group row" :class="{ 'has-danger': errors.has('firstName') }">
             <label class="col-3 col-form-label" for="firstName">First name</label>
             <div class="col-9">
-              <input v-model="newUser.firstName" class="form-control" id="firstName" name="firstName" type="text" placeholder="Your first name" required="">
+              <input v-model="newUser.firstName" class="form-control" id="firstName" name="firstName" type="text" placeholder="Your first name" v-validate="'required'" required>
+              <span v-show="errors.has('firstName')" v-bind:title="errors.first('firstName')" class="form-control-feedback">Enter a valid first name</span>
             </div>
           </div>
-
-          <!-- Text input-->
-          <div class="form-group row">
+          <div class="form-group row" :class="{ 'has-danger': errors.has('lastName') }">
             <label class="col-3 col-form-label" for="lastName">Last name</label>
             <div class="col-9">
-              <input v-model="newUser.lastName" id="lastName" name="lastName" type="text" placeholder="Your last name" class="form-control input-md" required="">
+              <input v-model="newUser.lastName" id="lastName" name="lastName" type="text" placeholder="Your last name" class="form-control" v-validate="'required'" required>
+              <span v-show="errors.has('lastName')" v-bind:title="errors.first('lastName')" class="form-control-feedback">Enter a valid last name</span>
             </div>
           </div>
-
-          <!-- Text input-->
-          <div class="form-group row">
+          <div class="form-group row" :class="{ 'has-danger': errors.has('emailAddress') }">
             <label class="col-3 col-form-label" for="email">E-mail</label>
             <div class="col-9">
-              <input v-model="newUser.emailAddress" id="email" name="email" type="text" placeholder="you@email.com" class="form-control input-md" required="">
+              <input v-model="newUser.emailAddress" id="emailAddress" name="emailAddress" type="text" placeholder="you@email.com" class="form-control" v-validate="'required|email'" required>
+              <span v-show="errors.has('emailAddress')" v-bind:title="errors.first('emailAddress')" class="form-control-feedback">Enter a valid email address</span>
             </div>
           </div>
-
-          <!-- Password input-->
-          <div class="form-group row">
+          <div class="form-group row" :class="{ 'has-danger': errors.has('password') }">
             <label class="col-3 col-form-label" for="password">Password</label>
             <div class="col-9">
-              <input v-model="newUser.password" id="password" name="password" type="password" placeholder="Enter your password" class="form-control input-md" required="">
-
+              <input v-model="newUser.password" id="password" name="password" type="password" placeholder="Enter your password" class="form-control" v-validate="'required|min:8'" required>
+              <span v-show="errors.has('password')" v-bind:title="errors.first('password')" class="form-control-feedback">Enter a valid password</span>
             </div>
           </div>
-
-          <!-- Password input-->
-          <div class="form-group row">
+          <div class="form-group row" :class="{ 'has-danger': errors.has('repeatPassword') }">
             <label class="col-3 col-form-label" for="repeatPassword">Repeat password </label>
             <div class="col-9">
-              <input v-model="newUser.repeatPassword" id="repeatPassword" name="repeatPassword" type="password" placeholder="Repeat your password" class="form-control input-md" required="">
+              <input id="repeatPassword" name="repeatPassword" type="password" placeholder="Repeat your password" v-validate="'required|confirmed:password'" data-vv-as="password" class="form-control">
+              <span v-show="errors.has('repeatPassword')" v-bind:title="errors.first('repeatPassword')" class="form-control-feedback">Passwords do not match</span>
             </div>
-          </div>
-
-          <!-- Button -->              
-          <div class="text-center">
-            <button @click="submit()" v-bind:disabled="registering" id="register" name="register" class="btn btn-primary">Register</button>
-            <button type="reset" class="btn btn-secondary">Reset</button>
-          </div>
-
+          </div>     
+          <button type="submit" v-bind:disabled="registering" id="register" name="register" class="btn btn-primary">Register</button>
+          <button type="reset" class="btn btn-secondary">Reset</button>
         </fieldset>
       </form>
     </div>
@@ -63,6 +53,7 @@
 
 <script>
   import utils from '@/utils'
+  import { ErrorBag } from 'vee-validate'
 
   export default {
     name: 'registerform',
@@ -72,28 +63,37 @@
           firstName: '',
           lastName: '',
           emailAddress: '',
-          password: '',
-          repeatPassword: ''
+          password: ''
         },
-        registering: false,
-        error: ''
+        registering: false
       }
     },
     methods: {
-      submit () {
-        this.registering = true
+      validateBeforeSubmit () {
+        this.$validator.validateAll().then(() => {
+          this.registering = true
+          var bag = new ErrorBag()
 
-        const registrationDetails = {
-          firstName: this.newUser.firstName,
-          lastName: this.newUser.lastName,
-          emailAddress: this.newUser.emailAddress,
-          password: this.newUser.password
-        }
+          const registrationDetails = {
+            firstName: this.newUser.firstName,
+            lastName: this.newUser.lastName,
+            emailAddress: this.newUser.emailAddress,
+            password: this.newUser.password
+          }
 
-        this.$http.post('/api/register', registrationDetails).then((response) => {
-          this.registering = false
-          debugger
-          this.error = utils.getError(response)
+          this.$http.post('/api/register', registrationDetails).then((response) => {
+            this.registering = false
+            if (!response.ok) {
+              var validationResult = utils.getFormValidationErrors(response)
+              validationResult.errors.forEach(validationError => {
+                bag.add(validationError.key, validationError.messages[0], 'required')
+              })
+              if (validationResult.status) {
+                bag.add('GenericError', validationResult.status, 'generic')
+              }
+            }
+          })
+          this.$validator.errorBag = bag
         })
       }
     }
