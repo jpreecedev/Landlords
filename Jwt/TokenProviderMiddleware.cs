@@ -10,6 +10,7 @@
     using System.Threading.Tasks;
     using Landlords.Database;
     using System.Collections.Generic;
+    using Core;
 
     public class TokenProviderMiddleware
     {
@@ -51,8 +52,10 @@
             var jwtIdentity = await GetIdentity(username, password);
             if (jwtIdentity == null)
             {
+
+
                 context.Response.StatusCode = 400;
-                await context.Response.WriteAsync("Invalid username or password.");
+                await context.Response.WriteAsync("Invalid username or password".AsGenericError());
                 return;
             }
 
@@ -99,7 +102,7 @@
             var user = _dataContext.Users.FirstOrDefault(u => string.Equals(u.Email.Replace(" ", "").Trim(), username, StringComparison.CurrentCultureIgnoreCase));
             if (user != null)
             {
-                if (!await _userManager.CheckPasswordAsync(user, password))
+                if (await _userManager.CheckPasswordAsync(user, password))
                 {
                     var userRoles = await _userManager.GetRolesAsync(user);
                     var claims = new List<Claim>()

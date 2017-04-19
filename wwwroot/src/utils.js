@@ -25,6 +25,11 @@ module.exports = {
 
     if (response.data && response.data.errors) {
       response.data.errors.forEach(error => {
+        if (error.key === 'GenericError') {
+          result.status = error.value[0]
+          return
+        }
+
         var key = error.key.substring(0, 1).toLowerCase() + error.key.substring(1)
         var messages = []
 

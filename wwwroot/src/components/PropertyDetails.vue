@@ -217,15 +217,16 @@ export default {
     validateBeforeSubmit () {
       this.$validator.validateAll().then(() => {
         var bag = new ErrorBag()
-        this.$http.post('/api/propertyDetails', { ...this.propertyDetails }).catch(response => {
-          var validationResult = utils.getFormValidationErrors(response)
-          validationResult.errors.forEach(validationError => {
-            bag.add(validationError.key, validationError.messages[0], 'required')
+        this.$http.post('/api/propertyDetails', { ...this.propertyDetails })
+          .catch(response => {
+            var validationResult = utils.getFormValidationErrors(response)
+            validationResult.errors.forEach(validationError => {
+              bag.add(validationError.key, validationError.messages[0], 'required')
+            })
+            if (validationResult.status) {
+              bag.add('GenericError', validationResult.status, 'generic')
+            }
           })
-          if (validationResult.status) {
-            bag.add('GenericError', validationResult.status, 'generic')
-          }
-        })
         this.$validator.errorBag = bag
       }).catch(() => {
         window.scrollTo(0, 0)

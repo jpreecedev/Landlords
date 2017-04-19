@@ -10,9 +10,21 @@
     using Repositories;
     using System.Linq;
     using Model.Database;
+    using Newtonsoft.Json;
 
     public static class Extensions
     {
+        public static string AsGenericError(this string message)
+        {
+            return JsonConvert.SerializeObject(new
+            {
+                errors = new[]
+                {
+                    new {key="GenericError", value=new [] { message }}
+                }
+            });
+        }
+
         public static Guid GetUserId(this ClaimsPrincipal claimsPrincipal)
         {
             if (claimsPrincipal == null) throw new ArgumentNullException(nameof(claimsPrincipal));

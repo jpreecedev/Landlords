@@ -18,7 +18,7 @@
     name: 'dashboard',
     methods: {
       callServer () {
-        this.$http.get('/api/PropertyOverview').then((response) => {
+        this.$http.get('/api/PropertyDetails').then((response) => {
           debugger
         })
       }
