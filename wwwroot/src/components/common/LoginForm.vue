@@ -1,24 +1,26 @@
 <template>
-  <div>
-    <h3>Sign In</h3>
-    <div class="alert alert-danger" v-if="error">
-      {{ error }}
-    </div>
-    <form role="form">
-      <div class="form-group row">
-        <label for="emailAddressField" class="col-3">Email Address</label>
-        <div class="col-9">
-          <input type="email" class="form-control" id="emailAddressField" placeholder="Enter your email" v-model="credentials.username">
-        </div>
+  <div class="card">
+    <div class="card-block">
+      <h3 class="card-title">Sign In</h3>
+      <div class="alert alert-danger" v-if="error">
+        {{ error }}
       </div>
-      <div class="form-group row">
-        <label for="passwordField" class="col-3">Password</label>
-        <div class="col-9">
-          <input type="password" class="form-control" id="passwordField" placeholder="Password" v-model="credentials.password">
+      <form role="form">
+        <div class="form-group row">
+          <label for="emailAddressField" class="col-3">Email Address</label>
+          <div class="col-9">
+            <input type="email" class="form-control" id="emailAddressField" placeholder="Enter your email" v-model="credentials.username">
+          </div>
         </div>
+        <div class="form-group row">
+          <label for="passwordField" class="col-3">Password</label>
+          <div class="col-9">
+            <input type="password" class="form-control" id="passwordField" placeholder="Password" v-model="credentials.password">
+          </div>
+        </div>
+        <button @click="submit()" v-bind:disabled="loggingIn" class="btn btn-primary">Log in</button>
+      </form>
       </div>
-      <button @click="submit()" v-bind:disabled="loggingIn" class="btn btn-primary">Log in</button>
-    </form>
     </div>
   </div>
 </template>
