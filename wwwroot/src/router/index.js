@@ -7,6 +7,13 @@ const router = new Router({
   mode: 'history',
   routes: [
     {
+      path: '/',
+      name: 'landingpage',
+      component: function (resolve) {
+        require(['@/components/LandingPage.vue'], resolve)
+      }
+    },
+    {
       path: '/registration',
       name: 'registration',
       component: function (resolve) {
@@ -36,11 +43,6 @@ const router = new Router({
         require(['@/components/PropertyList.vue'], resolve)
       },
       beforeEnter: guardRoute
-    },
-    {
-      path: '/',
-      name: 'default',
-      redirect: '/dashboard'
     }
   ]
 })
