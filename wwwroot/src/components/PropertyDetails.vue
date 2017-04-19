@@ -1,7 +1,9 @@
-<template>
+=<template>
   <main class="container">
-    <h2>Property Details</h2>
-    <hr>
+    <div> 
+      <h1>Property Details</h1>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
+    </div>
     <div id="errorMessage" class="alert alert-danger" v-show="errors.any()">
       <span v-show="!errors.has('GenericError')">Please fix validation errors highlighted in red and try and submit the form again</span>
       <span v-show="errors.has('GenericError')">{{ errors.first('GenericError') }}</span>
@@ -9,84 +11,94 @@
     <form @submit.prevent="validateBeforeSubmit" role="form" novalidate>
       <div class="row">
         <div class="col">
-          <h3>Overview</h3>
-          <div class="form-group row">
-            <label class="col-12 col-form-label" for="reference">Property Reference</label>
-            <div class="col-12">
-              <input v-model="propertyDetails.reference" class="form-control" id="reference" name="reference" type="text" required>
+
+          <div class="card">
+            <div class="card-block">
+              <h3 class="card-title">Overview</h3>
+              <div class="form-group row">
+                <label class="col-12 col-form-label" for="reference">Property Reference</label>
+                <div class="col-12">
+                  <input v-model="propertyDetails.reference" class="form-control" id="reference" name="reference" type="text" required>
+                </div>
+              </div>
+              <div class="form-group row" :class="{ 'has-danger': errors.has('propertyType') }">
+                <label class="col-12 col-form-label" for="propertyType">Property Type</label>
+                <div class="col-12">
+                  <select v-model="propertyDetails.propertyType" v-validate="'required'" class="form-control" id="propertyType" name="propertyType"  required>
+                    <option disabled value="">Select a property type</option>
+                    <option v-for="propertyType in propertyTypes" v-bind:value="propertyType">{{ propertyType }}</option>
+                  </select>
+                  <span v-show="errors.has('propertyType')" v-bind:title="errors.first('propertyType')" class="form-control-feedback">Select a valid property type</span>
+                </div>
+              </div>
+              <div class="form-group row" :class="{ 'has-danger': errors.has('furnishing') }">
+                <label class="col-12 col-form-label" for="furnishing">Furnishing</label>
+                <div class="col-12">
+                  <select v-model="propertyDetails.furnishing" v-validate="'required'" class="form-control" id="furnishing" name="furnishing" required>
+                    <option disabled value="">Select a furnishing type</option>
+                    <option v-for="furnishing in furnishings" v-bind:value="furnishing">{{ furnishing }}</option>
+                  </select>
+                  <span v-show="errors.has('furnishing')" v-bind:title="errors.first('furnishing')" class="form-control-feedback">Select a valid furnishing</span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-12 col-form-label" for="constructionDate">Construction Date</label>          
+                <div class="col-12">
+                  <datepicker v-model="propertyDetails.constructionDate" id="constructionDate" name="constructionDate" placeholder="Select date..." input-class="form-control"></datepicker>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="form-group row" :class="{ 'has-danger': errors.has('propertyType') }">
-            <label class="col-12 col-form-label" for="propertyType">Property Type</label>
-            <div class="col-12">
-              <select v-model="propertyDetails.propertyType" v-validate="'required'" class="form-control" id="propertyType" name="propertyType"  required>
-                <option disabled value="">Select a property type</option>
-                <option v-for="propertyType in propertyTypes" v-bind:value="propertyType">{{ propertyType }}</option>
-              </select>
-              <span v-show="errors.has('propertyType')" v-bind:title="errors.first('propertyType')" class="form-control-feedback">Select a valid property type</span>
+
+          <div class="card mt-3">
+            <div class="card-block">
+              <h3 class="card-title">Address</h3>
+              <div class="form-group row" :class="{ 'has-danger': errors.has('propertyStreetAddress') }">
+                <label class="col-12 col-form-label" for="propertyStreetAddress">Street address</label>
+                <div class="col-12">
+                  <textarea v-model="propertyDetails.propertyStreetAddress" v-validate="'required'" class="form-control" id="propertyStreetAddress" name="propertyStreetAddress" required>
+                  </textarea>
+                  <span v-show="errors.has('propertyStreetAddress')" v-bind:title="errors.first('propertyStreetAddress')" class="form-control-feedback">Enter a valid street address</span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-12 col-form-label" for="propertyTownOrCity">Town or City</label>
+                <div class="col-12">
+                  <input v-model="propertyDetails.propertyTownOrCity" class="form-control" id="propertyTownOrCity" name="propertyTownOrCity" type="text" required>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-12 col-form-label" for="propertyCountyOrRegion">County or Region</label>
+                <div class="col-12">
+                  <input v-model="propertyDetails.propertyCountyOrRegion" class="form-control" id="propertyCountyOrRegion" name="propertyCountyOrRegion" type="text" required>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-12 col-form-label" for="propertyPostcode">Postcode</label>          
+                <div class="col-12">
+                  <input v-model="propertyDetails.propertyPostcode" class="form-control" id="propertyPostcode" name="propertyPostcode" type="text" required>
+                </div>
+              </div>
+              <div class="form-group row" :class="{ 'has-danger': errors.has('propertyCountry') }">
+                <label class="col-12 col-form-label" for="propertyCountry">Country</label>          
+                <div class="col-12">
+                  <select v-model="propertyDetails.propertyCountry" v-validate="'required'" class="form-control" id="propertyCountry" name="propertyCountry" required>
+                    <option disabled value="">Select a Country</option>
+                    <option v-for="propertyCountry in countries" v-bind:value="propertyCountry">{{ propertyCountry }}</option>
+                  </select>
+                  <span v-show="errors.has('propertyCountry')" v-bind:title="errors.first('propertyCountry')" class="form-control-feedback">Select a valid country</span>
+                </div>
+              </div>
+              <div class="form-group row mt-4">
+                <div class="form-check col">
+                  <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" v-model="propertyDetails.isAvailableForLetting" id="isAvailableForLetting" name="isAvailableForLetting">
+                      This property is available for letting
+                  </label>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="form-group row" :class="{ 'has-danger': errors.has('furnishing') }">
-            <label class="col-12 col-form-label" for="furnishing">Furnishing</label>
-            <div class="col-12">
-              <select v-model="propertyDetails.furnishing" v-validate="'required'" class="form-control" id="furnishing" name="furnishing" required>
-                <option disabled value="">Select a furnishing type</option>
-                <option v-for="furnishing in furnishings" v-bind:value="furnishing">{{ furnishing }}</option>
-              </select>
-              <span v-show="errors.has('furnishing')" v-bind:title="errors.first('furnishing')" class="form-control-feedback">Select a valid furnishing</span>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-12 col-form-label" for="constructionDate">Construction Date</label>          
-            <div class="col-12">
-              <datepicker v-model="propertyDetails.constructionDate" id="constructionDate" name="constructionDate" placeholder="Select date..." input-class="form-control"></datepicker>
-            </div>
-          </div>
-          <h3 class="mt-5">Address</h3>
-          <div class="form-group row" :class="{ 'has-danger': errors.has('propertyStreetAddress') }">
-            <label class="col-12 col-form-label" for="propertyStreetAddress">Street address</label>
-            <div class="col-12">
-              <textarea v-model="propertyDetails.propertyStreetAddress" v-validate="'required'" class="form-control" id="propertyStreetAddress" name="propertyStreetAddress" required>
-              </textarea>
-              <span v-show="errors.has('propertyStreetAddress')" v-bind:title="errors.first('propertyStreetAddress')" class="form-control-feedback">Enter a valid street address</span>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-12 col-form-label" for="propertyTownOrCity">Town or City</label>
-            <div class="col-12">
-              <input v-model="propertyDetails.propertyTownOrCity" class="form-control" id="propertyTownOrCity" name="propertyTownOrCity" type="text" required>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-12 col-form-label" for="propertyCountyOrRegion">County or Region</label>
-            <div class="col-12">
-              <input v-model="propertyDetails.propertyCountyOrRegion" class="form-control" id="propertyCountyOrRegion" name="propertyCountyOrRegion" type="text" required>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-12 col-form-label" for="propertyPostcode">Postcode</label>          
-            <div class="col-12">
-              <input v-model="propertyDetails.propertyPostcode" class="form-control" id="propertyPostcode" name="propertyPostcode" type="text" required>
-            </div>
-          </div>
-          <div class="form-group row" :class="{ 'has-danger': errors.has('propertyCountry') }">
-            <label class="col-12 col-form-label" for="propertyCountry">Country</label>          
-            <div class="col-12">
-              <select v-model="propertyDetails.propertyCountry" v-validate="'required'" class="form-control" id="propertyCountry" name="propertyCountry" required>
-                <option disabled value="">Select a Country</option>
-                <option v-for="propertyCountry in countries" v-bind:value="propertyCountry">{{ propertyCountry }}</option>
-              </select>
-              <span v-show="errors.has('propertyCountry')" v-bind:title="errors.first('propertyCountry')" class="form-control-feedback">Select a valid country</span>
-            </div>
-          </div>
-          <div class="form-group row mt-4">
-            <div class="form-check col">
-              <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" v-model="propertyDetails.isAvailableForLetting" id="isAvailableForLetting" name="isAvailableForLetting">
-                  This property is available for letting
-              </label>
-            </div>
-          </div>
+          </div>          
         </div>
         <div class="col">
           <div class="card">
