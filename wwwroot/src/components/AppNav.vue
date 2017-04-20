@@ -20,6 +20,12 @@
           <router-link v-if="auth.isLoggedIn" tag="li" to="/manager/property-list" active-class="active" class="nav-item">
             <a class="nav-link">Property List</a>
           </router-link>
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="calculatorsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Calculators</a>
+              <div class="dropdown-menu" aria-labelledby="calculatorsDropdown">
+                <router-link class="dropdown-item" to="/calculators/rental-yield">Rental Yield</router-link>
+              </div>
+          </li>
           <li v-if="auth.isLoggedIn" class="nav-item">
             <a class="pointer nav-link" @click="logout()">Log Out</a>
           </li>

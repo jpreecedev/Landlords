@@ -29,6 +29,7 @@ const router = new Router({
   },
   {
     path: '/manager',
+    beforeEnter: guardRoute,
     component: function (resolve) {
       require(['@/components/Manager.vue'], resolve)
     },
@@ -37,16 +38,34 @@ const router = new Router({
       name: 'propertyDetails',
       component: function (resolve) {
         require(['@/components/PropertyDetails.vue'], resolve)
-      },
-      beforeEnter: guardRoute
+      }
     },
     {
       path: 'property-list',
       name: 'propertyList',
       component: function (resolve) {
         require(['@/components/PropertyList.vue'], resolve)
-      },
-      beforeEnter: guardRoute
+      }
+    }]
+  },
+  {
+    path: '/calculators',
+    component: function (resolve) {
+      require(['@/components/calculators/Calculators.vue'], resolve)
+    },
+    children: [{
+      path: 'rental-yield',
+      name: 'rentalYield',
+      component: function (resolve) {
+        require(['@/components/calculators/RentalYield.vue'], resolve)
+      }
+    },
+    {
+      path: 'property-list',
+      name: 'propertyList',
+      component: function (resolve) {
+        require(['@/components/PropertyList.vue'], resolve)
+      }
     }]
   }]
 })
