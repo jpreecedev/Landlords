@@ -17,7 +17,7 @@
   export default {
     name: 'dashboard',
     methods: {
-      callServer () {
+      callServer: function () {
         this.$http.get('/api/PropertyDetails').then((response) => {
           debugger
         })

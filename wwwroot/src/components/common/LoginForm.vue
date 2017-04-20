@@ -23,7 +23,7 @@
             </div>
           </div>
           <button type="submit" v-bind:disabled="loggingIn" class="btn btn-primary">Log in</button>
-          <button class="btn btn-secondary" type="reset">Reset</button>
+          <button class="btn btn-secondary" @click="reset()" type="reset">Reset</button>
         </fieldset>
       </form>
     </div>
@@ -47,7 +47,7 @@ export default {
     }
   },
   methods: {
-    validateBeforeSubmit () {
+    validateBeforeSubmit: function () {
       this.$validator.validateAll().then(() => {
         this.loggingIn = true
         var bag = new ErrorBag()
@@ -66,6 +66,9 @@ export default {
         })
         this.$validator.errorBag = bag
       })
+    },
+    reset: function () {
+      this.errors.clear()
     }
   }
 }

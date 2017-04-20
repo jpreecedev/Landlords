@@ -214,7 +214,7 @@ export default {
     })
   },
   methods: {
-    validateBeforeSubmit () {
+    validateBeforeSubmit: function () {
       this.$validator.validateAll().then(() => {
         var bag = new ErrorBag()
         this.$http.post('/api/propertyDetails', { ...this.propertyDetails })

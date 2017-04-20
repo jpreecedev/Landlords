@@ -37,7 +37,7 @@ export default {
     }
   },
   methods: {
-    logout () {
+    logout: function () {
       this.$auth.logout(false)
     }
   }
