@@ -1,7 +1,9 @@
 <template>
   <main class="container">
-    <h2>Property List</h2>
-    <hr>
+    <div> 
+      <h1>Property List</h1>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
+    </div>
     <grid :data="data" :columns="columns" v-on:rowclick="rowClicked" />
   </main>
 </template>

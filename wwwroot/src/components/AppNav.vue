@@ -14,10 +14,10 @@
           <router-link v-if="!auth.isLoggedIn" tag="li" to="/registration" active-class="active" class="nav-item">
             <a class="nav-link">Registration</a>
           </router-link>
-          <router-link v-if="auth.isLoggedIn" tag="li" to="/propertyDetails" active-class="active" class="nav-item">
+          <router-link v-if="auth.isLoggedIn" tag="li" to="/manager/property-details" active-class="active" class="nav-item">
             <a class="nav-link">Property Details</a>
           </router-link>
-          <router-link v-if="auth.isLoggedIn" tag="li" to="/propertyList" active-class="active" class="nav-item">
+          <router-link v-if="auth.isLoggedIn" tag="li" to="/manager/property-list" active-class="active" class="nav-item">
             <a class="nav-link">Property List</a>
           </router-link>
           <li v-if="auth.isLoggedIn" class="nav-item">
