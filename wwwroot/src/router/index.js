@@ -29,7 +29,7 @@ const router = new Router({
       beforeEnter: guardRoute
     },
     {
-      path: '/propertyDetails',
+      path: '/propertyDetails/:propertyId?',
       name: 'propertyDetails',
       component: function (resolve) {
         require(['@/components/PropertyDetails.vue'], resolve)

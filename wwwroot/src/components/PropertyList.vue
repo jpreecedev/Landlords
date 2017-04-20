@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     rowClicked: function (entry) {
-      this.$router.push({ path: 'propertyDetails', query: { propertyId: entry.id } })
+      this.$router.push({ name: 'propertyDetails', params: { propertyId: entry.id } })
     }
   }
 }

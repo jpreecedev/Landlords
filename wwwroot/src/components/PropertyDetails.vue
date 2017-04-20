@@ -209,8 +209,8 @@ export default {
     }
   },
   created () {
-    this.$http.get(`/api/propertydetails/${this.$route.query.propertyId ? this.$route.query.propertyId : 'viewdata'}`).then(response => {
-      Object.assign(this, utils.mapEntity(response.data, 'propertyDetails', !this.$route.query.propertyId))
+    this.$http.get(`/api/propertydetails/${this.$route.params.propertyId ? this.$route.params.propertyId : 'viewdata'}`).then(response => {
+      Object.assign(this, utils.mapEntity(response.data, 'propertyDetails', !this.$route.params.propertyId))
     })
   },
   methods: {
