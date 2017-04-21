@@ -67,6 +67,13 @@ const router = new Router({
         component: function (resolve) {
           require(['@/components/calculators/MonthlyPayment.vue'], resolve)
         }
+      },
+      {
+        path: 'how-much-can-i-borrow',
+        name: 'howMuch',
+        component: function (resolve) {
+          require(['@/components/calculators/HowMuch.vue'], resolve)
+        }
       }]
   }]
 })

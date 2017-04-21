@@ -25,6 +25,7 @@
               <div class="dropdown-menu" aria-labelledby="calculatorsDropdown">
                 <router-link class="dropdown-item" to="/calculators/rental-yield">Rental Yield</router-link>
                 <router-link class="dropdown-item" to="/calculators/monthly-payment">Monthly Payment</router-link>
+                <router-link class="dropdown-item" to="/calculators/how-much-can-i-borrow">How much can I borrow?</router-link>
               </div>
           </li>
           <li v-if="auth.isLoggedIn" class="nav-item">
