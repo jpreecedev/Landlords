@@ -24,6 +24,7 @@
               <a class="nav-link dropdown-toggle" href="#" id="calculatorsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Calculators</a>
               <div class="dropdown-menu" aria-labelledby="calculatorsDropdown">
                 <router-link class="dropdown-item" to="/calculators/rental-yield">Rental Yield</router-link>
+                <router-link class="dropdown-item" to="/calculators/monthly-payment">Monthly Payment</router-link>
               </div>
           </li>
           <li v-if="auth.isLoggedIn" class="nav-item">

@@ -53,20 +53,21 @@ const router = new Router({
     component: function (resolve) {
       require(['@/components/calculators/Calculators.vue'], resolve)
     },
-    children: [{
-      path: 'rental-yield',
-      name: 'rentalYield',
-      component: function (resolve) {
-        require(['@/components/calculators/RentalYield.vue'], resolve)
-      }
-    },
-    {
-      path: 'property-list',
-      name: 'propertyList',
-      component: function (resolve) {
-        require(['@/components/PropertyList.vue'], resolve)
-      }
-    }]
+    children: [
+      {
+        path: 'rental-yield',
+        name: 'rentalYield',
+        component: function (resolve) {
+          require(['@/components/calculators/RentalYield.vue'], resolve)
+        }
+      },
+      {
+        path: 'monthly-payment',
+        name: 'monthlyPayment',
+        component: function (resolve) {
+          require(['@/components/calculators/MonthlyPayment.vue'], resolve)
+        }
+      }]
   }]
 })
 
