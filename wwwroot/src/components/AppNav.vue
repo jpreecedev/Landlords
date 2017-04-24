@@ -26,6 +26,7 @@
                 <router-link class="dropdown-item" to="/calculators/rental-yield">Rental Yield</router-link>
                 <router-link class="dropdown-item" to="/calculators/monthly-payment">Monthly Payment</router-link>
                 <router-link class="dropdown-item" to="/calculators/how-much-can-i-borrow">How much can I borrow?</router-link>
+                <router-link class="dropdown-item" to="/calculators/is-this-property-a-good-investment">Is this property a good investment?</router-link>
               </div>
           </li>
           <li v-if="auth.isLoggedIn" class="nav-item">

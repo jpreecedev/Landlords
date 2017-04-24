@@ -74,6 +74,13 @@ const router = new Router({
         component: function (resolve) {
           require(['@/components/calculators/HowMuch.vue'], resolve)
         }
+      },
+      {
+        path: 'is-this-property-a-good-investment',
+        name: 'goodInvestment',
+        component: function (resolve) {
+          require(['@/components/calculators/GoodInvestment.vue'], resolve)
+        }
       }]
   }]
 })

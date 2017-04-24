@@ -81,6 +81,18 @@ module.exports = {
     }
 
     return returnValue
+  },
+
+  calculateMonthlyPayment: function (annualInterestRate, mortgageAmount, mortgageLength) {
+    if (!annualInterestRate || !mortgageAmount || !mortgageLength) {
+      return false
+    }
+
+    var p = mortgageAmount
+    var n = mortgageLength * 12
+    var i = annualInterestRate / 100 / 12
+
+    return parseFloat(p * i * (Math.pow(1 + i, n)) / (Math.pow(1 + i, n) - 1)).toFixed(2)
   }
 
 }

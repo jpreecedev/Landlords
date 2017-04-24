@@ -6,38 +6,43 @@
     </div>
 
     <div class="row">
-      <div class="card col-6">
-        <form role="form" class="card-block" novalidate>
-          <fieldset>
-            <div class="row">
-              <div class="form-group col">
-                <label for="grossIncome">Your annual gross income (how much you earn, including everybody who will be included on the mortgage, BEFORE tax)</label>
-                <div class="input-group currency">
-                  <span class="input-group-addon">£</span>
-                  <input type="number" class="form-control" id="grossIncome" name="grossIncome" v-model="grossIncome" placeholder="Gross income">
-                  <span class="input-group-addon">.00</span>
+      <div class="col-6">
+        <div class="card">
+          <form role="form" class="card-block" novalidate>
+            <fieldset>
+              <div class="row">
+                <div class="form-group col">
+                  <label for="grossIncome">
+                  Your annual gross income<br/>
+                  <small class="text-muted">How much you earn, including everybody who will be included on the mortgage, BEFORE tax</small>                
+                  </label>
+                  <div class="input-group">
+                    <span class="input-group-addon">£</span>
+                    <input type="number" class="form-control" id="grossIncome" name="grossIncome" v-model="grossIncome" placeholder="Gross income">
+                    <span class="input-group-addon">.00</span>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="form-group col">
-                <label for="multiplier">Multiplier (use the default if unsure)</label>
-                  <div>
-                    <select v-model="multiplier" class="form-control" id="multiplier" name="multiplier" required>
-                      <option disabled value="">Select a multiplier</option>
-                      <option v-for="multiplier in multipliers" v-bind:value="multiplier">{{ multiplier }}</option>
-                    </select>
-                  </div>
+              <div class="row">
+                <div class="form-group col">
+                  <label for="multiplier">Multiplier (use the default if unsure)</label>
+                    <div>
+                      <select v-model="multiplier" class="form-control" id="multiplier" name="multiplier" required>
+                        <option disabled value="">Select a multiplier</option>
+                        <option v-for="multiplier in multipliers" v-bind:value="multiplier">{{ multiplier }}</option>
+                      </select>
+                    </div>
+                </div>
               </div>
-            </div>
-            <div class="row mt-4" v-if="calculateAmountCanBorrow">
-              <div class="col">
-                <p><strong>You could potentially borrow up to:</strong> £{{ calculateAmountCanBorrow }}.
-                </p>
+              <div class="row mt-4" v-if="calculateAmountCanBorrow">
+                <div class="col">
+                  <p><strong>You could potentially borrow up to:</strong> £{{ calculateAmountCanBorrow }}.
+                  </p>
+                </div>
               </div>
-            </div>
-          </fieldset>
-        </form>
+            </fieldset>
+          </form>
+        </div>
       </div>
     </div>
   </main>
