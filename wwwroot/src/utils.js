@@ -1,3 +1,8 @@
+/* eslint no-extend-native: off */
+Number.prototype.formatWithSeparator = function () {
+  return this.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+}
+
 module.exports = {
 
    /**
@@ -93,6 +98,49 @@ module.exports = {
     var i = annualInterestRate / 100 / 12
 
     return parseFloat(p * i * (Math.pow(1 + i, n)) / (Math.pow(1 + i, n) - 1)).toFixed(2)
+  },
+
+  getPercentageScore (annualYield) {
+    if (annualYield >= 10) {
+      return 100
+    }
+    if (annualYield >= 7 && annualYield < 10) {
+      return 80
+    }
+    if (annualYield >= 5 && annualYield < 7) {
+      return 60
+    }
+    if (annualYield >= 2 && annualYield < 5) {
+      return 30
+    }
+    return 0
+  },
+
+  getScoreDisplay (score) {
+    if (score >= 80) {
+      return 'Excellent'
+    }
+    if (score >= 50 && score < 80) {
+      return 'Good'
+    }
+    if (score >= 30 && score < 50) {
+      return 'Below average'
+    }
+    return 'Poor'
+  },
+
+  calculateScore: function (investmentData) {
+    var percentageAnnualProfit = (100 / investmentData.income) * investmentData.outgoings
+    var annualYieldScore = this.getPercentageScore(investmentData.annualYield)
+    var growthScore = this.getPercentageScore(investmentData.growth)
+    var actualScore = (percentageAnnualProfit + annualYieldScore + growthScore) / 3
+    var scoreDisplay = this.getScoreDisplay(actualScore)
+
+    return {
+      profit: investmentData.income - investmentData.outgoings,
+      actualScore,
+      scoreDisplay
+    }
   }
 
 }

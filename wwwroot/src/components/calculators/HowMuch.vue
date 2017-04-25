@@ -65,7 +65,7 @@ export default {
         return false
       }
 
-      return Number.parseFloat(this.grossIncome * this.multiplier).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      return Number.parseFloat(this.grossIncome * this.multiplier).formatWithSeparator()
     }
   }
 }

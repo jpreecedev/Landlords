@@ -189,9 +189,10 @@
                     </div>
                   </div>
                 </div>
-                <div class="row mt-3" v-if="calculateResult">
+                <div class="row mt-3" v-if="calculateScore">
                   <div class="col">
-                    <p><strong>You could potentially borrow up to:</strong> £{{ calculateResult }}.</p>
+                    <p>The score based on the information provided is: <strong>{{ calculateScore.scoreDisplay }}</strong>.</p>
+                    <p>The property may make <strong>&pound;{{ calculateScore.profit.formatWithSeparator() }}</strong> profit per year, and in <strong>{{ this.mortgageLength }}</strong> years will be worth <strong>&pound;{{ this.getPropertyFutureValue().formatWithSeparator() }}</strong></p>
                   </div>
                 </div>
               </div>
@@ -243,6 +244,9 @@
         var future = this.pricePaid * Math.pow((1 + this.anticipatedAnnualIncrease / 100), this.mortgageLength)
         return Math.round(future * 100) / 100
       },
+      getInsuranceCosts: function () {
+        return this.buildingsInsurance + this.contentsInsurance
+      },
       getTaxBand: function () {
         switch (this.taxBand) {
           case 'BasicRate':
@@ -257,14 +261,22 @@
       }
     },
     computed: {
-      calculateResult: function () {
-        // var monthlyIncome = this.getMonthlyIncome()
-        // var agencyFees = this.getAgencyFees()
-        // var maintenanceFees = this.getMaintenanceFees()
-        // var insurance = this.buildingsInsurance + this.contentsInsurance
-        // var taxBand = this.getTaxBand()
-
-        // return Number.parseFloat(this.grossIncome * this.multiplier).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      annualYield: function () {
+        return Number.parseFloat(Number.parseFloat(this.getMonthlyIncome() / this.pricePaid * 100).toFixed(2))
+      },
+      totalIncome: function () {
+        return this.getMonthlyIncome() * this.getTaxBand()
+      },
+      totalOutgoings: function () {
+        return this.getAgencyFees() + this.getMaintenanceFees() + this.getInsuranceCosts() + this.otherCosts + this.contingency
+      },
+      calculateScore: function () {
+        return utils.calculateScore({
+          annualYield: this.annualYield,
+          growth: this.anticipatedAnnualIncrease,
+          income: this.totalIncome,
+          outgoings: this.totalOutgoings
+        })
       }
     }
   }
