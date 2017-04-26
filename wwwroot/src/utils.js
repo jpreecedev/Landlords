@@ -1,6 +1,25 @@
 /* eslint no-extend-native: off */
 Number.prototype.formatWithSeparator = function () {
-  return this.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  return this.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+}
+
+String.prototype.toFloat = function () {
+  if (!this) {
+    return 0
+  }
+
+  try {
+    return parseFloat(this)
+  } catch (x) {
+    return 0
+  }
+}
+
+Number.prototype.toFloat = function () {
+  if (!this) {
+    return 0
+  }
+  return this.toString().toFloat()
 }
 
 module.exports = {
@@ -130,10 +149,12 @@ module.exports = {
   },
 
   calculateScore: function (investmentData) {
-    var percentageAnnualProfit = (100 / investmentData.income) * investmentData.outgoings
     var annualYieldScore = this.getPercentageScore(investmentData.annualYield)
     var growthScore = this.getPercentageScore(investmentData.growth)
+
+    var percentageAnnualProfit = (100 / investmentData.outgoings) * investmentData.income
     var actualScore = (percentageAnnualProfit + annualYieldScore + growthScore) / 3
+
     var scoreDisplay = this.getScoreDisplay(actualScore)
 
     return {

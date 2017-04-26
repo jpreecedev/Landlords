@@ -17,7 +17,7 @@
                     </label>
                     <div class="input-group">
                       <span class="input-group-addon">£</span>
-                      <input type="number" class="form-control" id="pricePaid" name="pricePaid" v-model="pricePaid" placeholder="Amount borrowed">
+                      <input type="number" step="any" class="form-control" id="pricePaid" name="pricePaid" v-model="pricePaid" placeholder="Amount borrowed">
                       <span class="input-group-addon">.00</span>
                     </div>
                   </div>
@@ -26,7 +26,7 @@
                   <div class="form-group col">
                     <label for="annualInterestRate">Interest rate (annual)</label>
                     <div class="input-group">
-                      <input type="number" class="form-control" id="annualInterestRate" name="annualInterestRate" step="0" v-model="annualInterestRate" placeholder="Interest Rate">
+                      <input type="number" step="any" class="form-control" id="annualInterestRate" name="annualInterestRate" v-model="annualInterestRate" placeholder="Interest Rate">
                       <span class="input-group-addon">%</span>
                     </div>
                   </div>
@@ -35,7 +35,7 @@
                   <div class="form-group col">
                     <label for="mortgageLength">Mortgage length</label>
                     <div class="input-group">
-                      <input type="number" class="form-control" id="mortgageLength" name="mortgageLength" step="0" v-model="mortgageLength" placeholder="Mortgage length">
+                      <input type="number" step="any" class="form-control" id="mortgageLength" name="mortgageLength" v-model="mortgageLength" placeholder="Mortgage length">
                       <span class="input-group-addon">years</span>
                     </div>
                   </div>
@@ -71,7 +71,7 @@
                   <div class="form-group col">
                     <label for="anticipatedAnnualIncrease">Anticipated increase in property value (annual)</label>
                     <div class="input-group">
-                      <input type="number" class="form-control" id="anticipatedAnnualIncrease" name="anticipatedAnnualIncrease" step="0" v-model="anticipatedAnnualIncrease" placeholder="Anticipated Annual Increase">
+                      <input type="number" step="any" class="form-control" id="anticipatedAnnualIncrease" name="anticipatedAnnualIncrease" v-model="anticipatedAnnualIncrease" placeholder="Anticipated Annual Increase">
                       <span class="input-group-addon">%</span>
                     </div>
                   </div>
@@ -82,7 +82,7 @@
                     <label for="agencyFee">Agency fees</label>
                     <div class="input-group">
                       <span class="input-group-addon">£</span>
-                      <input type="number" class="form-control" id="agencyFee" name="agencyFee" v-model="agencyFee" placeholder="Agency fees">
+                      <input type="number" step="any" class="form-control" id="agencyFee" name="agencyFee" v-model="agencyFee" placeholder="Agency fees">
                       <span class="input-group-addon">.00</span>
                     </div>
                   </div>
@@ -107,7 +107,7 @@
                     <label for="maintenanceFees">Maintenance fees</label>
                     <div class="input-group">
                       <span class="input-group-addon">£</span>
-                      <input type="number" class="form-control" id="maintenanceFees" name="maintenanceFees" v-model="maintenanceFees" placeholder="Maintenance fees">
+                      <input type="number" step="any" class="form-control" id="maintenanceFees" name="maintenanceFees" v-model="maintenanceFees" placeholder="Maintenance fees">
                       <span class="input-group-addon">.00</span>
                     </div>
                   </div>
@@ -132,7 +132,7 @@
                     <label for="buildingsInsurance">Buildings insurance (per year)</label>
                     <div class="input-group">
                       <span class="input-group-addon">£</span>
-                      <input type="number" class="form-control" id="buildingsInsurance" name="buildingsInsurance" v-model="buildingsInsurance" placeholder="Buildings Insurance">
+                      <input type="number" step="any" class="form-control" id="buildingsInsurance" name="buildingsInsurance" v-model="buildingsInsurance" placeholder="Buildings Insurance">
                       <span class="input-group-addon">.00</span>
                     </div>
                   </div>
@@ -142,7 +142,7 @@
                     <label for="contentsInsurance">Contents insurance (per year)</label>
                     <div class="input-group">
                       <span class="input-group-addon">£</span>
-                      <input type="number" class="form-control" id="contentsInsurance" name="contentsInsurance" v-model="contentsInsurance" placeholder="Contents Insurance">
+                      <input type="number" step="any" class="form-control" id="contentsInsurance" name="contentsInsurance" v-model="contentsInsurance" placeholder="Contents Insurance">
                       <span class="input-group-addon">.00</span>
                     </div>
                   </div>
@@ -174,7 +174,7 @@
                     <label for="contingency">Contingency</label>
                     <div class="input-group">
                       <span class="input-group-addon">£</span>
-                      <input type="number" class="form-control" id="contingency" name="contingency" v-model="contingency" placeholder="Contingency">
+                      <input type="number" step="any" class="form-control" id="contingency" name="contingency" v-model="contingency" placeholder="Contingency">
                       <span class="input-group-addon">.00</span>
                     </div>
                   </div>
@@ -184,7 +184,7 @@
                     <label for="otherCosts">Other costs</label>
                     <div class="input-group">
                       <span class="input-group-addon">£</span>
-                      <input type="number" class="form-control" id="otherCosts" name="otherCosts" v-model="otherCosts" placeholder="Other costs">
+                      <input type="number" step="any" class="form-control" id="otherCosts" name="otherCosts" v-model="otherCosts" placeholder="Other costs">
                       <span class="input-group-addon">.00</span>
                     </div>
                   </div>
@@ -192,7 +192,9 @@
                 <div class="row mt-3" v-if="calculateScore">
                   <div class="col">
                     <p>The score based on the information provided is: <strong>{{ calculateScore.scoreDisplay }}</strong>.</p>
-                    <p>The property may make <strong>&pound;{{ calculateScore.profit.formatWithSeparator() }}</strong> profit per year, and in <strong>{{ this.mortgageLength }}</strong> years will be worth <strong>&pound;{{ this.getPropertyFutureValue().formatWithSeparator() }}</strong></p>
+                    <p>The property may make <strong>&pound;{{ this.calculateScore.profit.formatWithSeparator() }}</strong> profit per year, and in <strong>{{ this.mortgageLength }}</strong> years will be worth around <strong>&pound;{{ this.getPropertyFutureValue().formatWithSeparator() }}</strong>.  You will pay around <strong>&pound;{{ ((this.getMonthlyPayment() * 12 * this.mortgageLength) - this.pricePaid).formatWithSeparator() }}</strong> in interest on the mortgage (assuming the rate doesn't change).</p>
+                    <p>This means that over <strong>{{ this.mortgageLength }}</strong> years, you could pocket up to <strong>&pound;{{ ((this.getPropertyFutureValue() - this.pricePaid) + (this.calculateScore.profit * this.mortgageLength )).formatWithSeparator()  }}</strong> profit.</p>
+                    <p><strong>Note:</strong> This figure has not been adjusted for inflation.  Your actual return will vary and has been provided as a guideline only.</p>
                   </div>
                 </div>
               </div>
@@ -216,7 +218,7 @@
         expectedRentalIncome: 425,
         rentalIncomeFrequency: 'Monthly',
         anticipatedAnnualIncrease: 5,
-        agencyFee: 51,
+        agencyFee: 50,
         agencyFeeFrequency: 'Monthly',
         maintenanceFees: 500,
         maintenanceFeeFrequency: 'Annual',
@@ -229,23 +231,23 @@
     },
     methods: {
       getMonthlyPayment: function () {
-        return utils.calculateMonthlyPayment(this.annualInterestRate, this.pricePaid, this.mortgageLength)
+        return utils.calculateMonthlyPayment(this.annualInterestRate.toFloat(), this.pricePaid.toFloat(), this.mortgageLength.toFloat()).toFloat()
       },
       getMonthlyIncome: function () {
-        return this.rentalIncomeFrequency === 'Monthly' ? this.expectedRentalIncome * 12 : this.expectedRentalIncome
+        return this.rentalIncomeFrequency === 'Monthly' ? this.expectedRentalIncome.toFloat() * 12 : this.expectedRentalIncome.toFloat()
       },
       getAgencyFees: function () {
-        return this.agencyFeeFrequency === 'Monthly' ? this.agencyFee * 12 : this.agencyFee
+        return this.agencyFeeFrequency === 'Monthly' ? this.agencyFee.toFloat() * 12 : this.agencyFee.toFloat()
       },
       getMaintenanceFees: function () {
-        return this.maintenanceFeeFrequency === 'Monthly' ? this.maintenanceFees * 12 : this.maintenanceFees
+        return this.maintenanceFeeFrequency === 'Monthly' ? this.maintenanceFees.toFloat() * 12 : this.maintenanceFees.toFloat()
       },
       getPropertyFutureValue: function () {
-        var future = this.pricePaid * Math.pow((1 + this.anticipatedAnnualIncrease / 100), this.mortgageLength)
+        var future = this.pricePaid.toFloat() * Math.pow((1 + this.anticipatedAnnualIncrease.toFloat() / 100), this.mortgageLength.toFloat())
         return Math.round(future * 100) / 100
       },
       getInsuranceCosts: function () {
-        return this.buildingsInsurance + this.contentsInsurance
+        return this.buildingsInsurance.toFloat() + this.contentsInsurance.toFloat()
       },
       getTaxBand: function () {
         switch (this.taxBand) {
@@ -262,13 +264,13 @@
     },
     computed: {
       annualYield: function () {
-        return Number.parseFloat(Number.parseFloat(this.getMonthlyIncome() / this.pricePaid * 100).toFixed(2))
+        return Number.parseFloat((this.getMonthlyIncome() / this.pricePaid.toFloat() * 100).toFixed(2))
       },
       totalIncome: function () {
         return this.getMonthlyIncome() * this.getTaxBand()
       },
       totalOutgoings: function () {
-        return this.getAgencyFees() + this.getMaintenanceFees() + this.getInsuranceCosts() + this.otherCosts + this.contingency
+        return this.getMonthlyPayment() + this.getAgencyFees() + this.getMaintenanceFees() + this.getInsuranceCosts() + this.otherCosts.toFloat() + this.contingency.toFloat()
       },
       calculateScore: function () {
         return utils.calculateScore({
