@@ -14,7 +14,7 @@
                 <div class="form-group col" :class="{ 'has-danger': errors.has('purchasePrice') }">
                   <label for="purchasePrice" class="form-control-label">Total cost of property</label>          
                   <div class="input-group">
-                    <span class="input-group-addon">£</span>
+                    <span class="input-group-addon">&pound;</span>
                     <input type="number" class="form-control" id="purchasePrice" name="purchasePrice" v-model="rentalyield.purchasePrice" min="10000" v-validate="'required|min_value:10000'" data-vv-validate-on="change" placeholder="Purchase price">
                     <span class="input-group-addon">.00</span>
                   </div>
@@ -26,7 +26,7 @@
                 <div class="form-group col" :class="{ 'has-danger': errors.has('rentalValue') }">
                   <label for="rentalValue" class="form-control-label">Expected rental income</label>
                   <div class="input-group">
-                    <span class="input-group-addon">£</span>
+                    <span class="input-group-addon">&pound;</span>
                     <input type="number" class="form-control" id="rentalValue" name="rentalValue" min="1" step="1" v-model="rentalyield.rentalValue" v-validate="'required|min_value:1'" data-vv-validate-on="change" placeholder="Rental value">
                     <span class="input-group-addon">.00</span>
                   </div>
