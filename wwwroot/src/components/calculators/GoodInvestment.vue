@@ -215,8 +215,10 @@
                   <div class="col">
                     <p>The score based on the information provided is: <strong>{{ calculateScore.scoreDisplay }}</strong>.</p>
                     <p>The property may make <strong>&pound;{{ this.calculateScore.profit.formatWithSeparator() }}</strong> profit per year, and in <strong>{{ this.mortgageLength }}</strong> years will be worth around <strong>&pound;{{ this.getPropertyFutureValue().formatWithSeparator() }}</strong>.  You will pay around <strong>&pound;{{ ((this.getMonthlyPayment() * 12 * this.mortgageLength) - this.pricePaid).formatWithSeparator() }}</strong> in interest on the mortgage (assuming the rate doesn't change).</p>
-                    <p>This means that over <strong>{{ this.mortgageLength }}</strong> years, you could pocket up to <strong>&pound;{{ ((this.getPropertyFutureValue() - this.pricePaid) + (this.calculateScore.profit * this.mortgageLength )).formatWithSeparator()  }}</strong> profit.</p>
-                    <p><strong>Note:</strong> This figure has not been adjusted for inflation.  Your actual return will vary and has been provided as a guideline only.</p>
+                    <p>This means that over <strong>{{ this.mortgageLength }}</strong> years, you could pocket up to <strong>&pound;{{ ((((this.getPropertyFutureValue() - this.pricePaid) + (this.calculateScore.profit * this.mortgageLength )) - 11000) * getTaxBandForCapitalGains()).formatWithSeparator()  }}</strong>.</p>
+                    <hr>
+                    <p>This is calculated by taking the potential gross profit of <strong>&pound;{{ ((this.getPropertyFutureValue() - this.pricePaid) + (this.calculateScore.profit * this.mortgageLength )).formatWithSeparator()  }}</strong>, subtracting your tax free allowance of <strong>£11,000</strong>, and then subtracting capital gains tax of approximately <strong>&pound;{{ (((this.getPropertyFutureValue() - this.pricePaid) + (this.calculateScore.profit * this.mortgageLength )) * (1 - getTaxBandForCapitalGains())).formatWithSeparator() }}</strong>.</p>
+                    <p><strong>Note:</strong> These figures have not been adjusted for inflation.  Your actual return will vary and has been provided as a guideline only.</p>
                   </div>
                 </div>
               </div>
@@ -279,6 +281,17 @@
             return 0.6
           case 'Top':
             return 0.55
+          default:
+            return false
+        }
+      },
+      getTaxBandForCapitalGains: function () {
+        switch (this.taxBand) {
+          case 'BasicRate':
+            return 0.8
+          case 'Higher':
+          case 'Top':
+            return 0.72
           default:
             return false
         }
