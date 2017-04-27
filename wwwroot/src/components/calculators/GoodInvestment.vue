@@ -12,43 +12,53 @@
               <div class="card-block">
                 <h4 class="card-title">Basic details about your property</h4>
                 <div class="row">
-                  <div class="form-group col">
-                    <label for="pricePaid">Price paid<br/>
-                    </label>
+                  <div class="form-group col" :class="{ 'has-danger': errors.has('pricePaid') }">
+                    <label for="pricePaid" class="form-control-label">Price paid</label>
                     <div class="input-group">
                       <span class="input-group-addon">£</span>
-                      <input type="number" step="any" class="form-control" id="pricePaid" name="pricePaid" v-model="pricePaid" placeholder="Amount borrowed">
+                      <input type="number" step="any" class="form-control" min="10000" id="pricePaid" name="pricePaid" v-model="pricePaid" v-validate="'required|min_value:10000'" data-vv-validate-on="change" placeholder="Amount borrowed">
                       <span class="input-group-addon">.00</span>
                     </div>
+                    <span v-show="errors.has('pricePaid:required')" v-bind:title="errors.first('pricePaid')" class="form-control-feedback">Enter the amount paid for the property</span>
+                    <span v-show="errors.has('pricePaid:min_value')" v-bind:title="errors.first('pricePaid')" class="form-control-feedback">Enter at least £10,000</span>
                   </div>
                 </div>
                 <div class="row">
-                  <div class="form-group col">
-                    <label for="annualInterestRate">Interest rate (annual)</label>
+                  <div class="form-group col" :class="{ 'has-danger': errors.has('annualInterestRate') }">
+                    <label for="annualInterestRate" class="form-control-label">Interest rate (annual)</label>
                     <div class="input-group">
-                      <input type="number" step="any" class="form-control" id="annualInterestRate" name="annualInterestRate" v-model="annualInterestRate" placeholder="Interest Rate">
+                      <input type="number" step="any" class="form-control" id="annualInterestRate" name="annualInterestRate" v-model="annualInterestRate" v-validate="'required|min_value:0.1|max_value:20'" data-vv-validate-on="change" placeholder="Interest Rate">
                       <span class="input-group-addon">%</span>
                     </div>
+                    <span v-show="errors.has('annualInterestRate:required')" v-bind:title="errors.first('annualInterestRate')" class="form-control-feedback">Enter the interest rate</span>
+                    <span v-show="errors.has('annualInterestRate:min_value')" v-bind:title="errors.first('annualInterestRate')" class="form-control-feedback">Enter at least 0.1%</span>
+                    <span v-show="errors.has('annualInterestRate:max_value')" v-bind:title="errors.first('annualInterestRate')" class="form-control-feedback">Enter up to 20%</span>
                   </div>
                 </div>
                 <div class="row">
-                  <div class="form-group col">
-                    <label for="mortgageLength">Mortgage length</label>
+                  <div class="form-group col" :class="{ 'has-danger': errors.has('mortgageLength') }">
+                    <label for="mortgageLength" class="form-control-label">Mortgage length</label>
                     <div class="input-group">
-                      <input type="number" step="any" class="form-control" id="mortgageLength" name="mortgageLength" v-model="mortgageLength" placeholder="Mortgage length">
+                      <input type="number" step="any" class="form-control" id="mortgageLength" name="mortgageLength" v-model="mortgageLength" v-validate="'required|min_value:1|max_value:50'" data-vv-validate-on="change" placeholder="Mortgage length">
                       <span class="input-group-addon">years</span>
                     </div>
+                    <span v-show="errors.has('mortgageLength:required')" v-bind:title="errors.first('mortgageLength')" class="form-control-feedback">Enter the mortgage length</span>
+                    <span v-show="errors.has('mortgageLength:min_value')" v-bind:title="errors.first('mortgageLength')" class="form-control-feedback">Enter at least 1 year</span>
+                    <span v-show="errors.has('mortgageLength:max_value')" v-bind:title="errors.first('mortgageLength')" class="form-control-feedback">Enter up to 50 years</span>
                   </div>
                 </div>
                 <h4 class="card-title mt-3">Income</h4>
                 <div class="row">
-                  <div class="form-group col">
-                    <label for="expectedRentalIncome">Expected rental income</label>
+                  <div class="form-group col" :class="{ 'has-danger': errors.has('expectedRentalIncome') }">
+                    <label for="expectedRentalIncome" class="form-control-label">Expected rental income</label>
                     <div class="input-group">
                       <span class="input-group-addon">£</span>
-                      <input type="number" class="form-control" id="expectedRentalIncome" name="expectedRentalIncome" v-model="expectedRentalIncome" placeholder="Expected rental income">
+                      <input type="number" class="form-control" id="expectedRentalIncome" name="expectedRentalIncome" v-model="expectedRentalIncome" v-validate="'required|min_value:1|max_value:1000000'" data-vv-validate-on="change" placeholder="Expected rental income">
                       <span class="input-group-addon">.00</span>
                     </div>
+                    <span v-show="errors.has('expectedRentalIncome:required')" v-bind:title="errors.first('expectedRentalIncome')" class="form-control-feedback">Enter the rentval income value</span>
+                    <span v-show="errors.has('expectedRentalIncome:min_value')" v-bind:title="errors.first('expectedRentalIncome')" class="form-control-feedback">Enter at least £1</span>
+                    <span v-show="errors.has('expectedRentalIncome:max_value')" v-bind:title="errors.first('expectedRentalIncome')" class="form-control-feedback">Enter up to £1,000,000</span>
                   </div>
                 </div>
                 <div class="row mt-2">
@@ -189,7 +199,19 @@
                     </div>
                   </div>
                 </div>
-                <div class="row mt-3" v-if="calculateScore">
+              </div>
+            </div>
+          </div>
+          <div class="col-6">          
+            <div class="card">
+              <div class="card-block">
+                <h4 class="card-title">Your results</h4>
+                <div class="row mt-4" v-if="!calculateScore">
+                  <div class="col">
+                    <p>Please fix any validation errors highlighted in red to see your results</p>
+                  </div>
+                </div>
+                <div class="row mt-4" v-if="calculateScore">
                   <div class="col">
                     <p>The score based on the information provided is: <strong>{{ calculateScore.scoreDisplay }}</strong>.</p>
                     <p>The property may make <strong>&pound;{{ this.calculateScore.profit.formatWithSeparator() }}</strong> profit per year, and in <strong>{{ this.mortgageLength }}</strong> years will be worth around <strong>&pound;{{ this.getPropertyFutureValue().formatWithSeparator() }}</strong>.  You will pay around <strong>&pound;{{ ((this.getMonthlyPayment() * 12 * this.mortgageLength) - this.pricePaid).formatWithSeparator() }}</strong> in interest on the mortgage (assuming the rate doesn't change).</p>
@@ -273,6 +295,9 @@
         return this.getMonthlyPayment() + this.getAgencyFees() + this.getMaintenanceFees() + this.getInsuranceCosts() + this.otherCosts.toFloat() + this.contingency.toFloat()
       },
       calculateScore: function () {
+        if (this.errors.errors.length !== 0) {
+          return false
+        }
         return utils.calculateScore({
           annualYield: this.annualYield,
           growth: this.anticipatedAnnualIncrease,

@@ -109,7 +109,7 @@ module.exports = {
 
   calculateMonthlyPayment: function (annualInterestRate, mortgageAmount, mortgageLength) {
     if (!annualInterestRate || !mortgageAmount || !mortgageLength) {
-      return false
+      return '0.00'
     }
 
     var p = mortgageAmount
