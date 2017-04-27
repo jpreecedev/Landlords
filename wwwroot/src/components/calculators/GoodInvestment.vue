@@ -15,12 +15,12 @@
                   <div class="form-group col" :class="{ 'has-danger': errors.has('pricePaid') }">
                     <label for="pricePaid" class="form-control-label">Price paid</label>
                     <div class="input-group">
-                      <span class="input-group-addon">£</span>
+                      <span class="input-group-addon">&pound;</span>
                       <input type="number" step="any" class="form-control" min="10000" id="pricePaid" name="pricePaid" v-model="pricePaid" v-validate="'required|min_value:10000'" data-vv-validate-on="change" placeholder="Amount borrowed">
                       <span class="input-group-addon">.00</span>
                     </div>
                     <span v-show="errors.has('pricePaid:required')" v-bind:title="errors.first('pricePaid')" class="form-control-feedback">Enter the amount paid for the property</span>
-                    <span v-show="errors.has('pricePaid:min_value')" v-bind:title="errors.first('pricePaid')" class="form-control-feedback">Enter at least £10,000</span>
+                    <span v-show="errors.has('pricePaid:min_value')" v-bind:title="errors.first('pricePaid')" class="form-control-feedback">Enter at least &pound;10,000</span>
                   </div>
                 </div>
                 <div class="row">
@@ -52,13 +52,13 @@
                   <div class="form-group col" :class="{ 'has-danger': errors.has('expectedRentalIncome') }">
                     <label for="expectedRentalIncome" class="form-control-label">Expected rental income</label>
                     <div class="input-group">
-                      <span class="input-group-addon">£</span>
+                      <span class="input-group-addon">&pound;</span>
                       <input type="number" class="form-control" id="expectedRentalIncome" name="expectedRentalIncome" v-model="expectedRentalIncome" v-validate="'required|min_value:1|max_value:1000000'" data-vv-validate-on="change" placeholder="Expected rental income">
                       <span class="input-group-addon">.00</span>
                     </div>
                     <span v-show="errors.has('expectedRentalIncome:required')" v-bind:title="errors.first('expectedRentalIncome')" class="form-control-feedback">Enter the rentval income value</span>
-                    <span v-show="errors.has('expectedRentalIncome:min_value')" v-bind:title="errors.first('expectedRentalIncome')" class="form-control-feedback">Enter at least £1</span>
-                    <span v-show="errors.has('expectedRentalIncome:max_value')" v-bind:title="errors.first('expectedRentalIncome')" class="form-control-feedback">Enter up to £1,000,000</span>
+                    <span v-show="errors.has('expectedRentalIncome:min_value')" v-bind:title="errors.first('expectedRentalIncome')" class="form-control-feedback">Enter at least &pound;1</span>
+                    <span v-show="errors.has('expectedRentalIncome:max_value')" v-bind:title="errors.first('expectedRentalIncome')" class="form-control-feedback">Enter up to &pound;1,000,000</span>
                   </div>
                 </div>
                 <div class="row mt-2">
@@ -91,7 +91,7 @@
                   <div class="form-group col">
                     <label for="agencyFee">Agency fees</label>
                     <div class="input-group">
-                      <span class="input-group-addon">£</span>
+                      <span class="input-group-addon">&pound;</span>
                       <input type="number" step="any" class="form-control" id="agencyFee" name="agencyFee" v-model="agencyFee" placeholder="Agency fees">
                       <span class="input-group-addon">.00</span>
                     </div>
@@ -116,7 +116,7 @@
                   <div class="form-group col">
                     <label for="maintenanceFees">Maintenance fees</label>
                     <div class="input-group">
-                      <span class="input-group-addon">£</span>
+                      <span class="input-group-addon">&pound;</span>
                       <input type="number" step="any" class="form-control" id="maintenanceFees" name="maintenanceFees" v-model="maintenanceFees" placeholder="Maintenance fees">
                       <span class="input-group-addon">.00</span>
                     </div>
@@ -141,7 +141,7 @@
                   <div class="form-group col">
                     <label for="buildingsInsurance">Buildings insurance (per year)</label>
                     <div class="input-group">
-                      <span class="input-group-addon">£</span>
+                      <span class="input-group-addon">&pound;</span>
                       <input type="number" step="any" class="form-control" id="buildingsInsurance" name="buildingsInsurance" v-model="buildingsInsurance" placeholder="Buildings Insurance">
                       <span class="input-group-addon">.00</span>
                     </div>
@@ -151,7 +151,7 @@
                   <div class="form-group col">
                     <label for="contentsInsurance">Contents insurance (per year)</label>
                     <div class="input-group">
-                      <span class="input-group-addon">£</span>
+                      <span class="input-group-addon">&pound;</span>
                       <input type="number" step="any" class="form-control" id="contentsInsurance" name="contentsInsurance" v-model="contentsInsurance" placeholder="Contents Insurance">
                       <span class="input-group-addon">.00</span>
                     </div>
@@ -183,7 +183,7 @@
                   <div class="form-group col">
                     <label for="contingency">Contingency</label>
                     <div class="input-group">
-                      <span class="input-group-addon">£</span>
+                      <span class="input-group-addon">&pound;</span>
                       <input type="number" step="any" class="form-control" id="contingency" name="contingency" v-model="contingency" placeholder="Contingency">
                       <span class="input-group-addon">.00</span>
                     </div>
@@ -193,7 +193,7 @@
                   <div class="form-group col">
                     <label for="otherCosts">Other costs</label>
                     <div class="input-group">
-                      <span class="input-group-addon">£</span>
+                      <span class="input-group-addon">&pound;</span>
                       <input type="number" step="any" class="form-control" id="otherCosts" name="otherCosts" v-model="otherCosts" placeholder="Other costs">
                       <span class="input-group-addon">.00</span>
                     </div>
@@ -214,10 +214,10 @@
                 <div class="row mt-4" v-if="calculateScore">
                   <div class="col">
                     <p>The score based on the information provided is: <strong>{{ calculateScore.scoreDisplay }}</strong>.</p>
-                    <p>The property may make <strong>&pound;{{ this.calculateScore.profit.formatWithSeparator() }}</strong> profit per year, and in <strong>{{ this.mortgageLength }}</strong> years will be worth around <strong>&pound;{{ this.getPropertyFutureValue().formatWithSeparator() }}</strong>.  You will pay around <strong>&pound;{{ ((this.getMonthlyPayment() * 12 * this.mortgageLength) - this.pricePaid).formatWithSeparator() }}</strong> in interest on the mortgage (assuming the rate doesn't change).</p>
-                    <p>This means that over <strong>{{ this.mortgageLength }}</strong> years, you could pocket up to <strong>&pound;{{ ((((this.getPropertyFutureValue() - this.pricePaid) + (this.calculateScore.profit * this.mortgageLength )) - 11000) * getTaxBandForCapitalGains()).formatWithSeparator()  }}</strong>.</p>
+                    <p>The property may make <strong>&pound;{{ calculateScore.profit.formatWithSeparator() }}</strong> profit per year, and in <strong>{{ mortgageLength }}</strong> years will be worth around <strong>&pound;{{ getPropertyFutureValue().formatWithSeparator() }}</strong>.  You will pay around <strong>&pound;{{ getTotalMortgageInterest().formatWithSeparator() }}</strong> in interest on the mortgage (assuming the rate doesn't change).</p>
+                    <p>This means that over <strong>{{ mortgageLength }}</strong> years, you could pocket up to <strong>&pound;{{ getPocketAmount().formatWithSeparator()  }}</strong>.</p>
                     <hr>
-                    <p>This is calculated by taking the potential gross profit of <strong>&pound;{{ ((this.getPropertyFutureValue() - this.pricePaid) + (this.calculateScore.profit * this.mortgageLength )).formatWithSeparator()  }}</strong>, subtracting your tax free allowance of <strong>£11,000</strong>, and then subtracting capital gains tax of approximately <strong>&pound;{{ (((this.getPropertyFutureValue() - this.pricePaid) + (this.calculateScore.profit * this.mortgageLength )) * (1 - getTaxBandForCapitalGains())).formatWithSeparator() }}</strong>.</p>
+                    <p>This is calculated by taking the potential gross profit of <strong>&pound;{{ getGrossProfit().formatWithSeparator() }}</strong>, subtracting your tax free allowance of <strong>&pound;{{ taxFreeAllowance.formatWithSeparator() }}</strong>, and then subtracting capital gains tax of approximately <strong>&pound;{{ getCapitalGainsTax().formatWithSeparator() }}</strong>.</p>
                     <p><strong>Note:</strong> These figures have not been adjusted for inflation.  Your actual return will vary and has been provided as a guideline only.</p>
                   </div>
                 </div>
@@ -250,7 +250,8 @@
         contentsInsurance: 75,
         taxBand: 'Higher',
         contingency: 500,
-        otherCosts: 100
+        otherCosts: 100,
+        taxFreeAllowance: 11000
       }
     },
     methods: {
@@ -295,11 +296,23 @@
           default:
             return false
         }
+      },
+      getTotalMortgageInterest: function () {
+        return (this.getMonthlyPayment() * 12 * this.mortgageLength) - this.pricePaid
+      },
+      getPocketAmount: function () {
+        return (((this.getPropertyFutureValue() - this.pricePaid) + (this.calculateScore.profit * this.mortgageLength)) - this.taxFreeAllowance) * this.getTaxBandForCapitalGains()
+      },
+      getGrossProfit: function () {
+        return (this.getPropertyFutureValue() - this.pricePaid) + (this.calculateScore.profit * this.mortgageLength)
+      },
+      getCapitalGainsTax: function () {
+        return this.getGrossProfit() * (1 - this.getTaxBandForCapitalGains())
       }
     },
     computed: {
       annualYield: function () {
-        return Number.parseFloat((this.getMonthlyIncome() / this.pricePaid.toFloat() * 100).toFixed(2))
+        return (this.getMonthlyIncome() / this.pricePaid.toFloat() * 100).toFloat().toFixed(2)
       },
       totalIncome: function () {
         return this.getMonthlyIncome() * this.getTaxBand()
