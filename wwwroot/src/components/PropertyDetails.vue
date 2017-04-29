@@ -1,4 +1,4 @@
-=<template>
+<template>
   <main class="container">
     <div> 
       <h1>Property Details</h1>
@@ -8,10 +8,23 @@
       <span v-show="!errors.has('GenericError')">Please fix validation errors highlighted in red and try and submit the form again</span>
       <span v-show="errors.has('GenericError')">{{ errors.first('GenericError') }}</span>
     </div>    
-    <form @submit.prevent="validateBeforeSubmit" role="form" novalidate>
+    <form @submit.prevent="validateBeforeSubmit" role="form" enctype="multipart/form-data" novalidate>
+      <div class="property-image-container">
+        <div class="property-image" v-for="propertyImage in propertyDetails.propertyImages">
+          <img v-if="propertyImage.src" v-bind:src="propertyImage.src" v-bind:alt="propertyImage.alt">
+        </div>
+        <div class="property-image">
+          <label>
+            <input type="file" accept="image/*" @change="filesChange($event.target.name, $event.target.files)" name="files">
+            <img class="placeholder" src="../assets/images/placeholder.png" alt="Add more images...">
+            <div class="progress mt-4" v-if="isUploading">
+              <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%;"></div>
+            </div>
+          </label>
+        </div>
+      </div>
       <div class="row">
         <div class="col">
-
           <div class="card">
             <div class="card-block">
               <h3 class="card-title">Overview</h3>
@@ -178,12 +191,15 @@
 import Datepicker from 'vuejs-datepicker'
 import { ErrorBag } from 'vee-validate'
 import utils from '@/utils'
+import fileUpload from '@/file-upload.service'
 
 export default {
   name: 'propertyDetails',
   components: { Datepicker },
   data () {
     return {
+      isUploading: false,
+      currentUploadIndex: 1,
       propertyTypes: [],
       paymentTerms: [],
       furnishings: [],
@@ -204,7 +220,8 @@ export default {
         propertyTownOrCity: '',
         propertyCountyOrRegion: '',
         propertyPostcode: '',
-        propertyCountry: ''
+        propertyCountry: '',
+        propertyImages: []
       }
     }
   },
@@ -231,6 +248,29 @@ export default {
       }).catch(() => {
         window.scrollTo(0, 0)
       })
+    },
+    filesChange: function (fieldName, fileList) {
+      const formData = new FormData()
+      if (!fileList.length) return
+
+      this.isUploading = true
+
+      Array
+        .from(Array(fileList.length).keys())
+        .map(x => {
+          formData.append(fieldName, fileList[x], fileList[x].name)
+        })
+
+      fileUpload.upload(formData, '/api/propertyDetails/upload')
+        .then(imageUrl => {
+          this.propertyDetails.propertyImages.push({
+            src: imageUrl,
+            alt: imageUrl
+          })
+        })
+        .finally(() => {
+          this.isUploading = false
+        })
     }
   },
   watch: {
@@ -240,5 +280,43 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+  @import '../assets/styles/app';
+
+  .property-image-container {
+
+    background-color: $gray-lighter;
+    margin-bottom: 2rem;
+
+    @include media-breakpoint-up(lg) {
+      padding: remc(32px) remc(16px);      
+    }
+
+    .property-image {
+      display: inline-block;
+      label {
+        input[type="file"] {
+          position: fixed;
+          top: -1000px;
+        }
+      }
+      img {
+        max-width: 250px;
+        max-height: 250px;
+        height: auto;
+        &:not(.placeholder) {
+          margin-right: remc(16px);
+        }
+        &:hover {
+          background-color: $gray-lightest;
+        }
+        &.placeholder {
+          border: 3px dashed $gray-light; 
+          border-radius: 30px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
 
 </style>
