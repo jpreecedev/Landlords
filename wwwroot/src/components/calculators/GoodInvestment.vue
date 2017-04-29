@@ -208,7 +208,7 @@
                 <h4 class="card-title">Your results</h4>
                 <div class="row mt-4" v-if="!calculateScore">
                   <div class="col">
-                    <p>Please fix any validation errors highlighted in red to see your results</p>
+                    <p class="text-danger">Please fix any validation errors highlighted in red to see your results</p>
                   </div>
                 </div>
                 <div class="row mt-4" v-if="calculateScore">

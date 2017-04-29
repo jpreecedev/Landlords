@@ -10,6 +10,8 @@ import store from './store'
 import './assets/styles/app.scss'
 import App from './components/App'
 
+import './extensions'
+
 Vue.config.productionTip = false
 Vue.use(VueResource)
 

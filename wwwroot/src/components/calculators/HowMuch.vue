@@ -11,16 +11,18 @@
           <form role="form" class="card-block" novalidate>
             <fieldset>
               <div class="row">
-                <div class="form-group col">
+                <div class="form-group col" :class="{ 'has-danger': errors.has('grossIncome') }">
                   <label for="grossIncome">
                   Your annual gross income<br/>
                   <small class="text-muted">How much you earn, including everybody who will be included on the mortgage, BEFORE tax</small>                
                   </label>
                   <div class="input-group">
                     <span class="input-group-addon">£</span>
-                    <input type="number" class="form-control" id="grossIncome" name="grossIncome" v-model="grossIncome" placeholder="Gross income">
+                    <input type="number" class="form-control" id="grossIncome" name="grossIncome" min="1000" step="1" v-model="grossIncome" v-validate="'required|min_value:1000'" data-vv-validate-on="change" placeholder="Gross income">
                     <span class="input-group-addon">.00</span>
                   </div>
+                  <span v-show="errors.has('grossIncome:required')" v-bind:title="errors.first('grossIncome')" class="form-control-feedback">Enter your annual gross income</span>
+                  <span v-show="errors.has('grossIncome:min_value')" v-bind:title="errors.first('grossIncome')" class="form-control-feedback">Enter at least &pound;1,000</span>
                 </div>
               </div>
               <div class="row">
@@ -32,6 +34,11 @@
                         <option v-for="multiplier in multipliers" v-bind:value="multiplier">{{ multiplier }}</option>
                       </select>
                     </div>
+                </div>
+              </div>
+              <div class="row mt-4" v-if="!calculateAmountCanBorrow">
+                <div class="col">
+                  <p class="text-danger">Please fix any validation errors highlighted in red to see your results</p>
                 </div>
               </div>
               <div class="row mt-4" v-if="calculateAmountCanBorrow">
