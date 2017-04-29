@@ -16,7 +16,7 @@
                     <label for="pricePaid" class="form-control-label">Price paid</label>
                     <div class="input-group">
                       <span class="input-group-addon">&pound;</span>
-                      <input type="number" step="any" class="form-control" min="10000" id="pricePaid" name="pricePaid" v-model="pricePaid" v-validate="'required|min_value:10000'" data-vv-validate-on="change" placeholder="Amount borrowed">
+                      <input type="number" step="1" class="form-control" min="10000" id="pricePaid" name="pricePaid" v-model="pricePaid" v-validate="'required|min_value:10000'" data-vv-validate-on="change" placeholder="Amount borrowed">
                       <span class="input-group-addon">.00</span>
                     </div>
                     <span v-show="errors.has('pricePaid:required')" v-bind:title="errors.first('pricePaid')" class="form-control-feedback">Enter the amount paid for the property</span>
@@ -27,7 +27,7 @@
                   <div class="form-group col" :class="{ 'has-danger': errors.has('annualInterestRate') }">
                     <label for="annualInterestRate" class="form-control-label">Interest rate (annual)</label>
                     <div class="input-group">
-                      <input type="number" step="any" class="form-control" id="annualInterestRate" name="annualInterestRate" v-model="annualInterestRate" v-validate="'required|min_value:0.1|max_value:20'" data-vv-validate-on="change" placeholder="Interest Rate">
+                      <input type="number" step="1" class="form-control" id="annualInterestRate" name="annualInterestRate" v-model="annualInterestRate" v-validate="'required|min_value:0.1|max_value:20'" data-vv-validate-on="change" placeholder="Interest Rate">
                       <span class="input-group-addon">%</span>
                     </div>
                     <span v-show="errors.has('annualInterestRate:required')" v-bind:title="errors.first('annualInterestRate')" class="form-control-feedback">Enter the interest rate</span>
@@ -39,7 +39,7 @@
                   <div class="form-group col" :class="{ 'has-danger': errors.has('mortgageLength') }">
                     <label for="mortgageLength" class="form-control-label">Mortgage length</label>
                     <div class="input-group">
-                      <input type="number" step="any" class="form-control" id="mortgageLength" name="mortgageLength" v-model="mortgageLength" v-validate="'required|min_value:1|max_value:50'" data-vv-validate-on="change" placeholder="Mortgage length">
+                      <input type="number" step="1" class="form-control" id="mortgageLength" name="mortgageLength" v-model="mortgageLength" v-validate="'required|min_value:1|max_value:50'" data-vv-validate-on="change" placeholder="Mortgage length">
                       <span class="input-group-addon">years</span>
                     </div>
                     <span v-show="errors.has('mortgageLength:required')" v-bind:title="errors.first('mortgageLength')" class="form-control-feedback">Enter the mortgage length</span>
@@ -81,7 +81,7 @@
                   <div class="form-group col">
                     <label for="anticipatedAnnualIncrease">Anticipated increase in property value (annual)</label>
                     <div class="input-group">
-                      <input type="number" step="any" class="form-control" id="anticipatedAnnualIncrease" name="anticipatedAnnualIncrease" v-model="anticipatedAnnualIncrease" placeholder="Anticipated Annual Increase">
+                      <input type="number" step="1" class="form-control" id="anticipatedAnnualIncrease" name="anticipatedAnnualIncrease" v-model="anticipatedAnnualIncrease" placeholder="Anticipated Annual Increase">
                       <span class="input-group-addon">%</span>
                     </div>
                   </div>
@@ -92,7 +92,7 @@
                     <label for="agencyFee">Agency fees</label>
                     <div class="input-group">
                       <span class="input-group-addon">&pound;</span>
-                      <input type="number" step="any" class="form-control" id="agencyFee" name="agencyFee" v-model="agencyFee" placeholder="Agency fees">
+                      <input type="number" step="1" class="form-control" id="agencyFee" name="agencyFee" v-model="agencyFee" placeholder="Agency fees">
                       <span class="input-group-addon">.00</span>
                     </div>
                   </div>
@@ -117,7 +117,7 @@
                     <label for="maintenanceFees">Maintenance fees</label>
                     <div class="input-group">
                       <span class="input-group-addon">&pound;</span>
-                      <input type="number" step="any" class="form-control" id="maintenanceFees" name="maintenanceFees" v-model="maintenanceFees" placeholder="Maintenance fees">
+                      <input type="number" step="1" class="form-control" id="maintenanceFees" name="maintenanceFees" v-model="maintenanceFees" placeholder="Maintenance fees">
                       <span class="input-group-addon">.00</span>
                     </div>
                   </div>
@@ -142,7 +142,7 @@
                     <label for="buildingsInsurance">Buildings insurance (per year)</label>
                     <div class="input-group">
                       <span class="input-group-addon">&pound;</span>
-                      <input type="number" step="any" class="form-control" id="buildingsInsurance" name="buildingsInsurance" v-model="buildingsInsurance" placeholder="Buildings Insurance">
+                      <input type="number" step="1" class="form-control" id="buildingsInsurance" name="buildingsInsurance" v-model="buildingsInsurance" placeholder="Buildings Insurance">
                       <span class="input-group-addon">.00</span>
                     </div>
                   </div>
@@ -152,7 +152,7 @@
                     <label for="contentsInsurance">Contents insurance (per year)</label>
                     <div class="input-group">
                       <span class="input-group-addon">&pound;</span>
-                      <input type="number" step="any" class="form-control" id="contentsInsurance" name="contentsInsurance" v-model="contentsInsurance" placeholder="Contents Insurance">
+                      <input type="number" step="1" class="form-control" id="contentsInsurance" name="contentsInsurance" v-model="contentsInsurance" placeholder="Contents Insurance">
                       <span class="input-group-addon">.00</span>
                     </div>
                   </div>
@@ -184,7 +184,7 @@
                     <label for="contingency">Contingency</label>
                     <div class="input-group">
                       <span class="input-group-addon">&pound;</span>
-                      <input type="number" step="any" class="form-control" id="contingency" name="contingency" v-model="contingency" placeholder="Contingency">
+                      <input type="number" step="1" class="form-control" id="contingency" name="contingency" v-model="contingency" placeholder="Contingency">
                       <span class="input-group-addon">.00</span>
                     </div>
                   </div>
@@ -194,7 +194,7 @@
                     <label for="otherCosts">Other costs</label>
                     <div class="input-group">
                       <span class="input-group-addon">&pound;</span>
-                      <input type="number" step="any" class="form-control" id="otherCosts" name="otherCosts" v-model="otherCosts" placeholder="Other costs">
+                      <input type="number" step="1" class="form-control" id="otherCosts" name="otherCosts" v-model="otherCosts" placeholder="Other costs">
                       <span class="input-group-addon">.00</span>
                     </div>
                   </div>
