@@ -20,15 +20,6 @@
         protected LLDbContext Context { get; set; }
         protected IHostingEnvironment HostingEnvironment { get; set; }
 
-        protected void PopulateNewEntity(ApplicationUser user, T entity)
-        {
-            if (entity == null) throw new ArgumentNullException(nameof(entity));
-
-            entity.User = user;
-            entity.UserId = user.Id;
-            entity.Created = DateTime.Now;
-        }
-
         protected void PopulateNewEntity(Guid userId, T entity)
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));

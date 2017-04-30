@@ -4,7 +4,9 @@
     using Model.Validation;
     using System;
     using System.ComponentModel.DataAnnotations.Schema;
-    
+    using System.Linq;
+    using System.Reflection;
+
     public class BaseModel
     {
         [ValidateGuid]
@@ -39,6 +41,28 @@
         public virtual T Clone<T>()
         {
             return (T)Clone();
+        }
+
+        public void MapFrom(object viewModel)
+        {
+            if (viewModel == null)
+            {
+                return;
+            }
+
+            var properties = GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            foreach (PropertyInfo p in properties.Where(c => !c.Name.Contains("Id")))
+            {
+                var property = viewModel.GetType().GetProperty(p.Name);
+                if (property != null)
+                {
+                    var pv = property.GetValue(viewModel);
+                    if (pv != null)
+                    {
+                        p.SetValue(this, pv);
+                    }
+                }
+            }
         }
     }
 }

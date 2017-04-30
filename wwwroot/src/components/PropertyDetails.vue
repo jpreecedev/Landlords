@@ -239,6 +239,9 @@ export default {
       this.$validator.validateAll().then(() => {
         var bag = new ErrorBag()
         this.$http.post('/api/propertyDetails', { ...this.propertyDetails })
+          .then(() => {
+            this.$router.push('/manager/property-list')
+          })
           .catch(response => {
             var validationResult = utils.getFormValidationErrors(response)
             validationResult.errors.forEach(validationError => {

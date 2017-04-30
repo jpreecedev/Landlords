@@ -4,9 +4,7 @@
     using Landlords.Database;
     using Landlords.ViewModels;
     using System;
-    using System.Security.Claims;
     using System.Threading.Tasks;
-    using Core;
     using Microsoft.EntityFrameworkCore;
     using System.Collections.Generic;
     using System.Linq;
@@ -18,17 +16,26 @@
         {
         }
 
-        public async Task CreateAsync(ClaimsPrincipal user, PropertyDetailsViewModel viewModel)
+        public async Task<PropertyDetailsViewModel> NewAsync(Guid userId)
         {
-            if (user == null) throw new ArgumentNullException(nameof(user));
-
-            PropertyDetails entity = viewModel.Map();
-
-            var applicationUser = user.GetApplicationUser(Context);
-            PopulateNewEntity(applicationUser, entity);
+            PropertyDetails entity = new PropertyDetails();
+            PopulateNewEntity(userId, entity);
 
             await Context.PropertyDetails.AddAsync(entity);
             await Context.SaveChangesAsync();
+
+            return new PropertyDetailsViewModel(entity);
+        }
+
+        public async Task UpdateAsync(Guid userId, PropertyDetailsViewModel viewModel)
+        {
+            var existingEntity = await Context.PropertyDetails.FirstOrDefaultAsync(c => c.UserId == userId && c.Id == viewModel.Id);
+            if (existingEntity != null)
+            {
+                existingEntity.MapFrom(viewModel);
+                Context.PropertyDetails.Update(existingEntity);
+                await Context.SaveChangesAsync();
+            }
         }
 
         public async Task<PropertyDetailsViewModel> GetDetailsAsync(Guid userId, Guid propertyId)
@@ -41,6 +48,20 @@
                           {
                               Reference = details.Reference,
                               PropertyStreetAddress = details.PropertyStreetAddress,
+                              Furnishing = details.Furnishing,
+                              PropertyType = details.PropertyType,
+                              ConstructionDate = details.ConstructionDate,
+                              TargetRent = details.TargetRent,
+                              PaymentTerm = details.PaymentTerm,
+                              PurchaseDate = details.PurchaseDate,
+                              PurchasePrice = details.PurchasePrice,
+                              SellingDate = details.SellingDate,
+                              SellingPrice = details.SellingPrice,
+                              PropertyTownOrCity = details.PropertyTownOrCity,
+                              PropertyCountyOrRegion = details.PropertyCountyOrRegion,
+                              PropertyPostcode = details.PropertyPostcode,
+                              PropertyCountry = details.PropertyCountry,
+                              IsAvailableForLetting = details.IsAvailableForLetting,
                               PropertyImages = imageJoin.Where(c => !c.IsDeleted).Select(c => new PropertyImageViewModel(c)).ToList()
                           })
                          .FirstOrDefaultAsync();

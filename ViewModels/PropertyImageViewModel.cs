@@ -4,7 +4,7 @@
     using Model;
     using Model.Validation;
 
-    public class PropertyImageViewModel : IPropertyImage, IEntity<PropertyImage>
+    public class PropertyImageViewModel : IPropertyImage
     {
         public PropertyImageViewModel()
         {
@@ -18,15 +18,6 @@
             FileName = propertyImage.FileName;
             PropertyId = propertyImage.PropertyId;
             Id = propertyImage.Id;
-        }
-
-        public PropertyImage Map()
-        {
-            return new PropertyImage
-            {
-                FileName = FileName,
-                PropertyId = PropertyId
-            };
         }
 
         public string FileName { get; set; }

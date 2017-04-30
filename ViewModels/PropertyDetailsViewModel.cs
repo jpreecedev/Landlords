@@ -8,18 +8,12 @@
     using System.Collections.Generic;
 
     //TODO: Use automapper
-    public class PropertyDetailsViewModel : IPropertyDetails, IEntity<PropertyDetails>
+    public class PropertyDetailsViewModel : IPropertyDetails
     {
         public PropertyDetailsViewModel()
         {
         }
-
-        public PropertyDetailsViewModel(Guid propertyId, Guid userId)
-        {
-            Id = propertyId;
-            UserId = userId;
-        }
-
+        
         public PropertyDetailsViewModel(PropertyDetails propertyDetails)
         {
             if (propertyDetails == null) throw new ArgumentNullException(nameof(propertyDetails));
@@ -42,6 +36,12 @@
             SellingDate = propertyDetails.SellingDate;
             TargetRent = propertyDetails.TargetRent;
             SellingPrice = propertyDetails.SellingPrice;
+        }
+
+        public PropertyDetailsViewModel(Guid id, Guid userId)
+        {
+            Id = id;
+            UserId = userId;
         }
 
         public DateTime? ConstructionDate { get; set; }
@@ -103,32 +103,9 @@
         public ICollection<PropertyImageViewModel> PropertyImages { get; set; }
 
         [ValidateGuid]
-        public Guid Id { get; private set; }
+        public Guid Id { get; set; }
 
         [ValidateGuid]
-        public Guid UserId { get; private set; }
-
-        public PropertyDetails Map()
-        {
-            return new PropertyDetails
-            {
-                Reference = Reference,
-                Furnishing = Furnishing,
-                PropertyType = PropertyType,
-                ConstructionDate = ConstructionDate,
-                TargetRent = TargetRent,
-                PaymentTerm = PaymentTerm,
-                PurchaseDate = PurchaseDate,
-                PurchasePrice = PurchasePrice,
-                SellingDate = SellingDate,
-                SellingPrice = SellingPrice,
-                PropertyStreetAddress = PropertyStreetAddress,
-                PropertyTownOrCity = PropertyTownOrCity,
-                PropertyCountyOrRegion = PropertyCountyOrRegion,
-                PropertyPostcode = PropertyPostcode,
-                PropertyCountry = PropertyCountry,
-                IsAvailableForLetting = IsAvailableForLetting
-            };
-        }
+        public Guid UserId { get; set; }
     }
 }

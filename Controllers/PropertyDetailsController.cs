@@ -8,34 +8,47 @@
     using Landlords.ViewModels;
     using System.Threading.Tasks;
     using Model;
+    using Database;
 
     [Route("api/[controller]")]
     public class PropertyDetailsController : Controller
     {
         private readonly IPropertyDataProvider _propertyDataProvider;
+        private readonly ILLDbContext _context;
 
-        public PropertyDetailsController(IPropertyDataProvider dataAccessProvider)
+        public PropertyDetailsController(IPropertyDataProvider dataAccessProvider, ILLDbContext context)
         {
             _propertyDataProvider = dataAccessProvider;
+            _context = context;
         }
 
         [HttpGet("ViewData")]
-        public PropertyDetailsViewModel GetViewData()
+        public IActionResult GetViewData()
         {
-            return new PropertyDetailsViewModel();
+            return Ok(new PropertyDetailsViewModel());
+        }
+
+        [HttpPost("new")]
+        public async Task<IActionResult> New()
+        {
+            return Ok(await _propertyDataProvider.NewAsync(User.GetUserId()));
         }
 
         [HttpGet]
-        public async Task<PropertyDetailsViewModel[]> Get()
+        public async Task<IActionResult> Get()
         {
-            var properties = await _propertyDataProvider.GetListAsync(User.GetUserId());
-            return properties.ToArray();
+            return Ok(await _propertyDataProvider.GetListAsync(User.GetUserId()));
         }
 
         [HttpGet("{propertyId}")]
-        public async Task<PropertyDetailsViewModel> Get(Guid propertyId)
+        public async Task<IActionResult> Get(Guid propertyId)
         {
-            return await _propertyDataProvider.GetDetailsAsync(User.GetUserId(), propertyId);
+            var userId = User.GetUserId();
+
+            if (propertyId.IsDefault() || !userId.Owns<PropertyDetails>(propertyId, _context))
+                return BadRequest("Unable to validate payload");
+
+            return Ok(await _propertyDataProvider.GetDetailsAsync(User.GetUserId(), propertyId));
         }
 
         [HttpPost]
@@ -43,7 +56,12 @@
         {
             if (ModelState.IsValid)
             {
-                await _propertyDataProvider.CreateAsync(User, value);
+                var userId = User.GetUserId();
+
+                if (value.Id.IsDefault() || !userId.Owns<PropertyDetails>(value.Id, _context))
+                    return BadRequest("Unable to validate payload");
+                
+                await _propertyDataProvider.UpdateAsync(User.GetUserId(), value);
                 return Ok();
             }
             

@@ -26,6 +26,7 @@
         </tr>
       </tbody>
     </table>
+    <button type="button" class="btn btn-primary pointer" @click="addProperty()">Add a property</button>    
   </main>
 </template>
 
@@ -41,6 +42,13 @@ export default {
     this.$http.get('/api/propertydetails').then(response => {
       this.data = response.data
     })
+  },
+  methods: {
+    addProperty: function () {
+      this.$http.post('/api/propertydetails/new').then(response => {
+        this.$router.push(`/manager/property-details/${response.data.id}`)
+      })
+    }
   }
 }
 </script>

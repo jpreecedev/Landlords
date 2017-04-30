@@ -37,7 +37,7 @@ const router = new Router({
       require(['@/components/Manager.vue'], resolve)
     },
     children: [{
-      path: 'property-details/:propertyId?',
+      path: 'property-details/:propertyId',
       name: 'propertyDetails',
       component: function (resolve) {
         require(['@/components/PropertyDetails.vue'], resolve)
