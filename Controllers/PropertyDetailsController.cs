@@ -7,21 +7,15 @@
     using Landlords.Core;
     using Landlords.ViewModels;
     using System.Threading.Tasks;
-    using Landlords.Interfaces;
-    using System.Collections.Generic;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Http;
 
     [Route("api/[controller]")]
-    public class PropertyDetailsController : Controller, IImageUpload
+    public class PropertyDetailsController : Controller
     {
         private readonly IPropertyDataProvider _propertyDataProvider;
-        private readonly IHostingEnvironment _hostingEnvironment;
 
-        public PropertyDetailsController(IPropertyDataProvider dataAccessProvider, IHostingEnvironment hostingEnvironment)
+        public PropertyDetailsController(IPropertyDataProvider dataAccessProvider)
         {
             _propertyDataProvider = dataAccessProvider;
-            _hostingEnvironment = hostingEnvironment;
         }
 
         [HttpGet("ViewData")]
@@ -54,20 +48,6 @@
             }
             
             return BadRequest(new { Errors = ModelState.Errors() });
-        }
-
-        [HttpPost("upload")]
-        public async Task<IActionResult> Upload(ICollection<IFormFile> files)
-        {
-            try
-            {
-                return Ok(await new ImageUploadHelper().ProcessUploadedFiles(_hostingEnvironment, files, User.GetUserId()));
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-
         }
     }
 }

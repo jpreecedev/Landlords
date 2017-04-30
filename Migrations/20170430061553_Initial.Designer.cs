@@ -8,7 +8,7 @@ using Landlords.Database;
 namespace Landlords.Migrations
 {
     [DbContext(typeof(LLDbContext))]
-    [Migration("20170417125953_Initial")]
+    [Migration("20170430061553_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -221,6 +221,29 @@ namespace Landlords.Migrations
                     b.ToTable("PropertyDetails");
                 });
 
+            modelBuilder.Entity("Model.PropertyImage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Created");
+
+                    b.Property<DateTime?>("Deleted");
+
+                    b.Property<string>("FileName")
+                        .HasMaxLength(255);
+
+                    b.Property<Guid>("PropertyId");
+
+                    b.Property<Guid>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PropertyImages");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.HasOne("Model.Database.ApplicationRole")
@@ -264,6 +287,15 @@ namespace Landlords.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .HasConstraintName("ForeignKey_User_PropertyDetails")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Model.PropertyImage", b =>
+                {
+                    b.HasOne("Model.Database.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .HasConstraintName("ForeignKey_User_PropertyImages")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
         }

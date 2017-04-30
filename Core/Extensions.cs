@@ -11,9 +11,47 @@
     using System.Linq;
     using Model.Database;
     using Newtonsoft.Json;
+    using System.Collections.Generic;
+    using Microsoft.AspNetCore.Http;
 
     public static class Extensions
     {
+        public static bool Owns(this Guid userId, Guid propertyId, ILLDbContext context)
+        {
+            if (userId.IsDefault() || propertyId.IsDefault() || context == null)
+            {
+                return false;
+            }
+
+            return context.PropertyDetails.Any(c => c.UserId == userId && c.Id == propertyId);
+        }
+
+        public static bool IsDefault(this Guid guid)
+        {
+            return guid == default(Guid);
+        }
+
+        public static bool IsValid(this ICollection<IFormFile> files)
+        {
+            if (files == null || files.Count == 0)
+            {
+                return false;
+            }
+
+            var result = true;
+
+            foreach (var formFile in files)
+            {
+                if (formFile.Length > Constants.UPLOAD_LIMIT)
+                {
+                    result = false;
+                    break;
+                }
+            }
+
+            return result;
+        }
+
         public static string AsGenericError(this string message)
         {
             return JsonConvert.SerializeObject(new
@@ -65,6 +103,7 @@
         public static void RegisterDI(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddScoped<IPropertyDataProvider, PropertyDataProvider>();
+            serviceCollection.AddScoped<IPropertyImageDataProvider, PropertyImageDataProvider>();
             serviceCollection.AddScoped<IUserRepository, UserRepository>();
             serviceCollection.AddScoped<ILLDbContext, LLDbContext>();
         }

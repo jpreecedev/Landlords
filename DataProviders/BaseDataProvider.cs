@@ -14,5 +14,13 @@
             entity.UserId = user.Id;
             entity.Created = DateTime.Now;
         }
+
+        protected void PopulateNewEntity(Guid userId, T entity)
+        {
+            if (entity == null) throw new ArgumentNullException(nameof(entity));
+            
+            entity.UserId = userId;
+            entity.Created = DateTime.Now;
+        }
     }
 }

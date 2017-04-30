@@ -15,7 +15,7 @@
         </div>
         <div class="property-image">
           <label>
-            <input type="file" accept="image/*" @change="filesChange($event.target.name, $event.target.files)" name="files">
+            <input type="file" accept="image/x-png,image/gif,image/jpeg" multiple @change="filesChange($event.target.name, $event.target.files)" name="files">
             <img class="placeholder" src="../assets/images/placeholder.png" alt="Add more images...">
             <div class="progress mt-4" v-if="isUploading">
               <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%;"></div>
@@ -261,7 +261,7 @@ export default {
           formData.append(fieldName, fileList[x], fileList[x].name)
         })
 
-      fileUpload.upload(formData, '/api/propertyDetails/upload')
+      fileUpload.upload(formData, `/api/propertyimage/upload?propertyId=${this.$route.params.propertyId}`)
         .then(imageUrl => {
           this.propertyDetails.propertyImages.push({
             src: imageUrl,

@@ -8,6 +8,8 @@
     {
         DbSet<PropertyDetails> PropertyDetails { get; set; }
 
+        DbSet<PropertyImage> PropertyImages { get; set; }
+        
         DbSet<ApplicationUser> Users { get; set; }
     }
 }

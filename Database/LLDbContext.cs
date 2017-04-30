@@ -19,6 +19,11 @@
                 .HasOne(p => p.User)
                 .WithMany()
                 .HasConstraintName("ForeignKey_User_PropertyDetails");
+            
+            builder.Entity<PropertyImage>()
+                .HasOne(p => p.User)
+                .WithMany()
+                .HasConstraintName("ForeignKey_User_PropertyImages");
 
             base.OnModelCreating(builder);
         }
@@ -29,5 +34,6 @@
         }
 
         public DbSet<PropertyDetails> PropertyDetails { get; set; }
+        public DbSet<PropertyImage> PropertyImages { get; set; }
     }
 }

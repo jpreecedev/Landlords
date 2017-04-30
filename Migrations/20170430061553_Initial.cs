@@ -184,6 +184,28 @@ namespace Landlords.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "PropertyImages",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Created = table.Column<DateTime>(nullable: false),
+                    Deleted = table.Column<DateTime>(nullable: true),
+                    FileName = table.Column<string>(maxLength: 255, nullable: true),
+                    PropertyId = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PropertyImages", x => x.Id);
+                    table.ForeignKey(
+                        name: "ForeignKey_User_PropertyImages",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -225,6 +247,11 @@ namespace Landlords.Migrations
                 name: "IX_PropertyDetails_UserId",
                 table: "PropertyDetails",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PropertyImages_UserId",
+                table: "PropertyImages",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -246,6 +273,9 @@ namespace Landlords.Migrations
 
             migrationBuilder.DropTable(
                 name: "PropertyDetails");
+
+            migrationBuilder.DropTable(
+                name: "PropertyImages");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

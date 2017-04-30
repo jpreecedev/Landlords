@@ -5,6 +5,7 @@
     using Model;
     using Model.Database;
     using Model.DataTypes;
+    using Model.Validation;
 
     //TODO: Use automapper
     public class PropertyDetailsViewModel : IPropertyDetails, IEntity<PropertyDetails>
@@ -89,6 +90,7 @@
 
         public string[] DefaultCountries { get; } = Countries.GetDefaultCountries();
 
+        [ValidateGuid]
         public Guid Id { get; private set; }
 
         public ApplicationUser UserId { get; private set; }
