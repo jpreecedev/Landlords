@@ -13,17 +13,18 @@
     using Newtonsoft.Json;
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Http;
+    using Model;
 
     public static class Extensions
     {
-        public static bool Owns(this Guid userId, Guid propertyId, ILLDbContext context)
+        public static bool Owns<T>(this Guid userId, Guid propertyId, ILLDbContext context) where T : BaseModel
         {
             if (userId.IsDefault() || propertyId.IsDefault() || context == null)
             {
                 return false;
             }
 
-            return context.PropertyDetails.Any(c => c.UserId == userId && c.Id == propertyId);
+            return context.Set<T>().Where(c => !c.IsDeleted).Any(c => c.UserId == userId && c.Id == propertyId);
         }
 
         public static bool IsDefault(this Guid guid)

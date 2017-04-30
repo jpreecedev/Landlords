@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-
-namespace Landlords.DataProviders
+﻿namespace Landlords.DataProviders
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Http;
+    using ViewModels;
+
     public interface IPropertyImageDataProvider
     {
-        Task<List<string>> UploadAsync(ICollection<IFormFile> files, Guid userId, Guid propertyId);
+        Task<ICollection<PropertyImageViewModel>> UploadAsync(ICollection<IFormFile> files, Guid userId, Guid propertyId);
+        Task DeleteAsync(Guid userId, Guid propertyImageId);
     }
 }

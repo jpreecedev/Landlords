@@ -9,6 +9,7 @@
     using Interfaces;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+    using Model;
 
     [Route("api/[controller]")]
     public class PropertyImageController : Controller, IImageUpload
@@ -22,17 +23,36 @@
             _context = context;
         }
 
-        [HttpPost("upload")]
-        public async Task<IActionResult> Upload(ICollection<IFormFile> files, Guid propertyId)
+        [HttpDelete]
+        public async Task<IActionResult> Delete(Guid entityId)
         {
             try
             {
                 var userId = User.GetUserId();
 
-                if (!files.IsValid() || propertyId.IsDefault() || !userId.Owns(propertyId, _context))
+                if (entityId.IsDefault() || !userId.Owns<PropertyImage>(entityId, _context))
                     return BadRequest("Unable to validate payload");
 
-                return Ok(await _dataProvider.UploadAsync(files, userId, propertyId));
+                await _dataProvider.DeleteAsync(userId, entityId);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpPost("upload")]
+        public async Task<IActionResult> Upload(ICollection<IFormFile> files, Guid entityId)
+        {
+            try
+            {
+                var userId = User.GetUserId();
+
+                if (!files.IsValid() || entityId.IsDefault() || !userId.Owns<PropertyDetails>(entityId, _context))
+                    return BadRequest("Unable to validate payload");
+
+                return Ok(await _dataProvider.UploadAsync(files, userId, entityId));
             }
             catch (Exception e)
             {

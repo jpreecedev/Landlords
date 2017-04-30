@@ -8,27 +8,23 @@
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
     using Model;
+    using Landlords.ViewModels;
 
     public class PropertyImageDataProvider : BaseDataProvider<PropertyImage>, IPropertyImageDataProvider
     {
-        private readonly LLDbContext _context;
-        private readonly IHostingEnvironment _hostingEnvironment;
-
-        public PropertyImageDataProvider(IHostingEnvironment hostingEnvironment, LLDbContext context)
+        public PropertyImageDataProvider(IHostingEnvironment hostingEnvironment, LLDbContext context) : base(hostingEnvironment, context)
         {
-            _hostingEnvironment = hostingEnvironment;
-            _context = context;
         }
 
-        public async Task<List<string>> UploadAsync(ICollection<IFormFile> files, Guid userId, Guid propertyId)
+        public async Task<ICollection<PropertyImageViewModel>> UploadAsync(ICollection<IFormFile> files, Guid userId, Guid propertyId)
         {
-            var uploadDirectory = Path.Combine(_hostingEnvironment.WebRootPath, "static", "uploads", userId.ToString());
+            var uploadDirectory = Path.Combine(HostingEnvironment.WebRootPath, "static", "uploads", userId.ToString());
             if (!Directory.Exists(uploadDirectory))
             {
                 Directory.CreateDirectory(uploadDirectory);
             }
 
-            var result = new List<string>();
+            var result = new List<PropertyImageViewModel>();
 
             foreach (var file in files)
             {
@@ -37,8 +33,9 @@
                     using (var fileStream = new FileStream(Path.Combine(uploadDirectory, file.FileName), FileMode.Create))
                     {
                         await file.CopyToAsync(fileStream);
-                        await AttachToPropertyAsync(userId, propertyId, file.FileName);
-                        result.Add(new Uri(Path.Combine("/static/uploads", userId.ToString(), file.FileName), UriKind.Relative).ToString().Replace("\\", "/"));
+
+                        var entity = await AttachToPropertyAsync(userId, propertyId, file.FileName);
+                        result.Add(new PropertyImageViewModel(entity));
                     }
                 }
             }
@@ -46,7 +43,7 @@
             return result;
         }
 
-        private async Task AttachToPropertyAsync(Guid userId, Guid propertyId, string fileName)
+        private async Task<PropertyImage> AttachToPropertyAsync(Guid userId, Guid propertyId, string fileName)
         {
             var entity = new PropertyImage
             {
@@ -57,8 +54,10 @@
 
             PopulateNewEntity(userId, entity);
 
-            await _context.PropertyImages.AddAsync(entity);
-            await _context.SaveChangesAsync();
+            await Context.PropertyImages.AddAsync(entity);
+            await Context.SaveChangesAsync();
+
+            return entity;
         }
     }
 }

@@ -8,6 +8,7 @@
 
     public interface IImageUpload
     {
-        Task<IActionResult> Upload(ICollection<IFormFile> files, Guid propertyId);
+        Task<IActionResult> Upload(ICollection<IFormFile> files, Guid entityId);
+        Task<IActionResult> Delete(Guid entityId);
     }
 }

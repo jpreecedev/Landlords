@@ -2,6 +2,7 @@
 {
     using System;
     using Model;
+    using Model.Validation;
 
     public class PropertyImageViewModel : IPropertyImage, IEntity<PropertyImage>
     {
@@ -16,6 +17,7 @@
 
             FileName = propertyImage.FileName;
             PropertyId = propertyImage.PropertyId;
+            Id = propertyImage.Id;
         }
 
         public PropertyImage Map()
@@ -28,6 +30,11 @@
         }
 
         public string FileName { get; set; }
+
+        [ValidateGuid]
         public Guid PropertyId { get; set; }
+
+        [ValidateGuid]
+        public Guid Id { get; set; }
     }
 }

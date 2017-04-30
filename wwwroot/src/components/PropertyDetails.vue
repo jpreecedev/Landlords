@@ -10,17 +10,20 @@
     </div>    
     <form @submit.prevent="validateBeforeSubmit" role="form" enctype="multipart/form-data" novalidate>
       <div class="property-image-container">
-        <div class="property-image" v-for="propertyImage in propertyDetails.propertyImages">
-          <img class="img-thumbnail" v-if="propertyImage.fileName" v-bind:src="'/static/uploads/' + propertyDetails.userId + '/' + propertyImage.fileName" v-bind:alt="propertyImage.fileName" v-bind:title="propertyImage.fileName">
-        </div>
         <div class="property-image">
           <label>
             <input type="file" accept="image/x-png,image/gif,image/jpeg" multiple @change="filesChange($event.target.name, $event.target.files)" name="files">
             <img class="placeholder" src="../assets/images/placeholder.png" alt="Add more images...">
-            <div class="progress mt-4" v-if="isUploading">
-              <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%;"></div>
-            </div>
           </label>
+        </div>
+        <div class="property-image" v-for="propertyImage in propertyDetails.propertyImages">
+          <img class="img-thumbnail" v-if="propertyImage.fileName" v-bind:src="'/static/uploads/' + propertyDetails.userId + '/' + propertyImage.fileName" v-bind:alt="propertyImage.fileName" v-bind:title="propertyImage.fileName">
+          <div class="overlay">
+            <button type="button" class="btn btn-danger pointer" @click="deleteImage(propertyImage)">Delete</button>
+          </div>
+        </div>
+        <div class="row col progress mt-4" v-if="isUploading">
+          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%;"></div>
         </div>
       </div>
       <div class="row">
@@ -256,22 +259,32 @@ export default {
 
       this.isUploading = true
 
-      Array
-        .from(Array(fileList.length).keys())
-        .map(x => {
-          formData.append(fieldName, fileList[x], fileList[x].name)
-        })
+      Array.from(Array(fileList.length).keys()).map(x => {
+        formData.append(fieldName, fileList[x], fileList[x].name)
+      })
 
-      fileUpload.upload(formData, `/api/propertyimage/upload?propertyId=${this.$route.params.propertyId}`)
-        .then(imageUrl => {
-          this.propertyDetails.propertyImages.push({
-            src: imageUrl,
-            alt: imageUrl
-          })
+      fileUpload.upload(formData, `/api/propertyimage/upload?entityId=${this.$route.params.propertyId}`)
+        .then(images => {
+          if (images) {
+            images.forEach(image => {
+              this.propertyDetails.propertyImages.push(image)
+            })
+          }
         })
         .finally(() => {
           this.isUploading = false
         })
+    },
+    deleteImage: function (propertyImage) {
+      if (confirm('Are you sure you want to delete this image?')) {
+        this.$http.delete(`/api/propertyimage?entityId=${propertyImage.id}`)
+          .then(() => {
+            this.propertyDetails.propertyImages.splice(this.propertyDetails.propertyImages.indexOf(propertyImage), 1)
+          })
+          .catch(() => {
+            alert('Unable to delete image at this time')
+          })
+      }
     }
   },
   watch: {
@@ -288,12 +301,17 @@ export default {
 
     background-color: $gray-lighter;
     margin-bottom: 2rem;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    min-height: 275px;
+    white-space: nowrap;
 
     @include media-breakpoint-up(lg) {
-      padding: remc(32px) remc(16px);      
+      padding: remc(24px) remc(16px);      
     }
 
     .property-image {
+      position: relative;
       display: inline-block;
       label {
         input[type="file"] {
@@ -305,9 +323,7 @@ export default {
         max-width: 200px;
         max-height: 200px;
         height: auto;
-        &:not(.placeholder) {
-          margin-right: remc(16px);
-        }
+        margin-right: remc(16px);
         &:hover {
           background-color: $gray-lightest;
         }
@@ -316,6 +332,29 @@ export default {
           border-radius: 30px;
           cursor: pointer;
         }
+      }
+      .img-thumbnail {
+        opacity: 1;
+        transition: .5s ease;
+        backface-visibility: hidden;
+      }
+
+      .overlay {
+        transition: .5s ease;
+        opacity: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%)
+      }
+
+      &:hover .img-thumbnail {
+        opacity: 0.3;
+      }
+
+      &:hover .overlay {
+        opacity: 1;
       }
     }
   }

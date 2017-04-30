@@ -11,5 +11,7 @@
         DbSet<PropertyImage> PropertyImages { get; set; }
         
         DbSet<ApplicationUser> Users { get; set; }
+
+        DbSet<T> Set<T>() where T : class;
     }
 }
