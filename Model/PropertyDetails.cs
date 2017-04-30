@@ -1,7 +1,7 @@
 ﻿namespace Model
 {
     using System;
-
+    
     //EF Core does not support complex types
 
     public class PropertyDetails : BaseModel, IPropertyDetails

@@ -7,6 +7,7 @@
     using Landlords.Core;
     using Landlords.ViewModels;
     using System.Threading.Tasks;
+    using Model;
 
     [Route("api/[controller]")]
     public class PropertyDetailsController : Controller
@@ -28,14 +29,13 @@
         public async Task<PropertyDetailsViewModel[]> Get()
         {
             var properties = await _propertyDataProvider.GetListAsync(User.GetUserId());
-            return properties.Select(property => new PropertyDetailsViewModel(property)).ToArray();
+            return properties.ToArray();
         }
 
         [HttpGet("{propertyId}")]
-        public async Task<PropertyDetailsViewModel> Get(Guid propertyId)
+        public async Task<PropertyDetails> Get(Guid propertyId)
         {
-            var propertyDetails = await _propertyDataProvider.GetDetailsAsync(User.GetUserId(), propertyId);
-            return new PropertyDetailsViewModel(propertyDetails);
+            return await _propertyDataProvider.GetDetailsAsync(User.GetUserId(), propertyId);
         }
 
         [HttpPost]

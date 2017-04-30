@@ -35,20 +35,23 @@
 
         public async Task<PropertyDetails> GetDetailsAsync(Guid userId, Guid propertyId)
         {
-            return await _dataContext.PropertyDetails.FirstOrDefaultAsync(c => c.UserId == userId && c.Id == propertyId);
+            return await _dataContext.PropertyDetails
+                .FirstOrDefaultAsync(c => c.UserId == userId && c.Id == propertyId);
         }
 
-        public async Task<ICollection<PropertyDetails>> GetListAsync(Guid userId)
+        public async Task<ICollection<PropertyDetailsViewModel>> GetListAsync(Guid userId)
         {
-            return await _dataContext.PropertyDetails
-                .Where(c => c.UserId == userId)
-                .Select(c => new PropertyDetails
-                {
-                    Id = c.Id,
-                    Reference = c.Reference,
-                    PropertyStreetAddress = c.PropertyStreetAddress
-                })
-                .ToListAsync();
+            return await (from details in _dataContext.PropertyDetails
+                          join images in _dataContext.PropertyImages on details.Id equals images.PropertyId into imageJoin
+                          from img in imageJoin.DefaultIfEmpty()
+                          where details.UserId == userId
+                          select new PropertyDetailsViewModel(details.Id, userId)
+                          {
+                              Reference = details.Reference,
+                              PropertyStreetAddress = details.PropertyStreetAddress,
+                              PropertyImages = imageJoin.ToList()
+                          })
+                          .ToListAsync();
         }
     }
 }

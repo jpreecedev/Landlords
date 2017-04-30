@@ -3,9 +3,9 @@
     using System;
     using System.ComponentModel.DataAnnotations;
     using Model;
-    using Model.Database;
     using Model.DataTypes;
     using Model.Validation;
+    using System.Collections.Generic;
 
     //TODO: Use automapper
     public class PropertyDetailsViewModel : IPropertyDetails, IEntity<PropertyDetails>
@@ -14,10 +14,16 @@
         {
         }
 
+        public PropertyDetailsViewModel(Guid propertyId, Guid userId)
+        {
+            Id = propertyId;
+            UserId = userId;
+        }
+
         public PropertyDetailsViewModel(PropertyDetails propertyDetails)
         {
             Id = propertyDetails.Id;
-            UserId = propertyDetails.User;
+            UserId = propertyDetails.UserId;
             ConstructionDate = propertyDetails.ConstructionDate;
             Furnishing = propertyDetails.Furnishing;
             IsAvailableForLetting = propertyDetails.IsAvailableForLetting;
@@ -90,10 +96,13 @@
 
         public string[] DefaultCountries { get; } = Countries.GetDefaultCountries();
 
+        public ICollection<PropertyImage> PropertyImages { get; set; }
+
         [ValidateGuid]
         public Guid Id { get; private set; }
 
-        public ApplicationUser UserId { get; private set; }
+        [ValidateGuid]
+        public Guid UserId { get; private set; }
 
         public PropertyDetails Map()
         {
