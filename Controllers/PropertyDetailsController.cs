@@ -33,7 +33,7 @@
         }
 
         [HttpGet("{propertyId}")]
-        public async Task<PropertyDetails> Get(Guid propertyId)
+        public async Task<PropertyDetailsViewModel> Get(Guid propertyId)
         {
             return await _propertyDataProvider.GetDetailsAsync(User.GetUserId(), propertyId);
         }

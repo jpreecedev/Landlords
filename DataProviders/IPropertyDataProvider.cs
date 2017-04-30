@@ -10,7 +10,7 @@
     public interface IPropertyDataProvider
     {
         Task CreateAsync(ClaimsPrincipal user, PropertyDetailsViewModel viewModel);
-        Task<PropertyDetails> GetDetailsAsync(Guid userId, Guid propertyId);
+        Task<PropertyDetailsViewModel> GetDetailsAsync(Guid userId, Guid propertyId);
         Task<ICollection<PropertyDetailsViewModel>> GetListAsync(Guid guid);
     }
 }

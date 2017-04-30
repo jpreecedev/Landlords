@@ -22,6 +22,8 @@
 
         public PropertyDetailsViewModel(PropertyDetails propertyDetails)
         {
+            if (propertyDetails == null) throw new ArgumentNullException(nameof(propertyDetails));
+
             Id = propertyDetails.Id;
             UserId = propertyDetails.UserId;
             ConstructionDate = propertyDetails.ConstructionDate;
@@ -96,7 +98,9 @@
 
         public string[] DefaultCountries { get; } = Countries.GetDefaultCountries();
 
-        public ICollection<PropertyImage> PropertyImages { get; set; }
+        public PropertyImageViewModel LeadImage { get; set; }
+
+        public ICollection<PropertyImageViewModel> PropertyImages { get; set; }
 
         [ValidateGuid]
         public Guid Id { get; private set; }

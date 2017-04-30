@@ -33,10 +33,19 @@
             await _dataContext.SaveChangesAsync();
         }
 
-        public async Task<PropertyDetails> GetDetailsAsync(Guid userId, Guid propertyId)
+        public async Task<PropertyDetailsViewModel> GetDetailsAsync(Guid userId, Guid propertyId)
         {
-            return await _dataContext.PropertyDetails
-                .FirstOrDefaultAsync(c => c.UserId == userId && c.Id == propertyId);
+            return await (from details in _dataContext.PropertyDetails
+                          join images in _dataContext.PropertyImages on details.Id equals images.PropertyId into imageJoin
+                          from img in imageJoin.DefaultIfEmpty()
+                          where details.UserId == userId && details.Id == propertyId
+                          select new PropertyDetailsViewModel(details.Id, userId)
+                          {
+                              Reference = details.Reference,
+                              PropertyStreetAddress = details.PropertyStreetAddress,
+                              PropertyImages = imageJoin.Select(c => new PropertyImageViewModel(c)).ToList()
+                          })
+                         .FirstOrDefaultAsync();
         }
 
         public async Task<ICollection<PropertyDetailsViewModel>> GetListAsync(Guid userId)
@@ -49,7 +58,7 @@
                           {
                               Reference = details.Reference,
                               PropertyStreetAddress = details.PropertyStreetAddress,
-                              PropertyImages = imageJoin.ToList()
+                              LeadImage = imageJoin.Select(c => new PropertyImageViewModel(c)).FirstOrDefault()
                           })
                           .ToListAsync();
         }

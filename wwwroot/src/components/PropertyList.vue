@@ -15,7 +15,7 @@
       <tbody>
         <tr v-for="entry in data">
           <td>
-            <img class="grid-image" v-if="entry.propertyImages && entry.propertyImages.length > 0" v-bind:src="getImageSource(entry)" v-bind:alt="entry.propertyImages[0].fileName">
+            <img class="img-thumbnail" v-if="entry.leadImage" v-bind:src="'/static/uploads/' + entry.userId + '/' + entry.leadImage.fileName" v-bind:alt="entry.leadImage.fileName">
           </td>
           <td>
             <router-link :to="'/manager/property-details/' + entry.id">{{ entry.reference }}</router-link>
@@ -41,14 +41,6 @@ export default {
     this.$http.get('/api/propertydetails').then(response => {
       this.data = response.data
     })
-  },
-  methods: {
-    getImageSource: function (entry) {
-      return '/static/uploads/' + entry.propertyImages[0].userId + '/' + entry.propertyImages[0].fileName
-    },
-    rowClicked: function (entry) {
-      this.$router.push({ name: 'propertyDetails', params: { propertyId: entry.id } })
-    }
   }
 }
 </script>
@@ -57,12 +49,6 @@ export default {
 
 thead > tr > th:first-of-type {
   width: 175px;
-}
-
-.grid-image {
-  max-width: 150px;
-  max-height: 150px;
-  height: auto;
 }
   
 </style>

@@ -79,7 +79,6 @@ module.exports = {
         returnValue[wrapperName][p] = props[p]
       }
     }
-
     return returnValue
   },
 

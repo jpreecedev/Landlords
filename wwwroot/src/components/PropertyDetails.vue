@@ -11,7 +11,7 @@
     <form @submit.prevent="validateBeforeSubmit" role="form" enctype="multipart/form-data" novalidate>
       <div class="property-image-container">
         <div class="property-image" v-for="propertyImage in propertyDetails.propertyImages">
-          <img v-if="propertyImage.src" v-bind:src="propertyImage.src" v-bind:alt="propertyImage.alt">
+          <img class="img-thumbnail" v-if="propertyImage.fileName" v-bind:src="'/static/uploads/' + propertyDetails.userId + '/' + propertyImage.fileName" v-bind:alt="propertyImage.fileName" v-bind:title="propertyImage.fileName">
         </div>
         <div class="property-image">
           <label>
@@ -221,7 +221,8 @@ export default {
         propertyCountyOrRegion: '',
         propertyPostcode: '',
         propertyCountry: '',
-        propertyImages: []
+        propertyImages: [],
+        userId: ''
       }
     }
   },
@@ -301,8 +302,8 @@ export default {
         }
       }
       img {
-        max-width: 250px;
-        max-height: 250px;
+        max-width: 200px;
+        max-height: 200px;
         height: auto;
         &:not(.placeholder) {
           margin-right: remc(16px);
