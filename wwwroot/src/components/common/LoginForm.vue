@@ -11,14 +11,14 @@
           <div class="form-group row" :class="{ 'has-danger': errors.has('emailAddress') }">
             <label for="emailAddress" class="col-3">Email Address</label>
             <div class="col-9">
-              <input type="email" class="form-control" id="emailAddress" name="emailAddress" placeholder="Enter your email" v-validate="'required|email'" v-model="credentials.username" data-vv-validate-on="blur" required>
+              <input type="email" class="form-control" id="emailAddress" name="emailAddress" placeholder="Enter your email" v-validate="'required|email'" v-model="credentials.username" data-vv-validate-on="change" required>
               <span v-show="errors.has('emailAddress')" v-bind:title="errors.first('emailAddress')" class="form-control-feedback">Enter a valid email address</span>
             </div>
           </div>
           <div class="form-group row" :class="{ 'has-danger': errors.has('password') }">
             <label for="password" class="col-3">Password</label>
             <div class="col-9">
-              <input type="password" class="form-control" id="password" name="password" placeholder="Password" v-model="credentials.password" v-validate="'required|min:8'" data-vv-validate-on="blur" required>
+              <input type="password" class="form-control" id="password" name="password" placeholder="Password" v-model="credentials.password" v-validate="'required|min:8'" data-vv-validate-on="change" required>
               <span v-show="errors.has('password')" v-bind:title="errors.first('password')" class="form-control-feedback">Enter your password</span>
             </div>
           </div>

@@ -1,7 +1,6 @@
 ﻿namespace Landlords.Core
 {
     using System;
-    using System.Collections;
     using System.Security.Claims;
     using Database;
     using DataProviders;
@@ -13,10 +12,29 @@
     using Newtonsoft.Json;
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Identity;
     using Model;
 
     public static class Extensions
     {
+        public static IEnumerable<IdentityError> ToGeneric(this IEnumerable<IdentityError> errors)
+        {
+            return errors.Select(c => new IdentityError {Code = "GenericError", Description = c.Description});
+        }
+
+        public static object ToErrorCollection(this IEnumerable<IdentityError> errors)
+        {
+            return errors.Select(c => new { Key = c.Code, Value = new[] {c.Description} })
+                .ToList();
+        }
+
+        public static object ToErrorCollection(this ModelStateDictionary modelState)
+        {
+            return modelState.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray())
+                .Select(c => new {c.Key, c.Value})
+                .ToList();
+        }
+
         public static bool Owns<T>(this Guid userId, Guid propertyId, ILLDbContext context) where T : BaseModel
         {
             if (userId.IsDefault() || propertyId.IsDefault() || context == null)
@@ -88,17 +106,6 @@
             }
 
             throw new InvalidOperationException("Unable to determine User");
-        }
-
-        public static IEnumerable Errors(this ModelStateDictionary modelState)
-        {
-            if (!modelState.IsValid)
-                return modelState.ToDictionary(kvp => kvp.Key,
-                        kvp => kvp.Value.Errors
-                            .Select(e => e.ErrorMessage)
-                            .ToArray())
-                    .Where(m => m.Value.Count() > 0);
-            return null;
         }
 
         public static void RegisterDI(this IServiceCollection serviceCollection)

@@ -26,8 +26,11 @@
                 <router-link class="dropdown-item" to="/calculators/is-this-property-a-good-investment">Is this property a good investment?</router-link>
               </div>
           </li>
-          <li v-if="auth.isLoggedIn" class="nav-item">
-            <a class="pointer nav-link" @click="logout()">Log Out</a>
+        </ul>
+        <ul class="navbar-nav" v-if="auth.isLoggedIn">
+          <li class="nav-item">
+            <span class="navbar-text">Hi, {{ user.name }}</span>
+            <a class="pointer nav-link d-inline-block" @click="logout()">Log Out.</a>
           </li>
         </ul>
       </div>
@@ -39,7 +42,8 @@
 export default {
   data () {
     return {
-      auth: this.$store.state.auth
+      auth: this.$store.state.auth,
+      user: this.$store.state.user
     }
   },
   methods: {

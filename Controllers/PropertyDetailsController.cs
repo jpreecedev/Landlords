@@ -65,7 +65,7 @@
                 return Ok();
             }
             
-            return BadRequest(new { Errors = ModelState.Errors() });
+            return BadRequest(ModelState.ToErrorCollection());
         }
     }
 }

@@ -1,7 +1,10 @@
 ﻿namespace Landlords.Controllers
 {
+    using System.Linq;
     using System.Threading.Tasks;
+    using Core;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Repositories;
     using ViewModels;
@@ -21,17 +24,28 @@
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] RegisterUserViewModel data)
         {
-            var user = new ApplicationUser();
-            user.UserName = user.Email = data.EmailAddress;
+            IdentityResult registrationResult = null;
 
-            var result = await _userRepository.Create(user, data.Password);
-            if (result.Succeeded)
+            if (ModelState.IsValid)
             {
-                await _userRepository.AddToRole(user, ApplicationRoles.Landlord);
-                return Ok();
+                var user = new ApplicationUser();
+                user.UserName = user.Email = data.EmailAddress;
+                user.FirstName = data.FirstName;
+                user.LastName = data.LastName;
+
+                registrationResult = await _userRepository.Create(user, data.Password);
+                if (registrationResult.Succeeded)
+                {
+                    // TODO
+                    await _userRepository.AddToRole(user, ApplicationRoles.Landlord);
+                    return Ok();
+                }
             }
 
-            return BadRequest(string.Join(",", result.Errors));
+            return BadRequest(new
+            {
+                Errors = ModelState.ErrorCount > 0 ? ModelState.ToErrorCollection() : registrationResult.Errors.ToGeneric().ToErrorCollection()
+            });
         }
     }
 }

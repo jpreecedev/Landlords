@@ -163,8 +163,8 @@ export default {
     auth.isLoggedIn = true
     auth.accessToken = response.body.access_token
     auth.refreshToken = response.body.refresh_token
-    // TODO: get user's name from response from Oauth server.
-    user.name = 'John Smith'
+
+    user.name = response.body.name
 
     store.commit('UPDATE_AUTH', auth)
     store.commit('UPDATE_USER', user)
