@@ -137,6 +137,30 @@ module.exports = {
       actualScore,
       scoreDisplay
     }
-  }
+  },
 
+  pad: function (input) {
+    if (!input) {
+      return '00'
+    }
+    if (input.toString().length === 1) {
+      return '0' + input
+    }
+    return input
+  },
+
+  getTimesForSelectList: function () {
+    var result = []
+
+    for (var i = 0; i < 24; i++) {
+      for (var j = 0; j < 60; j += 15) {
+        result.push({
+          value: `1970-01-01T${this.pad(i) + ':' + this.pad(j) + ':00'}`,
+          display: this.pad(i) + ':' + this.pad(j)
+        })
+      }
+    }
+
+    return result
+  }
 }

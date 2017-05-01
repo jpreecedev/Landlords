@@ -28,8 +28,10 @@
           </li>
         </ul>
         <ul class="navbar-nav" v-if="auth.isLoggedIn">
+          <router-link tag="li" to="/profile" active-class="active" class="nav-item">
+            <a class="nav-link">Hi, {{ user.name }} (Profile)</a>
+          </router-link>
           <li class="nav-item">
-            <span class="navbar-text">Hi, {{ user.name }}</span>
             <a class="pointer nav-link d-inline-block" @click="logout()">Log Out.</a>
           </li>
         </ul>

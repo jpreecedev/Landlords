@@ -31,6 +31,14 @@ const router = new Router({
     beforeEnter: guardRoute
   },
   {
+    path: '/profile',
+    name: 'profile',
+    component: function (resolve) {
+      require(['@/components/Profile.vue'], resolve)
+    },
+    beforeEnter: guardRoute
+  },
+  {
     path: '/manager',
     beforeEnter: guardRoute,
     component: function (resolve) {

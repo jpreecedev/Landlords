@@ -1,10 +1,14 @@
 ﻿namespace Landlords.Repositories
 {
+    using System;
     using System.Linq;
+    using System.Security.Claims;
     using Database;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
     using Model.Database;
+    using ViewModels;
 
     public class UserRepository : IUserRepository
     {
@@ -30,6 +34,28 @@
             }
 
             return await _userManager.AddToRoleAsync(user, role);
+        }
+
+        public async Task UpdateAsync(Guid userId, ProfileViewModel viewModel)
+        {
+            var user = await _userManager.Users.FirstOrDefaultAsync(c => c.Id == userId);
+            if (user != null)
+            {
+                user.FirstName = viewModel.FirstName;
+                user.LastName = viewModel.LastName;
+                user.AvailableFrom = viewModel.AvailableFrom;
+                user.AvailableTo = viewModel.AvailableTo;
+                user.MainPhoneNumber = viewModel.MainPhoneNumber;
+                user.SecondaryPhoneNumber = viewModel.SecondaryPhoneNumber;
+
+                await _userManager.UpdateAsync(user);
+            }
+        }
+
+        public async Task<ProfileViewModel> GetProfileAsync(Guid userId)
+        {
+            var user = await _userManager.Users.FirstOrDefaultAsync(c => c.Id == userId);
+            return new ProfileViewModel(user);
         }
 
         public async Task<IdentityResult> Create(ApplicationUser user, string password)

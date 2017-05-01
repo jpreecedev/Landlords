@@ -3,7 +3,7 @@
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using System;
 
-    public class ApplicationUser : IdentityUser<Guid>
+    public class ApplicationUser : IdentityUser<Guid>, IApplicationUser
     {
         public string FirstName { get; set; }
 
