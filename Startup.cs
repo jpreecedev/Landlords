@@ -1,20 +1,22 @@
 ﻿namespace Landlords
 {
-    using Landlords.Jwt;
+    using System;
+    using System.Text;
+    using Core;
+    using Database;
+    using Jwt;
+    using Microsoft.AspNetCore.Antiforgery;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc.Authorization;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
     using Microsoft.IdentityModel.Tokens;
-    using System;
-    using System.Text;
-    using Database;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Mvc.Authorization;
-    using Landlords.Core;
     using Model.Database;
     using Services;
 
@@ -32,7 +34,7 @@
         }
 
         public IConfigurationRoot Configuration { get; }
-        
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc(config =>
@@ -45,25 +47,23 @@
 
             var sqlConnectionString = Configuration.GetConnectionString("LLDbContext");
             services.AddDbContext<LLDbContext>(options => options.UseSqlServer(sqlConnectionString));
-            
+
+            services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
             services.RegisterDI();
             services.AddOptions();
             services.Configure<JwtConfiguration>(Configuration.GetSection("Jwt"));
             services.Configure<EmailConfiguration>(Configuration.GetSection("Email"));
-            
+
             services
-                .AddIdentity<ApplicationUser, ApplicationRole>(options =>
-                {
-                    options.Password.RequireNonAlphanumeric = false;
-                })
+                .AddIdentity<ApplicationUser, ApplicationRole>(options => { options.Password.RequireNonAlphanumeric = false; })
                 .AddEntityFrameworkStores<LLDbContext, Guid>()
                 .AddUserManager<ApplicationUserManager>()
                 .AddUserStore<ApplicationUserStore>()
                 .AddRoleManager<ApplicationRoleManager>()
                 .AddDefaultTokenProviders();
         }
-        
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IOptions<JwtConfiguration> jwtConfiguration)
+
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IOptions<JwtConfiguration> jwtConfiguration, IAntiforgery antiforgery)
         {
 #if DEBUG
             app.UseCors(builder => builder.WithOrigins("http://localhost:8080").AllowAnyHeader().AllowAnyMethod());
@@ -79,7 +79,7 @@
             }
 
             var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtConfiguration.Value.Secret));
-            
+
             app.UseJwtBearerAuthentication(new JwtBearerOptions
             {
                 AutomaticAuthenticate = true,
@@ -91,8 +91,15 @@
             {
                 Audience = jwtConfiguration.Value.Audience,
                 Issuer = jwtConfiguration.Value.Issuer,
-                SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256),
+                SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256)
             };
+
+            app.Use((context, next) =>
+            {
+                var tokens = antiforgery.GetAndStoreTokens(context);
+                context.Response.Cookies.Append("XSRF-TOKEN", tokens.RequestToken, new CookieOptions {HttpOnly = false});
+                return next.Invoke();
+            });
 
             app.UseMiddleware<TokenProviderMiddleware>(Options.Create(options));
             app.UseMvc();

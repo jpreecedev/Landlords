@@ -28,7 +28,7 @@
             return Ok(new PropertyDetailsViewModel());
         }
 
-        [HttpPost("new")]
+        [HttpPost("new"), ValidateAntiForgeryToken]
         public async Task<IActionResult> New()
         {
             return Ok(await _propertyDataProvider.NewAsync(User.GetUserId()));
@@ -51,7 +51,7 @@
             return Ok(await _propertyDataProvider.GetDetailsAsync(User.GetUserId(), propertyId));
         }
 
-        [HttpPost]
+        [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Post([FromBody] PropertyDetailsViewModel value)
         {
             if (ModelState.IsValid)

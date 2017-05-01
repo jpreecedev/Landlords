@@ -22,7 +22,7 @@
             return Ok(await _userRepository.GetProfileAsync(User.GetUserId()));
         }
 
-        [HttpPost]
+        [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Post([FromBody] ProfileViewModel value)
         {
             if (ModelState.IsValid)

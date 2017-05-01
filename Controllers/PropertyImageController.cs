@@ -42,7 +42,7 @@
             }
         }
 
-        [HttpPost("upload")]
+        [HttpPost("upload"), ValidateAntiForgeryToken]
         public async Task<IActionResult> Upload(ICollection<IFormFile> files, Guid entityId)
         {
             try

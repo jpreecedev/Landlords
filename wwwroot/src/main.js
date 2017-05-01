@@ -18,6 +18,9 @@ Vue.use(VueResource)
 import Auth from './auth'
 Vue.use(Auth)
 
+import Interceptors from './interceptors'
+Vue.use(Interceptors)
+
 import VeeValidate from 'vee-validate'
 Vue.use(VeeValidate)
 

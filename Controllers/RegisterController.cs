@@ -27,7 +27,7 @@
             _context = context;
         }
 
-        [HttpPost("resendverification")]
+        [HttpPost("resendverification"), ValidateAntiForgeryToken]
         public async Task<IActionResult> ResendVerificationCode()
         {
             var user = User.GetApplicationUser(_context);
@@ -44,7 +44,7 @@
             return Ok();
         }
 
-        [HttpPost]
+        [HttpPost, ValidateAntiForgeryToken]
         [AllowAnonymous]
         public async Task<IActionResult> Post([FromBody] RegisterUserViewModel data)
         {
