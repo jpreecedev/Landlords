@@ -8,9 +8,11 @@ namespace Landlords.Repositories
 
     public interface IUserRepository
     {
-        Task<IdentityResult> Create(ApplicationUser user, string password);
-        Task<IdentityResult> AddToRole(ApplicationUser user, string role);
+        Task<IdentityResult> CreateAsync(ApplicationUser user, string password);
+        Task<IdentityResult> AddToRoleAsync(ApplicationUser user, string role);
         Task UpdateAsync(Guid userId, ProfileViewModel viewModel);
         Task<ProfileViewModel> GetProfileAsync(Guid userId);
+        Task<string> GenerateEmailConfirmationTokenAsync(ApplicationUser user);
+        Task<IdentityResult> ConfirmEmailAsync(Guid userId, string code);
     }
 }

@@ -21,8 +21,10 @@
             LastName = applicationUser.LastName;
             AvailableFrom = applicationUser.AvailableFrom;
             AvailableTo = applicationUser.AvailableTo;
-            MainPhoneNumber = applicationUser.MainPhoneNumber;
+            PhoneNumber = applicationUser.PhoneNumber;
             SecondaryPhoneNumber = applicationUser.SecondaryPhoneNumber;
+            EmailAddress = applicationUser.Email;
+            EmailConfirmed = applicationUser.EmailConfirmed;
         }
 
         [ValidateGuid]
@@ -40,8 +42,12 @@
 
         public DateTime? AvailableTo { get; set; }
 
-        public string MainPhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
 
         public string SecondaryPhoneNumber { get; set; }
+
+        public string EmailAddress { get; set; }
+
+        public bool EmailConfirmed { get; set; }
     }
 }

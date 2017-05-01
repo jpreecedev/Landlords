@@ -10,6 +10,15 @@
     </div>
     <div class="alert alert-success" v-if="saved">
       Your profile has been updated
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="alert alert-success" v-if="resentVerification">
+      We have sent you a new verification email.  Please check your inbox.
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
     <form @submit.prevent="validateBeforeSubmit" role="form" novalidate>
       <fieldset>
@@ -30,6 +39,13 @@
                   <div class="col-12">
                     <input v-model="profile.lastName" id="lastName" name="lastName" type="text" placeholder="Your last name" class="form-control" v-validate="'required'" data-vv-validate-on="change" required>
                     <span v-show="errors.has('lastName')" v-bind:title="errors.first('lastName')" class="form-control-feedback">Enter a valid last name</span>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-12 col-form-label" for="secondaryPhoneNumber">Email address</label>
+                  <div class="col-12">
+                    <p>{{ profile.emailAddress }}</p>
+                    <button v-if="!profile.emailConfirmed" @click="resendVerificationEmail()" type="button" class="btn btn-danger pointer">Re-send verification email</button>
                   </div>
                 </div>
               </div>
@@ -58,9 +74,9 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-12 col-form-label" for="mainPhoneNumber">Main Phone Number</label>
+                  <label class="col-12 col-form-label" for="phoneNumber">Main Phone Number</label>
                   <div class="col-12">
-                    <input v-model="profile.mainPhoneNumber" class="form-control" id="mainPhoneNumber" name="mainPhoneNumber" type="tel" required>
+                    <input v-model="profile.phoneNumber" class="form-control" id="phoneNumber" name="phoneNumber" type="tel" required>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -94,14 +110,17 @@
       return {
         times: utils.getTimesForSelectList(),
         saved: false,
+        resentVerification: false,
         profile: {
           userId: '',
           firstName: '',
           lastName: '',
           availableFrom: '',
           availableTo: '',
-          mainPhoneNumber: '',
-          secondaryPhoneNumber: ''
+          phoneNumber: '',
+          secondaryPhoneNumber: '',
+          emailAddress: '',
+          emailConfirmed: false
         }
       }
     },
@@ -146,6 +165,15 @@
         }).catch(() => {
           window.scrollTo(0, 0)
         })
+      },
+      resendVerificationEmail: function () {
+        this.$http.post('/api/register/resendverification')
+          .then(response => {
+            this.resentVerification = true
+          })
+          .catch(response => {
+            debugger
+          })
       }
     }
   }

@@ -16,6 +16,7 @@
     using Microsoft.AspNetCore.Mvc.Authorization;
     using Landlords.Core;
     using Model.Database;
+    using Services;
 
     public class Startup
     {
@@ -47,7 +48,8 @@
             
             services.RegisterDI();
             services.AddOptions();
-            services.Configure<JwtConfiguration>(Configuration.GetSection(("Jwt")));
+            services.Configure<JwtConfiguration>(Configuration.GetSection("Jwt"));
+            services.Configure<EmailConfiguration>(Configuration.GetSection("Email"));
             
             services
                 .AddIdentity<ApplicationUser, ApplicationRole>(options =>

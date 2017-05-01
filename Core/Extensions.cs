@@ -14,6 +14,7 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Model;
+    using Services;
 
     public static class Extensions
     {
@@ -114,6 +115,7 @@
             serviceCollection.AddScoped<IPropertyImageDataProvider, PropertyImageDataProvider>();
             serviceCollection.AddScoped<IUserRepository, UserRepository>();
             serviceCollection.AddScoped<ILLDbContext, LLDbContext>();
+            serviceCollection.AddTransient<IEmailSender, EmailSender>();
         }
     }
 }

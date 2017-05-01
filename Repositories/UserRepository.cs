@@ -2,7 +2,6 @@
 {
     using System;
     using System.Linq;
-    using System.Security.Claims;
     using Database;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;
@@ -23,7 +22,7 @@
             _roleManager = roleManager;
         }
         
-        public async Task<IdentityResult> AddToRole(ApplicationUser user, string role)
+        public async Task<IdentityResult> AddToRoleAsync(ApplicationUser user, string role)
         {
             if (!_roleManager.Roles.Any())
             {
@@ -45,7 +44,7 @@
                 user.LastName = viewModel.LastName;
                 user.AvailableFrom = viewModel.AvailableFrom;
                 user.AvailableTo = viewModel.AvailableTo;
-                user.MainPhoneNumber = viewModel.MainPhoneNumber;
+                user.PhoneNumber = viewModel.PhoneNumber;
                 user.SecondaryPhoneNumber = viewModel.SecondaryPhoneNumber;
 
                 await _userManager.UpdateAsync(user);
@@ -58,7 +57,26 @@
             return new ProfileViewModel(user);
         }
 
-        public async Task<IdentityResult> Create(ApplicationUser user, string password)
+        public async Task<string> GenerateEmailConfirmationTokenAsync(ApplicationUser user)
+        {
+            return await _userManager.GenerateEmailConfirmationTokenAsync(user);
+        }
+
+        public async Task<IdentityResult> ConfirmEmailAsync(Guid userId, string code)
+        {
+            var user = await _userManager.Users.FirstOrDefaultAsync(c => c.Id == userId && c.EmailConfirmed == false);
+            if (user != null)
+            {
+                return await _userManager.ConfirmEmailAsync(user, code);
+            }
+            return IdentityResult.Failed(new IdentityError()
+            {
+                Code = "User not found", 
+                Description = "User not found"
+            });
+        }
+
+        public async Task<IdentityResult> CreateAsync(ApplicationUser user, string password)
         {
             return await _userManager.CreateAsync(user, password);
         }
