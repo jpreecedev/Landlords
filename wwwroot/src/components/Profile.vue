@@ -10,15 +10,12 @@
     </div>
     <div class="alert alert-success" v-if="saved">
       Your profile has been updated
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
     </div>
     <div class="alert alert-success" v-if="resentVerification">
       We have sent you a new verification email.  Please check your inbox.
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
+    </div>
+    <div class="alert alert-success" v-if="confirmed">
+      Your email address has been verified
     </div>
     <form @submit.prevent="validateBeforeSubmit" role="form" novalidate>
       <fieldset>
@@ -111,6 +108,7 @@
         times: utils.getTimesForSelectList(),
         saved: false,
         resentVerification: false,
+        confirmed: this.$route.query.confirmed,
         profile: {
           userId: '',
           firstName: '',

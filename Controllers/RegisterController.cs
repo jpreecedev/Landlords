@@ -38,7 +38,7 @@
                 RecipientName = $"{user.FirstName} {user.LastName}",
                 RecipientEmail = user.Email,
                 Subject = "Confirm Email",
-                Body = $"Click this <a href=\"http://localhost:52812/api/register/confirmemail?userId={user.Id}&code={WebUtility.UrlEncode(code)}\">link</a> mofo."
+                Body = $"Click this <a href=\"http://localhost:52812/api/register/confirmemail?userId={user.Id}&code={Uri.EscapeDataString(code)}\">link</a> mofo."
             });
 
             return Ok();
@@ -69,7 +69,7 @@
                         RecipientName = $"{user.FirstName} {user.LastName}",
                         RecipientEmail = user.Email,
                         Subject = "Confirm Email",
-                        Body = $"Click this <a href=\"http://localhost:52812/api/register/confirmemail?userId={user.Id}&code={WebUtility.UrlEncode(code)}\">link</a> mofo."
+                        Body = $"Click this <a href=\"http://localhost:52812/api/register/confirmemail?userId={user.Id}&code={Uri.EscapeDataString(code)}\">link</a> mofo."
                     });
                     return Ok();
                 }
@@ -85,10 +85,10 @@
         [AllowAnonymous]
         public async Task<IActionResult> ConfirmEmail(Guid userId, string code)
         {
-            var result = await _userRepository.ConfirmEmailAsync(userId, WebUtility.UrlDecode(code));
+            var result = await _userRepository.ConfirmEmailAsync(userId, code);
             if (result.Succeeded)
             {
-                return Ok();
+                return Redirect("http://localhost:8080/profile?confirmed=true");
             }
             return BadRequest(new {Errors = result.Errors.ToErrorCollection()});
         }
