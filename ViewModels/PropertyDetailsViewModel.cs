@@ -22,6 +22,7 @@
             UserId = propertyDetails.UserId;
             ConstructionDate = propertyDetails.ConstructionDate;
             Furnishing = propertyDetails.Furnishing;
+            Bedrooms = propertyDetails.Bedrooms;
             IsAvailableForLetting = propertyDetails.IsAvailableForLetting;
             PaymentTerm = propertyDetails.PaymentTerm;
             PropertyCountry = propertyDetails.PropertyCountry;
@@ -49,6 +50,9 @@
         [Required]
         [MaxLength(255)]
         public string Furnishing { get; set; }
+
+        [Required, Range(0, 20)]
+        public int Bedrooms { get; set; }
 
         [Required]
         public bool IsAvailableForLetting { get; set; }

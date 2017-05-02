@@ -8,6 +8,8 @@
     {
         public string Reference { get; set; }
 
+        public int Bedrooms { get; set; }
+
         public string Furnishing { get; set; }
 
         public string PropertyType { get; set; }

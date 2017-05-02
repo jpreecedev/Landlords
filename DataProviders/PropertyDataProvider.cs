@@ -49,6 +49,7 @@
                               Reference = details.Reference,
                               PropertyStreetAddress = details.PropertyStreetAddress,
                               Furnishing = details.Furnishing,
+                              Bedrooms = details.Bedrooms,
                               PropertyType = details.PropertyType,
                               ConstructionDate = details.ConstructionDate,
                               TargetRent = details.TargetRent,

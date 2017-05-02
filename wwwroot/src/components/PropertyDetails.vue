@@ -47,15 +47,21 @@
                   <span v-show="errors.has('propertyType')" v-bind:title="errors.first('propertyType')" class="form-control-feedback">Select a valid property type</span>
                 </div>
               </div>
-              <div class="form-group row" :class="{ 'has-danger': errors.has('furnishing') }">
-                <label class="col-12 col-form-label" for="furnishing">Furnishing</label>
-                <div class="col-12">
+              <div class="form-group row">
+                <div class="col" :class="{ 'has-danger': errors.has('bedrooms') }">
+                  <label class="col-form-label" for="bedrooms">Number of bedrooms</label>
+                  <div>
+                    <input type="number" class="form-control" v-model="propertyDetails.bedrooms" v-validate="'required'" id="bedrooms" name="bedrooms" data-vv-validate-on="change" placeholder="Bedrooms">
+                  </div>
+                </div>
+                <div class="col" :class="{ 'has-danger': errors.has('furnishing') }">
+                  <label class="col-form-label" for="furnishing">Furnishing</label>
                   <select v-model="propertyDetails.furnishing" v-validate="'required'" data-vv-validate-on="change" class="form-control" id="furnishing" name="furnishing" required>
                     <option disabled value="">Select a furnishing type</option>
                     <option v-for="furnishing in furnishings" v-bind:value="furnishing">{{ furnishing }}</option>
                   </select>
                   <span v-show="errors.has('furnishing')" v-bind:title="errors.first('furnishing')" class="form-control-feedback">Select a valid furnishing</span>
-                </div>
+                </div>                
               </div>
               <div class="form-group row">
                 <label class="col-12 col-form-label" for="constructionDate">Construction Date</label>          
@@ -208,6 +214,7 @@ export default {
       furnishings: [],
       countries: [],
       propertyDetails: {
+        bedrooms: 0,
         reference: '',
         propertyType: '',
         furnishing: '',
