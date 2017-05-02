@@ -37,6 +37,10 @@
             SellingDate = propertyDetails.SellingDate;
             TargetRent = propertyDetails.TargetRent;
             SellingPrice = propertyDetails.SellingPrice;
+            MortgageAmount = propertyDetails.MortgageAmount;
+            InterestRate = propertyDetails.InterestRate;
+            CurrentDealExpirationDate = propertyDetails.CurrentDealExpirationDate;
+            MortgageProvider = propertyDetails.MortgageProvider;
         }
 
         public PropertyDetailsViewModel(Guid id, Guid userId)
@@ -85,6 +89,14 @@
 
         public decimal? PurchasePrice { get; set; }
 
+        public decimal? MortgageAmount { get; set; }
+
+        public double? InterestRate { get; set; }
+
+        public string MortgageProvider { get; set; }
+
+        public DateTime? CurrentDealExpirationDate { get; set; }
+
         [MaxLength(255)]
         public string Reference { get; set; }
 
@@ -102,6 +114,8 @@
 
         public string[] DefaultCountries { get; } = Countries.GetDefaultCountries();
 
+        public string[] DefaultMortgageProviders { get; } = MortgageProviders.GetDefaultMortgageProviders();
+
         public PropertyImageViewModel LeadImage { get; set; }
 
         public ICollection<PropertyImageViewModel> PropertyImages { get; set; }
@@ -111,5 +125,7 @@
 
         [ValidateGuid]
         public Guid UserId { get; set; }
+        
+        public decimal? MonthlyPayment { get; set; }
     }
 }

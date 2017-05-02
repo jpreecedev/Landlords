@@ -6,6 +6,7 @@ namespace Model
     {
         DateTime? ConstructionDate { get; set; }
         string Furnishing { get; set; }
+        int Bedrooms { get; set; }
         bool IsAvailableForLetting { get; set; }
         string PaymentTerm { get; set; }
         string PropertyCountry { get; set; }
@@ -20,5 +21,10 @@ namespace Model
         DateTime? SellingDate { get; set; }
         decimal? SellingPrice { get; set; }
         decimal? TargetRent { get; set; }
+        decimal? MortgageAmount { get; set; }
+        double? InterestRate { get; set; }
+        string MortgageProvider { get; set; }
+        DateTime? CurrentDealExpirationDate { get; set; }
+        decimal? MonthlyPayment { get; set; }
     }
 }

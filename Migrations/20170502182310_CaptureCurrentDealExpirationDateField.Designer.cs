@@ -8,9 +8,10 @@ using Landlords.Database;
 namespace Landlords.Migrations
 {
     [DbContext(typeof(LLDbContext))]
-    partial class LLDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170502182310_CaptureCurrentDealExpirationDateField")]
+    partial class CaptureCurrentDealExpirationDateField
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")
@@ -200,8 +201,6 @@ namespace Landlords.Migrations
                     b.Property<double?>("InterestRate");
 
                     b.Property<bool>("IsAvailableForLetting");
-
-                    b.Property<decimal?>("MonthlyPayment");
 
                     b.Property<decimal?>("MortgageAmount");
 

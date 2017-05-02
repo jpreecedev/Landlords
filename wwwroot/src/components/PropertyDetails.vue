@@ -125,19 +125,56 @@
         <div class="col">
           <div class="card">
             <div class="card-block">
-              <h4 class="card-title">Purchase Details</h4>
+              <h4 class="card-title">Ownership</h4>
               <div class="form-group row">
                 <div class="col">
                   <label class="col-form-label" for="purchaseDate">Purchase Date</label>
-                  <div>
-                    <datepicker v-model="propertyDetails.purchaseDate" id="purchaseDate" name="purchaseDate" placeholder="Select date..." input-class="form-control"></datepicker>
-                  </div>
+                  <datepicker v-model="propertyDetails.purchaseDate" id="purchaseDate" name="purchaseDate" placeholder="Select date..." input-class="form-control"></datepicker>
                 </div>
                 <div class="col">
                   <label class="col-form-label" for="purchasePrice">Purchase Price</label>
-                  <div>
-                    <input v-model="propertyDetails.purchasePrice" class="form-control" id="purchasePrice" name="purchasePrice" type="number" required>
+                  <input v-model="propertyDetails.purchasePrice" class="form-control" id="purchasePrice" name="purchasePrice" type="number">
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col">
+                  <label class="col-form-label" for="mortgageAmount">Mortgage Amount</label>                    
+                  <div class="input-group">
+                    <span class="input-group-addon">£</span>
+                    <input v-model="propertyDetails.mortgageAmount" class="form-control" id="mortgageAmount" name="mortgageAmount" type="number">                    
+                    <span class="input-group-addon">.00</span>
                   </div>
+                </div>
+                <div class="col">
+                    <label class="col-form-label" for="interestRate">Interest Rate</label>
+                    <div class="input-group">
+                      <input v-model="propertyDetails.interestRate" class="form-control" id="interestRate" name="interestRate" type="number">
+                      <span class="input-group-addon">%</span>
+                    </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-6">
+                  <label class="col-form-label" for="monthlyPayment">Monthly Repayment</label>                    
+                  <div class="input-group">
+                    <span class="input-group-addon">£</span>
+                    <input v-model="propertyDetails.monthlyPayment" class="form-control" id="monthlyPayment" name="monthlyPayment" type="number">                    
+                    <span class="input-group-addon">.00</span>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <label class="col-form-label" for="mortgageProvider">Mortgage Provider</label>
+                  <select v-model="propertyDetails.mortgageProvider" class="form-control" id="mortgageProvider" name="mortgageProvider">
+                    <option disabled value="">Select a mortgage provider</option>
+                    <option v-for="mortgageProvider in mortgageProviders" v-bind:value="mortgageProvider">{{ mortgageProvider }}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col">
+                  <label class="col-form-label" for="currentDealExpirationDate">Current deal expiration date</label>
+                  <p class="mb-2 text-muted">Tell us the date when your current mortgage deal/product expires</p>
+                  <datepicker v-model="propertyDetails.currentDealExpirationDate" id="currentDealExpirationDate" name="currentDealExpirationDate" placeholder="Select date..." input-class="form-control"></datepicker>
                 </div>
               </div>
             </div>
@@ -213,6 +250,7 @@ export default {
       paymentTerms: [],
       furnishings: [],
       countries: [],
+      mortgageProviders: [],
       propertyDetails: {
         bedrooms: 0,
         reference: '',
@@ -232,7 +270,12 @@ export default {
         propertyPostcode: '',
         propertyCountry: '',
         propertyImages: [],
-        userId: ''
+        userId: '',
+        mortgageAmount: 0,
+        interestRate: 0,
+        mortgageProvider: '',
+        currentDealExpirationDate: '',
+        monthlyPayment: 0
       }
     }
   },

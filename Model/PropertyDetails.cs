@@ -1,7 +1,7 @@
 ﻿namespace Model
 {
     using System;
-    
+
     //EF Core does not support complex types
 
     public class PropertyDetails : BaseModel, IPropertyDetails
@@ -39,5 +39,15 @@
         public string PropertyCountry { get; set; }
 
         public bool IsAvailableForLetting { get; set; }
+
+        public decimal? MortgageAmount { get; set; }
+
+        public double? InterestRate { get; set; }
+
+        public string MortgageProvider { get; set; }
+
+        public DateTime? CurrentDealExpirationDate { get; set; }
+
+        public decimal? MonthlyPayment { get; set; }
     }
 }

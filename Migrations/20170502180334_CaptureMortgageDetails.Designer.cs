@@ -8,9 +8,10 @@ using Landlords.Database;
 namespace Landlords.Migrations
 {
     [DbContext(typeof(LLDbContext))]
-    partial class LLDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170502180334_CaptureMortgageDetails")]
+    partial class CaptureMortgageDetails
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")
@@ -191,8 +192,6 @@ namespace Landlords.Migrations
 
                     b.Property<DateTime>("Created");
 
-                    b.Property<DateTime?>("CurrentDealExpirationDate");
-
                     b.Property<DateTime?>("Deleted");
 
                     b.Property<string>("Furnishing");
@@ -200,8 +199,6 @@ namespace Landlords.Migrations
                     b.Property<double?>("InterestRate");
 
                     b.Property<bool>("IsAvailableForLetting");
-
-                    b.Property<decimal?>("MonthlyPayment");
 
                     b.Property<decimal?>("MortgageAmount");
 
