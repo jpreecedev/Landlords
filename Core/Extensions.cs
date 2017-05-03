@@ -109,13 +109,15 @@
             throw new InvalidOperationException("Unable to determine User");
         }
 
-        public static void RegisterDI(this IServiceCollection serviceCollection)
+        public static IServiceCollection RegisterDI(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddScoped<IPropertyDataProvider, PropertyDataProvider>();
             serviceCollection.AddScoped<IPropertyImageDataProvider, PropertyImageDataProvider>();
             serviceCollection.AddScoped<IUserRepository, UserRepository>();
             serviceCollection.AddScoped<ILLDbContext, LLDbContext>();
             serviceCollection.AddTransient<IEmailSender, EmailSender>();
+
+            return serviceCollection;
         }
     }
 }

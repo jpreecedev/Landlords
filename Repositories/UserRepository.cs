@@ -24,14 +24,6 @@
         
         public async Task<IdentityResult> AddToRoleAsync(ApplicationUser user, string role)
         {
-            if (!_roleManager.Roles.Any())
-            {
-                //TODO: Remove
-                await _roleManager.CreateAsync(new ApplicationRole(ApplicationRoles.Administrator));
-                await _roleManager.CreateAsync(new ApplicationRole(ApplicationRoles.Agency));
-                await _roleManager.CreateAsync(new ApplicationRole(ApplicationRoles.Landlord));
-            }
-
             return await _userManager.AddToRoleAsync(user, role);
         }
 

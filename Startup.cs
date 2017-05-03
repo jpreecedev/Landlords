@@ -9,7 +9,6 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc.Authorization;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
@@ -48,11 +47,11 @@
             var sqlConnectionString = Configuration.GetConnectionString("LLDbContext");
             services.AddDbContext<LLDbContext>(options => options.UseSqlServer(sqlConnectionString));
 
-            services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
-            services.RegisterDI();
-            services.AddOptions();
-            services.Configure<JwtConfiguration>(Configuration.GetSection("Jwt"));
-            services.Configure<EmailConfiguration>(Configuration.GetSection("Email"));
+            services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN")
+                .RegisterDI()
+                .AddOptions()
+                .Configure<JwtConfiguration>(Configuration.GetSection("Jwt"))
+                .Configure<EmailConfiguration>(Configuration.GetSection("Email"));
 
             services
                 .AddIdentity<ApplicationUser, ApplicationRole>(options => { options.Password.RequireNonAlphanumeric = false; })
@@ -63,7 +62,8 @@
                 .AddDefaultTokenProviders();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IOptions<JwtConfiguration> jwtConfiguration, IAntiforgery antiforgery)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, 
+                              IOptions<JwtConfiguration> jwtConfiguration, IAntiforgery antiforgery)
         {
 #if DEBUG
             app.UseCors(builder => builder.WithOrigins("http://localhost:8080").AllowAnyHeader().AllowAnyMethod());
@@ -76,48 +76,21 @@
             {
                 var context = scope.ServiceProvider.GetRequiredService<LLDbContext>();
                 context.Database.Migrate();
+              
             }
 
             var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtConfiguration.Value.Secret));
 
-            app.UseJwtBearerAuthentication(new JwtBearerOptions
-            {
-                AutomaticAuthenticate = true,
-                AutomaticChallenge = true,
-                TokenValidationParameters = GetTokenValidationParameters(jwtConfiguration, signingKey)
-            });
+            app.UseJwt(jwtConfiguration, signingKey)
+                .UseXsrf(antiforgery)
+                .UseMiddleware<TokenProviderMiddleware>(Options.Create(new TokenProviderOptions
+                {
+                    Audience = jwtConfiguration.Value.Audience,
+                    Issuer = jwtConfiguration.Value.Issuer,
+                    SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256)
+                }));
 
-            var options = new TokenProviderOptions
-            {
-                Audience = jwtConfiguration.Value.Audience,
-                Issuer = jwtConfiguration.Value.Issuer,
-                SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256)
-            };
-
-            app.Use((context, next) =>
-            {
-                var tokens = antiforgery.GetAndStoreTokens(context);
-                context.Response.Cookies.Append("XSRF-TOKEN", tokens.RequestToken, new CookieOptions {HttpOnly = false});
-                return next.Invoke();
-            });
-
-            app.UseMiddleware<TokenProviderMiddleware>(Options.Create(options));
             app.UseMvc();
-        }
-
-        private static TokenValidationParameters GetTokenValidationParameters(IOptions<JwtConfiguration> jwtConfiguration, SymmetricSecurityKey signingKey)
-        {
-            return new TokenValidationParameters
-            {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = signingKey,
-                ValidateIssuer = true,
-                ValidIssuer = jwtConfiguration.Value.Issuer,
-                ValidateAudience = true,
-                ValidAudience = jwtConfiguration.Value.Audience,
-                ValidateLifetime = true,
-                ClockSkew = TimeSpan.Zero
-            };
         }
     }
 }
