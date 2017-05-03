@@ -22,8 +22,12 @@
             <button type="button" class="btn btn-danger pointer" @click="deleteImage(propertyImage)">Delete</button>
           </div>
         </div>
-        <div class="row col progress mt-4" v-if="isUploading">
-          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%;"></div>
+        <div class="row mt-4" v-if="isUploading">
+          <div class="col">
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" v-bind:aria-valuenow="progress" aria-valuemin="0" aria-valuemax="100" v-bind:style="{ width: progress + '%', height: '20px' }">{{ progress }}%</div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="row">
@@ -50,9 +54,7 @@
               <div class="form-group row">
                 <div class="col" :class="{ 'has-danger': errors.has('bedrooms') }">
                   <label class="col-form-label" for="bedrooms">Number of bedrooms</label>
-                  <div>
-                    <input type="number" class="form-control" v-model="propertyDetails.bedrooms" v-validate="'required'" id="bedrooms" name="bedrooms" data-vv-validate-on="change" placeholder="Bedrooms">
-                  </div>
+                  <input type="number" class="form-control" v-model="propertyDetails.bedrooms" v-validate="'required'" id="bedrooms" name="bedrooms" data-vv-validate-on="change" placeholder="Bedrooms">
                 </div>
                 <div class="col" :class="{ 'has-danger': errors.has('furnishing') }">
                   <label class="col-form-label" for="furnishing">Furnishing</label>
@@ -133,7 +135,11 @@
                 </div>
                 <div class="col">
                   <label class="col-form-label" for="purchasePrice">Purchase Price</label>
-                  <input v-model="propertyDetails.purchasePrice" class="form-control" id="purchasePrice" name="purchasePrice" type="number">
+                  <div class="input-group">
+                    <span class="input-group-addon">£</span>
+                    <input v-model="propertyDetails.purchasePrice" class="form-control" id="purchasePrice" name="purchasePrice" type="number">                    
+                    <span class="input-group-addon">.00</span>
+                  </div>
                 </div>
               </div>
               <div class="form-group row">
@@ -186,18 +192,18 @@
               <div class="form-group row">
                 <div class="col">
                   <label class="col-form-label" for="targetRent">Target Rent</label>
-                  <div>
+                  <div class="input-group">
+                    <span class="input-group-addon">£</span>
                     <input v-model="propertyDetails.targetRent" class="form-control" id="targetRent" name="targetRent" type="number" required>
+                    <span class="input-group-addon">.00</span>
                   </div>
                 </div>
                 <div class="col">
                   <label class="col-form-label" for="paymentTerm">Payment Term</label>
-                  <div>
-                    <select v-model="propertyDetails.paymentTerm" class="form-control" id="paymentTerm" name="paymentTerm" required>
-                      <option disabled value="">Select a payment term</option>
-                      <option v-for="paymentTerm in paymentTerms" v-bind:value="paymentTerm">{{ paymentTerm }}</option>
-                    </select>
-                  </div>
+                  <select v-model="propertyDetails.paymentTerm" class="form-control" id="paymentTerm" name="paymentTerm" required>
+                    <option disabled value="">Select a payment term</option>
+                    <option v-for="paymentTerm in paymentTerms" v-bind:value="paymentTerm">{{ paymentTerm }}</option>
+                  </select>
                 </div>
               </div>
             </div>
@@ -205,17 +211,18 @@
           <div class="card mt-3">
             <div class="card-block">
               <h4 class="card-title">Selling Details</h4>
+              <h6 class="card-subtitle mb-2 text-muted">Tell us the actual or expected selling price.</h6>
               <div class="form-group row">
                 <div class="col">
                   <label class="col-form-label" for="sellingDate">Selling Date</label>
-                  <div>
-                    <datepicker v-model="propertyDetails.sellingDate" id="sellingDate" name="sellingDate" placeholder="Select date..." input-class="form-control"></datepicker>
-                  </div>
+                  <datepicker v-model="propertyDetails.sellingDate" id="sellingDate" name="sellingDate" placeholder="Select date..." input-class="form-control"></datepicker>
                 </div>
                 <div class="col">
                   <label class="col-form-label" for="sellingPrice">Selling Price</label>
-                  <div>
+                  <div class="input-group">
+                    <span class="input-group-addon">£</span>
                     <input v-model="propertyDetails.sellingPrice" class="form-control" id="sellingPrice" name="sellingPrice" type="number" required>
+                    <span class="input-group-addon">.00</span>
                   </div>
                 </div>
               </div>
@@ -245,7 +252,7 @@ export default {
   data () {
     return {
       isUploading: false,
-      currentUploadIndex: 1,
+      progress: 0,
       propertyTypes: [],
       paymentTerms: [],
       furnishings: [],
@@ -316,7 +323,7 @@ export default {
         formData.append(fieldName, fileList[x], fileList[x].name)
       })
 
-      fileUpload.upload(formData, `/api/propertyimage/upload?entityId=${this.$route.params.propertyId}`)
+      fileUpload.upload(formData, `/api/propertyimage/upload?entityId=${this.$route.params.propertyId}`, uploadProgress => { this.progress = uploadProgress })
         .then(images => {
           if (images) {
             images.forEach(image => {
