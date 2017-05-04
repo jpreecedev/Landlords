@@ -2,9 +2,11 @@
 {
     using System.Threading.Tasks;
     using Core;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Repositories;
     using ViewModels;
+    using Model;
 
     [Route("api/[controller]")]
     public class ProfileController : Controller
@@ -17,12 +19,14 @@
         }
 
         [HttpGet]
+        [RequiresPermission(Permissions.ProfileView)]
         public async Task<IActionResult> Get()
         {
             return Ok(await _userRepository.GetProfileAsync(User.GetUserId()));
         }
 
         [HttpPost, ValidateAntiForgeryToken]
+        [RequiresPermission(Permissions.ProfileUpdate)]
         public async Task<IActionResult> Post([FromBody] ProfileViewModel value)
         {
             if (ModelState.IsValid)

@@ -8,6 +8,11 @@
 
     public class LLDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>, ILLDbContext
     {
+        public LLDbContext()
+        {
+            
+        }
+
         public LLDbContext(DbContextOptions options) : base(options)
         {
             
