@@ -76,7 +76,7 @@
             {
                 var context = scope.ServiceProvider.GetRequiredService<LLDbContext>();
                 context.Database.Migrate();
-              
+                context.Seed(app.ApplicationServices);
             }
 
             var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtConfiguration.Value.Secret));

@@ -24,21 +24,6 @@
         
         public async Task<IdentityResult> AddToRoleAsync(ApplicationUser user, string role)
         {
-            //HACK UNTIL EF IS NO LONGER SHITE
-            if (_roleManager.Roles.Count() == 0)
-            {
-                foreach (var r in ApplicationRoles.AllRoles)
-                {
-                    await _roleManager.CreateAsync(new ApplicationRole(r));
-                }
-            }
-            if (_roleManager.Roles.Count() == 3)
-            {
-                await _roleManager.CreateAsync(new ApplicationRole(ApplicationRoles.Accountant));
-                await _roleManager.CreateAsync(new ApplicationRole(ApplicationRoles.OtherUser));
-                await _roleManager.CreateAsync(new ApplicationRole(ApplicationRoles.AgencyUser));
-            }
-
             return await _userManager.AddToRoleAsync(user, role);
         }
 
