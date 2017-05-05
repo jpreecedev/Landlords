@@ -6,6 +6,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using System.Collections.Generic;
+    using Model;
     using Model.Database;
 
     public static class SeedExtensions
@@ -36,20 +37,23 @@
 
         private static async Task CreateUsers(LLDbContext context, ApplicationUserManager userManager)
         {
-            if (!await context.Users.AnyAsync(c => c.UserName == "admin@landlords.com"))
+            if (await userManager.Users.AnyAsync(c => c.UserName == "admin@landlords.com"))
             {
-                var administrator = new ApplicationUser
-                {
-                    UserName = "admin@landlords.com",
-                    Email = "admin@landlords.com",
-                    EmailConfirmed = true,
-                    FirstName = "Admin",
-                    LastName = "Admin"
-                };
-
-                await userManager.CreateAsync(administrator, "Password123");
-                await userManager.AddToRoleAsync(administrator, ApplicationRoles.SiteAdministrator);
+                return;
             }
+
+            var administrator = new ApplicationUser
+            {
+                UserName = "admin@landlords.com",
+                Email = "admin@landlords.com",
+                EmailConfirmed = true,
+                FirstName = "Admin",
+                LastName = "Admin"
+            };
+
+            await userManager.CreateAsync(administrator, "Password123");
+            await userManager.AddToRoleAsync(administrator, ApplicationRoles.SiteAdministrator);
+            await userManager.SetUserPermissionsAsync(administrator.Id, Permissions.ProfileView, Permissions.ProfileUpdate);
         }
     }
 }

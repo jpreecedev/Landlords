@@ -8,11 +8,6 @@
 
     public class LLDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>, ILLDbContext
     {
-        public LLDbContext()
-        {
-            
-        }
-
         public LLDbContext(DbContextOptions options) : base(options)
         {
             
@@ -40,5 +35,6 @@
 
         public DbSet<PropertyDetails> PropertyDetails { get; set; }
         public DbSet<PropertyImage> PropertyImages { get; set; }
+        public DbSet<UserPermission> UserPermissions { get; set; }
     }
 }

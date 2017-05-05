@@ -12,6 +12,8 @@
         
         DbSet<ApplicationUser> Users { get; set; }
 
+        DbSet<UserPermission> UserPermissions { get; set; }
+
         DbSet<T> Set<T>() where T : class;
     }
 }

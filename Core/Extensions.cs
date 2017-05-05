@@ -15,6 +15,8 @@
     using Microsoft.AspNetCore.Identity;
     using Model;
     using Services;
+    using Landlords.Permissions;
+    using Microsoft.AspNetCore.Authorization;
 
     public static class Extensions
     {
@@ -111,11 +113,12 @@
 
         public static IServiceCollection RegisterDI(this IServiceCollection serviceCollection)
         {
-            serviceCollection.AddScoped<IPropertyDataProvider, PropertyDataProvider>();
-            serviceCollection.AddScoped<IPropertyImageDataProvider, PropertyImageDataProvider>();
-            serviceCollection.AddScoped<IUserRepository, UserRepository>();
-            serviceCollection.AddScoped<ILLDbContext, LLDbContext>();
-            serviceCollection.AddTransient<IEmailSender, EmailSender>();
+            serviceCollection.AddScoped<IPropertyDataProvider, PropertyDataProvider>()
+                .AddScoped<IPropertyImageDataProvider, PropertyImageDataProvider>()
+                .AddScoped<IUserRepository, UserRepository>()
+                .AddScoped<ILLDbContext, LLDbContext>()
+                .AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>()
+                .AddTransient<IEmailSender, EmailSender>();
 
             return serviceCollection;
         }

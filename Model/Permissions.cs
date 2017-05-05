@@ -1,12 +1,8 @@
 ﻿namespace Model
 {
-    using System.ComponentModel.DataAnnotations;
-
-    public enum Permissions
+    public static class Permissions
     {
-        [Display(Name = "Update profile")]
-        ProfileUpdate,
-        [Display(Name = "View profile")]
-        ProfileView
+        public const string ProfileUpdate = "Update profile";
+        public const string ProfileView = "View profile";
     }
 }
