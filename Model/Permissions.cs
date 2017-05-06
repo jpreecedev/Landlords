@@ -32,5 +32,19 @@
             PropertyImageDelete,
             PropertyImageUpload
         };
+
+        public static readonly string[] DefaultAccountantPermissions = { };
+
+        public static readonly string[] DefaultOtherUserPermissions =
+        {
+            ProfileUpdate,
+            ProfileView,
+            PropertyDetailsViewData,
+            PropertyDetailsGetList,
+            PropertyDetailsGetById,
+        };
+
+        public static readonly string[] DefaultAgencyAdministratorPermissions = { };
+        public static readonly string[] DefaultAgencyUserPermissions = { };
     }
 }

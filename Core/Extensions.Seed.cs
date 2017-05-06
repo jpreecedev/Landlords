@@ -34,56 +34,144 @@
 
         private static async Task CreateUsers(LLDbContext context, ApplicationUserManager userManager)
         {
-            if (await userManager.Users.AnyAsync(c => c.UserName == "admin@landlords.com"))
+            if (!await userManager.Users.AnyAsync(c => c.UserName == "admin@landlords.com"))
             {
-                return;
+                var administrator = new ApplicationUser
+                {
+                    UserName = "admin@landlords.com",
+                    Email = "admin@landlords.com",
+                    EmailConfirmed = true,
+                    FirstName = "Admin",
+                    LastName = "Admin"
+                };
+
+                await userManager.CreateAsync(administrator, "Password123");
+                await userManager.AddToRoleAsync(administrator, ApplicationRoles.SiteAdministrator);
+                await userManager.SetUserPermissionsAsync(administrator.Id, Permissions.DefaultAdministratorPermissions);
             }
 
-            var administrator = new ApplicationUser
+            if (!await userManager.Users.AnyAsync(c => c.UserName == "jonpreece@hotmail.co.uk"))
             {
-                UserName = "admin@landlords.com",
-                Email = "admin@landlords.com",
-                EmailConfirmed = true,
-                FirstName = "Admin",
-                LastName = "Admin"
-            };
-            
-            await userManager.CreateAsync(administrator, "Password123");
-            await userManager.AddToRoleAsync(administrator, ApplicationRoles.SiteAdministrator);
-            await userManager.SetUserPermissionsAsync(administrator.Id, Permissions.DefaultAdministratorPermissions);
+                var landlord = new ApplicationUser
+                {
+                    UserName = "jonpreece@hotmail.co.uk",
+                    Email = "jonpreece@hotmail.co.uk",
+                    EmailConfirmed = true,
+                    FirstName = "Jon",
+                    LastName = "Preece"
+                };
 
-            var landlord = new ApplicationUser
+                await userManager.CreateAsync(landlord, "Password123");
+                await userManager.AddToRoleAsync(landlord, ApplicationRoles.Landlord);
+                await userManager.SetUserPermissionsAsync(landlord.Id, Permissions.DefaultLandlordPermissions);
+
+                var portfolio = new Portfolio
+                {
+                    Created = DateTime.Now,
+                    DisplayName = "Jons Portfolio",
+                    Name = "JonPreece-ABC123"
+                };
+                await context.Portfolios.AddAsync(portfolio);
+                await context.SaveChangesAsync();
+
+                var link = new ApplicationUserPortfolio
+                {
+                    Created = DateTime.Now,
+                    PortfolioId = portfolio.Id,
+                    UserId = landlord.Id
+                };
+                await context.ApplicationUserPortfolios.AddAsync(link);
+                await context.SaveChangesAsync();
+            }
+
+            if (!await userManager.Users.AnyAsync(c => c.UserName == "accountant@hotmail.co.uk"))
             {
-                UserName = "jonpreece@hotmail.co.uk",
-                Email = "jonpreece@hotmail.co.uk",
-                EmailConfirmed = true,
-                FirstName = "Jon",
-                LastName = "Preece"
-            };
+                var accountant = new ApplicationUser
+                {
+                    UserName = "accountant@hotmail.co.uk",
+                    Email = "accountant@hotmail.co.uk",
+                    EmailConfirmed = true,
+                    FirstName = "Account",
+                    LastName = "Ant"
+                };
 
-            await userManager.CreateAsync(landlord, "Password123");
-            await userManager.AddToRoleAsync(landlord, ApplicationRoles.Landlord);
-            await userManager.SetUserPermissionsAsync(landlord.Id, Permissions.DefaultLandlordPermissions);
+                await userManager.CreateAsync(accountant, "Password123");
+                await userManager.AddToRoleAsync(accountant, ApplicationRoles.Accountant);
+                await userManager.SetUserPermissionsAsync(accountant.Id, Permissions.DefaultAccountantPermissions);
 
-            var portfolio = new Portfolio
+                var portfolio = await context.Portfolios.FirstAsync(c => c.Name == "JonPreece-ABC123");
+
+                var link = new ApplicationUserPortfolio
+                {
+                    Created = DateTime.Now,
+                    PortfolioId = portfolio.Id,
+                    UserId = accountant.Id
+                };
+
+                await context.ApplicationUserPortfolios.AddAsync(link);
+                await context.SaveChangesAsync();
+            }
+
+            if (!await userManager.Users.AnyAsync(c => c.UserName == "other@hotmail.co.uk"))
             {
-                Created = DateTime.Now,
-                DisplayName = "Jons Portfolio",
-                Name = "JonPreece-ABC123"
-            };
+                var accountant = new ApplicationUser
+                {
+                    UserName = "other@hotmail.co.uk",
+                    Email = "other@hotmail.co.uk",
+                    EmailConfirmed = true,
+                    FirstName = "Other",
+                    LastName = "User"
+                };
 
-            await context.Portfolios.AddAsync(portfolio);
-            await context.SaveChangesAsync();
-            
-            var link = new ApplicationUserPortfolio
+                await userManager.CreateAsync(accountant, "Password123");
+                await userManager.AddToRoleAsync(accountant, ApplicationRoles.OtherUser);
+                await userManager.SetUserPermissionsAsync(accountant.Id, Permissions.DefaultOtherUserPermissions);
+
+                var portfolio = await context.Portfolios.FirstAsync(c => c.Name == "JonPreece-ABC123");
+
+                var link = new ApplicationUserPortfolio
+                {
+                    Created = DateTime.Now,
+                    PortfolioId = portfolio.Id,
+                    UserId = accountant.Id
+                };
+
+                await context.ApplicationUserPortfolios.AddAsync(link);
+                await context.SaveChangesAsync();
+            }
+
+            if (!await userManager.Users.AnyAsync(c => c.UserName == "administrator@agency.co.uk"))
             {
-                Created = DateTime.Now,
-                PortfolioId = portfolio.Id,
-                UserId = landlord.Id
-            };
+                var accountant = new ApplicationUser
+                {
+                    UserName = "administrator@agency.co.uk",
+                    Email = "administrator@agency.co.uk",
+                    EmailConfirmed = true,
+                    FirstName = "Agency",
+                    LastName = "Administrator"
+                };
 
-            await context.ApplicationUserPortfolios.AddAsync(link);
-            await context.SaveChangesAsync();
+                await userManager.CreateAsync(accountant, "Password123");
+                await userManager.AddToRoleAsync(accountant, ApplicationRoles.AgencyAdministrator);
+                await userManager.SetUserPermissionsAsync(accountant.Id, Permissions.DefaultAgencyAdministratorPermissions);
+            }
+
+            if (!await userManager.Users.AnyAsync(c => c.UserName == "user@agency.co.uk"))
+            {
+                var accountant = new ApplicationUser
+                {
+                    UserName = "user@agency.co.uk",
+                    Email = "user@agency.co.uk",
+                    EmailConfirmed = true,
+                    FirstName = "Agency",
+                    LastName = "User"
+                };
+
+                await userManager.CreateAsync(accountant, "Password123");
+                await userManager.AddToRoleAsync(accountant, ApplicationRoles.AgencyAdministrator);
+                await userManager.SetUserPermissionsAsync(accountant.Id, Permissions.DefaultAgencyAdministratorPermissions);
+            }
+
         }
 
         private static class AsyncHelpers
