@@ -374,6 +374,7 @@ export default {
     .property-image {
       position: relative;
       display: inline-block;
+      margin-right: remc(16px);
       label {
         input[type="file"] {
           position: fixed;
@@ -384,7 +385,6 @@ export default {
         max-width: 200px;
         max-height: 200px;
         height: auto;
-        margin-right: remc(16px);
         &:hover {
           background-color: $gray-lightest;
         }

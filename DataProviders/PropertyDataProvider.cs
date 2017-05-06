@@ -76,7 +76,8 @@
                               MonthlyPayment = details.MonthlyPayment,
                               PropertyImages = imageJoin.Where(c => !c.IsDeleted).Select(c => new PropertyImageViewModel(c)).ToList()
                           })
-                         .SingleOrDefaultAsync();
+                         .Distinct()
+                         .FirstOrDefaultAsync();
         }
 
         public async Task<ICollection<PropertyDetailsViewModel>> GetListAsync(Guid portfolioId)
