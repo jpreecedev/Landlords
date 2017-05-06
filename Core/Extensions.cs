@@ -11,6 +11,7 @@
     using Model.Database;
     using Newtonsoft.Json;
     using System.Collections.Generic;
+    using Jwt;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Services;
@@ -20,11 +21,6 @@
 
     public static class Extensions
     {
-        public static bool HasUser(this Portfolio portfolio, Guid userId)
-        {
-            return portfolio.Users.SingleOrDefault(link => link.UserId == userId) != null;
-        }
-
         public static IEnumerable<IdentityError> ToGeneric(this IEnumerable<IdentityError> errors)
         {
             return errors.Select(c => new IdentityError {Code = "GenericError", Description = c.Description});
@@ -80,19 +76,31 @@
             });
         }
 
+        public static Guid GetPortfolioId(this ClaimsPrincipal claimsPrincipal)
+        {
+            return claimsPrincipal.GetIdByClaimType(LLClaimTypes.PortfolioIdentifier);
+        }
+
         public static Guid GetUserId(this ClaimsPrincipal claimsPrincipal)
+        {
+            return claimsPrincipal.GetIdByClaimType(ClaimTypes.NameIdentifier);
+        }
+
+        public static Guid GetIdByClaimType(this ClaimsPrincipal claimsPrincipal, string claimType)
         {
             if (claimsPrincipal == null) throw new ArgumentNullException(nameof(claimsPrincipal));
 
-            var nameIdentifier = claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            if (nameIdentifier != null)
+            var identifier = claimsPrincipal.FindFirst(claimType)?.Value;
+            if (identifier != null)
             {
-                var success = Guid.TryParse(nameIdentifier, out Guid result);
+                var success = Guid.TryParse(identifier, out Guid result);
                 if (success)
+                {
                     return result;
+                }
             }
 
-            throw new InvalidOperationException("Unable to determine User");
+            throw new InvalidOperationException("Unable to determine claim");
         }
 
         public static ApplicationUser GetApplicationUser(this ClaimsPrincipal claimsPrincipal, LLDbContext context)

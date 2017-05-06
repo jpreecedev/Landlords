@@ -22,6 +22,8 @@
 
         public static readonly string[] DefaultLandlordPermissions =
         {
+            ProfileUpdate,
+            ProfileView,
             PropertyDetailsViewData,
             PropertyDetailsNew,
             PropertyDetailsGetList,

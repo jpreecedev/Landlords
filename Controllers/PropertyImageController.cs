@@ -24,18 +24,13 @@
             _context = context;
         }
 
-        [HttpDelete]
-        [RequiresPermission(Permissions.PropertyImageDelete)]
-        public async Task<IActionResult> Delete(Guid entityId)
+        [HttpDelete("{imageId}")]
+        [MustOwnPropertyImage, RequiresPermission(Permissions.PropertyImageDelete)]
+        public async Task<IActionResult> Delete(Guid imageId)
         {
             try
             {
-                var userId = User.GetUserId();
-
-                if (entityId.IsDefault() || !await userId.OwnsPropertyImageAsync(entityId, _context))
-                    return BadRequest("Unable to validate payload");
-
-                await _dataProvider.DeleteAsync(entityId);
+                await _dataProvider.DeleteAsync(imageId);
                 return Ok();
             }
             catch (Exception e)
@@ -45,17 +40,12 @@
         }
 
         [HttpPost("upload"), ValidateAntiForgeryToken]
-        [RequiresPermission(Permissions.PropertyImageUpload)]
+        [MustOwnPropertyDetails, RequiresPermission(Permissions.PropertyImageUpload)]
         public async Task<IActionResult> Upload(ICollection<IFormFile> files, Guid entityId)
         {
             try
             {
-                var userId = User.GetUserId();
-
-                if (!files.IsValid() || entityId.IsDefault() || !await userId.OwnsPropertyDetailsAsync(entityId, _context))
-                    return BadRequest("Unable to validate payload");
-
-                return Ok(await _dataProvider.UploadAsync(files, userId, entityId));
+                return Ok(await _dataProvider.UploadAsync(files, User.GetUserId(), entityId));
             }
             catch (Exception e)
             {

@@ -7,9 +7,9 @@
 
     public interface IPropertyDataProvider
     {
-        Task<PropertyDetailsViewModel> GetDetailsAsync(Guid propertyId);
-        Task<ICollection<PropertyDetailsViewModel>> GetListAsync(Guid portfolioId);
         Task<PropertyDetailsViewModel> NewAsync(Guid portfolioId);
+        Task<ICollection<PropertyDetailsViewModel>> GetListAsync(Guid portfolioId);
+        Task<PropertyDetailsViewModel> GetDetailsAsync(Guid propertyId);
         Task UpdateAsync(PropertyDetailsViewModel viewModel);
     }
 }

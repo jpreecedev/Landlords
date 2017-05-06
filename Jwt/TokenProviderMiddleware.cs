@@ -116,6 +116,12 @@
                         claims.Add(new Claim(ClaimTypes.Role, role));
                     }
 
+                    var portfolios = _dataContext.ApplicationUserPortfolios.Where(c => c.UserId == user.Id);
+                    foreach (var link in portfolios)
+                    {
+                        claims.Add(new Claim(LLClaimTypes.PortfolioIdentifier, link.PortfolioId.ToString()));
+                    }
+
                     return await Task.FromResult(new JwtIdentity
                     {
                         User = user,

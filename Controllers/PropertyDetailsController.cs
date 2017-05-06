@@ -30,42 +30,32 @@
         }
 
         [HttpPost("new"), ValidateAntiForgeryToken]
-        [RequiresPermission(Permissions.PropertyDetailsNew)]
+        [MustOwnPortfolio, RequiresPermission(Permissions.PropertyDetailsNew)]
         public async Task<IActionResult> New()
         {
-            return Ok(await _propertyDataProvider.NewAsync(User.GetUserId()));
+            return Ok(await _propertyDataProvider.NewAsync(User.GetPortfolioId()));
         }
 
         [HttpGet]
-        [RequiresPermission(Permissions.PropertyDetailsGetList)]
+        [MustOwnPortfolio, RequiresPermission(Permissions.PropertyDetailsGetList)]
         public async Task<IActionResult> Get()
         {
-            return Ok(await _propertyDataProvider.GetListAsync(User.GetUserId()));
+            return Ok(await _propertyDataProvider.GetListAsync(User.GetPortfolioId()));
         }
 
         [HttpGet("{propertyId}")]
-        [RequiresPermission(Permissions.PropertyDetailsGetById)]
+        [MustOwnPropertyDetails, RequiresPermission(Permissions.PropertyDetailsGetById)]
         public async Task<IActionResult> Get(Guid propertyId)
         {
-            var userId = User.GetUserId();
-
-            if (propertyId.IsDefault() || !await userId.OwnsPropertyDetailsAsync(propertyId, _context))
-                return BadRequest("Unable to validate payload");
-
             return Ok(await _propertyDataProvider.GetDetailsAsync(propertyId));
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        [RequiresPermission(Permissions.PropertyDetailsUpdate)]
+        [MustOwnPropertyDetails, RequiresPermission(Permissions.PropertyDetailsUpdate)]
         public async Task<IActionResult> Post([FromBody] PropertyDetailsViewModel value)
         {
             if (ModelState.IsValid)
             {
-                var userId = User.GetUserId();
-
-                if (value.Id.IsDefault() || !await userId.OwnsPropertyDetailsAsync(userId, _context))
-                    return BadRequest("Unable to validate payload");
-                
                 await _propertyDataProvider.UpdateAsync(value);
                 return Ok();
             }

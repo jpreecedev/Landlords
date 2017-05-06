@@ -8,17 +8,17 @@
 
     public class RequiresPermissionAttribute : TypeFilterAttribute
     {
-        public RequiresPermissionAttribute(params string[] permissions) : base(typeof(RequiresPermissionAttributeImpl))
+        public RequiresPermissionAttribute(params string[] permissions) : base(typeof(RequiresPermissionAttributeChecker))
         {
             Arguments = new[] {new PermissionAuthorizationRequirement(permissions)};
         }
 
-        private class RequiresPermissionAttributeImpl : Attribute, IAsyncResourceFilter
+        private class RequiresPermissionAttributeChecker : Attribute, IAsyncResourceFilter
         {
             private readonly IAuthorizationService _authService;
             private readonly PermissionAuthorizationRequirement _permissionRequirement;
 
-            public RequiresPermissionAttributeImpl(IAuthorizationService authService, PermissionAuthorizationRequirement permissionRequirement)
+            public RequiresPermissionAttributeChecker(IAuthorizationService authService, PermissionAuthorizationRequirement permissionRequirement)
             {
                 _authService = authService;
                 _permissionRequirement = permissionRequirement;
