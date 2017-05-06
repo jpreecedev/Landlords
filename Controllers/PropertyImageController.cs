@@ -24,13 +24,13 @@
             _context = context;
         }
 
-        [HttpDelete("{imageId}")]
+        [HttpDelete]
         [MustOwnPropertyImage, RequiresPermission(Permissions.PropertyImageDelete)]
-        public async Task<IActionResult> Delete(Guid imageId)
+        public async Task<IActionResult> Delete(Guid entityId)
         {
             try
             {
-                await _dataProvider.DeleteAsync(imageId);
+                await _dataProvider.DeleteAsync(entityId);
                 return Ok();
             }
             catch (Exception e)
@@ -45,7 +45,7 @@
         {
             try
             {
-                return Ok(await _dataProvider.UploadAsync(files, User.GetUserId(), entityId));
+                return Ok(await _dataProvider.UploadAsync(files, User.GetPortfolioId(), entityId));
             }
             catch (Exception e)
             {

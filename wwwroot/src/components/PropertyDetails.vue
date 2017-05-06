@@ -17,7 +17,7 @@
           </label>
         </div>
         <div class="property-image" v-for="propertyImage in propertyDetails.propertyImages">
-          <img class="img-thumbnail" v-if="propertyImage.fileName" v-bind:src="'/static/uploads/' + propertyDetails.userId + '/' + propertyImage.fileName" v-bind:alt="propertyImage.fileName" v-bind:title="propertyImage.fileName">
+          <img class="img-thumbnail" v-if="propertyImage.fileName" v-bind:src="'/static/uploads/' + propertyDetails.portfolioId + '/' + propertyImage.fileName" v-bind:alt="propertyImage.fileName" v-bind:title="propertyImage.fileName">
           <div class="overlay">
             <button type="button" class="btn btn-danger pointer" @click="deleteImage(propertyImage)">Delete</button>
           </div>
@@ -44,7 +44,7 @@
               <div class="form-group row" :class="{ 'has-danger': errors.has('propertyType') }">
                 <label class="col-12 col-form-label" for="propertyType">Property Type</label>
                 <div class="col-12">
-                  <select v-model="propertyDetails.propertyType" v-validate="'required'" data-vv-validate-on="change" class="form-control" id="propertyType" name="propertyType"  required>
+                  <select v-model="propertyDetails.propertyType" v-validate="'required'" data-vv-validate-on="blur" class="form-control" id="propertyType" name="propertyType"  required>
                     <option disabled value="">Select a property type</option>
                     <option v-for="propertyType in propertyTypes" v-bind:value="propertyType">{{ propertyType }}</option>
                   </select>
@@ -54,11 +54,11 @@
               <div class="form-group row">
                 <div class="col" :class="{ 'has-danger': errors.has('bedrooms') }">
                   <label class="col-form-label" for="bedrooms">Number of bedrooms</label>
-                  <input type="number" class="form-control" v-model="propertyDetails.bedrooms" v-validate="'required'" id="bedrooms" name="bedrooms" data-vv-validate-on="change" placeholder="Bedrooms">
+                  <input type="number" class="form-control" v-model="propertyDetails.bedrooms" v-validate="'required'" id="bedrooms" name="bedrooms" data-vv-validate-on="blur" placeholder="Bedrooms">
                 </div>
                 <div class="col" :class="{ 'has-danger': errors.has('furnishing') }">
                   <label class="col-form-label" for="furnishing">Furnishing</label>
-                  <select v-model="propertyDetails.furnishing" v-validate="'required'" data-vv-validate-on="change" class="form-control" id="furnishing" name="furnishing" required>
+                  <select v-model="propertyDetails.furnishing" v-validate="'required'" data-vv-validate-on="blur" class="form-control" id="furnishing" name="furnishing" required>
                     <option disabled value="">Select a furnishing type</option>
                     <option v-for="furnishing in furnishings" v-bind:value="furnishing">{{ furnishing }}</option>
                   </select>
@@ -80,7 +80,7 @@
               <div class="form-group row" :class="{ 'has-danger': errors.has('propertyStreetAddress') }">
                 <label class="col-12 col-form-label" for="propertyStreetAddress">Street address</label>
                 <div class="col-12">
-                  <textarea v-model="propertyDetails.propertyStreetAddress" v-validate="'required'" data-vv-validate-on="change" class="form-control" id="propertyStreetAddress" name="propertyStreetAddress" required>
+                  <textarea v-model="propertyDetails.propertyStreetAddress" v-validate="'required'" data-vv-validate-on="blur" class="form-control" id="propertyStreetAddress" name="propertyStreetAddress" required>
                   </textarea>
                   <span v-show="errors.has('propertyStreetAddress')" v-bind:title="errors.first('propertyStreetAddress')" class="form-control-feedback">Enter a valid street address</span>
                 </div>
@@ -106,7 +106,7 @@
               <div class="form-group row" :class="{ 'has-danger': errors.has('propertyCountry') }">
                 <label class="col-12 col-form-label" for="propertyCountry">Country</label>          
                 <div class="col-12">
-                  <select v-model="propertyDetails.propertyCountry" v-validate="'required'" data-vv-validate-on="change" class="form-control" id="propertyCountry" name="propertyCountry" required>
+                  <select v-model="propertyDetails.propertyCountry" v-validate="'required'" data-vv-validate-on="blur" class="form-control" id="propertyCountry" name="propertyCountry" required>
                     <option disabled value="">Select a Country</option>
                     <option v-for="propertyCountry in countries" v-bind:value="propertyCountry">{{ propertyCountry }}</option>
                   </select>
@@ -282,7 +282,8 @@ export default {
         interestRate: 0,
         mortgageProvider: '',
         currentDealExpirationDate: '',
-        monthlyPayment: 0
+        monthlyPayment: 0,
+        portfolioId: ''
       }
     }
   },

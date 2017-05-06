@@ -27,9 +27,9 @@
             }
         }
 
-        public async Task<ICollection<PropertyImageViewModel>> UploadAsync(ICollection<IFormFile> files, Guid userId, Guid propertyId)
+        public async Task<ICollection<PropertyImageViewModel>> UploadAsync(ICollection<IFormFile> files, Guid portfolioId, Guid propertyId)
         {
-            var uploadDirectory = Path.Combine(HostingEnvironment.WebRootPath, "static", "uploads", userId.ToString());
+            var uploadDirectory = Path.Combine(HostingEnvironment.WebRootPath, "static", "uploads", portfolioId.ToString());
             if (!Directory.Exists(uploadDirectory))
             {
                 Directory.CreateDirectory(uploadDirectory);

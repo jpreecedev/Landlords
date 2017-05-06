@@ -25,9 +25,9 @@
             public async Task OnResourceExecutionAsync(ResourceExecutingContext context, ResourceExecutionDelegate next)
             {
                 var userId = context.HttpContext.User.GetUserId();
-                var propertyId = Guid.Parse(context.HttpContext.Request.Query["imageId"]);
+                var propertyImageId = Guid.Parse(context.HttpContext.Request.Query["entityId"]);
 
-                if (!await userId.OwnsPropertyDetailsAsync(propertyId, _context))
+                if (!await userId.OwnsPropertyImageAsync(propertyImageId, _context))
                 {
                     context.Result = new ChallengeResult();
                 }

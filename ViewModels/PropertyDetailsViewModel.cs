@@ -6,6 +6,7 @@
     using Model.DataTypes;
     using Model.Validation;
     using System.Collections.Generic;
+    using System.ComponentModel;
 
     //TODO: Use automapper
     public class PropertyDetailsViewModel : IPropertyDetails
@@ -43,10 +44,10 @@
             MortgageProvider = propertyDetails.MortgageProvider;
         }
 
-        public PropertyDetailsViewModel(Guid id, Guid userId)
+        public PropertyDetailsViewModel(Guid id, Guid portfolioId)
         {
             Id = id;
-            PortfolioId = PortfolioId;
+            PortfolioId = portfolioId;
         }
 
         public DateTime? ConstructionDate { get; set; }
@@ -80,7 +81,7 @@
 
         [MaxLength(255)]
         public string PropertyTownOrCity { get; set; }
-
+        
         [Required(ErrorMessage = "Property type is required")]
         [MaxLength(255)]
         public string PropertyType { get; set; }
@@ -127,7 +128,5 @@
 
         [ValidateGuid]
         public Guid PortfolioId { get; set; }
-
-        public Portfolio Portfolio { get; set; }
     }
 }

@@ -26,9 +26,10 @@
             public async Task OnResourceExecutionAsync(ResourceExecutingContext context, ResourceExecutionDelegate next)
             {
                 var userId = context.HttpContext.User.GetUserId();
-                var propertyId = Guid.Parse(context.HttpContext.Request.Path.Value.Split('/').Last());
+                var propertyId = TryParse(context.HttpContext.Request.Path.Value.Split('/').LastOrDefault())
+                                 ?? TryParse(context.HttpContext.Request.Query["entityId"]);
 
-                if (!await userId.OwnsPropertyDetailsAsync(propertyId, _context))
+                if (!await userId.OwnsPropertyDetailsAsync(propertyId.GetValueOrDefault(), _context))
                 {
                     context.Result = new ChallengeResult();
                 }
@@ -36,6 +37,15 @@
                 {
                     await next();
                 }
+            }
+
+            private static Guid? TryParse(string input)
+            {
+                if (Guid.TryParse(input, out Guid result))
+                {
+                    return result;
+                }
+                return null;
             }
         }
     }
