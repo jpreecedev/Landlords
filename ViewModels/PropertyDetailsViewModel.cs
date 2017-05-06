@@ -19,7 +19,7 @@
             if (propertyDetails == null) throw new ArgumentNullException(nameof(propertyDetails));
 
             Id = propertyDetails.Id;
-            UserId = propertyDetails.UserId;
+            PortfolioId = propertyDetails.PortfolioId;
             ConstructionDate = propertyDetails.ConstructionDate;
             Furnishing = propertyDetails.Furnishing;
             Bedrooms = propertyDetails.Bedrooms;
@@ -46,7 +46,7 @@
         public PropertyDetailsViewModel(Guid id, Guid userId)
         {
             Id = id;
-            UserId = userId;
+            PortfolioId = PortfolioId;
         }
 
         public DateTime? ConstructionDate { get; set; }
@@ -122,10 +122,12 @@
 
         [ValidateGuid]
         public Guid Id { get; set; }
-
-        [ValidateGuid]
-        public Guid UserId { get; set; }
         
         public decimal? MonthlyPayment { get; set; }
+
+        [ValidateGuid]
+        public Guid PortfolioId { get; set; }
+
+        public Portfolio Portfolio { get; set; }
     }
 }

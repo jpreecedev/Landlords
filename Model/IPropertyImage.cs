@@ -5,6 +5,6 @@
     public interface IPropertyImage
     {
         string FileName { get; set; }
-        Guid PropertyId { get; set; }
+        PropertyDetails Property { get; set; }
     }
 }

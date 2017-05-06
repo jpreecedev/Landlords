@@ -13,13 +13,18 @@
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
-    using Model;
     using Services;
     using Landlords.Permissions;
     using Microsoft.AspNetCore.Authorization;
+    using Model;
 
     public static class Extensions
     {
+        public static bool HasUser(this Portfolio portfolio, Guid userId)
+        {
+            return portfolio.Users.SingleOrDefault(link => link.UserId == userId) != null;
+        }
+
         public static IEnumerable<IdentityError> ToGeneric(this IEnumerable<IdentityError> errors)
         {
             return errors.Select(c => new IdentityError {Code = "GenericError", Description = c.Description});
@@ -36,16 +41,6 @@
             return modelState.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray())
                 .Select(c => new {c.Key, c.Value})
                 .ToList();
-        }
-
-        public static bool Owns<T>(this Guid userId, Guid propertyId, ILLDbContext context) where T : BaseModel
-        {
-            if (userId.IsDefault() || propertyId.IsDefault() || context == null)
-            {
-                return false;
-            }
-
-            return context.Set<T>().Where(c => !c.IsDeleted).Any(c => c.UserId == userId && c.Id == propertyId);
         }
 
         public static bool IsDefault(this Guid guid)

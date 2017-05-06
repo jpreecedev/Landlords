@@ -32,10 +32,10 @@
             {
                 var userId = User.GetUserId();
 
-                if (entityId.IsDefault() || !userId.Owns<PropertyImage>(entityId, _context))
+                if (entityId.IsDefault() || !await userId.OwnsPropertyImageAsync(entityId, _context))
                     return BadRequest("Unable to validate payload");
 
-                await _dataProvider.DeleteAsync(userId, entityId);
+                await _dataProvider.DeleteAsync(entityId);
                 return Ok();
             }
             catch (Exception e)
@@ -52,7 +52,7 @@
             {
                 var userId = User.GetUserId();
 
-                if (!files.IsValid() || entityId.IsDefault() || !userId.Owns<PropertyDetails>(entityId, _context))
+                if (!files.IsValid() || entityId.IsDefault() || !await userId.OwnsPropertyDetailsAsync(entityId, _context))
                     return BadRequest("Unable to validate payload");
 
                 return Ok(await _dataProvider.UploadAsync(files, userId, entityId));

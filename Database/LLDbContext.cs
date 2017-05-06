@@ -12,29 +12,33 @@
         {
             
         }
-
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            builder.Entity<PropertyDetails>()
-                .HasOne(p => p.User)
-                .WithMany()
-                .HasConstraintName("ForeignKey_User_PropertyDetails");
-            
-            builder.Entity<PropertyImage>()
-                .HasOne(p => p.User)
-                .WithMany()
-                .HasConstraintName("ForeignKey_User_PropertyImages");
-
-            base.OnModelCreating(builder);
-        }
-
+        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ApplicationUserPortfolio>().Property(p => p.Id).ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<ApplicationUserPortfolio>()
+                .HasKey(aup => new { aup.Id, aup.UserId, aup.PortfolioId });
+
+            modelBuilder.Entity<ApplicationUser>()
+                .HasOne(p => p.Agency)
+                .WithMany(b => b.Users)
+                .HasForeignKey(p => p.AgencyId)
+                .HasConstraintName("ForeignKey_ApplicationUser_Agency");
+
+            base.OnModelCreating(modelBuilder);
+        }
+
         public DbSet<PropertyDetails> PropertyDetails { get; set; }
         public DbSet<PropertyImage> PropertyImages { get; set; }
         public DbSet<UserPermission> UserPermissions { get; set; }
+        public DbSet<Agency> Agencies { get; set; }
+        public DbSet<Portfolio> Portfolios { get; set; }
+        public DbSet<ApplicationUserPortfolio> ApplicationUserPortfolios { get; set; }
     }
 }

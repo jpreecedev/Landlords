@@ -23,9 +23,11 @@
         public string FileName { get; set; }
 
         [ValidateGuid]
-        public Guid PropertyId { get; set; }
+        public Guid Id { get; set; }
 
         [ValidateGuid]
-        public Guid Id { get; set; }
+        public Guid PropertyId { get; set; }
+
+        public PropertyDetails Property { get; set; }
     }
 }

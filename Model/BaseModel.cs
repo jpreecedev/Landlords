@@ -1,6 +1,5 @@
 ﻿namespace Model
 {
-    using Model.Database;
     using Model.Validation;
     using System;
     using System.ComponentModel.DataAnnotations.Schema;
@@ -11,11 +10,6 @@
     {
         [ValidateGuid]
         public Guid Id { get; set; }
-
-        [ValidateGuid]
-        public Guid UserId { get; set; }
-
-        public ApplicationUser User { get; set; }
 
         public DateTime Created { get; set; }
 

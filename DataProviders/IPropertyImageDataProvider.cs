@@ -9,6 +9,6 @@
     public interface IPropertyImageDataProvider
     {
         Task<ICollection<PropertyImageViewModel>> UploadAsync(ICollection<IFormFile> files, Guid userId, Guid propertyId);
-        Task DeleteAsync(Guid userId, Guid propertyImageId);
+        Task DeleteAsync(Guid propertyImageId);
     }
 }

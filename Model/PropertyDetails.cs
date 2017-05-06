@@ -1,9 +1,8 @@
 ﻿namespace Model
 {
     using System;
-
-    //EF Core does not support complex types
-
+    using Validation;
+    
     public class PropertyDetails : BaseModel, IPropertyDetails
     {
         public string Reference { get; set; }
@@ -49,5 +48,10 @@
         public DateTime? CurrentDealExpirationDate { get; set; }
 
         public decimal? MonthlyPayment { get; set; }
+
+        [ValidateGuid]
+        public Guid PortfolioId { get; set; }
+
+        public Portfolio Portfolio { get; set; }
     }
 }

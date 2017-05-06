@@ -14,5 +14,21 @@
         public const string PropertyImageDelete = "Delete property image";
         public const string PropertyImageUpload = "Upload property image";
 
+        public static readonly string[] DefaultAdministratorPermissions =
+        {
+            ProfileUpdate,
+            ProfileView
+        };
+
+        public static readonly string[] DefaultLandlordPermissions =
+        {
+            PropertyDetailsViewData,
+            PropertyDetailsNew,
+            PropertyDetailsGetList,
+            PropertyDetailsGetById,
+            PropertyDetailsUpdate,
+            PropertyImageDelete,
+            PropertyImageUpload
+        };
     }
 }

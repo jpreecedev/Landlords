@@ -2,7 +2,7 @@
 
 namespace Model
 {
-    public interface IPropertyDetails
+    public interface IPropertyDetails : IPortfolioEntity
     {
         DateTime? ConstructionDate { get; set; }
         string Furnishing { get; set; }

@@ -3,7 +3,6 @@
     using DataProviders;
     using Microsoft.AspNetCore.Mvc;
     using System;
-    using System.Linq;
     using Landlords.Core;
     using Landlords.ViewModels;
     using System.Threading.Tasks;
@@ -50,10 +49,10 @@
         {
             var userId = User.GetUserId();
 
-            if (propertyId.IsDefault() || !userId.Owns<PropertyDetails>(propertyId, _context))
+            if (propertyId.IsDefault() || !await userId.OwnsPropertyDetailsAsync(propertyId, _context))
                 return BadRequest("Unable to validate payload");
 
-            return Ok(await _propertyDataProvider.GetDetailsAsync(User.GetUserId(), propertyId));
+            return Ok(await _propertyDataProvider.GetDetailsAsync(propertyId));
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -64,10 +63,10 @@
             {
                 var userId = User.GetUserId();
 
-                if (value.Id.IsDefault() || !userId.Owns<PropertyDetails>(value.Id, _context))
+                if (value.Id.IsDefault() || !await userId.OwnsPropertyDetailsAsync(userId, _context))
                     return BadRequest("Unable to validate payload");
                 
-                await _propertyDataProvider.UpdateAsync(User.GetUserId(), value);
+                await _propertyDataProvider.UpdateAsync(value);
                 return Ok();
             }
             

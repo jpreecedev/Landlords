@@ -39,6 +39,9 @@
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Core\Extensions.Ownership.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="Model\Model.csproj" />
   </ItemGroup>
 

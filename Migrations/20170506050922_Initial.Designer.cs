@@ -8,8 +8,8 @@ using Landlords.Database;
 namespace Landlords.Migrations
 {
     [DbContext(typeof(LLDbContext))]
-    [Migration("20170501123605_UsePhoneNumberField")]
-    partial class UsePhoneNumberField
+    [Migration("20170506050922_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -98,6 +98,44 @@ namespace Landlords.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Model.Agency", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Created");
+
+                    b.Property<DateTime?>("Deleted");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Agencies");
+                });
+
+            modelBuilder.Entity("Model.ApplicationUserPortfolio", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("UserId");
+
+                    b.Property<Guid>("PortfolioId");
+
+                    b.Property<DateTime>("Created");
+
+                    b.Property<DateTime?>("Deleted");
+
+                    b.HasKey("Id", "UserId", "PortfolioId");
+
+                    b.HasIndex("PortfolioId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ApplicationUserPortfolios");
+                });
+
             modelBuilder.Entity("Model.Database.ApplicationRole", b =>
                 {
                     b.Property<Guid>("Id")
@@ -127,6 +165,8 @@ namespace Landlords.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("AccessFailedCount");
+
+                    b.Property<Guid?>("AgencyId");
 
                     b.Property<DateTime?>("AvailableFrom");
 
@@ -171,6 +211,8 @@ namespace Landlords.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AgencyId");
+
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
 
@@ -181,22 +223,54 @@ namespace Landlords.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("Model.PropertyDetails", b =>
+            modelBuilder.Entity("Model.Portfolio", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime?>("ConstructionDate");
 
                     b.Property<DateTime>("Created");
 
                     b.Property<DateTime?>("Deleted");
 
+                    b.Property<string>("DisplayName");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Portfolios");
+                });
+
+            modelBuilder.Entity("Model.PropertyDetails", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Bedrooms");
+
+                    b.Property<DateTime?>("ConstructionDate");
+
+                    b.Property<DateTime>("Created");
+
+                    b.Property<DateTime?>("CurrentDealExpirationDate");
+
+                    b.Property<DateTime?>("Deleted");
+
                     b.Property<string>("Furnishing");
+
+                    b.Property<double?>("InterestRate");
 
                     b.Property<bool>("IsAvailableForLetting");
 
+                    b.Property<decimal?>("MonthlyPayment");
+
+                    b.Property<decimal?>("MortgageAmount");
+
+                    b.Property<string>("MortgageProvider");
+
                     b.Property<string>("PaymentTerm");
+
+                    b.Property<Guid>("PortfolioId");
 
                     b.Property<string>("PropertyCountry");
 
@@ -222,11 +296,9 @@ namespace Landlords.Migrations
 
                     b.Property<decimal?>("TargetRent");
 
-                    b.Property<Guid>("UserId");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("PortfolioId");
 
                     b.ToTable("PropertyDetails");
                 });
@@ -245,13 +317,31 @@ namespace Landlords.Migrations
 
                     b.Property<Guid>("PropertyId");
 
+                    b.HasKey("Id");
+
+                    b.HasIndex("PropertyId");
+
+                    b.ToTable("PropertyImages");
+                });
+
+            modelBuilder.Entity("Model.UserPermission", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Created");
+
+                    b.Property<DateTime?>("Deleted");
+
+                    b.Property<string>("Permission");
+
                     b.Property<Guid>("UserId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("PropertyImages");
+                    b.ToTable("UserPermissions");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<System.Guid>", b =>
@@ -291,21 +381,48 @@ namespace Landlords.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("Model.ApplicationUserPortfolio", b =>
+                {
+                    b.HasOne("Model.Portfolio", "Portfolio")
+                        .WithMany("Users")
+                        .HasForeignKey("PortfolioId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Model.Database.ApplicationUser", "User")
+                        .WithMany("Portfolios")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Model.Database.ApplicationUser", b =>
+                {
+                    b.HasOne("Model.Agency", "Agency")
+                        .WithMany("Users")
+                        .HasForeignKey("AgencyId")
+                        .HasConstraintName("ForeignKey_ApplicationUser_Agency");
+                });
+
             modelBuilder.Entity("Model.PropertyDetails", b =>
                 {
-                    b.HasOne("Model.Database.ApplicationUser", "User")
+                    b.HasOne("Model.Portfolio", "Portfolio")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .HasConstraintName("ForeignKey_User_PropertyDetails")
+                        .HasForeignKey("PortfolioId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Model.PropertyImage", b =>
                 {
+                    b.HasOne("Model.PropertyDetails", "Property")
+                        .WithMany()
+                        .HasForeignKey("PropertyId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Model.UserPermission", b =>
+                {
                     b.HasOne("Model.Database.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .HasConstraintName("ForeignKey_User_PropertyImages")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
         }

@@ -16,10 +16,13 @@
         {
         }
 
-        public async Task<PropertyDetailsViewModel> NewAsync(Guid userId)
+        public async Task<PropertyDetailsViewModel> NewAsync(Guid portfolioId)
         {
-            PropertyDetails entity = new PropertyDetails();
-            PopulateNewEntity(userId, entity);
+            var entity = new PropertyDetails
+            {
+                Created = DateTime.Now,
+                PortfolioId = portfolioId
+            };
 
             await Context.PropertyDetails.AddAsync(entity);
             await Context.SaveChangesAsync();
@@ -27,9 +30,11 @@
             return new PropertyDetailsViewModel(entity);
         }
 
-        public async Task UpdateAsync(Guid userId, PropertyDetailsViewModel viewModel)
+        public async Task UpdateAsync(PropertyDetailsViewModel viewModel)
         {
-            var existingEntity = await Context.PropertyDetails.FirstOrDefaultAsync(c => c.UserId == userId && c.Id == viewModel.Id);
+            var existingEntity = await Context.PropertyDetails.Where(details => !details.IsDeleted)
+                .FirstOrDefaultAsync(details => details.Id == viewModel.Id);
+
             if (existingEntity != null)
             {
                 existingEntity.MapFrom(viewModel);
@@ -38,13 +43,13 @@
             }
         }
 
-        public async Task<PropertyDetailsViewModel> GetDetailsAsync(Guid userId, Guid propertyId)
+        public async Task<PropertyDetailsViewModel> GetDetailsAsync(Guid propertyId)
         {
             return await (from details in Context.PropertyDetails
                           join images in Context.PropertyImages on details.Id equals images.PropertyId into imageJoin
                           from img in imageJoin.DefaultIfEmpty()
-                          where details.UserId == userId && details.Id == propertyId && !details.IsDeleted
-                          select new PropertyDetailsViewModel(details.Id, userId)
+                          where details.Id == propertyId && !details.IsDeleted
+                          select new PropertyDetailsViewModel(details.Id, details.PortfolioId)
                           {
                               Reference = details.Reference,
                               PropertyStreetAddress = details.PropertyStreetAddress,
@@ -73,12 +78,13 @@
                          .FirstOrDefaultAsync();
         }
 
-        public async Task<ICollection<PropertyDetailsViewModel>> GetListAsync(Guid userId)
+        public async Task<ICollection<PropertyDetailsViewModel>> GetListAsync(Guid portfolioId)
         {
-            return await (from details in Context.PropertyDetails
-                          join images in Context.PropertyImages on details.Id equals images.PropertyId into imageJoin
-                          where details.UserId == userId && !details.IsDeleted
-                          select new PropertyDetailsViewModel(details.Id, userId)
+            return await (from details in Context.PropertyDetails.Include(x => x.Portfolio)
+                          where details.PortfolioId == portfolioId
+                          join images in Context.PropertyImages on details.Id equals images.Property.Id into imageJoin
+                          where !details.IsDeleted && !details.Portfolio.IsDeleted
+                          select new PropertyDetailsViewModel(details.Id, details.PortfolioId)
                           {
                               Reference = details.Reference,
                               PropertyStreetAddress = details.PropertyStreetAddress,

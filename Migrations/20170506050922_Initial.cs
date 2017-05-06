@@ -24,6 +24,20 @@ namespace Landlords.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Agencies",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Created = table.Column<DateTime>(nullable: false),
+                    Deleted = table.Column<DateTime>(nullable: true),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Agencies", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
                 {
@@ -38,14 +52,34 @@ namespace Landlords.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Portfolios",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Created = table.Column<DateTime>(nullable: false),
+                    Deleted = table.Column<DateTime>(nullable: true),
+                    DisplayName = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Portfolios", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetUsers",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
+                    AgencyId = table.Column<Guid>(nullable: true),
+                    AvailableFrom = table.Column<DateTime>(nullable: true),
+                    AvailableTo = table.Column<DateTime>(nullable: true),
                     ConcurrencyStamp = table.Column<string>(nullable: true),
                     Email = table.Column<string>(maxLength: 256, nullable: true),
                     EmailConfirmed = table.Column<bool>(nullable: false),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
@@ -53,6 +87,7 @@ namespace Landlords.Migrations
                     PasswordHash = table.Column<string>(nullable: true),
                     PhoneNumber = table.Column<string>(nullable: true),
                     PhoneNumberConfirmed = table.Column<bool>(nullable: false),
+                    SecondaryPhoneNumber = table.Column<string>(nullable: true),
                     SecurityStamp = table.Column<string>(nullable: true),
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     UserName = table.Column<string>(maxLength: 256, nullable: true)
@@ -60,6 +95,12 @@ namespace Landlords.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "ForeignKey_ApplicationUser_Agency",
+                        column: x => x.AgencyId,
+                        principalTable: "Agencies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -79,6 +120,48 @@ namespace Landlords.Migrations
                         name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PropertyDetails",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Bedrooms = table.Column<int>(nullable: false),
+                    ConstructionDate = table.Column<DateTime>(nullable: true),
+                    Created = table.Column<DateTime>(nullable: false),
+                    CurrentDealExpirationDate = table.Column<DateTime>(nullable: true),
+                    Deleted = table.Column<DateTime>(nullable: true),
+                    Furnishing = table.Column<string>(nullable: true),
+                    InterestRate = table.Column<double>(nullable: true),
+                    IsAvailableForLetting = table.Column<bool>(nullable: false),
+                    MonthlyPayment = table.Column<decimal>(nullable: true),
+                    MortgageAmount = table.Column<decimal>(nullable: true),
+                    MortgageProvider = table.Column<string>(nullable: true),
+                    PaymentTerm = table.Column<string>(nullable: true),
+                    PortfolioId = table.Column<Guid>(nullable: false),
+                    PropertyCountry = table.Column<string>(nullable: true),
+                    PropertyCountyOrRegion = table.Column<string>(nullable: true),
+                    PropertyPostcode = table.Column<string>(nullable: true),
+                    PropertyStreetAddress = table.Column<string>(nullable: true),
+                    PropertyTownOrCity = table.Column<string>(nullable: true),
+                    PropertyType = table.Column<string>(nullable: true),
+                    PurchaseDate = table.Column<DateTime>(nullable: true),
+                    PurchasePrice = table.Column<decimal>(nullable: true),
+                    Reference = table.Column<string>(nullable: true),
+                    SellingDate = table.Column<DateTime>(nullable: true),
+                    SellingPrice = table.Column<decimal>(nullable: true),
+                    TargetRent = table.Column<decimal>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PropertyDetails", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PropertyDetails_Portfolios_PortfolioId",
+                        column: x => x.PortfolioId,
+                        principalTable: "Portfolios",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -149,35 +232,47 @@ namespace Landlords.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PropertyDetails",
+                name: "ApplicationUserPortfolios",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    ConstructionDate = table.Column<DateTime>(nullable: true),
+                    UserId = table.Column<Guid>(nullable: false),
+                    PortfolioId = table.Column<Guid>(nullable: false),
+                    Created = table.Column<DateTime>(nullable: false),
+                    Deleted = table.Column<DateTime>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ApplicationUserPortfolios", x => new { x.Id, x.UserId, x.PortfolioId });
+                    table.ForeignKey(
+                        name: "FK_ApplicationUserPortfolios_Portfolios_PortfolioId",
+                        column: x => x.PortfolioId,
+                        principalTable: "Portfolios",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ApplicationUserPortfolios_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserPermissions",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
                     Created = table.Column<DateTime>(nullable: false),
                     Deleted = table.Column<DateTime>(nullable: true),
-                    Furnishing = table.Column<string>(nullable: true),
-                    IsAvailableForLetting = table.Column<bool>(nullable: false),
-                    PaymentTerm = table.Column<string>(nullable: true),
-                    PropertyCountry = table.Column<string>(nullable: true),
-                    PropertyCountyOrRegion = table.Column<string>(nullable: true),
-                    PropertyPostcode = table.Column<string>(nullable: true),
-                    PropertyStreetAddress = table.Column<string>(nullable: true),
-                    PropertyTownOrCity = table.Column<string>(nullable: true),
-                    PropertyType = table.Column<string>(nullable: true),
-                    PurchaseDate = table.Column<DateTime>(nullable: true),
-                    PurchasePrice = table.Column<decimal>(nullable: true),
-                    Reference = table.Column<string>(nullable: true),
-                    SellingDate = table.Column<DateTime>(nullable: true),
-                    SellingPrice = table.Column<decimal>(nullable: true),
-                    TargetRent = table.Column<decimal>(nullable: true),
+                    Permission = table.Column<string>(nullable: true),
                     UserId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PropertyDetails", x => x.Id);
+                    table.PrimaryKey("PK_UserPermissions", x => x.Id);
                     table.ForeignKey(
-                        name: "ForeignKey_User_PropertyDetails",
+                        name: "FK_UserPermissions_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -192,16 +287,15 @@ namespace Landlords.Migrations
                     Created = table.Column<DateTime>(nullable: false),
                     Deleted = table.Column<DateTime>(nullable: true),
                     FileName = table.Column<string>(maxLength: 255, nullable: true),
-                    PropertyId = table.Column<Guid>(nullable: false),
-                    UserId = table.Column<Guid>(nullable: false)
+                    PropertyId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PropertyImages", x => x.Id);
                     table.ForeignKey(
-                        name: "ForeignKey_User_PropertyImages",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
+                        name: "FK_PropertyImages_PropertyDetails_PropertyId",
+                        column: x => x.PropertyId,
+                        principalTable: "PropertyDetails",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -227,10 +321,25 @@ namespace Landlords.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ApplicationUserPortfolios_PortfolioId",
+                table: "ApplicationUserPortfolios",
+                column: "PortfolioId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ApplicationUserPortfolios_UserId",
+                table: "ApplicationUserPortfolios",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
                 table: "AspNetRoles",
                 column: "NormalizedName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_AgencyId",
+                table: "AspNetUsers",
+                column: "AgencyId");
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
@@ -244,13 +353,18 @@ namespace Landlords.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_PropertyDetails_UserId",
+                name: "IX_PropertyDetails_PortfolioId",
                 table: "PropertyDetails",
-                column: "UserId");
+                column: "PortfolioId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PropertyImages_UserId",
+                name: "IX_PropertyImages_PropertyId",
                 table: "PropertyImages",
+                column: "PropertyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserPermissions_UserId",
+                table: "UserPermissions",
                 column: "UserId");
         }
 
@@ -272,16 +386,28 @@ namespace Landlords.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "PropertyDetails");
+                name: "ApplicationUserPortfolios");
 
             migrationBuilder.DropTable(
                 name: "PropertyImages");
 
             migrationBuilder.DropTable(
+                name: "UserPermissions");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
+                name: "PropertyDetails");
+
+            migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Portfolios");
+
+            migrationBuilder.DropTable(
+                name: "Agencies");
         }
     }
 }
