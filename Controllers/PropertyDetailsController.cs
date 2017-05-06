@@ -9,6 +9,7 @@
     using System.Threading.Tasks;
     using Model;
     using Database;
+    using Landlords.Permissions;
 
     [Route("api/[controller]")]
     public class PropertyDetailsController : Controller
@@ -23,24 +24,28 @@
         }
 
         [HttpGet("ViewData")]
+        [RequiresPermission(Permissions.PropertyDetailsViewData)]
         public IActionResult GetViewData()
         {
             return Ok(new PropertyDetailsViewModel());
         }
 
         [HttpPost("new"), ValidateAntiForgeryToken]
+        [RequiresPermission(Permissions.PropertyDetailsNew)]
         public async Task<IActionResult> New()
         {
             return Ok(await _propertyDataProvider.NewAsync(User.GetUserId()));
         }
 
         [HttpGet]
+        [RequiresPermission(Permissions.PropertyDetailsGetList)]
         public async Task<IActionResult> Get()
         {
             return Ok(await _propertyDataProvider.GetListAsync(User.GetUserId()));
         }
 
         [HttpGet("{propertyId}")]
+        [RequiresPermission(Permissions.PropertyDetailsGetById)]
         public async Task<IActionResult> Get(Guid propertyId)
         {
             var userId = User.GetUserId();
@@ -52,6 +57,7 @@
         }
 
         [HttpPost, ValidateAntiForgeryToken]
+        [RequiresPermission(Permissions.PropertyDetailsUpdate)]
         public async Task<IActionResult> Post([FromBody] PropertyDetailsViewModel value)
         {
             if (ModelState.IsValid)

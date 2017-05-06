@@ -10,7 +10,6 @@
     using Model.Database;
     using Landlords.Services;
     using System;
-    using System.Net;
     using Database;
 
     [Route("api/[controller]")]
@@ -44,8 +43,8 @@
             return Ok();
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
         [AllowAnonymous]
+        [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Post([FromBody] RegisterUserViewModel data)
         {
             IdentityResult registrationResult = null;
@@ -81,8 +80,8 @@
             });
         }
 
-        [HttpGet("confirmemail")]
         [AllowAnonymous]
+        [HttpGet("confirmemail")]
         public async Task<IActionResult> ConfirmEmail(Guid userId, string code)
         {
             var result = await _userRepository.ConfirmEmailAsync(userId, code);
