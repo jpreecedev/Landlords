@@ -21,7 +21,8 @@
             var entity = new PropertyDetails
             {
                 Created = DateTime.Now,
-                PortfolioId = portfolioId
+                PortfolioId = portfolioId,
+                Reference = "New property"
             };
 
             await Context.PropertyDetails.AddAsync(entity);

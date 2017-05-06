@@ -296,7 +296,7 @@ export default {
     validateBeforeSubmit: function () {
       this.$validator.validateAll().then(() => {
         var bag = new ErrorBag()
-        this.$http.post('/api/propertyDetails', { ...this.propertyDetails })
+        this.$http.post(`/api/propertyDetails?entityId=${this.propertyDetails.id}`, { ...this.propertyDetails })
           .then(() => {
             this.$router.push('/manager/property-list')
           })

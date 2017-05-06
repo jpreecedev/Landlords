@@ -15,7 +15,7 @@
       <tbody>
         <tr v-for="entry in data">
           <td>
-            <img class="img-thumbnail" v-if="entry.leadImage" v-bind:src="'/static/uploads/' + entry.userId + '/' + entry.leadImage.fileName" v-bind:alt="entry.leadImage.fileName">
+            <img class="img-thumbnail" v-if="entry.leadImage" v-bind:src="'/static/uploads/' + entry.portfolioId + '/' + entry.leadImage.fileName" v-bind:alt="entry.leadImage.fileName">
           </td>
           <td>
             <router-link :to="'/manager/property-details/' + entry.id">{{ entry.reference }}</router-link>
