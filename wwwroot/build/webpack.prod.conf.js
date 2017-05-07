@@ -8,6 +8,7 @@ var CopyWebpackPlugin = require('copy-webpack-plugin')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
+var ImageminPlugin = require('imagemin-webpack-plugin').default
 
 var env = config.build.env
 
@@ -98,6 +99,13 @@ var webpackConfig = merge(baseWebpackConfig, {
       jQuery: 'jquery',
       '_': 'lodash',
       'Tether': 'tether'
+    }),
+    // Make sure that the plugin is after any plugins that add images
+    new ImageminPlugin({
+      disable: process.env.NODE_ENV !== 'production', // Disable during development
+      pngquant: {
+        quality: '95-100'
+      }
     })
   ]
 })
