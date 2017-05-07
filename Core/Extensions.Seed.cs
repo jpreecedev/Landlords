@@ -84,6 +84,40 @@
                 await context.SaveChangesAsync();
             }
 
+            if (!await userManager.Users.AnyAsync(c => c.UserName == "landlord@hotmail.co.uk"))
+            {
+                var landlord = new ApplicationUser
+                {
+                    UserName = "landlord@hotmail.co.uk",
+                    Email = "landlord@hotmail.co.uk",
+                    EmailConfirmed = true,
+                    FirstName = "Land",
+                    LastName = "Lord"
+                };
+
+                await userManager.CreateAsync(landlord, "Password123");
+                await userManager.AddToRoleAsync(landlord, ApplicationRoles.Landlord);
+                await userManager.SetUserPermissionsAsync(landlord.Id, Permissions.DefaultLandlordPermissions);
+
+                var portfolio = new Portfolio
+                {
+                    Created = DateTime.Now,
+                    DisplayName = "Landlord Portfolio",
+                    Name = "LandLord-ASD432"
+                };
+                await context.Portfolios.AddAsync(portfolio);
+                await context.SaveChangesAsync();
+
+                var link = new ApplicationUserPortfolio
+                {
+                    Created = DateTime.Now,
+                    PortfolioId = portfolio.Id,
+                    UserId = landlord.Id
+                };
+                await context.ApplicationUserPortfolios.AddAsync(link);
+                await context.SaveChangesAsync();
+            }
+
             if (!await userManager.Users.AnyAsync(c => c.UserName == "accountant@hotmail.co.uk"))
             {
                 var accountant = new ApplicationUser
