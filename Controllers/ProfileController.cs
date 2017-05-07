@@ -5,8 +5,8 @@
     using Microsoft.AspNetCore.Mvc;
     using Repositories;
     using ViewModels;
-    using Model;
     using Landlords.Permissions;
+    using Model.Permissions;
 
     [Route("api/[controller]")]
     public class ProfileController : Controller
@@ -19,14 +19,14 @@
         }
 
         [HttpGet]
-        [RequiresPermission(Permissions.ProfileView)]
+        [RequiresPermission(Profile.View)]
         public async Task<IActionResult> Get()
         {
             return Ok(await _userRepository.GetProfileAsync(User.GetUserId()));
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        [RequiresPermission(Permissions.ProfileUpdate)]
+        [RequiresPermission(Profile.Update)]
         public async Task<IActionResult> Post([FromBody] ProfileViewModel value)
         {
             if (ModelState.IsValid)

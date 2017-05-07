@@ -2,15 +2,22 @@
 {
     using System;
     using Database;
-    using Validation;
+    using Model.Validation;
 
-    public class UserPermission : BaseModel, IUserEntity
+    public class UserPermission : BaseModel, IUserEntity, IPermission
     {
-        public string Permission { get; set; }
+        public string RouteId { get; set; }
+
+        public string Description { get; set; }
+
+        public string DisplayText { get; set; }
+
+        [ValidateGuid]
+        public Guid? ParentPermissionId { get; set; }
+
+        public ApplicationUser User { get; set; }
 
         [ValidateGuid]
         public Guid UserId { get; set; }
-
-        public ApplicationUser User { get; set; }
     }
 }

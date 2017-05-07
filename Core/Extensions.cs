@@ -17,7 +17,7 @@
     using Services;
     using Landlords.Permissions;
     using Microsoft.AspNetCore.Authorization;
-    using Model;
+    using Landlords.Interfaces;
 
     public static class Extensions
     {

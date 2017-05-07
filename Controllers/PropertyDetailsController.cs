@@ -1,14 +1,14 @@
 ﻿namespace Landlords.Controllers
 {
-    using DataProviders;
     using Microsoft.AspNetCore.Mvc;
     using System;
     using Landlords.Core;
     using Landlords.ViewModels;
     using System.Threading.Tasks;
-    using Model;
     using Database;
     using Landlords.Permissions;
+    using Landlords.Interfaces;
+    using Model.Permissions;
 
     [Route("api/[controller]")]
     public class PropertyDetailsController : Controller
@@ -23,35 +23,35 @@
         }
 
         [HttpGet("ViewData")]
-        [RequiresPermission(Permissions.PropertyDetailsViewData)]
+        [RequiresPermission(PropertyDetails.ViewData)]
         public IActionResult GetViewData()
         {
             return Ok(new PropertyDetailsViewModel());
         }
 
         [HttpPost("new"), ValidateAntiForgeryToken]
-        [MustOwnPortfolio, RequiresPermission(Permissions.PropertyDetailsNew)]
+        [MustOwnPortfolio, RequiresPermission(PropertyDetails.New)]
         public async Task<IActionResult> New()
         {
             return Ok(await _propertyDataProvider.NewAsync(User.GetPortfolioId()));
         }
 
         [HttpGet]
-        [MustOwnPortfolio, RequiresPermission(Permissions.PropertyDetailsGetList)]
+        [MustOwnPortfolio, RequiresPermission(PropertyDetails.GetList)]
         public async Task<IActionResult> Get()
         {
             return Ok(await _propertyDataProvider.GetListAsync(User.GetPortfolioId()));
         }
 
         [HttpGet("{propertyId}")]
-        [MustOwnPropertyDetails, RequiresPermission(Permissions.PropertyDetailsGetById)]
+        [MustOwnPropertyDetails, RequiresPermission(PropertyDetails.GetById)]
         public async Task<IActionResult> Get(Guid propertyId)
         {
             return Ok(await _propertyDataProvider.GetDetailsAsync(propertyId));
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        [MustOwnPropertyDetails, RequiresPermission(Permissions.PropertyDetailsUpdate)]
+        [MustOwnPropertyDetails, RequiresPermission(PropertyDetails.Update)]
         public async Task<IActionResult> Post([FromBody] PropertyDetailsViewModel value)
         {
             if (ModelState.IsValid)

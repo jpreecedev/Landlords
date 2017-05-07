@@ -11,6 +11,8 @@
     using Microsoft.AspNetCore.Mvc;
     using Model;
     using Landlords.Permissions;
+    using Model.Permissions;
+    using PropertyImage = Model.Permissions.PropertyImage;
 
     [Route("api/[controller]")]
     public class PropertyImageController : Controller, IImageUpload
@@ -25,7 +27,7 @@
         }
 
         [HttpDelete]
-        [MustOwnPropertyImage, RequiresPermission(Permissions.PropertyImageDelete)]
+        [MustOwnPropertyImage, RequiresPermission(PropertyImage.Delete)]
         public async Task<IActionResult> Delete(Guid entityId)
         {
             try
@@ -40,7 +42,7 @@
         }
 
         [HttpPost("upload"), ValidateAntiForgeryToken]
-        [MustOwnPropertyDetails, RequiresPermission(Permissions.PropertyImageUpload)]
+        [MustOwnPropertyDetails, RequiresPermission(PropertyImage.Upload)]
         public async Task<IActionResult> Upload(ICollection<IFormFile> files, Guid entityId)
         {
             try

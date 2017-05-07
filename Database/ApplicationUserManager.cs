@@ -24,7 +24,7 @@
 
         public async Task<IEnumerable<string>> GetUserPermissionsAsync(Guid userId)
         {
-            return await _context.UserPermissions.Where(up => up.UserId == userId).Select(up => up.Permission).ToListAsync();
+            return await _context.UserPermissions.Where(up => up.UserId == userId).Select(up => up.DisplayText).ToListAsync();
         }
 
         public async Task SetUserPermissionsAsync(Guid userId, params string[] permission)
@@ -32,7 +32,7 @@
             var permissions = permission.Select(c => new UserPermission
             {
                 Created = DateTime.Now,
-                Permission = c,
+                Description = c,
                 UserId = userId
             });
 

@@ -1,4 +1,4 @@
-﻿namespace Landlords.DataProviders
+﻿namespace Landlords.Interfaces
 {
     using System;
     using ViewModels;

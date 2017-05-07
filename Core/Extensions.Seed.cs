@@ -49,7 +49,7 @@
 
                 await userManager.CreateAsync(administrator, "Password123");
                 await userManager.AddToRoleAsync(administrator, ApplicationRoles.SiteAdministrator);
-                await userManager.SetUserPermissionsAsync(administrator.Id, Permissions.DefaultAdministratorPermissions);
+                await userManager.SetUserPermissionsAsync(administrator.Id, DefaultPermissions.Administrator);
             }
 
             if (!await userManager.Users.AnyAsync(c => c.UserName == "jonpreece@hotmail.co.uk"))
@@ -65,7 +65,7 @@
 
                 await userManager.CreateAsync(landlord, "Password123");
                 await userManager.AddToRoleAsync(landlord, ApplicationRoles.Landlord);
-                await userManager.SetUserPermissionsAsync(landlord.Id, Permissions.DefaultLandlordPermissions);
+                await userManager.SetUserPermissionsAsync(landlord.Id, DefaultPermissions.Landlord);
 
                 var portfolio = new Portfolio
                 {
@@ -99,7 +99,7 @@
 
                 await userManager.CreateAsync(landlord, "Password123");
                 await userManager.AddToRoleAsync(landlord, ApplicationRoles.Landlord);
-                await userManager.SetUserPermissionsAsync(landlord.Id, Permissions.DefaultLandlordPermissions);
+                await userManager.SetUserPermissionsAsync(landlord.Id, DefaultPermissions.Landlord);
 
                 var portfolio = new Portfolio
                 {
@@ -133,7 +133,7 @@
 
                 await userManager.CreateAsync(accountant, "Password123");
                 await userManager.AddToRoleAsync(accountant, ApplicationRoles.Accountant);
-                await userManager.SetUserPermissionsAsync(accountant.Id, Permissions.DefaultAccountantPermissions);
+                await userManager.SetUserPermissionsAsync(accountant.Id, DefaultPermissions.Accountant);
 
                 var portfolio = await context.Portfolios.FirstAsync(c => c.Name == "JonPreece-ABC123");
 
@@ -161,7 +161,7 @@
 
                 await userManager.CreateAsync(accountant, "Password123");
                 await userManager.AddToRoleAsync(accountant, ApplicationRoles.OtherUser);
-                await userManager.SetUserPermissionsAsync(accountant.Id, Permissions.DefaultOtherUserPermissions);
+                await userManager.SetUserPermissionsAsync(accountant.Id, DefaultPermissions.OtherUser);
 
                 var portfolio = await context.Portfolios.FirstAsync(c => c.Name == "JonPreece-ABC123");
 
@@ -189,7 +189,7 @@
 
                 await userManager.CreateAsync(accountant, "Password123");
                 await userManager.AddToRoleAsync(accountant, ApplicationRoles.AgencyAdministrator);
-                await userManager.SetUserPermissionsAsync(accountant.Id, Permissions.DefaultAgencyAdministratorPermissions);
+                await userManager.SetUserPermissionsAsync(accountant.Id, DefaultPermissions.AgencyAdministrator);
             }
 
             if (!await userManager.Users.AnyAsync(c => c.UserName == "user@agency.co.uk"))
@@ -205,7 +205,7 @@
 
                 await userManager.CreateAsync(accountant, "Password123");
                 await userManager.AddToRoleAsync(accountant, ApplicationRoles.AgencyAdministrator);
-                await userManager.SetUserPermissionsAsync(accountant.Id, Permissions.DefaultAgencyAdministratorPermissions);
+                await userManager.SetUserPermissionsAsync(accountant.Id, DefaultPermissions.AgencyAdministrator);
             }
         }
 

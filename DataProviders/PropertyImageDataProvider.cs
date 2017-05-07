@@ -10,6 +10,7 @@
     using Model;
     using Landlords.ViewModels;
     using Microsoft.EntityFrameworkCore;
+    using Landlords.Interfaces;
 
     public class PropertyImageDataProvider : BaseDataProvider, IPropertyImageDataProvider
     {

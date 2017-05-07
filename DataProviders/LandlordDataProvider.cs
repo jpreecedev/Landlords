@@ -9,6 +9,7 @@
     using Microsoft.EntityFrameworkCore;
     using System.Collections.Generic;
     using Model.Database;
+    using Landlords.Interfaces;
 
     public class LandlordDataProvider : BaseDataProvider, ILandlordDataProvider
     {
