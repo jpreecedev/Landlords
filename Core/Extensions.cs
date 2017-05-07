@@ -76,6 +76,11 @@
             });
         }
 
+        public static Guid GetAgencyId(this ClaimsPrincipal claimsPrincipal)
+        {
+            return claimsPrincipal.GetIdByClaimType(LLClaimTypes.AgencyIdentifier);
+        }
+
         public static Guid GetPortfolioId(this ClaimsPrincipal claimsPrincipal)
         {
             return claimsPrincipal.GetIdByClaimType(LLClaimTypes.PortfolioIdentifier);
@@ -118,6 +123,7 @@
         {
             serviceCollection.AddScoped<IPropertyDataProvider, PropertyDataProvider>()
                 .AddScoped<IPropertyImageDataProvider, PropertyImageDataProvider>()
+                .AddScoped<ILandlordDataProvider, LandlordDataProvider>()
                 .AddScoped<IUserRepository, UserRepository>()
                 .AddScoped<ILLDbContext, LLDbContext>()
                 .AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>()

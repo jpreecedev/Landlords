@@ -14,6 +14,8 @@
         public const string PropertyImageDelete = "Delete property image";
         public const string PropertyImageUpload = "Upload property image";
 
+        public const string LandlordList = "View list of landlords";
+
         public static readonly string[] DefaultAdministratorPermissions =
         {
             ProfileUpdate,
@@ -44,7 +46,14 @@
             PropertyDetailsGetById,
         };
 
-        public static readonly string[] DefaultAgencyAdministratorPermissions = { };
-        public static readonly string[] DefaultAgencyUserPermissions = { };
+        public static readonly string[] DefaultAgencyAdministratorPermissions =
+        {
+            LandlordList
+        };
+
+        public static readonly string[] DefaultAgencyUserPermissions =
+        {
+            LandlordList
+        };
     }
 }

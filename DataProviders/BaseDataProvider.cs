@@ -2,9 +2,8 @@
 {
     using Database;
     using Microsoft.AspNetCore.Hosting;
-    using Model;
 
-    public class BaseDataProvider<T> where T : BaseModel
+    public class BaseDataProvider
     {
         public BaseDataProvider(IHostingEnvironment hostingEnvironment, LLDbContext context)
         {

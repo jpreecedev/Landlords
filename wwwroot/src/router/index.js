@@ -39,6 +39,20 @@ const router = new Router({
     beforeEnter: guardRoute
   },
   {
+    path: '/agency',
+    beforeEnter: guardRoute,
+    component: function (resolve) {
+      require(['@/components/Agency.vue'], resolve)
+    },
+    children: [{
+      path: 'landlord-list',
+      name: 'landlordList',
+      component: function (resolve) {
+        require(['@/components/LandlordList.vue'], resolve)
+      }
+    }]
+  },
+  {
     path: '/manager',
     beforeEnter: guardRoute,
     component: function (resolve) {

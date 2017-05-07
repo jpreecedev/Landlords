@@ -15,5 +15,10 @@
         public Guid UserId { get; set; }
 
         public ApplicationUser User { get; set; }
+
+        [ValidateGuid]
+        public Guid? AgencyId { get; set; }
+
+        public Agency Agency { get; set; }
     }
 }

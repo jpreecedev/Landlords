@@ -9,7 +9,7 @@
     using Model.Database;
     using System.Threading;
     using System.Collections.Generic;
-    using MimeKit;
+    using System.Linq;
 
     public static class SeedExtensions
     {
@@ -211,7 +211,7 @@
 
         private static async Task CreateAgencies(LLDbContext context)
         {
-            if (!await context.Agencies.AnyAsync(c => c.Name == "Enwhistle Green"))
+            if (!await context.Agencies.AnyAsync(c => c.Name == "Entwhistle Green"))
             {
                 var agency = new Agency
                 {
@@ -222,12 +222,18 @@
                 await context.Agencies.AddAsync(agency);
                 await context.SaveChangesAsync();
 
-                var user = await context.Users.FirstAsync(c => c.UserName == "jonpreece@hotmail.co.uk");
-                var landlord = await context.Users.FirstAsync(c => c.UserName == "landlord@hotmail.co.uk");
+                var user1 = await context.Users.FirstAsync(c => c.UserName == "administrator@agency.co.uk");
+                var user2 = await context.Users.FirstAsync(c => c.UserName == "user@agency.co.uk");
 
-                user.AgencyId = agency.Id;
-                landlord.AgencyId = agency.Id;
+                user1.AgencyId = agency.Id;
+                user2.AgencyId = agency.Id;
 
+                await context.SaveChangesAsync();
+
+                var landlord1 = await context.Users.FirstAsync(c => c.UserName == "jonpreece@hotmail.co.uk");
+                var portfolios = context.ApplicationUserPortfolios.Where(c => c.UserId == landlord1.Id);
+
+                await portfolios.ForEachAsync(c => c.AgencyId = agency.Id);
                 await context.SaveChangesAsync();
             }
         }

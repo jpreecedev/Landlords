@@ -1,7 +1,6 @@
 ﻿namespace Landlords.Repositories
 {
     using System;
-    using System.Linq;
     using Database;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;

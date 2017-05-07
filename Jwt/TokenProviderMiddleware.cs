@@ -108,7 +108,8 @@
                     var userRoles = await _userManager.GetRolesAsync(user);
                     var claims = new List<Claim>()
                     {
-                        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+                        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                        new Claim(LLClaimTypes.AgencyIdentifier, user.AgencyId.GetValueOrDefault().ToString())
                     };
 
                     foreach (var role in userRoles)

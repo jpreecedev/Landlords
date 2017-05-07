@@ -10,7 +10,7 @@
     using System.Linq;
     using Microsoft.AspNetCore.Hosting;
 
-    public class PropertyDataProvider : BaseDataProvider<PropertyDetails>, IPropertyDataProvider
+    public class PropertyDataProvider : BaseDataProvider, IPropertyDataProvider
     {
         public PropertyDataProvider(IHostingEnvironment hostingEnvironment, LLDbContext context) : base(hostingEnvironment, context)
         {

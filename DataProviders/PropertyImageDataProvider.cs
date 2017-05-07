@@ -11,7 +11,7 @@
     using Landlords.ViewModels;
     using Microsoft.EntityFrameworkCore;
 
-    public class PropertyImageDataProvider : BaseDataProvider<PropertyImage>, IPropertyImageDataProvider
+    public class PropertyImageDataProvider : BaseDataProvider, IPropertyImageDataProvider
     {
         public PropertyImageDataProvider(IHostingEnvironment hostingEnvironment, LLDbContext context) : base(hostingEnvironment, context)
         {
