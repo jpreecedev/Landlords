@@ -9,6 +9,7 @@
     using Model.Database;
     using System.Threading;
     using System.Collections.Generic;
+    using MimeKit;
 
     public static class SeedExtensions
     {
@@ -19,6 +20,7 @@
 
             AsyncHelpers.RunSync(() => CreateRoles(context, roleManager));
             AsyncHelpers.RunSync(() => CreateUsers(context, userManager));
+            AsyncHelpers.RunSync(() => CreateAgencies(context));
         }
 
         private static async Task CreateRoles(LLDbContext context, ApplicationRoleManager roleManager)
@@ -205,7 +207,29 @@
                 await userManager.AddToRoleAsync(accountant, ApplicationRoles.AgencyAdministrator);
                 await userManager.SetUserPermissionsAsync(accountant.Id, Permissions.DefaultAgencyAdministratorPermissions);
             }
+        }
 
+        private static async Task CreateAgencies(LLDbContext context)
+        {
+            if (!await context.Agencies.AnyAsync(c => c.Name == "Enwhistle Green"))
+            {
+                var agency = new Agency
+                {
+                    Created = DateTime.Now,
+                    Name = "Entwhistle Green"
+                };
+
+                await context.Agencies.AddAsync(agency);
+                await context.SaveChangesAsync();
+
+                var user = await context.Users.FirstAsync(c => c.UserName == "jonpreece@hotmail.co.uk");
+                var landlord = await context.Users.FirstAsync(c => c.UserName == "landlord@hotmail.co.uk");
+
+                user.AgencyId = agency.Id;
+                landlord.AgencyId = agency.Id;
+
+                await context.SaveChangesAsync();
+            }
         }
 
         private static class AsyncHelpers
