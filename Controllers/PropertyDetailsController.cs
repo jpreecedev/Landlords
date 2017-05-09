@@ -23,35 +23,35 @@
         }
 
         [HttpGet("ViewData")]
-        [RequiresPermission(PropertyDetails.ViewData)]
+        [Permission(PropertyDetails.ViewId, PropertyDetails.ViewRouteId, PropertyDetails.ViewDescription)]
         public IActionResult GetViewData()
         {
             return Ok(new PropertyDetailsViewModel());
         }
 
-        [HttpPost("new"), ValidateAntiForgeryToken]
-        [MustOwnPortfolio, RequiresPermission(PropertyDetails.New)]
+        [HttpPost("new"), ValidateAntiForgeryToken, MustOwnPortfolio]
+        [Permission(PropertyDetails.NewId, PropertyDetails.NewRouteId, PropertyDetails.NewDescription)]
         public async Task<IActionResult> New()
         {
             return Ok(await _propertyDataProvider.NewAsync(User.GetPortfolioId()));
         }
 
-        [HttpGet]
-        [MustOwnPortfolio, RequiresPermission(PropertyDetails.GetList)]
+        [HttpGet, MustOwnPortfolio]
+        [Permission(PropertyDetails.GetListId, PropertyDetails.GetListRouteId, PropertyDetails.GetListDescription)]
         public async Task<IActionResult> Get()
         {
             return Ok(await _propertyDataProvider.GetListAsync(User.GetPortfolioId()));
         }
 
-        [HttpGet("{propertyId}")]
-        [MustOwnPropertyDetails, RequiresPermission(PropertyDetails.GetById)]
+        [HttpGet("{propertyId}"), MustOwnPropertyDetails]
+        [Permission(PropertyDetails.GetById, PropertyDetails.GetByRouteId, PropertyDetails.GetByIdDescription)]
         public async Task<IActionResult> Get(Guid propertyId)
         {
             return Ok(await _propertyDataProvider.GetDetailsAsync(propertyId));
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
-        [MustOwnPropertyDetails, RequiresPermission(PropertyDetails.Update)]
+        [HttpPost, ValidateAntiForgeryToken, MustOwnPropertyDetails]
+        [Permission(PropertyDetails.UpdateId, PropertyDetails.UpdateRouteId, PropertyDetails.UpdateDescription)]
         public async Task<IActionResult> Post([FromBody] PropertyDetailsViewModel value)
         {
             if (ModelState.IsValid)

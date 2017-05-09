@@ -18,7 +18,7 @@
         }
 
         [HttpGet]
-        [RequiresPermission(LandlordList.List)]
+        [Permission(LandlordList.ListId, LandlordList.ListRouteId, LandlordList.ListDescription)]
         public async Task<IActionResult> Get()
         {
             return Ok(await _landlordDataProvider.GetListAsync(User.GetAgencyId()));

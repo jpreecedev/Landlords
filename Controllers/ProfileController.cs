@@ -19,14 +19,14 @@
         }
 
         [HttpGet]
-        [RequiresPermission(Profile.View)]
+        [Permission(Profile.ViewId, Profile.ViewRouteId, Profile.ViewDescription)]
         public async Task<IActionResult> Get()
         {
             return Ok(await _userRepository.GetProfileAsync(User.GetUserId()));
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        [RequiresPermission(Profile.Update)]
+        [Permission(Profile.UpdateId, Profile.UpdateRouteId, Profile.UpdateDescription)]
         public async Task<IActionResult> Post([FromBody] ProfileViewModel value)
         {
             if (ModelState.IsValid)

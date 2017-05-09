@@ -36,9 +36,11 @@
 
         public DbSet<PropertyDetails> PropertyDetails { get; set; }
         public DbSet<PropertyImage> PropertyImages { get; set; }
-        public DbSet<UserPermission> UserPermissions { get; set; }
         public DbSet<Agency> Agencies { get; set; }
         public DbSet<Portfolio> Portfolios { get; set; }
         public DbSet<ApplicationUserPortfolio> ApplicationUserPortfolios { get; set; }
+
+        public DbSet<UserPermission> UserPermissions { get; set; }
+        public DbSet<Permission> Permissions { get; set; }
     }
 }

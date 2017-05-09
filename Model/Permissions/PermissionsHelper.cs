@@ -1,48 +1,47 @@
 ﻿namespace Model
 {
-    using System.Collections.Generic;
     using Permissions;
 
     public static class DefaultPermissions
     {
         public static readonly string[] Administrator =
         {
-            Profile.Update,
-            Profile.View
+            Profile.UpdateId,
+            Profile.ViewId
         };
 
         public static readonly string[] Landlord =
         {
-            Profile.Update,
-            Profile.View,
-            Permissions.PropertyDetails.ViewData,
-            Permissions.PropertyDetails.New,
-            Permissions.PropertyDetails.GetList,
+            Profile.UpdateId,
+            Profile.ViewId,
+            Permissions.PropertyDetails.ViewId,
+            Permissions.PropertyDetails.NewId,
+            Permissions.PropertyDetails.GetListId,
             Permissions.PropertyDetails.GetById,
-            Permissions.PropertyDetails.Update,
-            Permissions.PropertyImage.Delete,
-            Permissions.PropertyImage.Upload
+            Permissions.PropertyDetails.UpdateId,
+            Permissions.PropertyImage.DeleteId,
+            Permissions.PropertyImage.UploadId
         };
 
         public static readonly string[] Accountant = { };
 
         public static readonly string[] OtherUser =
         {
-            Profile.Update,
-            Profile.View,
-            Permissions.PropertyDetails.ViewData,
-            Permissions.PropertyDetails.GetList,
+            Profile.UpdateId,
+            Profile.ViewId,
+            Permissions.PropertyDetails.ViewId,
+            Permissions.PropertyDetails.GetListId,
             Permissions.PropertyDetails.GetById
         };
 
         public static readonly string[] AgencyAdministrator =
         {
-            LandlordList.List
+            LandlordList.ListId
         };
 
         public static readonly string[] AgencyUser =
         {
-            LandlordList.List
+            LandlordList.ListId
         };
     }
 }

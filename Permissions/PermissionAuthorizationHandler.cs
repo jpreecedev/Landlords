@@ -18,7 +18,7 @@
         protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionAuthorizationRequirement requirement)
         {
             var currentUserPermissions = await _userManager.GetUserPermissionsAsync(context.User.GetUserId());
-            var authorized = requirement.RequiredPermissions.AsParallel().All(rp => currentUserPermissions.Contains(rp));
+            var authorized = currentUserPermissions.Any(c => c.PermissionId == requirement.RequiredPermission);
             
             if (authorized)
             {

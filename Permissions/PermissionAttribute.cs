@@ -6,11 +6,11 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc.Filters;
 
-    public class RequiresPermissionAttribute : TypeFilterAttribute
+    public class PermissionAttribute : TypeFilterAttribute
     {
-        public RequiresPermissionAttribute(params string[] permissions) : base(typeof(RequiresPermissionAttributeChecker))
+        public PermissionAttribute(string permissionId, string routeId, string description) : base(typeof(RequiresPermissionAttributeChecker))
         {
-            Arguments = new[] {new PermissionAuthorizationRequirement(permissions)};
+            Arguments = new[] {new PermissionAuthorizationRequirement(Guid.Parse(permissionId))};
         }
 
         private class RequiresPermissionAttributeChecker : Attribute, IAsyncResourceFilter

@@ -1,16 +1,15 @@
 ﻿namespace Landlords.Permissions
 {
-    using System.Collections.Generic;
+    using System;
     using Microsoft.AspNetCore.Authorization;
-    using Model;
 
     public class PermissionAuthorizationRequirement : IAuthorizationRequirement
     {
-        public PermissionAuthorizationRequirement(IEnumerable<string> requiredPermissions)
+        public PermissionAuthorizationRequirement(Guid requiredPermissions)
         {
-            RequiredPermissions = requiredPermissions;
+            RequiredPermission = requiredPermissions;
         }
 
-        public IEnumerable<string> RequiredPermissions { get; }
+        public Guid RequiredPermission { get; }
     }
 }

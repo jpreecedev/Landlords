@@ -5,13 +5,11 @@
     using System.Threading.Tasks;
     using Core;
     using Database;
-    using DataProviders;
     using Interfaces;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Model;
     using Landlords.Permissions;
-    using Model.Permissions;
     using PropertyImage = Model.Permissions.PropertyImage;
 
     [Route("api/[controller]")]
@@ -26,8 +24,8 @@
             _context = context;
         }
 
-        [HttpDelete]
-        [MustOwnPropertyImage, RequiresPermission(PropertyImage.Delete)]
+        [HttpDelete, MustOwnPropertyImage]
+        [Permission(PropertyImage.DeleteId, PropertyImage.DeleteRouteId, PropertyImage.DeleteDescription)]
         public async Task<IActionResult> Delete(Guid entityId)
         {
             try
@@ -41,8 +39,8 @@
             }
         }
 
-        [HttpPost("upload"), ValidateAntiForgeryToken]
-        [MustOwnPropertyDetails, RequiresPermission(PropertyImage.Upload)]
+        [HttpPost("upload"), ValidateAntiForgeryToken, MustOwnPropertyDetails]
+        [Permission(PropertyImage.UploadId, PropertyImage.UploadRouteId, PropertyImage.UploadDescription)]
         public async Task<IActionResult> Upload(ICollection<IFormFile> files, Guid entityId)
         {
             try

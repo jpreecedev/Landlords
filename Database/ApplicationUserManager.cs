@@ -22,21 +22,23 @@
             _context = context;
         }
 
-        public async Task<IEnumerable<string>> GetUserPermissionsAsync(Guid userId)
+        public async Task<IEnumerable<UserPermission>> GetUserPermissionsAsync(Guid userId)
         {
-            return await _context.UserPermissions.Where(up => up.UserId == userId).Select(up => up.DisplayText).ToListAsync();
+            return await _context.UserPermissions.Where(up => up.UserId == userId).ToListAsync();
         }
 
-        public async Task SetUserPermissionsAsync(Guid userId, params string[] permission)
+        public async Task SetUserPermissionsAsync(Guid userId, params string[] permissions)
         {
-            var permissions = permission.Select(c => new UserPermission
+            var permissionEntities = _context.Permissions.Where(c => permissions.Any(d => d == c.Description));
+
+            var userPermissions = permissionEntities.Select(c => new UserPermission
             {
                 Created = DateTime.Now,
-                Description = c,
+                Permission = c,
                 UserId = userId
             });
 
-            await _context.UserPermissions.AddRangeAsync(permissions);
+            await _context.UserPermissions.AddRangeAsync(userPermissions);
             await _context.SaveChangesAsync();
         }
     }

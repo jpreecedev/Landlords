@@ -1,18 +1,24 @@
 ﻿namespace Model
 {
+    using System;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+
     public class Permission : IPermission
     {
         public Permission()
         {
         }
 
-        public Permission(string description, string displayText)
+        public Permission(string description)
         {
-            Description = description;
-            DisplayText = displayText;
+            Description = Description;
         }
 
+        [Required, Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public Guid Id { get; set; }
+        
+        public string RouteId { get; set; }
         public string Description { get; set; }
-        public string DisplayText { get; set; }
     }
 }
