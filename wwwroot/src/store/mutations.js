@@ -14,6 +14,10 @@ export const APP_LOADING = (state, appData) => {
   state.app = appData
 }
 
+export const UPDATE_PERMISSIONS = (state, permissions) => {
+  state.permissions = permissions
+}
+
 /**
  * Clear each property, one by one, so reactivity still works.
  *
@@ -27,6 +31,9 @@ export const CLEAR_ALL_DATA = (state) => {
   state.auth.isLoggedIn = false
   state.auth.accessToken = null
   state.auth.refreshToken = null
+
+  // Permissions
+  state.permissions = {}
 
   // User
   state.user.name = ''

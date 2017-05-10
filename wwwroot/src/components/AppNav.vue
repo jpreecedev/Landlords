@@ -11,7 +11,7 @@
           <router-link v-if="auth.isLoggedIn" tag="li" to="/dashboard" active-class="active" class="nav-item">
             <a class="nav-link">Dashboard <span class="sr-only">(current)</span></a>
           </router-link>
-          <router-link v-if="auth.isLoggedIn" tag="li" to="/agency/landlord-list" active-class="active" class="nav-item">
+          <router-link v-if="permissions.LL_List" tag="li" to="/agency/landlord-list" active-class="active" class="nav-item">
             <a class="nav-link">Landlord List</a>
           </router-link>
           <router-link v-if="!auth.isLoggedIn" tag="li" to="/registration" active-class="active" class="nav-item">
@@ -47,8 +47,9 @@
 export default {
   data () {
     return {
-      auth: this.$store.state.auth,
-      user: this.$store.state.user
+      user: this.$store.state.user,
+      permissions: this.$store.state.permissions,
+      auth: { isLoggedIn: true }
     }
   },
   methods: {

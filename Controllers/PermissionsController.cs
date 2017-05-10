@@ -18,7 +18,7 @@
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return Ok(await _permissionsDataProvider.GetMenuStructureAsync(User.GetUserId()));
+            return Ok(await _permissionsDataProvider.GetPermissionsAsync(User.GetUserId()));
         }
     }
 }

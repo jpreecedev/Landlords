@@ -10,7 +10,9 @@
     using System.Threading;
     using System.Collections.Generic;
     using System.Linq;
-
+    using Permissions;
+    using System.Reflection;
+    
     public static class SeedExtensions
     {
         public static void Seed(this LLDbContext context, IServiceProvider serviceProvider)
@@ -18,6 +20,7 @@
             var roleManager = serviceProvider.GetService<ApplicationRoleManager>();
             var userManager = serviceProvider.GetService<ApplicationUserManager>();
 
+            CreatePermissions(context);
             AsyncHelpers.RunSync(() => CreateRoles(context, roleManager));
             AsyncHelpers.RunSync(() => CreateUsers(context, userManager));
             AsyncHelpers.RunSync(() => CreateAgencies(context));
@@ -49,7 +52,7 @@
 
                 await userManager.CreateAsync(administrator, "Password123");
                 await userManager.AddToRoleAsync(administrator, ApplicationRoles.SiteAdministrator);
-                await userManager.SetUserPermissionsAsync(administrator.Id, DefaultPermissions.Administrator);
+                await userManager.SetUserPermissionsAsync(administrator.Id, DefaultPermissions.Administrator.Select(c => Guid.Parse(c)).ToArray());
             }
 
             if (!await userManager.Users.AnyAsync(c => c.UserName == "jonpreece@hotmail.co.uk"))
@@ -65,7 +68,7 @@
 
                 await userManager.CreateAsync(landlord, "Password123");
                 await userManager.AddToRoleAsync(landlord, ApplicationRoles.Landlord);
-                await userManager.SetUserPermissionsAsync(landlord.Id, DefaultPermissions.Landlord);
+                await userManager.SetUserPermissionsAsync(landlord.Id, DefaultPermissions.Landlord.Select(c => Guid.Parse(c)).ToArray());
 
                 var portfolio = new Portfolio
                 {
@@ -99,7 +102,7 @@
 
                 await userManager.CreateAsync(landlord, "Password123");
                 await userManager.AddToRoleAsync(landlord, ApplicationRoles.Landlord);
-                await userManager.SetUserPermissionsAsync(landlord.Id, DefaultPermissions.Landlord);
+                await userManager.SetUserPermissionsAsync(landlord.Id, DefaultPermissions.Landlord.Select(c => Guid.Parse(c)).ToArray());
 
                 var portfolio = new Portfolio
                 {
@@ -133,7 +136,7 @@
 
                 await userManager.CreateAsync(accountant, "Password123");
                 await userManager.AddToRoleAsync(accountant, ApplicationRoles.Accountant);
-                await userManager.SetUserPermissionsAsync(accountant.Id, DefaultPermissions.Accountant);
+                await userManager.SetUserPermissionsAsync(accountant.Id, DefaultPermissions.Accountant.Select(c => Guid.Parse(c)).ToArray());
 
                 var portfolio = await context.Portfolios.FirstAsync(c => c.Name == "JonPreece-ABC123");
 
@@ -161,7 +164,7 @@
 
                 await userManager.CreateAsync(accountant, "Password123");
                 await userManager.AddToRoleAsync(accountant, ApplicationRoles.OtherUser);
-                await userManager.SetUserPermissionsAsync(accountant.Id, DefaultPermissions.OtherUser);
+                await userManager.SetUserPermissionsAsync(accountant.Id, DefaultPermissions.OtherUser.Select(c => Guid.Parse(c)).ToArray());
 
                 var portfolio = await context.Portfolios.FirstAsync(c => c.Name == "JonPreece-ABC123");
 
@@ -189,7 +192,7 @@
 
                 await userManager.CreateAsync(accountant, "Password123");
                 await userManager.AddToRoleAsync(accountant, ApplicationRoles.AgencyAdministrator);
-                await userManager.SetUserPermissionsAsync(accountant.Id, DefaultPermissions.AgencyAdministrator);
+                await userManager.SetUserPermissionsAsync(accountant.Id, DefaultPermissions.AgencyAdministrator.Select(c => Guid.Parse(c)).ToArray());
             }
 
             if (!await userManager.Users.AnyAsync(c => c.UserName == "user@agency.co.uk"))
@@ -205,7 +208,7 @@
 
                 await userManager.CreateAsync(accountant, "Password123");
                 await userManager.AddToRoleAsync(accountant, ApplicationRoles.AgencyAdministrator);
-                await userManager.SetUserPermissionsAsync(accountant.Id, DefaultPermissions.AgencyAdministrator);
+                await userManager.SetUserPermissionsAsync(accountant.Id, DefaultPermissions.AgencyAdministrator.Select(c => Guid.Parse(c)).ToArray());
             }
         }
 
@@ -236,6 +239,30 @@
                 await portfolios.ForEachAsync(c => c.AgencyId = agency.Id);
                 await context.SaveChangesAsync();
             }
+        }
+
+        private static void CreatePermissions(LLDbContext context)
+        {
+            typeof(PermissionAttribute).GetTypeInfo().Assembly
+                .GetTypes()
+                .SelectMany(c => c.GetMethods(BindingFlags.Instance | BindingFlags.Public))
+                .Where(c => c.CustomAttributes.Any(d => d.AttributeType == typeof(PermissionAttribute)))
+                .Select(c => c.GetCustomAttribute<PermissionAttribute>())
+                .ToList()
+                .ForEach(permissionAttribute =>
+                {
+                    if (!context.Permissions.Any(c => c.Id == permissionAttribute.PermissionId))
+                    {
+                        context.Permissions.Add(new Permission
+                        {
+                            Id = permissionAttribute.PermissionId,
+                            Description = permissionAttribute.Description,
+                            RouteId = permissionAttribute.RouteId
+                        });
+                    }
+                });
+
+            context.SaveChanges();
         }
 
         private static class AsyncHelpers

@@ -8,6 +8,8 @@ import store from './store'
  */
 const LOGIN_URL = '/token'
 
+const PERMISSIONS_URL = '/api/permissions'
+
 /**
  * TODO: This is here to demonstrate what an OAuth server will want. Ultimately you don't want to
  * expose a client_secret here. You want your real project backend to take a username/password
@@ -79,11 +81,14 @@ export default {
       .then((response) => {
         this._storeToken(response)
 
-        if (redirect) {
-          router.push({ name: redirect })
-        }
+        return Vue.http.get(PERMISSIONS_URL).then((response) => {
+          this._storePermissions(response)
+          if (redirect) {
+            router.push({ name: redirect })
+          }
 
-        return response
+          return response
+        })
       })
       .catch((errorResponse) => {
         return errorResponse
@@ -168,6 +173,20 @@ export default {
 
     store.commit('UPDATE_AUTH', auth)
     store.commit('UPDATE_USER', user)
+  },
+
+  _storePermissions (response) {
+    var permissions = {}
+
+    response.body.forEach(function (element) {
+      Vue.set(permissions, element.routeId, {
+        routeId: element.routeId,
+        description: element.description
+      })
+    })
+
+    permissions = Object.assign({}, store.state.permissions, permissions)
+    store.commit('UPDATE_PERMISSIONS', permissions)
   },
 
   /**

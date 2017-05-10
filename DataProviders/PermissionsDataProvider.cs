@@ -1,6 +1,7 @@
 ﻿namespace Landlords.DataProviders
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using Database;
@@ -15,12 +16,11 @@
         {
         }
 
-        public async Task<UserMenuStructureViewModel> GetMenuStructureAsync(Guid userId)
+        public async Task<ICollection<UserPermissionViewModel>> GetPermissionsAsync(Guid userId)
         {
-            // TODO
-
-            var permissions = Context.UserPermissions.Where(c => c.UserId == userId);
-            return await permissions.Select(c => new UserMenuStructureViewModel()).FirstAsync();
+            return await Context.UserPermissions.Where(c => c.UserId == userId)
+                .Select(c => new UserPermissionViewModel(c.Permission.Description, c.Permission.RouteId))
+                .ToListAsync();
         }
     }
 }

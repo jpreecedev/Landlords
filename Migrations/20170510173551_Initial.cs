@@ -52,6 +52,19 @@ namespace Landlords.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Permissions",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    RouteId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Permissions", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Portfolios",
                 columns: table => new
                 {
@@ -238,12 +251,19 @@ namespace Landlords.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     UserId = table.Column<Guid>(nullable: false),
                     PortfolioId = table.Column<Guid>(nullable: false),
+                    AgencyId = table.Column<Guid>(nullable: true),
                     Created = table.Column<DateTime>(nullable: false),
                     Deleted = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ApplicationUserPortfolios", x => new { x.Id, x.UserId, x.PortfolioId });
+                    table.ForeignKey(
+                        name: "FK_ApplicationUserPortfolios_Agencies_AgencyId",
+                        column: x => x.AgencyId,
+                        principalTable: "Agencies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_ApplicationUserPortfolios_Portfolios_PortfolioId",
                         column: x => x.PortfolioId,
@@ -265,12 +285,18 @@ namespace Landlords.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     Created = table.Column<DateTime>(nullable: false),
                     Deleted = table.Column<DateTime>(nullable: true),
-                    Permission = table.Column<string>(nullable: true),
+                    PermissionId = table.Column<Guid>(nullable: false),
                     UserId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserPermissions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserPermissions_Permissions_PermissionId",
+                        column: x => x.PermissionId,
+                        principalTable: "Permissions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_UserPermissions_AspNetUsers_UserId",
                         column: x => x.UserId,
@@ -321,6 +347,11 @@ namespace Landlords.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ApplicationUserPortfolios_AgencyId",
+                table: "ApplicationUserPortfolios",
+                column: "AgencyId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ApplicationUserPortfolios_PortfolioId",
                 table: "ApplicationUserPortfolios",
                 column: "PortfolioId");
@@ -363,6 +394,11 @@ namespace Landlords.Migrations
                 column: "PropertyId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_UserPermissions_PermissionId",
+                table: "UserPermissions",
+                column: "PermissionId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserPermissions_UserId",
                 table: "UserPermissions",
                 column: "UserId");
@@ -399,6 +435,9 @@ namespace Landlords.Migrations
 
             migrationBuilder.DropTable(
                 name: "PropertyDetails");
+
+            migrationBuilder.DropTable(
+                name: "Permissions");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

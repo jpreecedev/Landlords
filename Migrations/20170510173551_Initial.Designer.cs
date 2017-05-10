@@ -8,7 +8,7 @@ using Landlords.Database;
 namespace Landlords.Migrations
 {
     [DbContext(typeof(LLDbContext))]
-    [Migration("20170506050922_Initial")]
+    [Migration("20170510173551_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -123,11 +123,15 @@ namespace Landlords.Migrations
 
                     b.Property<Guid>("PortfolioId");
 
+                    b.Property<Guid?>("AgencyId");
+
                     b.Property<DateTime>("Created");
 
                     b.Property<DateTime?>("Deleted");
 
                     b.HasKey("Id", "UserId", "PortfolioId");
+
+                    b.HasIndex("AgencyId");
 
                     b.HasIndex("PortfolioId");
 
@@ -221,6 +225,19 @@ namespace Landlords.Migrations
                         .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("Model.Permission", b =>
+                {
+                    b.Property<Guid>("Id");
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("RouteId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Permissions");
                 });
 
             modelBuilder.Entity("Model.Portfolio", b =>
@@ -333,11 +350,13 @@ namespace Landlords.Migrations
 
                     b.Property<DateTime?>("Deleted");
 
-                    b.Property<string>("Permission");
+                    b.Property<Guid>("PermissionId");
 
                     b.Property<Guid>("UserId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PermissionId");
 
                     b.HasIndex("UserId");
 
@@ -383,6 +402,10 @@ namespace Landlords.Migrations
 
             modelBuilder.Entity("Model.ApplicationUserPortfolio", b =>
                 {
+                    b.HasOne("Model.Agency", "Agency")
+                        .WithMany()
+                        .HasForeignKey("AgencyId");
+
                     b.HasOne("Model.Portfolio", "Portfolio")
                         .WithMany("Users")
                         .HasForeignKey("PortfolioId")
@@ -420,6 +443,11 @@ namespace Landlords.Migrations
 
             modelBuilder.Entity("Model.UserPermission", b =>
                 {
+                    b.HasOne("Model.Permission", "Permission")
+                        .WithMany()
+                        .HasForeignKey("PermissionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("Model.Database.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")

@@ -226,6 +226,19 @@ namespace Landlords.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("Model.Permission", b =>
+                {
+                    b.Property<Guid>("Id");
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("RouteId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Permissions");
+                });
+
             modelBuilder.Entity("Model.Portfolio", b =>
                 {
                     b.Property<Guid>("Id")
@@ -336,17 +349,13 @@ namespace Landlords.Migrations
 
                     b.Property<DateTime?>("Deleted");
 
-                    b.Property<string>("Description");
-
-                    b.Property<string>("DisplayText");
-
-                    b.Property<Guid?>("ParentPermissionId");
-
-                    b.Property<string>("RouteId");
+                    b.Property<Guid>("PermissionId");
 
                     b.Property<Guid>("UserId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PermissionId");
 
                     b.HasIndex("UserId");
 
@@ -433,6 +442,11 @@ namespace Landlords.Migrations
 
             modelBuilder.Entity("Model.UserPermission", b =>
                 {
+                    b.HasOne("Model.Permission", "Permission")
+                        .WithMany()
+                        .HasForeignKey("PermissionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("Model.Database.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")

@@ -27,9 +27,9 @@
             return await _context.UserPermissions.Where(up => up.UserId == userId).ToListAsync();
         }
 
-        public async Task SetUserPermissionsAsync(Guid userId, params string[] permissions)
+        public async Task SetUserPermissionsAsync(Guid userId, params Guid[] permissions)
         {
-            var permissionEntities = _context.Permissions.Where(c => permissions.Any(d => d == c.Description));
+            var permissionEntities = _context.Permissions.Where(c => permissions.Any(d => d == c.Id));
 
             var userPermissions = permissionEntities.Select(c => new UserPermission
             {

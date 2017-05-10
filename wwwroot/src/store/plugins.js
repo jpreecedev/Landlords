@@ -2,7 +2,11 @@ import { STORAGE_KEY } from './state'
 
 const localStoragePlugin = store => {
   store.subscribe((mutation, state) => {
-    const syncedData = { auth: state.auth, user: state.user }
+    const syncedData = {
+      auth: state.auth,
+      user: state.user,
+      permissions: {}
+    }
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(syncedData))
 

@@ -2,16 +2,23 @@
 {
     using System;
     using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Filters;
 
     public class PermissionAttribute : TypeFilterAttribute
     {
         public PermissionAttribute(string permissionId, string routeId, string description) : base(typeof(RequiresPermissionAttributeChecker))
         {
-            Arguments = new[] {new PermissionAuthorizationRequirement(Guid.Parse(permissionId))};
+            PermissionId = Guid.Parse(permissionId);
+            RouteId = routeId;
+            Description = description;
+            Arguments = new[] {new PermissionAuthorizationRequirement(PermissionId)};
         }
+
+        public Guid PermissionId { get; }
+        public string RouteId { get; }
+        public string Description { get; }
 
         private class RequiresPermissionAttributeChecker : Attribute, IAsyncResourceFilter
         {

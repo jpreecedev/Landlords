@@ -9,6 +9,7 @@ let syncedData = {
     accessToken: null,
     refreshToken: null
   },
+  permissions: {},
   user: {
     name: null
   }
