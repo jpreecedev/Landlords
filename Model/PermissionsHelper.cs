@@ -4,8 +4,8 @@
     {
         public static readonly string[] Administrator =
         {
-            Permissions_P.UpdateId,
-            Permissions_P.ViewId
+            Permissions_PE.UpdateId,
+            Permissions_PE.ListId
         };
 
         public static readonly string[] Landlord =

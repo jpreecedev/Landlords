@@ -23,6 +23,13 @@ const router = new Router({
     }
   },
   {
+    path: '/permissions',
+    name: 'permissions',
+    component: function (resolve) {
+      require(['@/components/Permissions.vue'], resolve)
+    }
+  },
+  {
     path: '/dashboard',
     name: 'dashboard',
     component: function (resolve) {
