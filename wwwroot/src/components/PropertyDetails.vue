@@ -10,7 +10,7 @@
     </div>    
     <form @submit.prevent="validateBeforeSubmit" role="form" enctype="multipart/form-data" novalidate>
       <fieldset v-bind:disabled="!permissions.PD_Update">
-        <div class="property-image-container">
+        <div class="property-image-container" v-if="(permissions.PI_Upload) || (!permissions.PI_Upload && propertyDetails.propertyImages.length)">
           <div v-if="permissions.PI_Upload" class="property-image">
             <label>
               <input type="file" accept="image/x-png,image/gif,image/jpeg" multiple @change="filesChange($event.target.name, $event.target.files)" name="files">
@@ -367,7 +367,6 @@ export default {
     margin-bottom: 2rem;
     overflow-x: scroll;
     overflow-y: hidden;
-    min-height: 275px;
     white-space: nowrap;
 
     @include media-breakpoint-up(lg) {
@@ -386,7 +385,7 @@ export default {
       }
       img {
         max-width: 200px;
-        max-height: 200px;
+        max-height: 150px;
         height: auto;
         &:hover {
           background-color: $gray-lightest;
