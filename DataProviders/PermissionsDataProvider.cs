@@ -33,5 +33,16 @@
                 .Select(c => new UserPermissionViewModel(c.Permission.Description, c.Permission.RouteId))
                 .ToListAsync();
         }
+
+        public async Task<ICollection<UserViewModel>> GetUsersAsync()
+        {
+            return await Context.Users.Select(c => new UserViewModel
+                {
+                    Id = c.Id,
+                    Name = c.FirstName + " " + c.LastName,
+                    EmailAddress = c.Email
+                })
+                .ToListAsync();
+        }
     }
 }

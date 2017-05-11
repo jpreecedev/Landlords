@@ -9,5 +9,9 @@
         public const string UpdateId = "bd169a38-5b7d-437f-8638-729273248a2c";
         public const string UpdateRouteId = "PE_Update";
         public const string UpdateDescription = "Update list of permissions";
+
+        public const string UsersId = "1e3b49fc-eaa2-4ccc-8e6d-e4efd828e38f";
+        public const string UsersRouteId = "PE_Users";
+        public const string UsersDescription = "Get list of users";
     }
 }

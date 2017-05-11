@@ -11,6 +11,8 @@ import './extensions'
 import Auth from './auth'
 import Interceptors from './interceptors'
 import VeeValidate from 'vee-validate'
+import Autocomplete from 'v-autocomplete'
+import 'v-autocomplete/dist/v-autocomplete.css'
 
 require('bootstrap')
 
@@ -20,6 +22,7 @@ Vue.use(VueResource)
 Vue.use(Auth)
 Vue.use(Interceptors)
 Vue.use(VeeValidate)
+Vue.use(Autocomplete)
 
 new Vue({
   el: '#app',

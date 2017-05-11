@@ -38,6 +38,13 @@
             }));
         }
 
+        [HttpGet("users")]
+        [Permission(Permissions_PE.UsersId, Permissions_PE.UsersRouteId, Permissions_PE.UsersDescription)]
+        public async Task<IActionResult> GetUsers()
+        {
+            return Ok(await _permissionsDataProvider.GetUsersAsync());
+        }
+
         [HttpPost]
         [Permission(Permissions_PE.UpdateId, Permissions_PE.UpdateRouteId, Permissions_PE.UpdateDescription)]
         public IActionResult Post()
