@@ -1,3 +1,5 @@
+import Vue from 'Vue'
+
 export const UPDATE_AUTH = (state, auth) => {
   state.auth = auth
 }
@@ -33,7 +35,9 @@ export const CLEAR_ALL_DATA = (state) => {
   state.auth.refreshToken = null
 
   // Permissions
-  state.permissions = {}
+  for (var key in state.permissions) {
+    Vue.delete(state.permissions, key)
+  }
 
   // User
   state.user.name = ''

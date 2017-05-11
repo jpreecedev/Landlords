@@ -1,3 +1,9 @@
-.form-control[readonly][name*="Date"] {
+.form-control[readonly][name*='Date'] {
   background-color: #fff;
+}
+
+fieldset[disabled] {
+  .form-control[name*='Date'] {
+    background-color: #eceeef;
+  }
 }

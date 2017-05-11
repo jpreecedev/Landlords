@@ -17,7 +17,7 @@
           <router-link v-if="!auth.isLoggedIn" tag="li" to="/registration" active-class="active" class="nav-item">
             <a class="nav-link">Registration</a>
           </router-link>
-          <router-link v-if="auth.isLoggedIn" tag="li" to="/manager/property-list" active-class="active" class="nav-item">
+          <router-link v-if="permissions.PD_GetList" tag="li" to="/manager/property-list" active-class="active" class="nav-item">
             <a class="nav-link">Property List</a>
           </router-link>
           <li class="nav-item dropdown">
@@ -31,8 +31,11 @@
           </li>
         </ul>
         <ul class="navbar-nav" v-if="auth.isLoggedIn">
-          <router-link tag="li" to="/profile" active-class="active" class="nav-item">
-            <a class="nav-link">Hi, {{ user.name }} (Profile)</a>
+          <li class="navbar-text">
+            Hi, {{ user.name }}
+          </li>
+          <router-link v-if="permissions.P_View" tag="li" to="/profile" active-class="active" class="nav-item">
+            <a class="nav-link">View Profile</a>
           </router-link>
           <li class="nav-item">
             <a class="pointer nav-link d-inline-block" @click="logout()">Log Out.</a>
@@ -49,7 +52,7 @@ export default {
     return {
       user: this.$store.state.user,
       permissions: this.$store.state.permissions,
-      auth: { isLoggedIn: true }
+      auth: this.$store.state.auth
     }
   },
   methods: {

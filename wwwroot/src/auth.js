@@ -176,17 +176,14 @@ export default {
   },
 
   _storePermissions (response) {
-    var permissions = {}
+    for (var key in store.state.permissions) {
+      Vue.delete(store.state.permissions, key)
+    }
 
-    response.body.forEach(function (element) {
-      Vue.set(permissions, element.routeId, {
-        routeId: element.routeId,
-        description: element.description
-      })
+    response.data.forEach(function (element) {
+      Vue.set(store.state.permissions, element.routeId, element)
     })
-
-    permissions = Object.assign({}, store.state.permissions, permissions)
-    store.commit('UPDATE_PERMISSIONS', permissions)
+    store.commit('UPDATE_PERMISSIONS', store.state.permissions)
   },
 
   /**

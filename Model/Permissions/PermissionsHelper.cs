@@ -27,7 +27,6 @@
 
         public static readonly string[] OtherUser =
         {
-            Profile.UpdateId,
             Profile.ViewId,
             Permissions.PropertyDetails.ViewId,
             Permissions.PropertyDetails.GetListId,

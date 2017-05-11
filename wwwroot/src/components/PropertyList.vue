@@ -18,7 +18,8 @@
             <img class="img-thumbnail" v-if="entry.leadImage" v-bind:src="'/static/uploads/' + entry.portfolioId + '/' + entry.leadImage.fileName" v-bind:alt="entry.leadImage.fileName">
           </td>
           <td>
-            <router-link :to="'/manager/property-details/' + entry.id">{{ entry.reference }}</router-link>
+            <router-link v-if="permissions.PD_View" :to="'/manager/property-details/' + entry.id">{{ entry.reference }}</router-link>
+            <span v-else>{{ entry.reference }}</span>
           </td>
           <td>
             {{ entry.propertyStreetAddress }}
@@ -26,7 +27,7 @@
         </tr>
       </tbody>
     </table>
-    <button type="button" class="btn btn-primary pointer" @click="addProperty()">Add a property</button>    
+    <button v-if="permissions.PD_New" type="button" class="btn btn-primary pointer" @click="addProperty()">Add a property</button>    
   </main>
 </template>
 
@@ -35,6 +36,7 @@ export default {
   name: 'propertylist',
   data () {
     return {
+      permissions: this.$store.state.permissions,
       data: []
     }
   },

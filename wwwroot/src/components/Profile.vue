@@ -18,7 +18,7 @@
       Your email address has been verified
     </div>
     <form @submit.prevent="validateBeforeSubmit" role="form" novalidate>
-      <fieldset>
+      <fieldset v-bind:disabled="!permissions.P_Update">
         <div class="row">
           <div class="col">
             <div class="card">
@@ -88,8 +88,8 @@
         </div>
         <div class="row mt-3">
           <div class="col">
-            <button type="submit" class="btn btn-primary">Save</button>
-            <input type="reset" class="btn btn-secondary" value="Reset" />
+            <button v-if="permissions.P_Update" type="submit" class="btn btn-primary">Save</button>
+            <input v-if="permissions.P_Update" type="reset" class="btn btn-secondary" value="Reset" />
           </div>
         </div>
       </fieldset>
@@ -105,6 +105,7 @@
     name: 'profile',
     data () {
       return {
+        permissions: this.$store.state.permissions,
         times: utils.getTimesForSelectList(),
         saved: false,
         resentVerification: false,
