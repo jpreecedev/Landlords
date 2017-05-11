@@ -1,6 +1,6 @@
-﻿namespace Model.Permissions
+﻿namespace Model
 {
-    public class Profile
+    public class Permissions_P
     {
         public const string ViewId = "cb28cea1-efa8-43de-8f15-c98ba4bd8d94";
         public const string ViewRouteId = "P_View";

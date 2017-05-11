@@ -6,7 +6,7 @@
     using Repositories;
     using ViewModels;
     using Landlords.Permissions;
-    using Model.Permissions;
+    using Model;
 
     [Route("api/[controller]")]
     public class ProfileController : Controller
@@ -19,14 +19,14 @@
         }
 
         [HttpGet]
-        [Permission(Profile.ViewId, Profile.ViewRouteId, Profile.ViewDescription)]
+        [Permission(Permissions_P.ViewId, Permissions_P.ViewRouteId, Permissions_P.ViewDescription)]
         public async Task<IActionResult> Get()
         {
             return Ok(await _userRepository.GetProfileAsync(User.GetUserId()));
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        [Permission(Profile.UpdateId, Profile.UpdateRouteId, Profile.UpdateDescription)]
+        [Permission(Permissions_P.UpdateId, Permissions_P.UpdateRouteId, Permissions_P.UpdateDescription)]
         public async Task<IActionResult> Post([FromBody] ProfileViewModel value)
         {
             if (ModelState.IsValid)

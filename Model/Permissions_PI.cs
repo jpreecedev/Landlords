@@ -1,6 +1,6 @@
-﻿namespace Model.Permissions
+﻿namespace Model
 {
-    public class PropertyImage
+    public class Permissions_PI
     {
         public const string DeleteId = "960262e1-8c10-40f7-bc0c-52bab4bc3d4c";
         public const string DeleteRouteId = "PI_Delete";

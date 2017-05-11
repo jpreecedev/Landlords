@@ -16,7 +16,18 @@
         {
         }
 
-        public async Task<ICollection<UserPermissionViewModel>> GetPermissionsAsync(Guid userId)
+        public async Task<ICollection<PermissionViewModel>> GetPermissionsAsync()
+        {
+            return await Context.Permissions.Select(c => new PermissionViewModel
+                {
+                    PermissionId = c.Id,
+                    Description = c.Description,
+                    RouteId = c.RouteId
+                })
+                .ToListAsync();
+        }
+
+        public async Task<ICollection<UserPermissionViewModel>> GetUserPermissionsAsync(Guid userId)
         {
             return await Context.UserPermissions.Where(c => c.UserId == userId)
                 .Select(c => new UserPermissionViewModel(c.Permission.Description, c.Permission.RouteId))

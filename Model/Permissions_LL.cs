@@ -1,6 +1,6 @@
-﻿namespace Model.Permissions
+﻿namespace Model
 {
-    public class LandlordList
+    public class Permissions_LL
     {
         public const string ListId = "7119c9b7-b7dd-429e-9cfc-f388301e28c8";
         public const string ListRouteId = "LL_List";

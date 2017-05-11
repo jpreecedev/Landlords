@@ -8,7 +8,7 @@
     using Database;
     using Landlords.Permissions;
     using Landlords.Interfaces;
-    using Model.Permissions;
+    using Model;
 
     [Route("api/[controller]")]
     public class PropertyDetailsController : Controller
@@ -23,35 +23,35 @@
         }
 
         [HttpGet("ViewData")]
-        [Permission(PropertyDetails.ViewId, PropertyDetails.ViewRouteId, PropertyDetails.ViewDescription)]
+        [Permission(Permissions_PD.ViewId, Permissions_PD.ViewRouteId, Permissions_PD.ViewDescription)]
         public IActionResult GetViewData()
         {
             return Ok(new PropertyDetailsViewModel());
         }
 
         [HttpPost("new"), ValidateAntiForgeryToken, MustOwnPortfolio]
-        [Permission(PropertyDetails.NewId, PropertyDetails.NewRouteId, PropertyDetails.NewDescription)]
+        [Permission(Permissions_PD.NewId, Permissions_PD.NewRouteId, Permissions_PD.NewDescription)]
         public async Task<IActionResult> New()
         {
             return Ok(await _propertyDataProvider.NewAsync(User.GetPortfolioId()));
         }
 
         [HttpGet, MustOwnPortfolio]
-        [Permission(PropertyDetails.GetListId, PropertyDetails.GetListRouteId, PropertyDetails.GetListDescription)]
+        [Permission(Permissions_PD.GetListId, Permissions_PD.GetListRouteId, Permissions_PD.GetListDescription)]
         public async Task<IActionResult> Get()
         {
             return Ok(await _propertyDataProvider.GetListAsync(User.GetPortfolioId()));
         }
 
         [HttpGet("{propertyId}"), MustOwnPropertyDetails]
-        [Permission(PropertyDetails.GetById, PropertyDetails.GetByRouteId, PropertyDetails.GetByIdDescription)]
+        [Permission(Permissions_PD.GetById, Permissions_PD.GetByRouteId, Permissions_PD.GetByIdDescription)]
         public async Task<IActionResult> Get(Guid propertyId)
         {
             return Ok(await _propertyDataProvider.GetDetailsAsync(propertyId));
         }
 
         [HttpPost, ValidateAntiForgeryToken, MustOwnPropertyDetails]
-        [Permission(PropertyDetails.UpdateId, PropertyDetails.UpdateRouteId, PropertyDetails.UpdateDescription)]
+        [Permission(Permissions_PD.UpdateId, Permissions_PD.UpdateRouteId, Permissions_PD.UpdateDescription)]
         public async Task<IActionResult> Post([FromBody] PropertyDetailsViewModel value)
         {
             if (ModelState.IsValid)

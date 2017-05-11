@@ -7,6 +7,7 @@
 
     public interface IPermissionsDataProvider
     {
-        Task<ICollection<UserPermissionViewModel>> GetPermissionsAsync(Guid userId);
+        Task<ICollection<PermissionViewModel>> GetPermissionsAsync();
+        Task<ICollection<UserPermissionViewModel>> GetUserPermissionsAsync(Guid userId);
     }
 }

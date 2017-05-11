@@ -5,7 +5,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Permissions;
     using Landlords.Interfaces;
-    using Model.Permissions;
+    using Model;
 
     [Route("api/[controller]")]
     public class LandlordController : Controller
@@ -18,7 +18,7 @@
         }
 
         [HttpGet]
-        [Permission(LandlordList.ListId, LandlordList.ListRouteId, LandlordList.ListDescription)]
+        [Permission(Permissions_LL.ListId, Permissions_LL.ListRouteId, Permissions_LL.ListDescription)]
         public async Task<IActionResult> Get()
         {
             return Ok(await _landlordDataProvider.GetListAsync(User.GetAgencyId()));

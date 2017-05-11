@@ -1,6 +1,6 @@
-﻿namespace Model.Permissions
+﻿namespace Model
 {
-    public class PropertyDetails
+    public class Permissions_PD
     {
         public const string ViewId = "0ac6631f-86ce-4400-a19e-ef384145367f";
         public const string ViewRouteId = "PD_View";
