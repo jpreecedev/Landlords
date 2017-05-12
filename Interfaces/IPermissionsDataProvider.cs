@@ -10,5 +10,7 @@
         Task<ICollection<PermissionViewModel>> GetPermissionsAsync();
         Task<ICollection<UserPermissionViewModel>> GetUserPermissionsAsync(Guid userId);
         Task<ICollection<UserViewModel>> GetUsersAsync();
+        Task RemovePermissionAsync(Guid userId, Guid permissionId);
+        Task AddPermissionAsync(Guid userId, Guid permissionId);
     }
 }

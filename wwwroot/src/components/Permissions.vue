@@ -16,7 +16,7 @@
         <div class="form-group row">
           <label class="col-12 col-form-label" for="searchForUser">Search for user</label>
           <div class="col-12">
-            <v-autocomplete :items="items" v-model="item" :get-label="getLabel" :component-item='template'></v-autocomplete>
+            <v-autocomplete :items="filteredUsers" placeholder="Enter name or email" v-model="selectedUser" :auto-select-one-item="false" :get-label="getLabel" :component-item='template' @change="change"></v-autocomplete>
           </div>
         </div>
         <div class="row mt-4">
@@ -24,9 +24,9 @@
             <div class="form-group row">
               <label class="col-12 col-form-label" for="permission">Available Permissions</label>
               <div class="col-12">
-                <select class="form-control" id="permission" name="permission" size="20" multiple>
+                <select v-model="selectedPermissions" class="form-control" id="permission" name="permission" size="20" multiple>
                   <optgroup v-for="group in allPermissions" v-bind:label="group.key">
-                    <option v-for="permission in group.items" v-bind:value="permission.PermissionId">{{ permission.description }}</option>
+                    <option v-for="permission in group.items" v-bind:value="permission.permissionId">{{ permission.description }}</option>
                   </optgroup>
                 </select>
               </div>
@@ -35,19 +35,21 @@
           <div class="col-auto">
             <div class="h-100 d-flex align-items-center">
               <div>
-                <button type="button" class="btn btn-secondary d-block mb-3 w-100">&#10007;</button>
-                <button type="button" class="btn btn-secondary d-block w-100">&rarr;</button>
+                <button @click="removePermission" type="button" class="btn btn-secondary d-block mb-3 w-100">&#10007;</button>
+                <button @click="addPermission" type="button" class="btn btn-secondary d-block w-100">&rarr;</button>
               </div>
             </div>
           </div>
           <div class="col">
             <div class="form-group row">
-              <label class="col-12 col-form-label" for="permission">Allocated Permissions</label>
+              <label class="col-12 col-form-label" for="userPermission">Allocated Permissions</label>
               <div class="col-12">
-                <select class="form-control" id="permission" name="permission" size="20" multiple>
-                  <optgroup v-for="group in allPermissions" v-bind:label="group.key">
-                    <option v-for="permission in group.items" v-bind:value="permission.PermissionId">{{ permission.description }}</option>
-                  </optgroup>
+                <select v-model="allocatedPermissions" class="form-control" id="userPermission" name="userPermission" size="20" multiple>
+                  <template v-if="selectedUser && selectedUser.permissions">
+                    <optgroup v-for="group in selectedUser.permissions" v-bind:label="group.key">
+                      <option v-for="userPermission in group.items" v-bind:value="userPermission.id">{{ userPermission.description }}</option>
+                    </optgroup>
+                  </template>
                 </select>
               </div>
             </div>
@@ -74,9 +76,12 @@ export default {
     return {
       permissions: this.$store.state.permissions,
       allPermissions: [],
+      selectedPermissions: [],
+      allocatedPermissions: [],
       saved: false,
-      item: null,
-      items: [],
+      selectedUser: null,
+      users: [],
+      filteredUsers: [],
       template: UserTemplate
     }
   },
@@ -85,12 +90,49 @@ export default {
       this.allPermissions = response.data
     })
     this.$http.get('/api/permissions/users').then(response => {
-      this.items = response.data
+      this.users = this.filteredUsers = response.data
     })
   },
   methods: {
-    getLabel (item) {
-      return item.name
+    getSelectedPermissions: function (collection) {
+      if (!collection) {
+        return []
+      }
+      var result = []
+      collection.forEach(permission => {
+        this.allPermissions.forEach(allPermission => {
+          allPermission.items.forEach(item => {
+            console.log(item, permission)
+            if (item.permissionId === permission) {
+              result.push(item)
+            }
+          })
+        })
+      })
+      return result
+    },
+    addPermission: function () {
+      var selectedPermissions = this.getSelectedPermissions(this.selectedPermissions)
+      if (selectedPermissions) {
+        // TODO
+      }
+    },
+    removePermission: function () {
+      var selectedPermissions = this.getSelectedPermissions(this.allocatedPermissions)
+      if (selectedPermissions) {
+        console.log(selectedPermissions)
+        selectedPermissions.forEach(permission => {
+          this.$http.delete(`/api/permissions`, {
+            params: {
+              userId: this.selectedUser.id,
+              permissionId: permission.permissionId
+            }
+          })
+        })
+      }
+    },
+    getLabel (user) {
+      return user.name
     },
     updatePermissions: function () {
       var bag = new ErrorBag()
@@ -107,10 +149,29 @@ export default {
           bag.add('GenericError', validationResult.status, 'generic')
         }
       })
+    },
+    change (text) {
+      if (!text) {
+        this.filteredUsers = this.users
+        return
+      }
+
+      var searchText = text.toLowerCase()
+      this.filteredUsers = this.users.filter(item => {
+        return item.name.toLowerCase().indexOf(searchText) > -1 || item.emailAddress.toLowerCase().indexOf(searchText) > -1
+      })
     }
   },
   watch: {
-    '$route' (to, from) {}
+    selectedUser: function (user) {
+      if (!user || user.permissions) {
+        return
+      }
+
+      this.$http.get(`/api/permissions/${user.id}`).then(response => {
+        user.permissions = response.data
+      })
+    }
   }
 }
 </script>

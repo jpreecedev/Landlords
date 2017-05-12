@@ -1,5 +1,6 @@
 ﻿namespace Landlords.Controllers
 {
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
     using Core;
@@ -24,6 +25,20 @@
             return Ok(await _permissionsDataProvider.GetUserPermissionsAsync(User.GetUserId()));
         }
 
+        [HttpGet("{userId}")]
+        [Permission(Permissions_PE.GetById, Permissions_PE.GetByRouteId, Permissions_PE.GetByIdDescription)]
+        public async Task<IActionResult> Get(Guid userId)
+        {
+            var permissions = await _permissionsDataProvider.GetUserPermissionsAsync(userId);
+            var grouped = permissions.GroupBy(c => c.RouteId.Substring(0, c.RouteId.IndexOf("_")));
+
+            return Ok(grouped.Select(c => new
+            {
+                Key = c.Key,
+                Items = c
+            }));
+        }
+
         [HttpGet("all")]
         [Permission(Permissions_PE.ListId, Permissions_PE.ListRouteId, Permissions_PE.ListDescription)]
         public async Task<IActionResult> GetAll()
@@ -46,10 +61,18 @@
         }
 
         [HttpPost]
-        [Permission(Permissions_PE.UpdateId, Permissions_PE.UpdateRouteId, Permissions_PE.UpdateDescription)]
-        public IActionResult Post()
+        [Permission(Permissions_PE.AddId, Permissions_PE.AddRouteId, Permissions_PE.AddDescription)]
+        public async Task<IActionResult> Post(Guid userId, Guid permissionId)
         {
-            // TODO
+            await _permissionsDataProvider.AddPermissionAsync(userId, permissionId);
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Permission(Permissions_PE.DeleteId, Permissions_PE.DeleteRouteId, Permissions_PE.DeleteDescription)]
+        public async Task<IActionResult> Delete(Guid userId, Guid permissionId)
+        {
+            await _permissionsDataProvider.RemovePermissionAsync(userId, permissionId);
             return Ok();
         }
     }
