@@ -23,7 +23,7 @@
             _context = context;
         }
 
-        [HttpDelete, MustOwnPropertyImage]
+        [HttpDelete, ValidateAntiForgeryToken, MustOwnPropertyImage]
         [Permission(Permissions_PI.DeleteId, Permissions_PI.DeleteRouteId, Permissions_PI.DeleteDescription)]
         public async Task<IActionResult> Delete(Guid entityId)
         {

@@ -65,7 +65,7 @@
             return Ok(await _permissionsDataProvider.GetUsersAsync());
         }
 
-        [HttpPost]
+        [HttpPost, ValidateAntiForgeryToken]
         [Permission(Permissions_PE.AddId, Permissions_PE.AddRouteId, Permissions_PE.AddDescription)]
         public async Task<IActionResult> Post(Guid userId, Guid permissionId)
         {
@@ -78,7 +78,7 @@
             return Ok();
         }
 
-        [HttpDelete]
+        [HttpDelete, ValidateAntiForgeryToken]
         [Permission(Permissions_PE.DeleteId, Permissions_PE.DeleteRouteId, Permissions_PE.DeleteDescription)]
         public async Task<IActionResult> Delete(Guid userId, Guid permissionId)
         {

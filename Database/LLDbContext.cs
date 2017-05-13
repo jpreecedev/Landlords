@@ -42,5 +42,6 @@
 
         public DbSet<UserPermission> UserPermissions { get; set; }
         public DbSet<Permission> Permissions { get; set; }
+        public DbSet<EmailTemplate> EmailTemplates { get; set; }
     }
 }

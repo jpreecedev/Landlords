@@ -1,10 +1,10 @@
 ﻿namespace Landlords.Services
 {
-    using System;
     using System.Threading.Tasks;
     using MailKit.Net.Smtp;
     using Microsoft.Extensions.Options;
     using MimeKit;
+    using ViewModels;
 
     public class EmailSender : IEmailSender
     {
@@ -15,17 +15,15 @@
             _configuration = configuration.Value;
         }
 
-        public async Task SendEmailAsync(EmailData emailData)
+        public async Task SendEmailAsync(EmailViewModel email)
         {
-            if (emailData == null) throw new ArgumentNullException(nameof(emailData));
-
             var message = new MimeMessage();
             message.From.Add(new MailboxAddress(_configuration.Name, _configuration.Address));
-            message.To.Add(new MailboxAddress(emailData.RecipientName, emailData.RecipientEmail));
-            message.Subject = emailData.Subject;
+            message.To.Add(new MailboxAddress(email.RecipientName, email.RecipientEmail));
+            message.Subject = email.Template.Subject;
             
             var bodyBuilder = new BodyBuilder();
-            bodyBuilder.HtmlBody = emailData.Body;
+            bodyBuilder.HtmlBody = email.Template.Body;
             message.Body = bodyBuilder.ToMessageBody();
 
             using (var client = new SmtpClient())

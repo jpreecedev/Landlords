@@ -19,7 +19,9 @@
         DbSet<Portfolio> Portfolios { get; set; }
 
         DbSet<ApplicationUserPortfolio> ApplicationUserPortfolios { get; set; }
-        
+
+        DbSet<EmailTemplate> EmailTemplates { get; set; }
+            
         DbSet<T> Set<T>() where T : class;
     }
 }

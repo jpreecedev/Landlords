@@ -11,6 +11,7 @@
     using Landlords.Services;
     using System;
     using Database;
+    using Microsoft.EntityFrameworkCore;
 
     [Route("api/[controller]")]
     public class RegisterController : Controller
@@ -31,14 +32,15 @@
         {
             var user = User.GetApplicationUser(_context);
             var code = await _userRepository.GenerateEmailConfirmationTokenAsync(user);
-
-            await _emailSender.SendEmailAsync(new EmailData
+            var template = new EmailViewModel
             {
                 RecipientName = $"{user.FirstName} {user.LastName}",
                 RecipientEmail = user.Email,
-                Subject = "Confirm Email",
-                Body = $"Click this <a href=\"http://localhost:52812/api/register/confirmemail?userId={user.Id}&code={Uri.EscapeDataString(code)}\">link</a> mofo."
-            });
+                Template = await _context.EmailTemplates.FirstAsync(c => c.Key == "ResendVerification")
+            };
+            template.SetBody(user.Id.ToString(), code);
+
+            await _emailSender.SendEmailAsync(template);
 
             return Ok();
         }
@@ -63,13 +65,15 @@
                     await _userRepository.AddToRoleAsync(user, ApplicationRoles.Landlord);
 
                     var code = await _userRepository.GenerateEmailConfirmationTokenAsync(user);
-                    await _emailSender.SendEmailAsync(new EmailData
+                    var template = new EmailViewModel
                     {
                         RecipientName = $"{user.FirstName} {user.LastName}",
                         RecipientEmail = user.Email,
-                        Subject = "Confirm Email",
-                        Body = $"Click this <a href=\"http://localhost:52812/api/register/confirmemail?userId={user.Id}&code={Uri.EscapeDataString(code)}\">link</a> mofo."
-                    });
+                        Template = await _context.EmailTemplates.FirstAsync(c => c.Key == "Register")
+                    };
+                    template.SetBody(user.Id.ToString(), code);
+                    await _emailSender.SendEmailAsync(template);
+
                     return Ok();
                 }
             }
@@ -89,7 +93,7 @@
             {
                 return Redirect("http://localhost:8080/profile?confirmed=true");
             }
-            return BadRequest(new {Errors = result.Errors.ToErrorCollection()});
+            return BadRequest(new { Errors = result.Errors.ToErrorCollection() });
         }
     }
 }

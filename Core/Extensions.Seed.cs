@@ -21,6 +21,7 @@
             var userManager = serviceProvider.GetService<ApplicationUserManager>();
 
             CreatePermissions(context);
+            AsyncHelpers.RunSync(() => CreateEmails(context));
             AsyncHelpers.RunSync(() => CreateRoles(context, roleManager));
             AsyncHelpers.RunSync(() => CreateUsers(context, userManager));
             AsyncHelpers.RunSync(() => CreateAgencies(context));
@@ -263,6 +264,34 @@
                 });
 
             context.SaveChanges();
+        }
+
+        private static async Task CreateEmails(LLDbContext context)
+        {
+            if (!await context.EmailTemplates.AnyAsync(c => c.Key == "ResendVerification"))
+            {
+                await context.EmailTemplates.AddAsync(new EmailTemplate
+                {
+                    Key = "ResendVerification",
+                    Description = "Re-send verification email",
+                    Created = DateTime.Now,
+                    Subject = "Confirm email",
+                    Body = "Click this <a href=\"http://localhost:52812/api/register/confirmemail?userId={0}&code={1}\">link</a> mofo."
+                });
+            }
+            if (!await context.EmailTemplates.AnyAsync(c => c.Key == "Register"))
+            {
+                await context.EmailTemplates.AddAsync(new EmailTemplate
+                {
+                    Key = "Register",
+                    Description = "Registration confirmation",
+                    Created = DateTime.Now,
+                    Subject = "Confirm email",
+                    Body = "Click this <a href=\"http://localhost:52812/api/register/confirmemail?userId={0}&code={1}\">link</a> mofo."
+                });
+            }
+
+            await context.SaveChangesAsync();
         }
 
         private static class AsyncHelpers
