@@ -29,6 +29,11 @@
         [Permission(Permissions_PE.GetById, Permissions_PE.GetByRouteId, Permissions_PE.GetByIdDescription)]
         public async Task<IActionResult> Get(Guid userId)
         {
+            if (userId.IsDefault())
+            {
+                return BadRequest("Unable to validate payload");
+            }
+
             var permissions = await _permissionsDataProvider.GetUserPermissionsAsync(userId);
             var grouped = permissions.GroupBy(c => c.RouteId.Substring(0, c.RouteId.IndexOf("_")));
 
@@ -64,6 +69,11 @@
         [Permission(Permissions_PE.AddId, Permissions_PE.AddRouteId, Permissions_PE.AddDescription)]
         public async Task<IActionResult> Post(Guid userId, Guid permissionId)
         {
+            if (userId.IsDefault() || permissionId.IsDefault())
+            {
+                return BadRequest("Unable to validate payload");
+            }
+
             await _permissionsDataProvider.AddPermissionAsync(userId, permissionId);
             return Ok();
         }
@@ -72,6 +82,11 @@
         [Permission(Permissions_PE.DeleteId, Permissions_PE.DeleteRouteId, Permissions_PE.DeleteDescription)]
         public async Task<IActionResult> Delete(Guid userId, Guid permissionId)
         {
+            if (userId.IsDefault() || permissionId.IsDefault())
+            {
+                return BadRequest("Unable to validate payload");
+            }
+
             await _permissionsDataProvider.RemovePermissionAsync(userId, permissionId);
             return Ok();
         }

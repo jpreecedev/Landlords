@@ -11,7 +11,7 @@
     <div class="alert alert-success" v-if="saved">
       Permissions have been updated
     </div> 
-    <form @submit.prevent="updatePermissions" role="form" enctype="multipart/form-data" novalidate>
+    <form role="form" novalidate>
       <fieldset>
         <div class="form-group row">
           <label class="col-12 col-form-label" for="searchForUser">Search for user</label>
@@ -35,8 +35,8 @@
           <div class="col-auto">
             <div class="h-100 d-flex align-items-center">
               <div>
-                <button @click="removePermission" type="button" class="btn btn-secondary d-block mb-3 w-100">&#10007;</button>
-                <button @click="addPermission" type="button" class="btn btn-secondary d-block w-100">&rarr;</button>
+                <button @click="removePermission" v-bind:disabled="!selectedUser || !allocatedPermissions.length" type="button" class="btn btn-secondary d-block mb-3 w-100">&#10007;</button>
+                <button @click="addPermission" v-bind:disabled="!selectedUser || !selectedPermissions.length" type="button" class="btn btn-secondary d-block w-100">&rarr;</button>
               </div>
             </div>
           </div>
@@ -47,17 +47,12 @@
                 <select v-model="allocatedPermissions" class="form-control" id="userPermission" name="userPermission" size="20" multiple>
                   <template v-if="selectedUser && selectedUser.permissions">
                     <optgroup v-for="group in selectedUser.permissions" v-bind:label="group.key">
-                      <option v-for="userPermission in group.items" v-bind:value="userPermission.id">{{ userPermission.description }}</option>
+                      <option v-for="userPermission in group.items" v-bind:value="userPermission.permissionId">{{ userPermission.description }}</option>
                     </optgroup>
                   </template>
                 </select>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="row mt-3">
-          <div class="col">
-            <button v-if="permissions.PE_Update" type="submit" class="btn btn-primary">Save</button>
           </div>
         </div>
       </fieldset>
@@ -66,8 +61,6 @@
 </template>
 
 <script>
-import { ErrorBag } from 'vee-validate'
-import utils from '@/utils'
 import UserTemplate from './UserTemplate.vue'
 
 export default {
@@ -102,7 +95,6 @@ export default {
       collection.forEach(permission => {
         this.allPermissions.forEach(allPermission => {
           allPermission.items.forEach(item => {
-            console.log(item, permission)
             if (item.permissionId === permission) {
               result.push(item)
             }
@@ -114,41 +106,50 @@ export default {
     addPermission: function () {
       var selectedPermissions = this.getSelectedPermissions(this.selectedPermissions)
       if (selectedPermissions) {
-        // TODO
+        selectedPermissions.forEach(selectedPermission => {
+          var key = selectedPermission.routeId.substring(0, selectedPermission.routeId.indexOf('_'))
+          var group = this.selectedUser.permissions.find(x => {
+            return x.key === key
+          })
+          if (group) {
+            var existingPermission = group.items.find(item => {
+              return item.permissionId === selectedPermission.permissionId
+            })
+            if (!existingPermission) {
+              group.items.push(selectedPermission)
+            }
+          } else {
+            this.selectedUser.permissions.push({
+              key: key,
+              items: [selectedPermission]
+            })
+          }
+          this.$http.post(`/api/permissions/?userId=${this.selectedUser.id}&permissionId=${selectedPermission.permissionId}`)
+        })
       }
     },
     removePermission: function () {
       var selectedPermissions = this.getSelectedPermissions(this.allocatedPermissions)
       if (selectedPermissions) {
-        console.log(selectedPermissions)
-        selectedPermissions.forEach(permission => {
-          this.$http.delete(`/api/permissions`, {
-            params: {
-              userId: this.selectedUser.id,
-              permissionId: permission.permissionId
+        selectedPermissions.forEach(selectedPermission => {
+          this.selectedUser.permissions.forEach(userPermission => {
+            userPermission.items.forEach(item => {
+              if (item.permissionId === selectedPermission.permissionId) {
+                var index = userPermission.items.indexOf(item)
+                userPermission.items.splice(index, 1)
+              }
+            })
+            if (userPermission.items.length === 0) {
+              var index = this.selectedUser.permissions.indexOf(userPermission)
+              this.selectedUser.permissions.splice(index, 1)
             }
           })
+          this.$http.delete(`/api/permissions/?userId=${this.selectedUser.id}&permissionId=${selectedPermission.permissionId}`)
         })
       }
     },
     getLabel (user) {
       return user.name
-    },
-    updatePermissions: function () {
-      var bag = new ErrorBag()
-      this.$http.post(`/api/permissions`, {})
-      .then(() => {
-        this.saved = true
-      })
-      .catch(response => {
-        var validationResult = utils.getFormValidationErrors(response)
-        validationResult.errors.forEach(validationError => {
-          bag.add(validationError.key, validationError.messages[0], 'required')
-        })
-        if (validationResult.status) {
-          bag.add('GenericError', validationResult.status, 'generic')
-        }
-      })
     },
     change (text) {
       if (!text) {
@@ -164,7 +165,7 @@ export default {
   },
   watch: {
     selectedUser: function (user) {
-      if (!user || user.permissions) {
+      if (!user || user.permissions.length) {
         return
       }
 
@@ -177,6 +178,10 @@ export default {
 </script>
   
 <style lang="scss">
+
+select {
+  max-height: 378px;
+}
 
 .v-autocomplete {
 	.v-autocomplete-input-group {

@@ -11,7 +11,7 @@
             RouteId = routeId;
         }
 
-        public Guid Id { get; set; }
+        public Guid PermissionId { get; set; }
         public string Description { get; set; }
         public string RouteId { get; set; }
     }

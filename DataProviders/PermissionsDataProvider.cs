@@ -20,7 +20,8 @@
 
         public async Task<ICollection<PermissionViewModel>> GetPermissionsAsync()
         {
-            return await Context.Permissions.Select(c => new PermissionViewModel
+            return await Context.Permissions.Where(c => c.RouteId.Substring(0, 2) != "PE")
+                .Select(c => new PermissionViewModel
                 {
                     PermissionId = c.Id,
                     Description = c.Description,
@@ -31,8 +32,8 @@
 
         public async Task<ICollection<UserPermissionViewModel>> GetUserPermissionsAsync(Guid userId)
         {
-            return await Context.UserPermissions.Where(c => c.UserId == userId)
-                .Select(c => new UserPermissionViewModel(c.Permission.Description, c.Permission.RouteId) { Id = c.PermissionId })
+            return await Context.UserPermissions.Where(c => !c.IsDeleted && c.UserId == userId)
+                .Select(c => new UserPermissionViewModel(c.Permission.Description, c.Permission.RouteId) { PermissionId = c.PermissionId })
                 .ToListAsync();
         }
 
@@ -46,24 +47,25 @@
                 {
                     Id = c.User.Id,
                     Name = c.User.FirstName + " " + c.User.LastName,
-                    EmailAddress = c.User.Email
+                    EmailAddress = c.User.Email,
+                    Permissions = new List<UserPermissionViewModel>()
                 })
                 .ToListAsync();
         }
 
         public async Task RemovePermissionAsync(Guid userId, Guid permissionId)
         {
-            var userPermission = await Context.UserPermissions.SingleOrDefaultAsync(c => c.UserId == userId && c.PermissionId == permissionId);
+            var userPermission = await Context.UserPermissions.Where(c => !c.IsDeleted).SingleOrDefaultAsync(c => c.UserId == userId && c.PermissionId == permissionId);
             if (userPermission != null)
             {
-                Context.UserPermissions.Remove(userPermission);
+                userPermission.Deleted = DateTime.Now;
                 await Context.SaveChangesAsync();
             }
         }
 
         public async Task AddPermissionAsync(Guid userId, Guid permissionId)
         {
-            var existingPermission = await Context.UserPermissions.SingleOrDefaultAsync(c => c.UserId == userId && c.PermissionId == permissionId);
+            var existingPermission = await Context.UserPermissions.Where(c => !c.IsDeleted).SingleOrDefaultAsync(c => c.UserId == userId && c.PermissionId == permissionId);
             if (existingPermission == null)
             {
                 await Context.UserPermissions.AddAsync(new UserPermission
