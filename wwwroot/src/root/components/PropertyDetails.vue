@@ -14,7 +14,7 @@
           <div v-if="permissions.PI_Upload" class="property-image">
             <label>
               <input type="file" accept="image/x-png,image/gif,image/jpeg" multiple @change="filesChange($event.target.name, $event.target.files)" name="files">
-              <img class="placeholder" src="../assets/images/placeholder.png" alt="Add more images...">
+              <img class="placeholder" src="../../assets/images/placeholder.png" alt="Add more images...">
             </label>
           </div>
           <div class="property-image" v-for="propertyImage in propertyDetails.propertyImages">
@@ -359,7 +359,7 @@ export default {
 
 <style lang="scss" scoped>
 
-  @import '../assets/styles/app';
+  @import '../../assets/styles/app';
 
   .property-image-container {
 

@@ -31,7 +31,13 @@ module.exports = merge(baseWebpackConfig, {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'src/root/root.html',
-      inject: true
+      inject: false
+    }),
+    
+    new HtmlWebpackPlugin({
+      filename: 'admin.html',
+      template: 'src/admin/admin.html',
+      inject: false
     }),
 
     new WebpackCleanupPlugin(),
