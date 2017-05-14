@@ -98,7 +98,7 @@
 </template>
 
 <script>
-  import utils from '@/utils'
+  import utils from 'utils'
   import { ErrorBag } from 'vee-validate'
 
   export default {

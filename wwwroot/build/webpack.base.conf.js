@@ -9,7 +9,7 @@ function resolve (dir) {
 
 module.exports = {
   entry: {
-    app: './src/main.js'
+    app: './src/root/index.js'
   },
   output: {
     path: config.build.assetsRoot,
@@ -22,7 +22,13 @@ module.exports = {
     extensions: ['.js', '.vue', '.json'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
-      '@': resolve('src')
+      'assets': resolve("src/assets"),
+      'components': resolve("src/components"),
+      'root': resolve("src/root"),
+      'store': resolve("src/store"),
+      'utils': resolve("src/utils"),
+      'services': resolve("src/services"),
+      'src': resolve("src")
     }
   },
   module: {

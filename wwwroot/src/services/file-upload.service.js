@@ -1,7 +1,7 @@
 import Vue from 'vue'
 
-export default {
-  upload: (formData, url, progress) => {
+export class FileUploadService {
+  upload (formData, url, progress) {
     return Vue.http.post(url, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
@@ -16,3 +16,5 @@ export default {
     .catch((error) => Promise.reject(error))
   }
 }
+
+export default FileUploadService

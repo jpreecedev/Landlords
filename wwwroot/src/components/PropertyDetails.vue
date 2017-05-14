@@ -245,8 +245,8 @@
 <script>
 import Datepicker from 'vuejs-datepicker'
 import { ErrorBag } from 'vee-validate'
-import utils from '@/utils'
-import fileUpload from '@/file-upload.service'
+import utils from 'utils'
+import FileUploadService from 'services/file-upload.service'
 
 export default {
   name: 'propertyDetails',
@@ -327,7 +327,7 @@ export default {
         formData.append(fieldName, fileList[x], fileList[x].name)
       })
 
-      fileUpload.upload(formData, `/api/propertyimage/upload?entityId=${this.$route.params.propertyId}`, uploadProgress => { this.progress = uploadProgress })
+      FileUploadService.upload(formData, `/api/propertyimage/upload?entityId=${this.$route.params.propertyId}`, uploadProgress => { this.progress = uploadProgress })
         .then(images => {
           if (images) {
             images.forEach(image => {

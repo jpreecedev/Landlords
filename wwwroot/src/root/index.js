@@ -1,17 +1,15 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-
 import Vue from 'vue'
 import VueResource from 'vue-resource'
-import router from './router'
-import store from './store'
-import './assets/styles/app.scss'
-import App from './components/App'
-import './extensions'
-import Auth from './auth'
-import Interceptors from './interceptors'
+import store from 'store'
+import App from 'components/App'
+import AuthService from 'services/auth.service'
+import Interceptors from 'src/interceptors'
 import VeeValidate from 'vee-validate'
 import Autocomplete from 'v-autocomplete'
+import router from './routes'
+
+import 'src/extensions'
+import 'assets/styles/app.scss'
 import 'v-autocomplete/dist/v-autocomplete.css'
 
 require('bootstrap')
@@ -19,7 +17,7 @@ require('bootstrap')
 Vue.config.productionTip = false
 
 Vue.use(VueResource)
-Vue.use(Auth)
+Vue.use(AuthService)
 Vue.use(Interceptors)
 Vue.use(VeeValidate)
 Vue.use(Autocomplete)

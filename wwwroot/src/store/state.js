@@ -19,9 +19,6 @@ const notSyncedData = {
   appnav: {
     searchText: '',
     searchTimestamp: null
-  },
-  app: {
-    isLoading: false
   }
 }
 

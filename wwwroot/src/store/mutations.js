@@ -12,10 +12,6 @@ export const APPNAV_SEARCH = (state, searchData) => {
   state.appnav = searchData
 }
 
-export const APP_LOADING = (state, appData) => {
-  state.app = appData
-}
-
 export const UPDATE_PERMISSIONS = (state, permissions) => {
   state.permissions = permissions
 }

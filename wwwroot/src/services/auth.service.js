@@ -1,6 +1,6 @@
 import Vue from 'vue'
-import router from './router'
-import store from './store'
+import router from 'root/routes'
+import store from 'store'
 
 /**
  * @var{string} LOGIN_URL The endpoint for logging in. This endpoint should be proxied by Webpack dev server
@@ -36,7 +36,6 @@ const AUTH_BASIC_HEADERS = {
 * Handles login and token authentication using OAuth2.
 */
 export default {
-
   /**
    * Install the Auth class.
    *
