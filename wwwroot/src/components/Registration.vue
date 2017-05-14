@@ -23,8 +23,8 @@
 
 <script>
 
-  import LoginForm from './common/LoginForm.vue'
-  import RegisterForm from './common/RegisterForm.vue'
+  import LoginForm from './LoginForm.vue'
+  import RegisterForm from './RegisterForm.vue'
 
   export default {
     name: 'registration',
@@ -41,7 +41,3 @@
   }
 
 </script>
-  
-<style lang="scss" scoped>
-  
-</style>
