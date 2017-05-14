@@ -1,6 +1,7 @@
 import Vue from 'vue'
 
-export class FileUploadService {
+export default {
+
   upload (formData, url, progress) {
     return Vue.http.post(url, formData, {
       headers: {
@@ -15,6 +16,5 @@ export class FileUploadService {
     .then((response) => Promise.resolve(response.data))
     .catch((error) => Promise.reject(error))
   }
-}
 
-export default FileUploadService
+}
