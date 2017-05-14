@@ -27,6 +27,8 @@ var webpackConfig = merge(baseWebpackConfig, {
     chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
   },
   plugins: [
+    new WebpackCleanupPlugin(),
+
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({
       'process.env': env
@@ -52,8 +54,24 @@ var webpackConfig = merge(baseWebpackConfig, {
     // you can customize output by editing /index.html
     // see https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
-      filename: config.build.index,
-      template: 'index.html',
+      filename: config.build.root,
+      template: 'src/root/root.html',
+      chunks: ['vendor', 'app'],
+      inject: true,
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeAttributeQuotes: true
+        // more options:
+        // https://github.com/kangax/html-minifier#options-quick-reference
+      },
+      // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+      chunksSortMode: 'dependency'
+    }),
+    new HtmlWebpackPlugin({
+      filename: config.build.admin,
+      template: 'src/admin/admin.html',
+      chunks: ['vendor', 'admin'],
       inject: true,
       minify: {
         removeComments: true,
@@ -107,8 +125,7 @@ var webpackConfig = merge(baseWebpackConfig, {
       pngquant: {
         quality: '95-100'
       }
-    }),
-    new WebpackCleanupPlugin()
+    })
   ]
 })
 
