@@ -8,6 +8,7 @@ var CopyWebpackPlugin = require('copy-webpack-plugin')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
+var WebpackCleanupPlugin = require('webpack-cleanup-plugin')
 var ImageminPlugin = require('imagemin-webpack-plugin').default
 
 var env = config.build.env
@@ -106,7 +107,8 @@ var webpackConfig = merge(baseWebpackConfig, {
       pngquant: {
         quality: '95-100'
       }
-    })
+    }),
+    new WebpackCleanupPlugin()
   ]
 })
 
