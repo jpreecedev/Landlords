@@ -29,6 +29,7 @@ module.exports = {
       'store': resolve("src/store"),
       'utils': resolve("src/utils"),
       'services': resolve("src/services"),
+      'checklists': resolve("src/checklists"),
       'src': resolve("src")
     }
   },
