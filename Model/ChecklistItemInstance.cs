@@ -6,10 +6,8 @@
     public class ChecklistItemInstance : BaseModel, IChecklistItem
     {
         [ValidateGuid]
-        public Guid ChecklistId { get; set; }
-
-        public Checklist Checklist { get; set; }
-
+        public Guid ChecklistInstanceId { get; set; }
+        
         public string DisplayText { get; set; }
 
         public string Key { get; set; }

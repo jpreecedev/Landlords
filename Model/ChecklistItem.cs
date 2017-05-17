@@ -8,8 +8,6 @@
         [ValidateGuid]
         public Guid ChecklistId { get; set; }
 
-        public Checklist Checklist { get; set; }
-
         public string DisplayText { get; set; }
 
         public string Key { get; set; }

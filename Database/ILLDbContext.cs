@@ -23,12 +23,8 @@
         DbSet<EmailTemplate> EmailTemplates { get; set; }
 
         DbSet<Checklist> Checklists { get; set; }
-
-        DbSet<ChecklistItem> ChecklistItems { get; set; }
         
         DbSet<ChecklistInstance> ChecklistInstances { get; set; }
-
-        DbSet<ChecklistItemInstance> ChecklistItemInstances { get; set; }
         
         DbSet<T> Set<T>() where T : class;
     }

@@ -8,7 +8,7 @@ using Landlords.Database;
 namespace Landlords.Migrations
 {
     [DbContext(typeof(LLDbContext))]
-    [Migration("20170517182934_ChecklistEntities")]
+    [Migration("20170517184831_ChecklistEntities")]
     partial class ChecklistEntities
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -197,8 +197,6 @@ namespace Landlords.Migrations
 
                     b.Property<Guid>("ChecklistId");
 
-                    b.Property<Guid?>("ChecklistId1");
-
                     b.Property<DateTime>("Created");
 
                     b.Property<DateTime?>("Deleted");
@@ -217,9 +215,7 @@ namespace Landlords.Migrations
 
                     b.HasIndex("ChecklistId");
 
-                    b.HasIndex("ChecklistId1");
-
-                    b.ToTable("ChecklistItems");
+                    b.ToTable("ChecklistItem");
                 });
 
             modelBuilder.Entity("Model.ChecklistItemInstance", b =>
@@ -227,9 +223,7 @@ namespace Landlords.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid>("ChecklistId");
-
-                    b.Property<Guid?>("ChecklistInstanceId");
+                    b.Property<Guid>("ChecklistInstanceId");
 
                     b.Property<DateTime>("Created");
 
@@ -247,11 +241,9 @@ namespace Landlords.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ChecklistId");
-
                     b.HasIndex("ChecklistInstanceId");
 
-                    b.ToTable("ChecklistItemInstances");
+                    b.ToTable("ChecklistItemInstance");
                 });
 
             modelBuilder.Entity("Model.Database.ApplicationRole", b =>
@@ -568,26 +560,18 @@ namespace Landlords.Migrations
 
             modelBuilder.Entity("Model.ChecklistItem", b =>
                 {
-                    b.HasOne("Model.Checklist", "Checklist")
-                        .WithMany()
-                        .HasForeignKey("ChecklistId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("Model.Checklist")
                         .WithMany("ChecklistItems")
-                        .HasForeignKey("ChecklistId1");
+                        .HasForeignKey("ChecklistId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Model.ChecklistItemInstance", b =>
                 {
-                    b.HasOne("Model.Checklist", "Checklist")
-                        .WithMany()
-                        .HasForeignKey("ChecklistId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("Model.ChecklistInstance")
                         .WithMany("ChecklistItems")
-                        .HasForeignKey("ChecklistInstanceId");
+                        .HasForeignKey("ChecklistInstanceId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Model.Database.ApplicationUser", b =>

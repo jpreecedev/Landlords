@@ -56,12 +56,11 @@ namespace Landlords.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ChecklistItems",
+                name: "ChecklistItem",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
                     ChecklistId = table.Column<Guid>(nullable: false),
-                    ChecklistId1 = table.Column<Guid>(nullable: true),
                     Created = table.Column<DateTime>(nullable: false),
                     Deleted = table.Column<DateTime>(nullable: true),
                     DisplayText = table.Column<string>(nullable: true),
@@ -72,28 +71,21 @@ namespace Landlords.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ChecklistItems", x => x.Id);
+                    table.PrimaryKey("PK_ChecklistItem", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ChecklistItems_Checklists_ChecklistId",
+                        name: "FK_ChecklistItem_Checklists_ChecklistId",
                         column: x => x.ChecklistId,
                         principalTable: "Checklists",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ChecklistItems_Checklists_ChecklistId1",
-                        column: x => x.ChecklistId1,
-                        principalTable: "Checklists",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ChecklistItemInstances",
+                name: "ChecklistItemInstance",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    ChecklistId = table.Column<Guid>(nullable: false),
-                    ChecklistInstanceId = table.Column<Guid>(nullable: true),
+                    ChecklistInstanceId = table.Column<Guid>(nullable: false),
                     Created = table.Column<DateTime>(nullable: false),
                     Deleted = table.Column<DateTime>(nullable: true),
                     DisplayText = table.Column<string>(nullable: true),
@@ -104,19 +96,13 @@ namespace Landlords.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ChecklistItemInstances", x => x.Id);
+                    table.PrimaryKey("PK_ChecklistItemInstance", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ChecklistItemInstances_Checklists_ChecklistId",
-                        column: x => x.ChecklistId,
-                        principalTable: "Checklists",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ChecklistItemInstances_ChecklistInstances_ChecklistInstanceId",
+                        name: "FK_ChecklistItemInstance_ChecklistInstances_ChecklistInstanceId",
                         column: x => x.ChecklistInstanceId,
                         principalTable: "ChecklistInstances",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -130,33 +116,23 @@ namespace Landlords.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ChecklistItems_ChecklistId",
-                table: "ChecklistItems",
+                name: "IX_ChecklistItem_ChecklistId",
+                table: "ChecklistItem",
                 column: "ChecklistId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ChecklistItems_ChecklistId1",
-                table: "ChecklistItems",
-                column: "ChecklistId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ChecklistItemInstances_ChecklistId",
-                table: "ChecklistItemInstances",
-                column: "ChecklistId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ChecklistItemInstances_ChecklistInstanceId",
-                table: "ChecklistItemInstances",
+                name: "IX_ChecklistItemInstance_ChecklistInstanceId",
+                table: "ChecklistItemInstance",
                 column: "ChecklistInstanceId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ChecklistItems");
+                name: "ChecklistItem");
 
             migrationBuilder.DropTable(
-                name: "ChecklistItemInstances");
+                name: "ChecklistItemInstance");
 
             migrationBuilder.DropTable(
                 name: "ChecklistInstances");
