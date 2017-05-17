@@ -196,6 +196,8 @@ namespace Landlords.Migrations
 
                     b.Property<Guid>("ChecklistId");
 
+                    b.Property<Guid?>("ChecklistId1");
+
                     b.Property<DateTime>("Created");
 
                     b.Property<DateTime?>("Deleted");
@@ -213,6 +215,8 @@ namespace Landlords.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ChecklistId");
+
+                    b.HasIndex("ChecklistId1");
 
                     b.ToTable("ChecklistItems");
                 });
@@ -224,6 +228,8 @@ namespace Landlords.Migrations
 
                     b.Property<Guid>("ChecklistId");
 
+                    b.Property<Guid?>("ChecklistInstanceId");
+
                     b.Property<DateTime>("Created");
 
                     b.Property<DateTime?>("Deleted");
@@ -241,6 +247,8 @@ namespace Landlords.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ChecklistId");
+
+                    b.HasIndex("ChecklistInstanceId");
 
                     b.ToTable("ChecklistItemInstances");
                 });
@@ -563,6 +571,10 @@ namespace Landlords.Migrations
                         .WithMany()
                         .HasForeignKey("ChecklistId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Model.Checklist")
+                        .WithMany("ChecklistItems")
+                        .HasForeignKey("ChecklistId1");
                 });
 
             modelBuilder.Entity("Model.ChecklistItemInstance", b =>
@@ -571,6 +583,10 @@ namespace Landlords.Migrations
                         .WithMany()
                         .HasForeignKey("ChecklistId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Model.ChecklistInstance")
+                        .WithMany("ChecklistItems")
+                        .HasForeignKey("ChecklistInstanceId");
                 });
 
             modelBuilder.Entity("Model.Database.ApplicationUser", b =>

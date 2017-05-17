@@ -1,6 +1,7 @@
 ﻿namespace Model
 {
     using System;
+    using System.Collections.Generic;
     using Database;
     using Validation;
 
@@ -21,7 +22,9 @@
 
         [ValidateGuid]
         public Guid ChecklistId { get; set; }
-
+        
         public Checklist Checklist { get; set; }
+
+        public ICollection<IChecklistItem> ChecklistItems { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace Landlords.Database
 {
     using System;
+    using System.Collections.Generic;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
     using Model;
@@ -30,6 +31,12 @@
                 .WithMany(b => b.Users)
                 .HasForeignKey(p => p.AgencyId)
                 .HasConstraintName("ForeignKey_ApplicationUser_Agency");
+
+            modelBuilder.Entity<Checklist>()
+                .HasMany(c => (List<ChecklistItem>) c.ChecklistItems);
+
+            modelBuilder.Entity<ChecklistInstance>()
+                .HasMany(c => (List<ChecklistItemInstance>) c.ChecklistItems);
 
             base.OnModelCreating(modelBuilder);
         }

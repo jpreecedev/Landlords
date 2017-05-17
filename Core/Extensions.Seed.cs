@@ -25,6 +25,7 @@
             AsyncHelpers.RunSync(() => CreateRoles(context, roleManager));
             AsyncHelpers.RunSync(() => CreateUsers(context, userManager));
             AsyncHelpers.RunSync(() => CreateAgencies(context));
+            AsyncHelpers.RunSync(() => CreateChecklists(context, userManager));
         }
 
         private static async Task CreateRoles(LLDbContext context, ApplicationRoleManager roleManager)
@@ -292,6 +293,22 @@
             }
 
             await context.SaveChangesAsync();
+        }
+
+        private static async Task CreateChecklists(LLDbContext context, ApplicationUserManager userManager)
+        {
+            var moveInChecklist = new Checklist
+            {
+                Created = DateTime.Now,
+                Image = "NewMoveIn.png",
+                IsAvailableDownstream = true,
+                IsPropertyMandatory = true
+            };
+         
+            //moveInChecklist.ChecklistItems.Add();
+
+            var admin = userManager.Users.FirstAsync(c => c.UserName == "admin@landlords.com");
+
         }
 
         private static class AsyncHelpers
