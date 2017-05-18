@@ -26,5 +26,7 @@
         public Checklist Checklist { get; set; }
 
         public ICollection<IChecklistItem> ChecklistItems { get; set; }
+
+        public string Name { get; set; }
     }
 }

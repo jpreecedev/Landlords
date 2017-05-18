@@ -8,7 +8,7 @@ using Landlords.Database;
 namespace Landlords.Migrations
 {
     [DbContext(typeof(LLDbContext))]
-    [Migration("20170517184831_ChecklistEntities")]
+    [Migration("20170518185429_ChecklistEntities")]
     partial class ChecklistEntities
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -155,6 +155,10 @@ namespace Landlords.Migrations
 
                     b.Property<bool>("IsPropertyMandatory");
 
+                    b.Property<string>("Name");
+
+                    b.Property<Guid>("UserId");
+
                     b.HasKey("Id");
 
                     b.ToTable("Checklists");
@@ -178,6 +182,8 @@ namespace Landlords.Migrations
                     b.Property<bool>("IsAvailableDownstream");
 
                     b.Property<bool>("IsPropertyMandatory");
+
+                    b.Property<string>("Name");
 
                     b.Property<Guid>("UserId");
 

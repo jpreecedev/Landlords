@@ -125,6 +125,7 @@
                 .AddScoped<IPropertyImageDataProvider, PropertyImageDataProvider>()
                 .AddScoped<ILandlordDataProvider, LandlordDataProvider>()
                 .AddScoped<IPermissionsDataProvider, PermissionsDataProvider>()
+                .AddScoped<IChecklistDataProvider, ChecklistDataProvider>()
                 .AddScoped<IUserRepository, UserRepository>()
                 .AddScoped<ILLDbContext, LLDbContext>()
                 .AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>()

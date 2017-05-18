@@ -297,12 +297,16 @@
 
         private static async Task CreateChecklists(LLDbContext context, ApplicationUserManager userManager)
         {
+            var admin = await context.Users.FirstAsync(c => c.UserName == "admin@landlords.com");
+
             var moveInChecklist = new Checklist
             {
                 Created = DateTime.Now,
+                Name = "New tenant move in",
                 Image = "NewMoveIn.png",
                 IsAvailableDownstream = true,
-                IsPropertyMandatory = true
+                IsPropertyMandatory = true,
+                UserId = admin.Id
             };
 
             await context.Checklists.AddAsync(moveInChecklist);

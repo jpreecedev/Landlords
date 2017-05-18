@@ -23,12 +23,9 @@
           <router-link v-if="permissions.PE_List" tag="li" to="/permissions" active-class="active" class="nav-item">
             <a class="nav-link">Permissions</a>
           </router-link>
-          <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="checklistsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Checklists</a>
-              <div class="dropdown-menu" aria-labelledby="checklistsDropdown">
-                <router-link class="dropdown-item" to="/checklists/new-tenant-move-in">New Tenant Move In</router-link>
-              </div>
-          </li>
+          <router-link v-if="permissions.CL_Overview" tag="li" to="/checklists/" active-class="active" class="nav-item">
+            <a class="nav-link">Checklists</a>
+          </router-link>
           <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="calculatorsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Calculators</a>
               <div class="dropdown-menu" aria-labelledby="calculatorsDropdown">

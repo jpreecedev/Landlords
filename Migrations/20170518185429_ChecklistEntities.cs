@@ -17,7 +17,9 @@ namespace Landlords.Migrations
                     Deleted = table.Column<DateTime>(nullable: true),
                     Image = table.Column<string>(nullable: true),
                     IsAvailableDownstream = table.Column<bool>(nullable: false),
-                    IsPropertyMandatory = table.Column<bool>(nullable: false)
+                    IsPropertyMandatory = table.Column<bool>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    UserId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -36,6 +38,7 @@ namespace Landlords.Migrations
                     IsArchived = table.Column<bool>(nullable: false),
                     IsAvailableDownstream = table.Column<bool>(nullable: false),
                     IsPropertyMandatory = table.Column<bool>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
                     UserId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>

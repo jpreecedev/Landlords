@@ -154,6 +154,10 @@ namespace Landlords.Migrations
 
                     b.Property<bool>("IsPropertyMandatory");
 
+                    b.Property<string>("Name");
+
+                    b.Property<Guid>("UserId");
+
                     b.HasKey("Id");
 
                     b.ToTable("Checklists");
@@ -177,6 +181,8 @@ namespace Landlords.Migrations
                     b.Property<bool>("IsAvailableDownstream");
 
                     b.Property<bool>("IsPropertyMandatory");
+
+                    b.Property<string>("Name");
 
                     b.Property<Guid>("UserId");
 
