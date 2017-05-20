@@ -299,112 +299,118 @@
         {
             var admin = await context.Users.FirstAsync(c => c.UserName == "admin@landlords.com");
 
-            var moveInChecklist = new Checklist
+            if (!await context.Checklists.AnyAsync(c => c.Name == "New tenant move in"))
             {
-                Created = DateTime.Now,
-                Name = "New tenant move in",
-                Image = "NewMoveIn.png",
-                IsAvailableDownstream = true,
-                IsPropertyMandatory = true,
-                UserId = admin.Id
-            };
-
-            await context.Checklists.AddAsync(moveInChecklist);
-            await context.SaveChangesAsync();
-
-            moveInChecklist.ChecklistItems = new List<IChecklistItem>
-            {
-                new ChecklistItem
+                var moveInChecklist = new Checklist
                 {
                     Created = DateTime.Now,
-                    ChecklistId = moveInChecklist.Id,
-                    DisplayText = "Determine rental amount",
-                    IsExpanded = true,
-                    Key = "NL001",
-                    Template = "CommentsOnly"
-                },
+                    Name = "New tenant move in",
+                    Image = "NewMoveIn.png",
+                    IsAvailableDownstream = true,
+                    IsPropertyMandatory = true,
+                    UserId = admin.Id
+                };
 
-                new ChecklistItem
-                {
-                    Created = DateTime.Now,
-                    ChecklistId = moveInChecklist.Id,
-                    DisplayText = "Take photos (or get a professional to do it)",
-                    Key = "NL002",
-                    Template = "DocumentUpload"
-                },
+                await context.Checklists.AddAsync(moveInChecklist);
+                await context.SaveChangesAsync();
 
-                new ChecklistItem
+                var checklistItems = new List<ChecklistItem>
                 {
-                    Created = DateTime.Now,
-                    ChecklistId = moveInChecklist.Id,
-                    DisplayText = "Advertise the property",
-                    Key = "NL003",
-                    Template = "CommentsOnly"
-                },
+                    new ChecklistItem
+                    {
+                        Created = DateTime.Now,
+                        ChecklistId = moveInChecklist.Id,
+                        DisplayText = "Determine rental amount",
+                        IsExpanded = true,
+                        Key = "NL001",
+                        Template = "CommentsOnly"
+                    },
 
-                new ChecklistItem
-                {
-                    Created = DateTime.Now,
-                    ChecklistId = moveInChecklist.Id,
-                    DisplayText = "Conduct viewings",
-                    Key = "NL004",
-                    Template = "CommentsOnly"
-                },
+                    new ChecklistItem
+                    {
+                        Created = DateTime.Now,
+                        ChecklistId = moveInChecklist.Id,
+                        DisplayText = "Take photos (or get a professional to do it)",
+                        Key = "NL002",
+                        Template = "DocumentUpload"
+                    },
 
-                new ChecklistItem
-                {
-                    Created = DateTime.Now,
-                    ChecklistId = moveInChecklist.Id,
-                    DisplayText = "Negotiate & accept offer",
-                    Key = "NL005",
-                    Template = "CommentsOnly"
-                },
+                    new ChecklistItem
+                    {
+                        Created = DateTime.Now,
+                        ChecklistId = moveInChecklist.Id,
+                        DisplayText = "Advertise the property",
+                        Key = "NL003",
+                        Template = "CommentsOnly"
+                    },
 
-                new ChecklistItem
-                {
-                    Created = DateTime.Now,
-                    ChecklistId = moveInChecklist.Id,
-                    DisplayText = "Take fees",
-                    Key = "NL006",
-                    Template = "CommentsOnly"
-                },
+                    new ChecklistItem
+                    {
+                        Created = DateTime.Now,
+                        ChecklistId = moveInChecklist.Id,
+                        DisplayText = "Conduct viewings",
+                        Key = "NL004",
+                        Template = "CommentsOnly"
+                    },
 
-                new ChecklistItem
-                {
-                    Created = DateTime.Now,
-                    ChecklistId = moveInChecklist.Id,
-                    DisplayText = "Get proof of Id",
-                    Key = "NL007",
-                    Template = "DocumentUpload"
-                },
+                    new ChecklistItem
+                    {
+                        Created = DateTime.Now,
+                        ChecklistId = moveInChecklist.Id,
+                        DisplayText = "Negotiate & accept offer",
+                        Key = "NL005",
+                        Template = "CommentsOnly"
+                    },
 
-                new ChecklistItem
-                {
-                    Created = DateTime.Now,
-                    ChecklistId = moveInChecklist.Id,
-                    DisplayText = "Establish right to rent",
-                    Key = "NL008",
-                    Template = "CommentsOnly"
-                },
+                    new ChecklistItem
+                    {
+                        Created = DateTime.Now,
+                        ChecklistId = moveInChecklist.Id,
+                        DisplayText = "Take fees",
+                        Key = "NL006",
+                        Template = "CommentsOnly"
+                    },
 
-                new ChecklistItem
-                {
-                    Created = DateTime.Now,
-                    ChecklistId = moveInChecklist.Id,
-                    DisplayText = "Conduct reference checks",
-                    Key = "NL009",
-                    Template = "CommentsOnly"
-                },
+                    new ChecklistItem
+                    {
+                        Created = DateTime.Now,
+                        ChecklistId = moveInChecklist.Id,
+                        DisplayText = "Get proof of Id",
+                        Key = "NL007",
+                        Template = "DocumentUpload"
+                    },
 
-                new ChecklistItem
-                {
-                    Created = DateTime.Now,
-                    ChecklistId = moveInChecklist.Id,
-                    DisplayText = "Ask for a guarantor if necessary",
-                    Key = "NL010",
-                    Template = "CommentsOnly"
-                }
-            };
+                    new ChecklistItem
+                    {
+                        Created = DateTime.Now,
+                        ChecklistId = moveInChecklist.Id,
+                        DisplayText = "Establish right to rent",
+                        Key = "NL008",
+                        Template = "CommentsOnly"
+                    },
+
+                    new ChecklistItem
+                    {
+                        Created = DateTime.Now,
+                        ChecklistId = moveInChecklist.Id,
+                        DisplayText = "Conduct reference checks",
+                        Key = "NL009",
+                        Template = "CommentsOnly"
+                    },
+
+                    new ChecklistItem
+                    {
+                        Created = DateTime.Now,
+                        ChecklistId = moveInChecklist.Id,
+                        DisplayText = "Ask for a guarantor if necessary",
+                        Key = "NL010",
+                        Template = "CommentsOnly"
+                    }
+                };
+
+                await context.ChecklistItems.AddRangeAsync(checklistItems);
+            }
+            
             await context.SaveChangesAsync();
         }
 

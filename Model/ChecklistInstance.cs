@@ -5,7 +5,7 @@
     using Database;
     using Validation;
 
-    public class ChecklistInstance : BaseModel, IChecklist
+    public class ChecklistInstance : BaseModel, IChecklist<IChecklistItem>
     {
         public bool IsArchived { get; set; }
 

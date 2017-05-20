@@ -51,6 +51,8 @@
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<EmailTemplate> EmailTemplates { get; set; }
         public DbSet<Checklist> Checklists { get; set; }
+        public DbSet<ChecklistItem> ChecklistItems { get; set; }
         public DbSet<ChecklistInstance> ChecklistInstances { get; set; }
+        public DbSet<ChecklistItemInstance> ChecklistItemInstances { get; set; }
     }
 }

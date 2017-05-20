@@ -6,6 +6,6 @@
 
     public interface IChecklistDataProvider
     {
-        Task<ChecklistOverviewViewModel> GetChecklistOverview(Guid userId, Guid agencyId);
+        Task<ChecklistOverviewViewModel> GetChecklistOverviewAsync(Guid userId, Guid agencyId);
     }
 }

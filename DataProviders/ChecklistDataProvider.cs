@@ -17,22 +17,37 @@
         {
         }
 
-        public async Task<ChecklistOverviewViewModel> GetChecklistOverview(Guid userId, Guid agencyId)
+        public async Task<ChecklistOverviewViewModel> GetChecklistOverviewAsync(Guid userId, Guid agencyId)
         {
-            var userChecklists = await GetChecklistsByUser(userId);
-            var agencyChecklists = new List<ChecklistInstanceViewModel>();
+            var userChecklists = await (from checklist in Context.Checklists.AsNoTracking()
+                    join checklistItems in Context.ChecklistItems on checklist.Id equals checklistItems.ChecklistId into checklistItemsJoin
+                    from checklistItem in checklistItemsJoin.DefaultIfEmpty()
+                    where checklist.UserId == userId && !checklist.IsDeleted
+                    select new ChecklistViewModel(checklist, checklistItemsJoin.ToList())
+                )
+                .Distinct()
+                .ToListAsync();
 
+            var agencyChecklists = new List<ChecklistViewModel>();
             if (agencyId != default(Guid))
             {
-                agencyChecklists = await GetChecklistsByUser(agencyId);
-                agencyChecklists = agencyChecklists.Where(c => c.IsAvailableDownstream).ToList();
+                agencyChecklists = await (from checklist in Context.Checklists.AsNoTracking()
+                        join checklistItems in Context.ChecklistItems on checklist.Id equals checklistItems.ChecklistId into checklistItemsJoin
+                        from checklistItem in checklistItemsJoin.DefaultIfEmpty()
+                        where checklist.UserId == agencyId && checklist.IsAvailableDownstream && !checklist.IsDeleted
+                        select new ChecklistViewModel(checklist, checklistItemsJoin.ToList())
+                    )
+                    .Distinct()
+                    .ToListAsync();
             }
 
-            var adminChecklists = await Context.ChecklistInstances.Select(c => new {Instance = c})
-                .Join(Context.UserRoles, arg => arg.Instance.UserId, role => role.UserId, (arg, role) => new {Instance = arg.Instance, Role = role})
-                .Join(Context.Roles, arg => arg.Role.RoleId, role => role.Id, (arg, role) => new {Instance = arg.Instance, Role = role})
-                .Where(c => c.Role.Name == ApplicationRoles.SiteAdministrator && c.Instance.IsAvailableDownstream && !c.Instance.IsDeleted)
-                .Select(c => new ChecklistInstanceViewModel(c.Instance))
+            var adminChecklists = await (from checklist in Context.Checklists.AsNoTracking()
+                    join checklistItems in Context.ChecklistItems on checklist.Id equals checklistItems.ChecklistId into checklistItemsJoin
+                    join userRoles in Context.UserRoles on checklist.UserId equals userRoles.UserId
+                    join role in Context.Roles on userRoles.RoleId equals role.Id
+                    where role.Name == ApplicationRoles.SiteAdministrator
+                    select new ChecklistViewModel(checklist, checklistItemsJoin.ToList())
+                )
                 .ToListAsync();
 
             return new ChecklistOverviewViewModel
@@ -41,15 +56,6 @@
                 AgencyChecklists = agencyChecklists,
                 UserChecklists = userChecklists
             };
-        }
-
-        private async Task<List<ChecklistInstanceViewModel>> GetChecklistsByUser(Guid userId)
-        {
-            return await Context.ChecklistInstances.Include(x => x.ChecklistItems)
-                .Join(Context.Users, instance => instance.UserId, user => user.Id, (instance, user) => new {Instance = instance, User = user})
-                .Where(c => c.User.Id == userId && !c.Instance.IsArchived && !c.Instance.IsDeleted)
-                .Select(c => new ChecklistInstanceViewModel(c.Instance))
-                .ToListAsync();
         }
     }
 }
