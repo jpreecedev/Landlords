@@ -5,14 +5,14 @@
     using System.Linq;
     using Model;
 
-    public class ChecklistViewModel : IChecklist<ChecklistItemViewModel>
+    public class ChecklistViewModel
     {
         public ChecklistViewModel()
         {
             
         }
 
-        public ChecklistViewModel(Checklist checklist, ICollection<ChecklistItem> checklistItems)
+        public ChecklistViewModel(ChecklistInstance checklist, List<ChecklistItemInstance> checklistItems, string origin)
         {
             if (checklist == null)
             {
@@ -26,6 +26,24 @@
             Name = checklist.Name;
             UserId = checklist.UserId;
             ChecklistItems = checklistItems.Select(c => new ChecklistItemViewModel(c)).ToList();
+            Origin = origin;
+        }
+
+        public ChecklistViewModel(Checklist checklist, ICollection<ChecklistItem> checklistItems, string origin)
+        {
+            if (checklist == null)
+            {
+                return;
+            }
+
+            Id = checklist.Id;
+            IsPropertyMandatory = checklist.IsPropertyMandatory;
+            IsAvailableDownstream = checklist.IsAvailableDownstream;
+            Image = checklist.Image;
+            Name = checklist.Name;
+            UserId = checklist.UserId;
+            ChecklistItems = checklistItems.Select(c => new ChecklistItemViewModel(c)).ToList();
+            Origin = origin;
         }
 
         public bool IsPropertyMandatory { get; set; }
@@ -35,5 +53,6 @@
         public ICollection<ChecklistItemViewModel> ChecklistItems { get; set; }
         public Guid UserId { get; set; }
         public Guid Id { get; set; }
+        public string Origin { get; set; }
     }
 }

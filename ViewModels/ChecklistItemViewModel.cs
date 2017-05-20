@@ -1,14 +1,29 @@
 ﻿namespace Landlords.ViewModels
 {
+    using System;
     using Model;
 
-    public class ChecklistItemViewModel : IChecklistItem
+    public class ChecklistItemViewModel
     {
         public ChecklistItemViewModel()
         {
         }
 
-        public ChecklistItemViewModel(IChecklistItem checklistItem)
+        public ChecklistItemViewModel(ChecklistItem checklistItem)
+        {
+            if (checklistItem == null)
+            {
+                return;
+            }
+
+            DisplayText = checklistItem.DisplayText;
+            Key = checklistItem.Key;
+            IsExpanded = checklistItem.IsExpanded;
+            Template = checklistItem.Template;
+            IsCompleted = checklistItem.IsCompleted;
+        }
+
+        public ChecklistItemViewModel(ChecklistItemInstance checklistItem)
         {
             if (checklistItem == null)
             {

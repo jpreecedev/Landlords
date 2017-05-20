@@ -3,7 +3,7 @@
     using System;
     using Validation;
 
-    public class ChecklistItem : BaseModel, IChecklistItem
+    public class ChecklistItem : BaseModel
     {
         [ValidateGuid]
         public Guid ChecklistId { get; set; }

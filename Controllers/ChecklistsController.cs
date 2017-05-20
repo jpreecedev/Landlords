@@ -6,6 +6,7 @@
     using System.Threading.Tasks;
     using Core;
     using Interfaces;
+    using System;
 
     [Route("api/[controller]")]
     public class ChecklistsController : Controller
@@ -14,7 +15,7 @@
 
         public ChecklistsController(IChecklistDataProvider checklistDataProvider)
         {
-            this._checklistDataProvider = checklistDataProvider;
+            _checklistDataProvider = checklistDataProvider;
         }
 
         [HttpGet]
@@ -25,6 +26,18 @@
             var agencyId = User.GetAgencyId();
             
             return Ok(await _checklistDataProvider.GetChecklistOverviewAsync(userId, agencyId));
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        [Permission(Permissions_CL.CreateId, Permissions_CL.CreateRouteId, Permissions_CL.CreateDescription)]
+        public async Task<IActionResult> Post(Guid checklistId)
+        {
+            if (checklistId.IsDefault())
+            {
+                return BadRequest("Unable to validate payload");
+            }
+
+            return Ok(await _checklistDataProvider.CreateChecklistInstanceAsync(User.GetUserId(), checklistId));
         }
     }
 }

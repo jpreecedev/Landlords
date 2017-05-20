@@ -5,8 +5,21 @@
     using Database;
     using Validation;
 
-    public class ChecklistInstance : BaseModel, IChecklist<IChecklistItem>
+    public class ChecklistInstance : BaseModel
     {
+        public ChecklistInstance()
+        {
+            
+        }
+
+        public ChecklistInstance(Checklist checklist)
+        {
+            IsPropertyMandatory = checklist.IsPropertyMandatory;
+            Image = checklist.Image;
+            ChecklistId = checklist.Id;
+            Name = checklist.Name;
+        }
+
         public bool IsArchived { get; set; }
 
         public bool IsAvailableDownstream { get; set; }
@@ -25,7 +38,7 @@
         
         public Checklist Checklist { get; set; }
 
-        public ICollection<IChecklistItem> ChecklistItems { get; set; }
+        public ICollection<ChecklistItemInstance> ChecklistItems { get; set; }
 
         public string Name { get; set; }
     }

@@ -3,10 +3,25 @@
     using System;
     using Validation;
 
-    public class ChecklistItemInstance : BaseModel, IChecklistItem
+    public class ChecklistItemInstance : BaseModel
     {
-        [ValidateGuid]
-        public Guid ChecklistInstanceId { get; set; }
+        public ChecklistItemInstance()
+        {
+
+        }
+
+        public ChecklistItemInstance(ChecklistItem checklistItem)
+        {
+            if (checklistItem == null)
+            {
+                return;
+            }
+            
+            DisplayText = checklistItem.DisplayText;
+            Key = checklistItem.Key;
+            IsExpanded = checklistItem.IsExpanded;
+            Template = checklistItem.Template;
+        }
         
         public string DisplayText { get; set; }
 
@@ -17,5 +32,8 @@
         public string Template { get; set; }
 
         public bool IsCompleted { get; set; }
+
+        [ValidateGuid]
+        public Guid ChecklistInstanceId { get; set; }
     }
 }

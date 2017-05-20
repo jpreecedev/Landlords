@@ -4,10 +4,8 @@
 
     public class ChecklistOverviewViewModel
     {
-        public ICollection<ChecklistViewModel> UserChecklists { get; set; }
+        public ICollection<ChecklistViewModel> Checklists { get; set; }
                                     
-        public ICollection<ChecklistViewModel> AgencyChecklists { get; set; }
-                                    
-        public ICollection<ChecklistViewModel> AdminChecklists { get; set; }
+        public ICollection<ChecklistViewModel> AvailableChecklists { get; set; }
     }
 }

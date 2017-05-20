@@ -9,23 +9,22 @@
     </div>
     <div class="mt-5">
       <h2>Your checklists</h2>
-      <p v-if="!overview.userChecklists || !overview.userChecklists.length">You have not created any checklists yet.</p>
-      <div class="col" v-for="checklist in overview.userChecklists">
+      <p v-if="!overview.checklists || !overview.checklists.length">You have not created any checklists yet.</p>
+      <div class="col" v-for="checklist in overview.checklists">
         {{ checklist.name }}
       </div>
     </div>
     <div class="row mt-5">
-    <div class="col" v-if="overview.agencyChecklists && overview.agencyChecklists.length">
-      <h2>Agency checklists</h2>
-      <select class="form-control">
-        <option v-for="checklist in overview.agencyChecklists" v-bind:value="checklist.id">{{ checklist.name }}</option>
-      </select>
-    </div>
-      <div class="col-6" v-if="overview.adminChecklists && overview.adminChecklists.length">
-        <h2>Admin checklists</h2>
-        <select class="form-control">
-          <option v-for="checklist in overview.adminChecklists" v-bind:value="checklist.id">{{ checklist.name }}</option>
+      <div class="col-6" v-if="overview.availableChecklists && overview.availableChecklists.length">
+        <h2>Available checklists</h2>
+        <select v-model="selectedChecklistId" class="form-control">
+          <option v-for="checklist in overview.availableChecklists" v-bind:value="checklist.id">{{ checklist.origin }}: {{ checklist.name }}</option>
         </select>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col">
+        <button v-if="permissions.CL_Create" @click="createChecklistInstance(selectedChecklistId)" class="btn btn-primary pointer">Create checklist</button>
       </div>
     </div>
   </main>
@@ -37,17 +36,27 @@
     data () {
       return {
         permissions: this.$store.state.permissions,
+        selectedChecklistId: null,
         overview: {
-          userChecklists: [],
-          agencyChecklists: [],
-          adminChecklists: []
+          checklists: [],
+          availableChecklists: []
         }
       }
     },
     created () {
       this.$http.get(`/api/checklists/`).then(response => {
         this.overview = response.data
+        this.selectedChecklistId = this.overview.availableChecklists[0].id
       })
+    },
+    methods: {
+      createChecklistInstance: function (selectedChecklistId) {
+        this.$http.post(`/api/checklists/?checklistId=${selectedChecklistId}`).then(response => {
+          if (response.data) {
+            this.overview.checklists.push(response.data)
+          }
+        })
+      }
     }
   }
 </script>

@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using Validation;
 
-    public class Checklist : BaseModel, IChecklist<IChecklistItem>
+    public class Checklist : BaseModel
     {
         public bool IsPropertyMandatory { get; set; }
 
@@ -12,7 +12,7 @@
 
         public string Image { get; set; }
 
-        public ICollection<IChecklistItem> ChecklistItems { get; set; }
+        public ICollection<ChecklistItem> ChecklistItems { get; set; }
 
         public string Name { get; set; }
 
