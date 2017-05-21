@@ -28,6 +28,8 @@
 
         public string Image { get; set; }
 
+        public string Description { get; set; }
+
         [ValidateGuid]
         public Guid UserId { get; set; }
 

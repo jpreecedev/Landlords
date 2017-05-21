@@ -8,5 +8,6 @@
     {
         Task<ChecklistOverviewViewModel> GetChecklistOverviewAsync(Guid userId, Guid agencyId);
         Task<ChecklistViewModel> CreateChecklistInstanceAsync(Guid userId, Guid checklistId);
+        Task<ChecklistViewModel> GetChecklistByIdAsync(Guid userId, Guid checklistId);
     }
 }

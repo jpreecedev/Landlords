@@ -27,6 +27,7 @@
             UserId = checklist.UserId;
             ChecklistItems = checklistItems.Select(c => new ChecklistItemViewModel(c)).ToList();
             Origin = origin;
+            Description = checklist.Description;
         }
 
         public ChecklistViewModel(Checklist checklist, ICollection<ChecklistItem> checklistItems, string origin)
@@ -44,6 +45,7 @@
             UserId = checklist.UserId;
             ChecklistItems = checklistItems.Select(c => new ChecklistItemViewModel(c)).ToList();
             Origin = origin;
+            Description = checklist.Description;
         }
 
         public bool IsPropertyMandatory { get; set; }
@@ -54,5 +56,6 @@
         public Guid UserId { get; set; }
         public Guid Id { get; set; }
         public string Origin { get; set; }
+        public string Description { get; set; }
     }
 }

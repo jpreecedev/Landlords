@@ -9,10 +9,20 @@
     </div>
     <div class="mt-5">
       <h2>Your checklists</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium sint, odio, optio, expedita alias dolorum dicta iusto aliquam eos doloremque fuga iste fugiat quam sed eius corporis suscipit. Voluptatum, assumenda.</p>
       <p v-if="!overview.checklists || !overview.checklists.length">You have not created any checklists yet.</p>
-      <div class="col" v-for="checklist in overview.checklists">
-        {{ checklist.name }}
+
+      <div class="card-deck">
+        <div class="card col-3 pl-0 pr-0" v-for="checklist in overview.checklists">
+          <img class="card-img-top" src="../assets/images/checklist.png" v-bind:alt="checklist.name">
+          <div class="card-block">
+            <h4 class="card-title">{{ checklist.name }}</h4>
+            <p v-if="checklist.description" class="card-text">{{ checklist.description }}</p>
+            <router-link :to="{name: 'editor', params: {checklistId: checklist.id}}" class="pointer btn btn-secondary">View or Edit</router-link>
+          </div>
+        </div>
       </div>
+      
     </div>
     <div class="row mt-5">
       <div class="col-6" v-if="overview.availableChecklists && overview.availableChecklists.length">

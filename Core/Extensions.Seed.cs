@@ -305,7 +305,8 @@
                 {
                     Created = DateTime.Now,
                     Name = "New tenant move in",
-                    Image = "NewMoveIn.png",
+                    Image = "checklist.png",
+                    Description = "For when a new tenant is moving into the property",
                     IsAvailableDownstream = true,
                     IsPropertyMandatory = true,
                     UserId = admin.Id

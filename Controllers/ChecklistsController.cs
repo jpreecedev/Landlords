@@ -28,6 +28,13 @@
             return Ok(await _checklistDataProvider.GetChecklistOverviewAsync(userId, agencyId));
         }
 
+        [HttpGet("{checklistId}")]
+        [Permission(Permissions_CL.GetById, Permissions_CL.GetByRouteId, Permissions_CL.GetByDescription)]
+        public async Task<IActionResult> Get(Guid checklistId)
+        {
+            return Ok(await _checklistDataProvider.GetChecklistByIdAsync(User.GetUserId(), checklistId));
+        }
+
         [HttpPost, ValidateAntiForgeryToken]
         [Permission(Permissions_CL.CreateId, Permissions_CL.CreateRouteId, Permissions_CL.CreateDescription)]
         public async Task<IActionResult> Post(Guid checklistId)

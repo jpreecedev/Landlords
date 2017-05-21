@@ -8,21 +8,21 @@
       <p class="text-muted">There are {{ outstandingActions }} outstanding actions.</p>
       <form>
         <fieldset>
-          <div id="accordion" v-if="checklist && checklist.length" role="tablist" aria-multiselectable="true">
-            <div class="card" v-for="item in checklist">
+          <div id="accordion" v-if="checklist && checklist.checklistItems && checklist.checklistItems.length" role="tablist" aria-multiselectable="true">
+            <div class="card" v-for="item in checklist.checklistItems">
               <div class="card-header" role="tab" v-bind:id="item.key">
                 <h5 class="mb-0">
                   <div class="form-check">
                   <label class="form-check-label">
-                    <input class="form-check-input" type="checkbox" v-model="item.completed">                                        
-                    <span v-if="!item.completed">{{ item.display }}</span>
-                    <del class="text-muted" v-if="item.completed">{{ item.display }}</del>                    
+                    <input class="form-check-input" type="checkbox" v-model="item.isCompleted">                                        
+                    <span v-if="!item.isCompleted">{{ item.displayText }}</span>
+                    <del class="text-muted" v-if="item.isCompleted">{{ item.displayText }}</del>                    
                   </label>
-                  <p class="pointer float-right d-inline-block mb-0 text-right" @click="expand(item)">{{ item.expanded ? 'Collapse' : 'Expand' }} {{ item.expanded ? '&#9660;' : '&#9658;' }}</p>                  
+                  <p class="pointer float-right d-inline-block mb-0 text-right" @click="expand(item)">{{ item.isExpanded ? 'Collapse' : 'Expand' }} {{ item.isExpanded ? '&#9660;' : '&#9658;' }}</p>                  
                 </div>
                 </h5>
               </div>
-              <div v-bind:id="item.key" v-bind:class="{'show': item.expanded}" role="tabpanel" v-bind:aria-labelledby="item.key" class="collapse">
+              <div v-bind:id="item.key" v-bind:class="{'show': item.isExpanded}" role="tabpanel" v-bind:aria-labelledby="item.key" class="collapse">
                 <div class="card-block">
                   <div class="form-group row">
                     <div class="col">
@@ -61,36 +61,24 @@
     components: { Datepicker },
     data () {
       return {
-        checklist: [
-          {
-            key: 'NTMI1',
-            display: 'Ensure property is clean and tidy',
-            completed: false,
-            expanded: false,
-            comments: ''
-          },
-          {
-            key: 'NTMI2',
-            display: 'Get tenant to sign tenancy agreement',
-            completed: false,
-            expanded: false,
-            comments: ''
-          },
-          {
-            key: 'NTMI3',
-            display: 'Get tenant to pay monies',
-            completed: false,
-            expanded: false,
-            comments: ''
-          }
-        ]
+        checklistId: this.$route.params.checklistId,
+        checklist: null
       }
+    },
+    created () {
+      this.$http.get(`/api/checklists/${this.checklistId}`).then(response => {
+        this.checklist = response.data
+      })
     },
     computed: {
       outstandingActions: function () {
+        if (!this.checklist) {
+          return 0
+        }
+
         var count = 0
-        this.checklist.forEach(item => {
-          if (!item.completed) {
+        this.checklist.checklistItems.forEach(item => {
+          if (!item.isCompleted) {
             count += 1
           }
         })
@@ -99,12 +87,7 @@
     },
     methods: {
       expand: function (item) {
-        this.checklist.forEach(checklistItem => {
-          if (checklistItem !== item) {
-            checklistItem.expanded = false
-          }
-        })
-        item.expanded = !item.expanded
+        item.isExpanded = !item.isExpanded
       }
     }
   }

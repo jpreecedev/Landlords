@@ -100,5 +100,13 @@
 
             return null;
         }
+
+        public async Task<ChecklistViewModel> GetChecklistByIdAsync(Guid userId, Guid checklistId)
+        {
+            var checklist = await Context.ChecklistInstances.FirstOrDefaultAsync(c => c.UserId == userId && c.Id == checklistId);
+            var checklistItems = await Context.ChecklistItemInstances.Where(c => c.ChecklistInstanceId == checklistId).ToListAsync();
+
+            return new ChecklistViewModel(checklist, checklistItems, "User");
+        }
     }
 }

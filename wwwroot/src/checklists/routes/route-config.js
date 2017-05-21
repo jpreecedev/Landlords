@@ -1,6 +1,6 @@
 import Checklists from '../Checklists'
 import Overview from '../Overview'
-import NewTenantMoveIn from '../NewTenantMoveIn'
+import Editor from '../Editor'
 
 import guardRoute from 'root/routes/route-guards'
 
@@ -14,9 +14,9 @@ export const RouteConfig = [
       name: 'overview',
       component: Overview
     }, {
-      path: 'new-tenant-move-in/:checklistId',
-      name: 'newTenantMoveIn',
-      component: NewTenantMoveIn
+      path: 'editor/:checklistId',
+      name: 'editor',
+      component: Editor
     }]
   }
 ]
