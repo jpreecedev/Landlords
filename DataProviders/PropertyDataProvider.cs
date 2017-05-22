@@ -45,6 +45,20 @@
             }
         }
 
+        public async Task<ICollection<PropertyBasicDetailsViewModel>> GetBasicDetailsAsync(Guid userId)
+        {
+            return await Context.ApplicationUserPortfolios.Where(aup => aup.UserId == userId)
+                .Join(Context.PropertyDetails, aup => aup.PortfolioId, details => details.PortfolioId, (portfolio, details) => new {PortfolioName = portfolio.Portfolio.DisplayName, PropertyDetails = details})
+                .Select(c => new PropertyBasicDetailsViewModel
+                {
+                    PortfolioName = c.PortfolioName,
+                    Id = c.PropertyDetails.Id,
+                    PropertyReference = c.PropertyDetails.Reference,
+                    PropertyStreetAddress = c.PropertyDetails.PropertyStreetAddress
+                })
+                .ToListAsync();
+        }
+
         public async Task<PropertyDetailsViewModel> GetDetailsAsync(Guid propertyId)
         {
             return await (from details in Context.PropertyDetails

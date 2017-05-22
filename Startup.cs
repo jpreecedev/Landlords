@@ -18,7 +18,6 @@
     using Microsoft.IdentityModel.Tokens;
     using Model.Database;
     using Services;
-    using Newtonsoft.Json;
 
     public class Startup
     {
@@ -41,10 +40,6 @@
                 {
                     var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
                     config.Filters.Add(new AuthorizeFilter(policy));
-                })
-                .AddJsonOptions(options =>
-                {
-                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 });
 
             services.AddCors();

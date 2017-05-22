@@ -50,6 +50,13 @@
             return Ok(await _propertyDataProvider.GetDetailsAsync(propertyId));
         }
 
+        [HttpGet("BasicDetails")]
+        [Permission(Permissions_PD.GetBasicId, Permissions_PD.GetBasicRouteId, Permissions_PD.GetBasicIdDescription)]
+        public async Task<IActionResult> GetBasicDetails()
+        {
+            return Ok(await _propertyDataProvider.GetBasicDetailsAsync(User.GetUserId()));
+        }
+
         [HttpPost, ValidateAntiForgeryToken, MustOwnPropertyDetails]
         [Permission(Permissions_PD.UpdateId, Permissions_PD.UpdateRouteId, Permissions_PD.UpdateDescription)]
         public async Task<IActionResult> Post([FromBody] PropertyDetailsViewModel value)

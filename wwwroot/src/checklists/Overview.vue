@@ -27,14 +27,22 @@
     <div class="row mt-5">
       <div class="col-6" v-if="overview.availableChecklists && overview.availableChecklists.length">
         <h2>Available checklists</h2>
-        <select v-model="selectedChecklistId" class="form-control">
-          <option v-for="checklist in overview.availableChecklists" v-bind:value="checklist.id">{{ checklist.origin }}: {{ checklist.name }}</option>
+        <select v-model="selectedChecklist" class="form-control">
+          <option v-for="checklist in overview.availableChecklists" v-bind:value="checklist">{{ checklist.origin }}: {{ checklist.name }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="row mt-5" v-if="selectedChecklist && selectedChecklist.isPropertyMandatory">
+      <div class="col-6">
+        <h3>Select a property from your portfolio</h3>
+        <select v-model="selectedProperty" class="form-control">
+          <option v-for="property in portfolioProperties" v-bind:value="property">{{ property.propertyReference }}<span v-if="property.propertyStreetAddress"> ({{property.propertyStreetAddress}})</span></option>
         </select>
       </div>
     </div>
     <div class="row mt-3">
       <div class="col">
-        <button v-if="permissions.CL_Create" @click="createChecklistInstance(selectedChecklistId)" class="btn btn-primary pointer">Create checklist</button>
+        <button v-if="permissions.CL_Create" @click="createChecklistInstance(selectedChecklist)" class="btn btn-primary pointer">Create checklist</button>
       </div>
     </div>
   </main>
@@ -46,7 +54,9 @@
     data () {
       return {
         permissions: this.$store.state.permissions,
-        selectedChecklistId: null,
+        selectedChecklist: null,
+        selectedProperty: null,
+        portfolioProperties: [],
         overview: {
           checklists: [],
           availableChecklists: []
@@ -56,12 +66,18 @@
     created () {
       this.$http.get(`/api/checklists/`).then(response => {
         this.overview = response.data
-        this.selectedChecklistId = this.overview.availableChecklists[0].id
+        this.selectedChecklist = this.overview.availableChecklists[0]
+      })
+      this.$http.get(`/api/propertydetails/basicdetails`).then(response => {
+        if (response.data) {
+          this.portfolioProperties = response.data
+          this.selectedProperty = this.portfolioProperties[0]
+        }
       })
     },
     methods: {
-      createChecklistInstance: function (selectedChecklistId) {
-        this.$http.post(`/api/checklists/?checklistId=${selectedChecklistId}`).then(response => {
+      createChecklistInstance: function (selectedChecklist) {
+        this.$http.post(`/api/checklists/?checklistId=${selectedChecklist}`).then(response => {
           if (response.data) {
             this.overview.checklists.push(response.data)
           }

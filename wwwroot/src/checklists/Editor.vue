@@ -50,6 +50,14 @@
         </fieldset>
       </form>
     </div>
+    <div class="row mt-5">
+      <div class="col-3 offset-9">
+        <div class="alert alert-danger text-center">
+          <p>Danger Zone!! Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+          <button class="btn btn-danger pointer ar" @click="deleteChecklist()">Delete Checklist</button>
+        </div>
+      </div>
+    </div>
   </main>
 </template>
 

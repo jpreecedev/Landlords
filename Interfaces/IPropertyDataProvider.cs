@@ -11,5 +11,6 @@
         Task<ICollection<PropertyDetailsViewModel>> GetListAsync(Guid portfolioId);
         Task<PropertyDetailsViewModel> GetDetailsAsync(Guid propertyId);
         Task UpdateAsync(PropertyDetailsViewModel viewModel);
+        Task<ICollection<PropertyBasicDetailsViewModel>> GetBasicDetailsAsync(Guid userId);
     }
 }

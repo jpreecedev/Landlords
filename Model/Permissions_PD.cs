@@ -21,5 +21,9 @@
         public const string UpdateId = "5f86012c-ffa7-4578-ab0c-8fea01f86dad";
         public const string UpdateRouteId = "PD_Update";
         public const string UpdateDescription = "Update property details";
+
+        public const string GetBasicId = "8b93da48-0c0b-49d9-9a95-3d92682af54d";
+        public const string GetBasicRouteId = "PD_GetBasic";
+        public const string GetBasicIdDescription = "Get basic details about a property";
     }
 }
