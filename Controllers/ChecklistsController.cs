@@ -46,5 +46,18 @@
 
             return Ok(await _checklistDataProvider.CreateChecklistInstanceAsync(User.GetUserId(), checklistId));
         }
+
+        [HttpDelete("{checklistId}"), ValidateAntiForgeryToken]
+        [Permission(Permissions_CL.DeleteById, Permissions_CL.DeleteByRouteId, Permissions_CL.DeleteByDescription)]
+        public async Task<IActionResult> Delete(Guid checklistId)
+        {
+            if (checklistId.IsDefault())
+            {
+                return BadRequest("Unable to validate payload");
+            }
+
+            await _checklistDataProvider.DeleteInstanceAsync(User.GetUserId(), checklistId);
+            return Ok();
+        }
     }
 }

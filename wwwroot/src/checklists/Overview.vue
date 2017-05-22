@@ -77,10 +77,8 @@
     },
     methods: {
       createChecklistInstance: function (selectedChecklist) {
-        this.$http.post(`/api/checklists/?checklistId=${selectedChecklist}`).then(response => {
-          if (response.data) {
-            this.overview.checklists.push(response.data)
-          }
+        this.$http.post(`/api/checklists/?checklistId=${selectedChecklist.id}`).then(response => {
+          this.$router.push({ name: 'editor', params: { checklistId: response.data.id } })
         })
       }
     }

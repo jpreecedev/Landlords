@@ -54,7 +54,7 @@
       <div class="col-3 offset-9">
         <div class="alert alert-danger text-center">
           <p>Danger Zone!! Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-          <button class="btn btn-danger pointer ar" @click="deleteChecklist()">Delete Checklist</button>
+          <button class="btn btn-danger pointer" @click="deleteChecklist()">Delete Checklist</button>
         </div>
       </div>
     </div>
@@ -96,6 +96,11 @@
     methods: {
       expand: function (item) {
         item.isExpanded = !item.isExpanded
+      },
+      deleteChecklist: function () {
+        this.$http.delete(`/api/checklists/${this.checklistId}`).then(response => {
+          this.$router.push({ name: 'overview' })
+        })
       }
     }
   }

@@ -13,5 +13,9 @@
         public const string GetById = "22dcb537-87bc-4978-81bd-629f34386f30";
         public const string GetByRouteId = "CL_GetById";
         public const string GetByDescription = "View a specific checklist";
+
+        public const string DeleteById = "c3f94000-2a78-4855-b960-80a0b335c50c";
+        public const string DeleteByRouteId = "CL_DeleteById";
+        public const string DeleteByDescription = "Delete a specific checklist instance";
     }
 }

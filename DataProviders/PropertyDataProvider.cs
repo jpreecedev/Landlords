@@ -49,6 +49,7 @@
         {
             return await Context.ApplicationUserPortfolios.Where(aup => aup.UserId == userId)
                 .Join(Context.PropertyDetails, aup => aup.PortfolioId, details => details.PortfolioId, (portfolio, details) => new {PortfolioName = portfolio.Portfolio.DisplayName, PropertyDetails = details})
+                .Where(c => !c.PropertyDetails.IsDeleted)
                 .Select(c => new PropertyBasicDetailsViewModel
                 {
                     PortfolioName = c.PortfolioName,

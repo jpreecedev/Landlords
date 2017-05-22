@@ -108,5 +108,15 @@
 
             return new ChecklistViewModel(checklist, checklistItems, "User");
         }
+
+        public async Task DeleteInstanceAsync(Guid userId, Guid checklistId)
+        {
+            var checklist = await Context.ChecklistInstances.FirstOrDefaultAsync(c => c.UserId == userId && c.Id == checklistId);
+            if (checklist != null)
+            {
+                checklist.Deleted = DateTime.Now;
+                await Context.SaveChangesAsync();
+            }
+        }
     }
 }
