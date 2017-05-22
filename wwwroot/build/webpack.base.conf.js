@@ -30,6 +30,7 @@ module.exports = {
       'utils': resolve("src/utils"),
       'services': resolve("src/services"),
       'checklists': resolve("src/checklists"),
+      'common': resolve("src/common"),
       'src': resolve("src")
     }
   },
