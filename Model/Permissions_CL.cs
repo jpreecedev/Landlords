@@ -17,5 +17,13 @@
         public const string DeleteById = "c3f94000-2a78-4855-b960-80a0b335c50c";
         public const string DeleteByRouteId = "CL_DeleteById";
         public const string DeleteByDescription = "Delete a specific checklist instance";
+
+        public const string ArchiveId = "cac59e66-c357-46b0-a2ff-4d029daf4899";
+        public const string ArchiveRouteId = "CL_Archive";
+        public const string ArchiveDescription = "Archive the checklist instance";
+
+        public const string ArchivedId = "ba2c0ea7-d0af-4035-bd77-676c26c1ef7a";
+        public const string ArchivedRouteId = "CL_Archived";
+        public const string ArchivedDescription = "Get archived checklist instances";
     }
 }

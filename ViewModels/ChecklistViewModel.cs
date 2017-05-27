@@ -28,6 +28,7 @@
             ChecklistItems = checklistItems.Select(c => new ChecklistItemViewModel(c)).ToList();
             Origin = origin;
             Description = checklist.Description;
+            IsArchived = checklist.IsArchived;
         }
 
         public ChecklistViewModel(Checklist checklist, ICollection<ChecklistItem> checklistItems, string origin)
@@ -57,5 +58,6 @@
         public Guid Id { get; set; }
         public string Origin { get; set; }
         public string Description { get; set; }
+        public bool IsArchived { get; set; }
     }
 }

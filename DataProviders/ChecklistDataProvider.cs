@@ -18,11 +18,11 @@
         {
         }
 
-        public async Task<ChecklistOverviewViewModel> GetChecklistOverviewAsync(Guid userId, Guid agencyId)
+        public async Task<ChecklistOverviewViewModel> GetChecklistOverviewAsync(Guid userId, Guid agencyId, bool includeArchived)
         {
             var checklistInstances = await (from checklist in Context.ChecklistInstances.AsNoTracking()
                     join checklistItems in Context.ChecklistItemInstances on checklist.Id equals checklistItems.ChecklistInstanceId into checklistItemsJoin
-                    where checklist.UserId == userId && !checklist.IsDeleted
+                    where checklist.UserId == userId && !checklist.IsDeleted && (includeArchived ? true : !checklist.IsArchived)
                     select new ChecklistViewModel(checklist, checklistItemsJoin.ToList(), "User")
                 )
                 .ToListAsync();
@@ -117,6 +117,26 @@
                 checklist.Deleted = DateTime.Now;
                 await Context.SaveChangesAsync();
             }
+        }
+
+        public async Task ArchiveChecklistInstanceAsync(Guid userId, Guid checklistId)
+        {
+            var checklist = await Context.ChecklistInstances.FirstOrDefaultAsync(c => c.UserId == userId && c.Id == checklistId);
+            if (checklist != null)
+            {
+                checklist.IsArchived = true;
+                await Context.SaveChangesAsync();
+            }
+        }
+
+        public async Task<ICollection<ChecklistViewModel>> GetArchivedChecklistInstancesAsync(Guid userId)
+        {
+            return await(from checklist in Context.ChecklistInstances.AsNoTracking()
+                    join checklistItems in Context.ChecklistItemInstances on checklist.Id equals checklistItems.ChecklistInstanceId into checklistItemsJoin
+                    where checklist.UserId == userId && !checklist.IsDeleted && checklist.IsArchived
+                    select new ChecklistViewModel(checklist, checklistItemsJoin.ToList(), "User")
+                )
+                .ToListAsync();
         }
     }
 }

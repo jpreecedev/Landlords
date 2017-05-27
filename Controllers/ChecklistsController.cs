@@ -25,7 +25,7 @@
             var userId = User.GetUserId();
             var agencyId = User.GetAgencyId();
             
-            return Ok(await _checklistDataProvider.GetChecklistOverviewAsync(userId, agencyId));
+            return Ok(await _checklistDataProvider.GetChecklistOverviewAsync(userId, agencyId, false));
         }
 
         [HttpGet("{checklistId}")]
@@ -45,6 +45,26 @@
             }
 
             return Ok(await _checklistDataProvider.CreateChecklistInstanceAsync(User.GetUserId(), checklistId));
+        }
+
+        [HttpPost("archive"), ValidateAntiForgeryToken]
+        [Permission(Permissions_CL.ArchiveId, Permissions_CL.ArchiveRouteId, Permissions_CL.ArchiveDescription)]
+        public async Task<IActionResult> Archive(Guid checklistId)
+        {
+            if (checklistId.IsDefault())
+            {
+                return BadRequest("Unable to validate payload");
+            }
+
+            await _checklistDataProvider.ArchiveChecklistInstanceAsync(User.GetUserId(), checklistId);
+            return Ok();
+        }
+
+        [HttpGet("archived")]
+        [Permission(Permissions_CL.ArchivedId, Permissions_CL.ArchivedRouteId, Permissions_CL.ArchivedDescription)]
+        public async Task<IActionResult> Archived()
+        {
+            return Ok(await _checklistDataProvider.GetArchivedChecklistInstancesAsync(User.GetUserId()));
         }
 
         [HttpDelete("{checklistId}"), ValidateAntiForgeryToken]
