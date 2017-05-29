@@ -29,5 +29,9 @@
         public const string ArchivedId = "ba2c0ea7-d0af-4035-bd77-676c26c1ef7a";
         public const string ArchivedRouteId = "CL_Archived";
         public const string ArchivedDescription = "Get archived checklist instances";
+
+        public const string UpdateId = "6a3787ab-79e7-4ef8-b94e-f2308fc9a955";
+        public const string UpdateRouteId = "CL_Update";
+        public const string UpdateDescription = "Make changes to a checklist instance";
     }
 }

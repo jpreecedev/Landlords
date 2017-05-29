@@ -7,17 +7,18 @@
     using Core;
     using Interfaces;
     using System;
-    using Model.Database;
     using ViewModels;
 
     [Route("api/[controller]")]
     public class ChecklistsController : Controller
     {
         private readonly IChecklistDataProvider _checklistDataProvider;
+        private readonly IChecklistInstanceDataProvider _checklistInstanceDataProvider;
 
-        public ChecklistsController(IChecklistDataProvider checklistDataProvider)
+        public ChecklistsController(IChecklistDataProvider checklistDataProvider, IChecklistInstanceDataProvider checklistInstanceDataProvider)
         {
             _checklistDataProvider = checklistDataProvider;
+            _checklistInstanceDataProvider = checklistInstanceDataProvider;
         }
 
         [HttpGet]
@@ -46,7 +47,7 @@
                 return BadRequest("Unable to validate payload");
             }
 
-            return Ok(await _checklistDataProvider.CreateChecklistInstanceAsync(User.GetUserId(), checklistId));
+            return Ok(await _checklistInstanceDataProvider.CreateChecklistInstanceAsync(User.GetUserId(), checklistId));
         }
 
         [HttpPost("template"), ValidateAntiForgeryToken]
@@ -85,7 +86,7 @@
                 return BadRequest("Unable to validate payload");
             }
 
-            await _checklistDataProvider.ArchiveChecklistInstanceAsync(User.GetUserId(), checklistId);
+            await _checklistInstanceDataProvider.ArchiveChecklistInstanceAsync(User.GetUserId(), checklistId);
             return Ok();
         }
 
@@ -93,7 +94,7 @@
         [Permission(Permissions_CL.ArchivedId, Permissions_CL.ArchivedRouteId, Permissions_CL.ArchivedDescription)]
         public async Task<IActionResult> Archived()
         {
-            return Ok(await _checklistDataProvider.GetArchivedChecklistInstancesAsync(User.GetUserId()));
+            return Ok(await _checklistInstanceDataProvider.GetArchivedChecklistInstancesAsync(User.GetUserId()));
         }
 
         [HttpDelete("{checklistId}"), ValidateAntiForgeryToken]
@@ -105,7 +106,7 @@
                 return BadRequest("Unable to validate payload");
             }
 
-            await _checklistDataProvider.DeleteInstanceAsync(User.GetUserId(), checklistId);
+            await _checklistInstanceDataProvider.DeleteInstanceAsync(User.GetUserId(), checklistId);
             return Ok();
         }
     }
