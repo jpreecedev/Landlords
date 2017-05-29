@@ -8,7 +8,7 @@
       <p class="text-muted">There are {{ outstandingActions }} outstanding actions.</p>
       <form>
         <fieldset>
-          <accordion :checklist="checklist" />
+          <accordion :checklist="checklist" v-on:collapseAll="collapseAll()" />
         </fieldset>
       </form>
     </div>
@@ -59,6 +59,11 @@
       deleteChecklist: function () {
         this.$http.delete(`/api/checklists/${this.checklistId}`).then(response => {
           this.$router.push({ name: 'overview' })
+        })
+      },
+      collapseAll: function () {
+        this.checklist.checklistItems.forEach(item => {
+          item.isExpanded = false
         })
       }
     }

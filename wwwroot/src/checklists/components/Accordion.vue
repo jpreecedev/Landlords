@@ -44,7 +44,9 @@ export default {
   },
   methods: {
     expand: function (item) {
-      item.isExpanded = !item.isExpanded
+      var expanded = item.isExpanded
+      this.$emit('collapseAll')
+      item.isExpanded = !expanded
     }
   }
 }

@@ -33,9 +33,7 @@
     <div class="row mt-5">
       <div class="col-6" v-if="overview.availableChecklists && overview.availableChecklists.length">
         <h2>Available checklist templates</h2>
-        <select v-model="selectedChecklist" class="form-control">
-          <option v-for="checklist in overview.availableChecklists" v-bind:value="checklist">{{ checklist.origin }}: {{ checklist.name }}</option>
-        </select>
+        <available-checklists :checklists="overview.availableChecklists" :selectedChecklist="selectedChecklist" />
       </div>
     </div>
     <div class="row mt-5" v-if="selectedChecklist && selectedChecklist.isPropertyMandatory">
@@ -55,8 +53,11 @@
 </template>
 
 <script>
+  import AvailableChecklists from './components/AvailableChecklists'
+
   export default {
     name: 'overview',
+    components: { AvailableChecklists },
     data () {
       return {
         permissions: this.$store.state.permissions,
