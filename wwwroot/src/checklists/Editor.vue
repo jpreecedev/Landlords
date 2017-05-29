@@ -8,7 +8,7 @@
       <p class="text-muted">There are {{ outstandingActions }} outstanding actions.</p>
       <form>
         <fieldset>
-          <accordion :checklist="checklist" v-on:collapseAll="collapseAll()" v-on:toggleCompleted="toggleCompleted" v-on:toggleExpanded="toggleExpanded" />
+          <accordion :checklist="checklist" v-on:collapseAll="collapseAll()" v-on:toggleCompleted="toggleCompleted" v-on:toggleExpanded="toggleExpanded" v-on:move="move" />
         </fieldset>
       </form>
     </div>
@@ -74,6 +74,26 @@
         if (this.permissions.CI_ToggleExpanded) {
           this.$http.post(`/api/checklistitem/expanded?checklistId=${this.checklistId}&checklistItemId=${item.id}&expanded=${item.isExpanded}`)
         }
+      },
+      move: function (data) {
+        this.$http.post(`/api/checklistitem/move?checklistId=${this.checklistId}&checklistItemId=${data.item.id}&direction=${data.direction}`).then(() => {
+          var index = this.checklist.checklistItems.indexOf(data.item)
+          var poppedItem = this.checklist.checklistItems[index]
+          this.checklist.checklistItems.splice(index, 1)
+
+          switch (data.direction) {
+            case 'up':
+              this.checklist.checklistItems.splice(index - 1, 0, poppedItem)
+              break
+            case 'down':
+              this.checklist.checklistItems.splice(index + 1, 0, poppedItem)
+              break
+          }
+
+          for (var i = 0; i < this.checklist.checklistItems.length; i++) {
+            this.checklist.checklistItems[i].order = i + 1
+          }
+        })
       }
     }
   }

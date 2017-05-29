@@ -24,7 +24,7 @@
             var checklistInstances = await (from checklist in Context.ChecklistInstances.AsNoTracking()
                     join checklistItems in Context.ChecklistItemInstances on checklist.Id equals checklistItems.ChecklistInstanceId into checklistItemsJoin
                     where checklist.UserId == userId && !checklist.IsDeleted && (includeArchived ? true : !checklist.IsArchived)
-                    select new ChecklistViewModel(checklist, checklistItemsJoin.ToList(), ChecklistOrigin.User.ToString())
+                    select new ChecklistViewModel(checklist, checklistItemsJoin.OrderBy(c => c.Order).ToList(), ChecklistOrigin.User.ToString())
                 )
                 .ToListAsync();
 
@@ -34,7 +34,7 @@
                 userChecklists = await (from checklist in Context.Checklists.AsNoTracking()
                         join checklistItems in Context.ChecklistItems on checklist.Id equals checklistItems.ChecklistId into checklistItemsJoin
                         where checklist.UserId == userId && !checklist.IsDeleted
-                        select new ChecklistViewModel(checklist, checklistItemsJoin.ToList(), ChecklistOrigin.User.ToString())
+                        select new ChecklistViewModel(checklist, checklistItemsJoin.OrderBy(c => c.Order).ToList(), ChecklistOrigin.User.ToString())
                     )
                     .ToListAsync();
             }
@@ -45,7 +45,7 @@
                 agencyChecklists = await (from checklist in Context.Checklists.AsNoTracking()
                         join checklistItems in Context.ChecklistItems on checklist.Id equals checklistItems.ChecklistId into checklistItemsJoin
                         where checklist.UserId == agencyId && checklist.IsAvailableDownstream && !checklist.IsDeleted
-                        select new ChecklistViewModel(checklist, checklistItemsJoin.ToList(), ChecklistOrigin.Agency.ToString())
+                        select new ChecklistViewModel(checklist, checklistItemsJoin.OrderBy(c => c.Order).ToList(), ChecklistOrigin.Agency.ToString())
                     )
                     .ToListAsync();
             }
@@ -55,7 +55,7 @@
                     join userRoles in Context.UserRoles on checklist.UserId equals userRoles.UserId
                     join role in Context.Roles on userRoles.RoleId equals role.Id
                     where role.Name == ApplicationRoles.SiteAdministrator
-                    select new ChecklistViewModel(checklist, checklistItemsJoin.ToList(), ChecklistOrigin.Admin.ToString())
+                    select new ChecklistViewModel(checklist, checklistItemsJoin.OrderBy(c => c.Order).ToList(), ChecklistOrigin.Admin.ToString())
                 )
                 .ToListAsync();
 
@@ -69,7 +69,7 @@
         public async Task<ChecklistViewModel> GetChecklistByIdAsync(Guid userId, Guid checklistId)
         {
             var checklist = await Context.ChecklistInstances.FirstOrDefaultAsync(c => c.UserId == userId && c.Id == checklistId);
-            var checklistItems = await Context.ChecklistItemInstances.Where(c => c.ChecklistInstanceId == checklistId).ToListAsync();
+            var checklistItems = await Context.ChecklistItemInstances.Where(c => c.ChecklistInstanceId == checklistId).OrderBy(c => c.Order).ToListAsync();
 
             return new ChecklistViewModel(checklist, checklistItems, ChecklistOrigin.User.ToString());
         }
@@ -169,7 +169,7 @@
             await Context.ChecklistItems.AddRangeAsync(checklistItemEntities);
             await Context.SaveChangesAsync();
 
-            var checklistItems = await Context.ChecklistItems.Where(c => c.ChecklistId == entity.Id).ToListAsync();
+            var checklistItems = await Context.ChecklistItems.OrderBy(c => c.Order).Where(c => c.ChecklistId == entity.Id).ToListAsync();
             return new ChecklistViewModel(entity, checklistItems, userOrigin);
         }
 

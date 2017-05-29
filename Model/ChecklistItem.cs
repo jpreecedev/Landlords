@@ -15,5 +15,7 @@
         public bool IsExpanded { get; set; }
 
         public string Template { get; set; }
+
+        public int Order { get; set; }
     }
 }

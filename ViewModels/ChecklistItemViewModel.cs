@@ -20,6 +20,7 @@
             Key = checklistItem.Key;
             IsExpanded = checklistItem.IsExpanded;
             Template = checklistItem.Template;
+            Order = checklistItem.Order;
             Id = checklistItem.Id;
         }
 
@@ -35,6 +36,7 @@
             IsExpanded = checklistItem.IsExpanded;
             Template = checklistItem.Template;
             IsCompleted = checklistItem.IsCompleted;
+            Order = checklistItem.Order;
             Id = checklistItem.Id;
         }
 
@@ -43,6 +45,7 @@
         public bool IsExpanded { get; set; }
         public string Template { get; set; }
         public bool IsCompleted { get; set; }
+        public int Order { get; set; }
         public Guid Id { get; set; }
     }
 }

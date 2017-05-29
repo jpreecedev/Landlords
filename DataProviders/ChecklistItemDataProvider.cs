@@ -42,5 +42,36 @@
                 await Context.SaveChangesAsync();
             }
         }
+
+        public async Task MoveAsync(Guid userId, Guid checklistId, Guid checklistItemId, string direction)
+        {
+            var checklistItems = await(from checklist in Context.ChecklistInstances
+                join checklistItem in Context.ChecklistItemInstances on checklist.Id equals checklistItem.ChecklistInstanceId into itemJoin
+                from item in itemJoin.DefaultIfEmpty().OrderBy(c => c.Order)
+                where checklist.UserId == userId && checklist.Id == checklistId
+                select item).ToListAsync();
+
+            var index = checklistItems.FindIndex(c => c.Id == checklistItemId);
+            var poppedItem = checklistItems[index];
+            checklistItems.RemoveAt(index);
+
+            switch (direction)
+            {
+                case "up":
+                    checklistItems.Insert(index - 1, poppedItem);
+                    break;
+
+                case "down":
+                    checklistItems.Insert(index + 1, poppedItem);
+                    break;
+            }
+
+            for (int i = 0; i < checklistItems.Count; i++)
+            {
+                checklistItems[i].Order = i + 1;
+            }
+
+            await Context.SaveChangesAsync();
+        }
     }
 }

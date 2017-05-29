@@ -44,5 +44,19 @@
             await _checklistItemDataProvider.ToggleChecklistItemExpandedAsync(User.GetUserId(), checklistId, checklistItemId, expanded);
             return Ok();
         }
+
+        [HttpPost("move")]
+        [ValidateAntiForgeryToken]
+        [Permission(Permissions_CI.MoveId, Permissions_CI.MoveRouteId, Permissions_CI.MoveDescription)]
+        public async Task<IActionResult> Move(Guid checklistId, Guid checklistItemId, string direction)
+        {
+            if (checklistId.IsDefault() || checklistItemId.IsDefault())
+            {
+                return BadRequest("Unable to validate payload");
+            }
+
+            await _checklistItemDataProvider.MoveAsync(User.GetUserId(), checklistId, checklistItemId, direction);
+            return Ok();
+        }
     }
 }

@@ -20,6 +20,7 @@
             DisplayText = checklistItem.DisplayText;
             Key = checklistItem.Key;
             IsExpanded = checklistItem.IsExpanded;
+            Order = checklistItem.Order;
             Template = checklistItem.Template;
         }
         
@@ -32,6 +33,8 @@
         public string Template { get; set; }
 
         public bool IsCompleted { get; set; }
+
+        public int Order { get; set; }
 
         [ValidateGuid]
         public Guid ChecklistInstanceId { get; set; }

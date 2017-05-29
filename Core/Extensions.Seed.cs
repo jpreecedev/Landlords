@@ -325,6 +325,7 @@
                         DisplayText = "Determine rental amount",
                         IsExpanded = true,
                         Key = "NL001",
+                        Order = 1,
                         Template = ChecklistTemplates.CommentsOnly
                     },
 
@@ -334,6 +335,7 @@
                         ChecklistId = moveInChecklist.Id,
                         DisplayText = "Take photos (or get a professional to do it)",
                         Key = "NL002",
+                        Order = 2,
                         Template = ChecklistTemplates.DocumentUpload
                     },
 
@@ -343,6 +345,7 @@
                         ChecklistId = moveInChecklist.Id,
                         DisplayText = "Advertise the property",
                         Key = "NL003",
+                        Order = 3,
                         Template = ChecklistTemplates.CommentsOnly
                     },
 
@@ -352,6 +355,7 @@
                         ChecklistId = moveInChecklist.Id,
                         DisplayText = "Conduct viewings",
                         Key = "NL004",
+                        Order = 4,
                         Template = ChecklistTemplates.CommentsOnly
                     },
 
@@ -361,6 +365,7 @@
                         ChecklistId = moveInChecklist.Id,
                         DisplayText = "Negotiate & accept offer",
                         Key = "NL005",
+                        Order = 5,
                         Template = ChecklistTemplates.CommentsOnly
                     },
 
@@ -370,6 +375,7 @@
                         ChecklistId = moveInChecklist.Id,
                         DisplayText = "Take fees",
                         Key = "NL006",
+                        Order = 6,
                         Template = ChecklistTemplates.CommentsOnly
                     },
 
@@ -379,6 +385,7 @@
                         ChecklistId = moveInChecklist.Id,
                         DisplayText = "Get proof of Id",
                         Key = "NL007",
+                        Order = 7,
                         Template = ChecklistTemplates.DocumentUpload
                     },
 
@@ -388,6 +395,7 @@
                         ChecklistId = moveInChecklist.Id,
                         DisplayText = "Establish right to rent",
                         Key = "NL008",
+                        Order = 8,
                         Template = ChecklistTemplates.CommentsAndDateOfAction
                     },
 
@@ -397,6 +405,7 @@
                         ChecklistId = moveInChecklist.Id,
                         DisplayText = "Conduct reference checks",
                         Key = "NL009",
+                        Order = 9,
                         Template = ChecklistTemplates.DateOfAction
                     },
 
@@ -406,6 +415,7 @@
                         ChecklistId = moveInChecklist.Id,
                         DisplayText = "Ask for a guarantor if necessary",
                         Key = "NL010",
+                        Order = 10,
                         Template = ChecklistTemplates.CommentsOnly
                     }
                 };
