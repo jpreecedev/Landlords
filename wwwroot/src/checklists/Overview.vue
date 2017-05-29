@@ -4,9 +4,7 @@
       <h1>Overview</h1>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
     </div>
-    <div v-if="!permissions.CL_Overview" class="alert alert-danger">
-      Sorry this resource is currently unavailable
-    </div>
+    <permissions-warning :permission="permissions.CL_Overview" />
     <div class="mt-5">
       <h2>Your checklists</h2>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium sint, odio, optio, expedita alias dolorum dicta iusto aliquam eos doloremque fuga iste fugiat quam sed eius corporis suscipit. Voluptatum, assumenda.</p>
@@ -54,10 +52,11 @@
 
 <script>
   import AvailableChecklists from './components/AvailableChecklists'
+  import PermissionsWarning from 'common/PermissionsWarning'
 
   export default {
     name: 'overview',
-    components: { AvailableChecklists },
+    components: { AvailableChecklists, PermissionsWarning },
     data () {
       return {
         permissions: this.$store.state.permissions,
