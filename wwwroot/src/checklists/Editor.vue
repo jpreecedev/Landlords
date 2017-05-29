@@ -8,7 +8,7 @@
       <p class="text-muted">There are {{ outstandingActions }} outstanding actions.</p>
       <form>
         <fieldset>
-          <accordion :checklist="checklist" v-on:collapseAll="collapseAll()" />
+          <accordion :checklist="checklist" v-on:collapseAll="collapseAll()" v-on:toggleCompleted="toggleCompleted" v-on:toggleExpanded="toggleExpanded" />
         </fieldset>
       </form>
     </div>
@@ -31,6 +31,7 @@
     components: { accordion },
     data () {
       return {
+        permissions: this.$store.state.permissions,
         checklistId: this.$route.params.checklistId,
         checklist: null
       }
@@ -65,6 +66,14 @@
         this.checklist.checklistItems.forEach(item => {
           item.isExpanded = false
         })
+      },
+      toggleCompleted: function (item) {
+        this.$http.post(`/api/checklistitem/completed?checklistId=${this.checklistId}&checklistItemId=${item.id}&completed=${item.isCompleted}`)
+      },
+      toggleExpanded: function (item) {
+        if (this.permissions.CI_ToggleExpanded) {
+          this.$http.post(`/api/checklistitem/expanded?checklistId=${this.checklistId}&checklistItemId=${item.id}&expanded=${item.isExpanded}`)
+        }
       }
     }
   }

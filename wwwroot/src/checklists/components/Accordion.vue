@@ -5,7 +5,7 @@
         <h5 class="mb-0">
           <div class="form-check">
           <label class="form-check-label">
-            <input class="form-check-input" type="checkbox" v-model="item.isCompleted">                                        
+            <input class="form-check-input" v-if="permissions.CI_ToggleCompleted" type="checkbox" v-model="item.isCompleted" @change="toggleCompleted(item)">                                        
             <span v-if="!item.isCompleted">{{ item.displayText }}</span>
             <del class="text-muted" v-if="item.isCompleted">{{ item.displayText }}</del>                    
           </label>
@@ -40,6 +40,7 @@ export default {
   },
   data () {
     return {
+      permissions: this.$store.state.permissions
     }
   },
   methods: {
@@ -47,6 +48,10 @@ export default {
       var expanded = item.isExpanded
       this.$emit('collapseAll')
       item.isExpanded = !expanded
+      this.$emit('toggleExpanded', item)
+    },
+    toggleCompleted: function (item) {
+      this.$emit('toggleCompleted', item)
     }
   }
 }

@@ -143,6 +143,8 @@
                 .AddScoped<ILandlordDataProvider, LandlordDataProvider>()
                 .AddScoped<IPermissionsDataProvider, PermissionsDataProvider>()
                 .AddScoped<IChecklistDataProvider, ChecklistDataProvider>()
+                .AddScoped<IChecklistInstanceDataProvider, ChecklistInstanceDataProvider>()
+                .AddScoped<IChecklistItemDataProvider, ChecklistItemDataProvider>()
                 .AddScoped<IUserRepository, UserRepository>()
                 .AddScoped<ILLDbContext, LLDbContext>()
                 .AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>()

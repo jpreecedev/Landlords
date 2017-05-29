@@ -9,9 +9,11 @@
 </template>
 
 <script>
+  import PermissionsWarning from 'common/PermissionsWarning'
 
   export default {
     name: 'overview',
+    components: { PermissionsWarning },
     data () {
       return {
         permissions: this.$store.state.permissions
