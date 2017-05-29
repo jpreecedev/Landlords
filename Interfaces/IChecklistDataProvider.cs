@@ -13,5 +13,6 @@
         Task DeleteInstanceAsync(Guid userId, Guid checklistId);
         Task ArchiveChecklistInstanceAsync(Guid userId, Guid checklistId);
         Task<ICollection<ChecklistViewModel>> GetArchivedChecklistInstancesAsync(Guid userId);
+        Task<ChecklistViewModel> CreateChecklistTemplateAsync(Guid userId, ChecklistViewModel checklist, string userOrigin);
     }
 }

@@ -119,6 +119,23 @@
             throw new InvalidOperationException("Unable to determine User");
         }
 
+        public static bool IsSiteAdministrator(this ClaimsPrincipal claimsPrincipal)
+        {
+            return claimsPrincipal.IsInRole(ApplicationRoles.SiteAdministrator);
+        }
+
+        public static bool IsAgencyUser(this ClaimsPrincipal claimsPrincipal)
+        {
+            return claimsPrincipal.IsInRole(ApplicationRoles.AgencyAdministrator) || claimsPrincipal.IsInRole(ApplicationRoles.AgencyUser);
+        }
+
+        public static bool IsEndUser(this ClaimsPrincipal claimsPrincipal)
+        {
+            return claimsPrincipal.IsInRole(ApplicationRoles.Landlord) || 
+                claimsPrincipal.IsInRole(ApplicationRoles.Accountant) ||
+                claimsPrincipal.IsInRole(ApplicationRoles.OtherUser);
+        }
+
         public static IServiceCollection RegisterDI(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddScoped<IPropertyDataProvider, PropertyDataProvider>()

@@ -10,6 +10,10 @@
         public const string CreateRouteId = "CL_Create";
         public const string CreateDescription = "Create a new instance of a checklist";
 
+        public const string CreateTemplateId = "a2ed5264-429c-4881-bc22-b21bbe5f912c";
+        public const string CreateTemplateRouteId = "CL_CreateTemplate";
+        public const string CreateTemplateDescription = "Create a new checklist from scratch";
+
         public const string GetById = "22dcb537-87bc-4978-81bd-629f34386f30";
         public const string GetByRouteId = "CL_GetById";
         public const string GetByDescription = "View a specific checklist";

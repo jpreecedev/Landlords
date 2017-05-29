@@ -7,6 +7,8 @@
     using Core;
     using Interfaces;
     using System;
+    using Model.Database;
+    using ViewModels;
 
     [Route("api/[controller]")]
     public class ChecklistsController : Controller
@@ -45,6 +47,33 @@
             }
 
             return Ok(await _checklistDataProvider.CreateChecklistInstanceAsync(User.GetUserId(), checklistId));
+        }
+
+        [HttpPost("template"), ValidateAntiForgeryToken]
+        [Permission(Permissions_CL.CreateTemplateId, Permissions_CL.CreateTemplateRouteId, Permissions_CL.CreateTemplateDescription)]
+        public async Task<IActionResult> Create(ChecklistViewModel value)
+        {
+            if (ModelState.IsValid)
+            {
+                var userId = User.GetUserId();
+
+                if (value.UserId.IsDefault() || userId != value.UserId)
+                    return BadRequest("Unable to validate payload");
+
+                var origin = ChecklistOrigin.User.ToString();
+                if (User.IsSiteAdministrator())
+                {
+                    origin = ChecklistOrigin.Admin.ToString();
+                }
+                else if (User.IsAgencyUser())
+                {
+                    origin = ChecklistOrigin.Agency.ToString();
+                }
+
+                return Ok(await _checklistDataProvider.CreateChecklistTemplateAsync(User.GetUserId(), value, origin));
+            }
+
+            return BadRequest(new { Errors = ModelState.ToErrorCollection() });
         }
 
         [HttpPost("archive"), ValidateAntiForgeryToken]

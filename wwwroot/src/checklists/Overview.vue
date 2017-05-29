@@ -27,11 +27,12 @@
           </div>
         </div>
       </div>
-      
+
+      <button v-if="permissions.CL_CreateTemplate" @click="redirectToCreate()" class="btn btn-primary pointer mt-3">Create checklist from scratch</button>            
     </div>
     <div class="row mt-5">
       <div class="col-6" v-if="overview.availableChecklists && overview.availableChecklists.length">
-        <h2>Available checklists</h2>
+        <h2>Available checklist templates</h2>
         <select v-model="selectedChecklist" class="form-control">
           <option v-for="checklist in overview.availableChecklists" v-bind:value="checklist">{{ checklist.origin }}: {{ checklist.name }}</option>
         </select>
@@ -100,6 +101,9 @@
             this.overview.checklists.push(...response.data)
           }
         })
+      },
+      redirectToCreate: function () {
+        this.$router.push({ name: 'template' })
       }
     }
   }
