@@ -18,10 +18,10 @@
         </h5>
       </div>
       <div v-bind:id="item.key" v-bind:class="{'show': item.isExpanded}" role="tabpanel" v-bind:aria-labelledby="item.key" class="collapse">
-        <document-upload v-if="item.template === 'DocumentUpload'" :checklistItem="item" />
-        <comments-date-of-action v-if="item.template === 'CommentsAndDateOfAction'" :checklistItem="item" />
-        <comments-only v-if="item.template === 'CommentsOnly'" :checklistItem="item" />
-        <date-of-action v-if="item.template === 'DateOfAction'" :checklistItem="item" />
+        <document-upload v-if="item.template === 'DocumentUpload'" :checklistId="checklist.id" :checklistItem="item" />
+        <comments-date-of-action v-if="item.template === 'CommentsAndDateOfAction'" :checklistId="checklist.id" :checklistItem="item" />
+        <comments-only v-if="item.template === 'CommentsOnly'" :checklistId="checklist.id" :checklistItem="item" />
+        <date-of-action v-if="item.template === 'DateOfAction'" :checklistId="checklist.id" :checklistItem="item" />
       </div>
     </div>
   </div>  

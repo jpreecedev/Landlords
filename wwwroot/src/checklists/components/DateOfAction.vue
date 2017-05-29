@@ -16,13 +16,13 @@ export default {
   name: 'date-of-action',
   components: { Datepicker },
   props: {
+    'checklistId': {
+      type: String,
+      default: null
+    },
     'checklistItem': {
       type: Object,
       default: null
-    }
-  },
-  data () {
-    return {
     }
   }
 }

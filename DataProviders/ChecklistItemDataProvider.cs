@@ -18,7 +18,7 @@
             var checklist = await Context.ChecklistInstances.Join(Context.ChecklistItemInstances, checklistInstance => checklistInstance.Id, itemInstance => itemInstance.ChecklistInstanceId, (checklistInstance, itemInstance) => new {Checklist = checklistInstance, Item = itemInstance})
                 .FirstOrDefaultAsync(c => c.Checklist.UserId == userId && c.Checklist.Id == checklistId && c.Item.Id == checklistItemId);
 
-            if (checklist != null)
+            if (checklist != null && checklist.Item != null)
             {
                 checklist.Item.IsCompleted = completed;
                 await Context.SaveChangesAsync();
@@ -72,6 +72,18 @@
             }
 
             await Context.SaveChangesAsync();
+        }
+
+        public async Task ApplyTemplatePayloadAsync(Guid userId, Guid checklistId, Guid checklistItemId, string payload)
+        {
+            var checklist = await Context.ChecklistInstances.Join(Context.ChecklistItemInstances, checklistInstance => checklistInstance.Id, itemInstance => itemInstance.ChecklistInstanceId, (checklistInstance, itemInstance) => new { Checklist = checklistInstance, Item = itemInstance })
+                .FirstOrDefaultAsync(c => c.Checklist.UserId == userId && c.Checklist.Id == checklistId && c.Item.Id == checklistItemId);
+
+            if (checklist != null && checklist.Item != null)
+            {
+                checklist.Item.Payload = payload;
+                await Context.SaveChangesAsync();
+            }
         }
     }
 }

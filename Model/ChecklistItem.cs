@@ -17,5 +17,7 @@
         public string Template { get; set; }
 
         public int Order { get; set; }
+
+        public string Payload { get; set; }
     }
 }

@@ -8,5 +8,6 @@
         Task ToggleChecklistItemCompletedAsync(Guid userId, Guid checklistId, Guid checklistItemId, bool completed);
         Task ToggleChecklistItemExpandedAsync(Guid userId, Guid checklistId, Guid checklistItemId, bool expanded);
         Task MoveAsync(Guid userId, Guid checklistId, Guid checklistItemId, string direction);
+        Task ApplyTemplatePayloadAsync(Guid userId, Guid checklistId, Guid checklistItemId, string payload);
     }
 }

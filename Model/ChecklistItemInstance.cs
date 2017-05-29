@@ -22,6 +22,7 @@
             IsExpanded = checklistItem.IsExpanded;
             Order = checklistItem.Order;
             Template = checklistItem.Template;
+            Payload = checklistItem.Payload;
         }
         
         public string DisplayText { get; set; }
@@ -35,6 +36,8 @@
         public bool IsCompleted { get; set; }
 
         public int Order { get; set; }
+
+        public string Payload { get; set; }
 
         [ValidateGuid]
         public Guid ChecklistInstanceId { get; set; }

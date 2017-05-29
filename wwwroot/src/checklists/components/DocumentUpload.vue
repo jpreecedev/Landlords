@@ -29,13 +29,13 @@ export default {
   name: 'document-upload',
   components: { Datepicker },
   props: {
+    'checklistId': {
+      type: String,
+      default: null
+    },
     'checklistItem': {
       type: Object,
       default: null
-    }
-  },
-  data () {
-    return {
     }
   }
 }

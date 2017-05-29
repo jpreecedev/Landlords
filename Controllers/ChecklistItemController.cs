@@ -6,6 +6,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Model;
     using Permissions;
+    using ViewModels;
 
     [Route("api/[controller]")]
     public class ChecklistItemController : Controller
@@ -56,6 +57,20 @@
             }
 
             await _checklistItemDataProvider.MoveAsync(User.GetUserId(), checklistId, checklistItemId, direction);
+            return Ok();
+        }
+
+        [HttpPost("template")]
+        [ValidateAntiForgeryToken]
+        [Permission(Permissions_CI.ApplyTemplateId, Permissions_CI.ApplyTemplateRouteId, Permissions_CI.ApplyTemplateDescription)]
+        public async Task<IActionResult> ApplyTemplate(Guid checklistId, Guid checklistItemId, [FromBody] PayloadViewModel value)
+        {
+            if (checklistId.IsDefault() || checklistItemId.IsDefault())
+            {
+                return BadRequest("Unable to validate payload");
+            }
+
+            await _checklistItemDataProvider.ApplyTemplatePayloadAsync(User.GetUserId(), checklistId, checklistItemId, value?.Payload);
             return Ok();
         }
     }
