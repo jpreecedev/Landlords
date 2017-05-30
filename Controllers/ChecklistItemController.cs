@@ -1,6 +1,7 @@
 ﻿namespace Landlords.Controllers
 {
     using System;
+    using System.Text;
     using System.Threading.Tasks;
     using Core;
     using Microsoft.AspNetCore.Mvc;
@@ -63,14 +64,14 @@
         [HttpPost("template")]
         [ValidateAntiForgeryToken]
         [Permission(Permissions_CI.ApplyTemplateId, Permissions_CI.ApplyTemplateRouteId, Permissions_CI.ApplyTemplateDescription)]
-        public async Task<IActionResult> ApplyTemplate(Guid checklistId, Guid checklistItemId, [FromBody] PayloadViewModel value)
+        public async Task<IActionResult> ApplyTemplate(Guid checklistId, Guid checklistItemId, [FromBody] object payload)
         {
             if (checklistId.IsDefault() || checklistItemId.IsDefault())
             {
                 return BadRequest("Unable to validate payload");
             }
 
-            await _checklistItemDataProvider.ApplyTemplatePayloadAsync(User.GetUserId(), checklistId, checklistItemId, value?.Payload);
+            await _checklistItemDataProvider.ApplyTemplatePayloadAsync(User.GetUserId(), checklistId, checklistItemId, payload?.ToString());
             return Ok();
         }
     }
