@@ -23,28 +23,30 @@
             <router-link v-if="permissions.CL_GetById" :to="{name: 'editor', params: {checklistId: checklist.id}}" class="pointer btn btn-secondary">View or Edit</router-link>
             <a v-if="permissions.CL_Archive && !checklist.isArchived" href="#" @click="archive(checklist)" class="pointer btn btn-secondary">Archive</a>
           </div>
+          <div class="card-footer text-muted">
+            <span v-if="!checklist.propertyReference && !checklist.propertyStreetAddress">General</span>
+            <span v-if="checklist.propertyReference">{{ checklist.propertyReference }}</span>
+          </div>
         </div>
       </div>
-
-      <button v-if="permissions.CL_CreateTemplate" @click="redirectToCreate()" class="btn btn-primary pointer mt-3">Create checklist from scratch</button>            
     </div>
-    <div class="row mt-5">
+    <div class="row mt-5" v-if="permissions.CL_Create">
       <div class="col-6" v-if="overview.availableChecklists && overview.availableChecklists.length">
         <h2>Available checklist templates</h2>
-        <available-checklists :checklists="overview.availableChecklists" :selectedChecklist="selectedChecklist" />
+          <available-checklists :checklists="overview.availableChecklists" :selectedChecklist="selectedChecklist" />
       </div>
     </div>
-    <div class="row mt-5" v-if="selectedChecklist && selectedChecklist.isPropertyMandatory">
+    <div class="row mt-5" v-if="permissions.CL_Create">
       <div class="col-6">
         <h3>Select a property from your portfolio</h3>
-        <select v-model="selectedProperty" class="form-control">
+        <select v-model="selectedProperty" v-bind:disabled="!selectedChecklist || !selectedChecklist.isPropertyMandatory" class="form-control">
           <option v-for="property in portfolioProperties" v-bind:value="property">{{ property.propertyReference }}<span v-if="property.propertyStreetAddress"> ({{property.propertyStreetAddress}})</span></option>
         </select>
       </div>
     </div>
-    <div class="row mt-3">
+    <div class="row mt-3" v-if="permissions.CL_Create">
       <div class="col">
-        <button v-if="permissions.CL_Create" @click="createChecklistInstance(selectedChecklist, selectedProperty)" class="btn btn-primary pointer">Create checklist</button>
+        <button @click="createChecklistInstance(selectedChecklist, selectedProperty)" class="btn btn-primary pointer">Create checklist</button>
       </div>
     </div>
   </main>
@@ -83,7 +85,7 @@
     },
     methods: {
       createChecklistInstance: function (selectedChecklist, selectedProperty) {
-        this.$http.post(`/api/checklists/?checklistId=${selectedChecklist.id}${selectedProperty ? `&portfolioId=${selectedProperty.portfolioId}&propertyDetailsId=` + selectedProperty.id : null}`).then(response => {
+        this.$http.post(`/api/checklists/?checklistId=${selectedChecklist.id}${selectedProperty ? `&portfolioId=${selectedProperty.portfolioId}&propertyDetailsId=` + selectedProperty.id : ''}`).then(response => {
           this.$router.push({ name: 'editor', params: { checklistId: response.data.id } })
         })
       },
@@ -101,9 +103,6 @@
             this.overview.checklists.push(...response.data)
           }
         })
-      },
-      redirectToCreate: function () {
-        this.$router.push({ name: 'template' })
       }
     },
     watch: {

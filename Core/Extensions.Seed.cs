@@ -421,9 +421,92 @@
                 };
 
                 await context.ChecklistItems.AddRangeAsync(checklistItems);
+                await context.SaveChangesAsync();
             }
-            
-            await context.SaveChangesAsync();
+
+            if (!await context.Checklists.AnyAsync(c => c.Name == "Move the tenants out"))
+            {
+                var moveOutChecklist = new Checklist
+                {
+                    Created = DateTime.Now,
+                    Name = "Move the tenants out",
+                    Image = "checklist.png",
+                    Description = "For when a new tenant is moving out of the property",
+                    IsAvailableDownstream = true,
+                    IsPropertyMandatory = false,
+                    UserId = admin.Id
+                };
+
+                await context.Checklists.AddAsync(moveOutChecklist);
+                await context.SaveChangesAsync();
+
+                var checklistItems = new List<ChecklistItem>
+                {
+                    new ChecklistItem
+                    {
+                        Created = DateTime.Now,
+                        ChecklistId = moveOutChecklist.Id,
+                        DisplayText = "Before move out, make sure the tenants are clear on their responsibilities and what is expected in order for them to get their deposit back in full",
+                        IsExpanded = false,
+                        Key = "MO001",
+                        Order = 1,
+                        Template = ChecklistTemplates.CommentsOnly
+                    },
+                    new ChecklistItem
+                    {
+                        Created = DateTime.Now,
+                        ChecklistId = moveOutChecklist.Id,
+                        DisplayText = "Conduct a checkout inspection",
+                        IsExpanded = false,
+                        Key = "MO002",
+                        Order = 2,
+                        Template = ChecklistTemplates.DateOfAction
+                    },
+                    new ChecklistItem
+                    {
+                        Created = DateTime.Now,
+                        ChecklistId = moveOutChecklist.Id,
+                        DisplayText = "Take meter readings",
+                        IsExpanded = false,
+                        Key = "MO003",
+                        Order = 3,
+                        Template = ChecklistTemplates.CommentsAndDateOfAction
+                    },
+                    new ChecklistItem
+                    {
+                        Created = DateTime.Now,
+                        ChecklistId = moveOutChecklist.Id,
+                        DisplayText = "Contact the utility companies with the meter readings, the tenant's forwarding address, and the details of the new occupant",
+                        IsExpanded = false,
+                        Key = "MO004",
+                        Order = 4,
+                        Template = ChecklistTemplates.CommentsAndDateOfAction
+                    },
+                    new ChecklistItem
+                    {
+                        Created = DateTime.Now,
+                        ChecklistId = moveOutChecklist.Id,
+                        DisplayText = "Agree on how much (if any) of the deposit should be deducted",
+                        IsExpanded = false,
+                        Key = "MO005",
+                        Order = 5,
+                        Template = ChecklistTemplates.CommentsOnly
+                    },
+                    new ChecklistItem
+                    {
+                        Created = DateTime.Now,
+                        ChecklistId = moveOutChecklist.Id,
+                        DisplayText = "Arrange the return of the deposit with the deposit protection scheme you've used",
+                        IsExpanded = false,
+                        Key = "MO006",
+                        Order = 6,
+                        Template = ChecklistTemplates.CommentsAndDateOfAction
+                    }
+                };
+
+                await context.ChecklistItems.AddRangeAsync(checklistItems);
+                await context.SaveChangesAsync();
+            }
         }
 
         private static class AsyncHelpers

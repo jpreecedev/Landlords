@@ -68,5 +68,9 @@ export default {
   .sort {
     display: inline-block;
     width: 30px;
+    vertical-align: top;
+  }
+  .form-check-label{
+    max-width: 80%;
   }
 </style>
