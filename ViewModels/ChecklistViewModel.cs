@@ -24,7 +24,6 @@
             IsAvailableDownstream = checklist.IsAvailableDownstream;
             Image = checklist.Image;
             Name = checklist.Name;
-            UserId = checklist.UserId;
             ChecklistItems = checklistItems.Select(c => new ChecklistItemViewModel(c)).ToList();
             Origin = origin;
             Description = checklist.Description;
@@ -45,10 +44,10 @@
             IsAvailableDownstream = checklist.IsAvailableDownstream;
             Image = checklist.Image;
             Name = checklist.Name;
-            UserId = checklist.UserId;
             ChecklistItems = checklistItems.Select(c => new ChecklistItemViewModel(c)).ToList();
             Origin = origin;
             Description = checklist.Description;
+            UserId = checklist.UserId;
         }
 
         public bool IsPropertyMandatory { get; set; }
@@ -56,11 +55,11 @@
         public string Image { get; set; }
         public string Name { get; set; }
         public ICollection<ChecklistItemViewModel> ChecklistItems { get; set; }
-        public Guid UserId { get; set; }
         public Guid Id { get; set; }
         public string Origin { get; set; }
         public string Description { get; set; }
         public bool IsArchived { get; set; }
+        public Guid? UserId { get; set; }
 
         public Guid? PortfolioId { get; set; }
         public Guid? PropertyDetailsId { get; set; }

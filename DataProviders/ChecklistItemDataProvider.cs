@@ -13,10 +13,10 @@
         {
         }
 
-        public async Task ToggleChecklistItemCompletedAsync(Guid userId, Guid checklistId, Guid checklistItemId, bool completed)
+        public async Task ToggleChecklistItemCompletedAsync(Guid portfolioId, Guid checklistId, Guid checklistItemId, bool completed)
         {
             var checklist = await Context.ChecklistInstances.Join(Context.ChecklistItemInstances, checklistInstance => checklistInstance.Id, itemInstance => itemInstance.ChecklistInstanceId, (checklistInstance, itemInstance) => new {Checklist = checklistInstance, Item = itemInstance})
-                .FirstOrDefaultAsync(c => c.Checklist.UserId == userId && c.Checklist.Id == checklistId && c.Item.Id == checklistItemId);
+                .FirstOrDefaultAsync(c => c.Checklist.PortfolioId == portfolioId && c.Checklist.Id == checklistId && c.Item.Id == checklistItemId);
 
             if (checklist != null && checklist.Item != null)
             {
@@ -25,12 +25,12 @@
             }
         }
 
-        public async Task ToggleChecklistItemExpandedAsync(Guid userId, Guid checklistId, Guid checklistItemId, bool expanded)
+        public async Task ToggleChecklistItemExpandedAsync(Guid portfolioId, Guid checklistId, Guid checklistItemId, bool expanded)
         {
             var checklistItems = await (from checklist in Context.ChecklistInstances
                 join checklistItem in Context.ChecklistItemInstances on checklist.Id equals checklistItem.ChecklistInstanceId into itemJoin
                 from item in itemJoin.DefaultIfEmpty()
-                where checklist.UserId == userId && checklist.Id == checklistId
+                where checklist.PortfolioId == portfolioId && checklist.Id == checklistId
                 select item).ToListAsync();
 
             checklistItems.ForEach(item => item.IsExpanded = false);
@@ -43,12 +43,12 @@
             }
         }
 
-        public async Task MoveAsync(Guid userId, Guid checklistId, Guid checklistItemId, string direction)
+        public async Task MoveAsync(Guid portfolioId, Guid checklistId, Guid checklistItemId, string direction)
         {
             var checklistItems = await(from checklist in Context.ChecklistInstances
                 join checklistItem in Context.ChecklistItemInstances on checklist.Id equals checklistItem.ChecklistInstanceId into itemJoin
                 from item in itemJoin.DefaultIfEmpty().OrderBy(c => c.Order)
-                where checklist.UserId == userId && checklist.Id == checklistId
+                where checklist.PortfolioId == portfolioId && checklist.Id == checklistId
                 select item).ToListAsync();
 
             var index = checklistItems.FindIndex(c => c.Id == checklistItemId);
@@ -74,10 +74,10 @@
             await Context.SaveChangesAsync();
         }
 
-        public async Task ApplyTemplatePayloadAsync(Guid userId, Guid checklistId, Guid checklistItemId, string payload)
+        public async Task ApplyTemplatePayloadAsync(Guid portfolioId, Guid checklistId, Guid checklistItemId, string payload)
         {
             var checklist = await Context.ChecklistInstances.Join(Context.ChecklistItemInstances, checklistInstance => checklistInstance.Id, itemInstance => itemInstance.ChecklistInstanceId, (checklistInstance, itemInstance) => new { Checklist = checklistInstance, Item = itemInstance })
-                .FirstOrDefaultAsync(c => c.Checklist.UserId == userId && c.Checklist.Id == checklistId && c.Item.Id == checklistItemId);
+                .FirstOrDefaultAsync(c => c.Checklist.PortfolioId == portfolioId && c.Checklist.Id == checklistId && c.Item.Id == checklistItemId);
 
             if (checklist != null && checklist.Item != null)
             {

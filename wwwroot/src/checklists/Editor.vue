@@ -16,7 +16,7 @@
         </fieldset>
       </form>
     </div>
-    <div class="row mt-5">
+    <div class="row mt-5" v-if="permissions.CL_DeleteById">
       <div class="col-3 offset-9">
         <div class="alert alert-danger text-center">
           <p>Danger Zone!! Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>

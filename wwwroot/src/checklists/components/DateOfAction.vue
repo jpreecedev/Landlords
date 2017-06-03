@@ -25,11 +25,18 @@ export default {
       default: null
     }
   },
+  data () {
+    return {
+      permissions: this.$store.state.permissions
+    }
+  },
   methods: {
     save: function () {
-      this.$http.post(`/api/checklistitem/template?checklistId=${this.checklistId}&checklistItemId=${this.checklistItem.id}`, {
-        payload: this.checklistItem.payload
-      })
+      if (this.permissions.CI_ApplyTemplate) {
+        this.$http.post(`/api/checklistitem/template?checklistId=${this.checklistId}&checklistItemId=${this.checklistItem.id}`, {
+          payload: this.checklistItem.payload
+        })
+      }
     }
   }
 }

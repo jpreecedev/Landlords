@@ -17,17 +17,16 @@
         {
         }
 
-        public async Task<ChecklistViewModel> GetChecklistByIdAsync(Guid userId, Guid checklistId)
+        public async Task<ChecklistViewModel> GetChecklistByIdAsync(Guid portfolioId, Guid checklistId)
         {
             return await (from checklistInstance in Context.ChecklistInstances
                 join checklistItems in Context.ChecklistItemInstances on checklistInstance.Id equals checklistItems.ChecklistInstanceId into checklistItemsJoin
                 join propertyDetails in Context.PropertyDetails on checklistInstance.PropertyDetailsId.GetValueOrDefault() equals propertyDetails.Id into propertyDetailsJoin
-                where checklistInstance.Id == checklistId && checklistInstance.UserId == userId && !checklistInstance.IsDeleted
+                where checklistInstance.Id == checklistId && checklistInstance.PortfolioId == portfolioId && !checklistInstance.IsDeleted
                 select new ChecklistViewModel
                 {
                     ChecklistItems = checklistItemsJoin.OrderBy(c => c.Order).Where(c => !c.IsDeleted).Select(c => new ChecklistItemViewModel(c)).ToList(),
                     Id = checklistInstance.Id,
-                    UserId = checklistInstance.UserId,
                     PortfolioId = checklistInstance.PortfolioId,
                     Description = checklistInstance.Description,
                     Name = checklistInstance.Name,
@@ -42,14 +41,13 @@
                 }).FirstOrDefaultAsync();
         }
 
-        public async Task<ChecklistViewModel> CreateChecklistInstanceAsync(Guid userId, Guid checklistId, Guid? portfolioId, Guid? propertyDetailsId)
+        public async Task<ChecklistViewModel> CreateChecklistInstanceAsync(Guid portfolioId, Guid checklistId, Guid? propertyDetailsId)
         {
             var checklist = await Context.Checklists.FirstOrDefaultAsync(c => c.Id == checklistId);
             if (checklist != null)
             {
                 var instance = new ChecklistInstance(checklist)
                 {
-                    UserId = userId,
                     Created = DateTime.Now,
                     PortfolioId = portfolioId,
                     PropertyDetailsId = propertyDetailsId
@@ -80,9 +78,9 @@
             return null;
         }
 
-        public async Task DeleteInstanceAsync(Guid userId, Guid checklistId)
+        public async Task DeleteInstanceAsync(Guid portfolioId, Guid checklistId)
         {
-            var checklist = await Context.ChecklistInstances.FirstOrDefaultAsync(c => c.UserId == userId && c.Id == checklistId);
+            var checklist = await Context.ChecklistInstances.FirstOrDefaultAsync(c => c.PortfolioId == portfolioId && c.Id == checklistId);
             if (checklist != null)
             {
                 checklist.Deleted = DateTime.Now;
@@ -90,9 +88,9 @@
             }
         }
 
-        public async Task ArchiveChecklistInstanceAsync(Guid userId, Guid checklistId)
+        public async Task ArchiveChecklistInstanceAsync(Guid portfolioId, Guid checklistId)
         {
-            var checklist = await Context.ChecklistInstances.FirstOrDefaultAsync(c => c.UserId == userId && c.Id == checklistId);
+            var checklist = await Context.ChecklistInstances.FirstOrDefaultAsync(c => c.PortfolioId == portfolioId && c.Id == checklistId);
             if (checklist != null)
             {
                 checklist.IsArchived = true;
@@ -100,11 +98,11 @@
             }
         }
 
-        public async Task<ICollection<ChecklistViewModel>> GetArchivedChecklistInstancesAsync(Guid userId)
+        public async Task<ICollection<ChecklistViewModel>> GetArchivedChecklistInstancesAsync(Guid portfolioId)
         {
             return await (from checklist in Context.ChecklistInstances.AsNoTracking()
                           join checklistItems in Context.ChecklistItemInstances on checklist.Id equals checklistItems.ChecklistInstanceId into checklistItemsJoin
-                          where checklist.UserId == userId && !checklist.IsDeleted && checklist.IsArchived
+                          where checklist.PortfolioId == portfolioId && !checklist.IsDeleted && checklist.IsArchived
                           select new ChecklistViewModel(checklist, checklistItemsJoin.OrderBy(c => c.Order).ToList(), ChecklistOrigin.User.ToString())
                 )
                 .ToListAsync();

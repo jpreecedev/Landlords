@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using Database;
     using Validation;
 
     public class ChecklistInstance : BaseModel
@@ -28,7 +27,8 @@
 
         public Portfolio Portfolio { get; set; }
 
-        public Guid? PortfolioId { get; set; }
+        [ValidateGuid]
+        public Guid PortfolioId { get; set; }
 
         public PropertyDetails PropertyDetails { get; set; }
 
@@ -37,12 +37,7 @@
         public string Image { get; set; }
 
         public string Description { get; set; }
-
-        [ValidateGuid]
-        public Guid UserId { get; set; }
-
-        public ApplicationUser User { get; set; }
-
+        
         [ValidateGuid]
         public Guid ChecklistId { get; set; }
         

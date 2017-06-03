@@ -6,7 +6,6 @@
 
     public interface IChecklistDataProvider
     {
-        Task<ChecklistOverviewViewModel> GetChecklistOverviewAsync(Guid userId, Guid agencyId, bool includeArchived);
-        Task<ChecklistViewModel> CreateChecklistTemplateAsync(Guid userId, ChecklistViewModel checklist, string userOrigin);
+        Task<ChecklistOverviewViewModel> GetChecklistOverviewAsync(Guid portfolioId, Guid agencyId, bool includeArchived);
     }
 }

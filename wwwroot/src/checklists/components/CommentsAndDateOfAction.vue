@@ -29,6 +29,11 @@ export default {
       default: null
     }
   },
+  data () {
+    return {
+      permissions: this.$store.state.permissions
+    }
+  },
   created () {
     if (!this.checklistItem.payload) {
       this.checklistItem.payload = {
@@ -41,7 +46,9 @@ export default {
   },
   methods: {
     save: function () {
-      this.$http.post(`/api/checklistitem/template?checklistId=${this.checklistId}&checklistItemId=${this.checklistItem.id}`, this.checklistItem.payload)
+      if (this.permissions.CI_ApplyTemplate) {
+        this.$http.post(`/api/checklistitem/template?checklistId=${this.checklistId}&checklistItemId=${this.checklistItem.id}`, this.checklistItem.payload)
+      }
     }
   }
 }

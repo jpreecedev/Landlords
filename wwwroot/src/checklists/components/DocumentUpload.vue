@@ -37,6 +37,11 @@ export default {
       type: Object,
       default: null
     }
+  },
+  data () {
+    return {
+      permissions: this.$store.state.permissions
+    }
   }
 }
 </script>

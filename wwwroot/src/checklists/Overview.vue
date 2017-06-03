@@ -20,7 +20,7 @@
           <div class="card-block">
             <h4 class="card-title">{{ checklist.name }}</h4>
             <p v-if="checklist.description" class="card-text">{{ checklist.description }}</p>
-            <router-link v-if="permissions.CL_GetById" :to="{name: 'editor', params: {checklistId: checklist.id}}" class="pointer btn btn-secondary">View or Edit</router-link>
+            <router-link v-if="permissions.CL_GetById" :to="{name: 'editor', params: {checklistId: checklist.id}}" class="pointer btn btn-secondary">View</router-link>
             <a v-if="permissions.CL_Archive && !checklist.isArchived" href="#" @click="archive(checklist)" class="pointer btn btn-secondary">Archive</a>
           </div>
           <div class="card-footer text-muted">
@@ -33,10 +33,10 @@
     <div class="row mt-5" v-if="permissions.CL_Create">
       <div class="col-6" v-if="overview.availableChecklists && overview.availableChecklists.length">
         <h2>Available checklist templates</h2>
-          <available-checklists :checklists="overview.availableChecklists" :selectedChecklist="selectedChecklist" />
+          <available-checklists :propertyCount="portfolioProperties.length" :checklists="overview.availableChecklists" :selectedChecklist="selectedChecklist" />
       </div>
     </div>
-    <div class="row mt-5" v-if="permissions.CL_Create">
+    <div class="row mt-5" v-if="permissions.CL_Create && portfolioProperties && portfolioProperties.length">
       <div class="col-6">
         <h3>Select a property from your portfolio</h3>
         <select v-model="selectedProperty" v-bind:disabled="!selectedChecklist || !selectedChecklist.isPropertyMandatory" class="form-control">
@@ -72,15 +72,26 @@
       }
     },
     created () {
-      this.$http.get(`/api/checklists/`).then(response => {
+      this.$http.get(`/api/checklists/overview`).then(response => {
         this.overview = response.data
-        this.selectedChecklist = this.overview.availableChecklists[0]
       })
-      this.$http.get(`/api/propertydetails/basicdetails`).then(response => {
-        if (response.data) {
-          this.portfolioProperties = response.data
-          this.selectedProperty = this.portfolioProperties[0]
+      .then(() => {
+        if (this.permissions.PD_GetBasic) {
+          return this.$http.get(`/api/propertydetails/basicdetails`).then(response => {
+            if (response.data) {
+              this.portfolioProperties = response.data
+              this.selectedProperty = this.portfolioProperties[0]
+            }
+          })
         }
+      })
+      .then(() => {
+        var index = 0
+        if (!this.portfolioProperties || !this.portfolioProperties.length) {
+          var first = this.overview.availableChecklists.filter(c => !c.isPropertyMandatory)[0]
+          index = this.overview.availableChecklists.indexOf(first)
+        }
+        this.selectedChecklist = this.overview.availableChecklists[index]
       })
     },
     methods: {

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using Database;
     using Validation;
 
     public class Checklist : BaseModel
@@ -17,6 +18,8 @@
         public string Name { get; set; }
 
         public string Description { get; set; }
+
+        public ApplicationUser User { get; set; }
 
         [ValidateGuid]
         public Guid UserId { get; set; }

@@ -184,7 +184,7 @@
 
             if (!await userManager.Users.AnyAsync(c => c.UserName == "administrator@agency.co.uk"))
             {
-                var accountant = new ApplicationUser
+                var administrator = new ApplicationUser
                 {
                     UserName = "administrator@agency.co.uk",
                     Email = "administrator@agency.co.uk",
@@ -192,10 +192,10 @@
                     FirstName = "Agency",
                     LastName = "Administrator"
                 };
-
-                await userManager.CreateAsync(accountant, "Password123");
-                await userManager.AddToRoleAsync(accountant, ApplicationRoles.AgencyAdministrator);
-                await userManager.SetUserPermissionsAsync(accountant.Id, DefaultPermissions.AgencyAdministrator.Select(c => Guid.Parse(c)).ToArray());
+                
+                await userManager.CreateAsync(administrator, "Password123");
+                await userManager.AddToRoleAsync(administrator, ApplicationRoles.AgencyAdministrator);
+                await userManager.SetUserPermissionsAsync(administrator.Id, DefaultPermissions.AgencyAdministrator.Select(c => Guid.Parse(c)).ToArray());
             }
 
             if (!await userManager.Users.AnyAsync(c => c.UserName == "user@agency.co.uk"))
@@ -240,6 +240,25 @@
                 var portfolios = context.ApplicationUserPortfolios.Where(c => c.UserId == landlord1.Id);
 
                 await portfolios.ForEachAsync(c => c.AgencyId = agency.Id);
+                await context.SaveChangesAsync();
+
+                var agencyPortfolio = new Portfolio
+                {
+                    Created = DateTime.Now,
+                    DisplayName = "Agency Portfolio",
+                    Name = "Agency-BBB445"
+                };
+                await context.Portfolios.AddAsync(agencyPortfolio);
+                await context.SaveChangesAsync();
+
+                var link = new ApplicationUserPortfolio
+                {
+                    Created = DateTime.Now,
+                    PortfolioId = agencyPortfolio.Id,
+                    AgencyId = agency.Id,
+                    UserId = user1.Id
+                };
+                await context.ApplicationUserPortfolios.AddAsync(link);
                 await context.SaveChangesAsync();
             }
         }
