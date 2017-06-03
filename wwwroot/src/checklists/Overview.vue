@@ -32,8 +32,10 @@
     </div>
     <div class="row mt-5" v-if="permissions.CL_Create">
       <div class="col-6" v-if="overview.availableChecklists && overview.availableChecklists.length">
-        <h2>Available checklist templates</h2>
-          <available-checklists :propertyCount="portfolioProperties.length" :checklists="overview.availableChecklists" :selectedChecklist="selectedChecklist" />
+        <h2>Available checklist templates</h2>          
+        <select v-model="selectedChecklist" class="form-control">
+          <option v-for="checklist in overview.availableChecklists" v-bind:value="checklist" v-bind:disabled="checklist.isPropertyMandatory && portfolioProperties.length < 1">{{ checklist.origin }}: {{ checklist.name }}</option>
+        </select>  
       </div>
     </div>
     <div class="row mt-5" v-if="permissions.CL_Create && portfolioProperties && portfolioProperties.length">
@@ -53,12 +55,11 @@
 </template>
 
 <script>
-  import AvailableChecklists from './components/AvailableChecklists'
   import PermissionsWarning from 'common/PermissionsWarning'
 
   export default {
     name: 'overview',
-    components: { AvailableChecklists, PermissionsWarning },
+    components: { PermissionsWarning },
     data () {
       return {
         permissions: this.$store.state.permissions,
@@ -120,6 +121,8 @@
       selectedChecklist: function (value) {
         if (!value || !value.isPropertyMandatory) {
           this.selectedProperty = null
+        } else {
+          this.selectedProperty = this.portfolioProperties[0]
         }
       }
     }
