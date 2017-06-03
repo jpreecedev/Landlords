@@ -102,8 +102,13 @@
         {
             return await (from checklist in Context.ChecklistInstances.AsNoTracking()
                           join checklistItems in Context.ChecklistItemInstances on checklist.Id equals checklistItems.ChecklistInstanceId into checklistItemsJoin
+                          join propertyDetails in Context.PropertyDetails on checklist.PropertyDetailsId.GetValueOrDefault() equals propertyDetails.Id into propertyDetailsJoin
                           where checklist.PortfolioId == portfolioId && !checklist.IsDeleted && checklist.IsArchived
                           select new ChecklistViewModel(checklist, checklistItemsJoin.OrderBy(c => c.Order).ToList(), ChecklistOrigin.User.ToString())
+                          {
+                              PropertyReference = propertyDetailsJoin.Any() ? propertyDetailsJoin.First().Reference : null,
+                              PropertyStreetAddress = propertyDetailsJoin.Any() ? propertyDetailsJoin.First().PropertyStreetAddress : null
+                          }
                 )
                 .ToListAsync();
         }

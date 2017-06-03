@@ -11,7 +11,6 @@
      
       <template v-if="!overview.checklists || !overview.checklists.length">
         <p>You have not created any checklists yet.</p>
-        <a v-if="permissions.CL_Archived" href="#" @click="getArchived()" class="pointer btn btn-secondary">View Archived</a>        
       </template>
 
       <div class="card-deck">
@@ -28,6 +27,10 @@
             <span v-if="checklist.propertyReference">{{ checklist.propertyReference }}</span>
           </div>
         </div>
+
+      </div>
+      <div class="mt-3" v-if="permissions.CL_Archived && !hasArchivedLists">
+        <button @click="getArchived()" class="pointer btn btn-secondary">View Archived</button>
       </div>
     </div>
     <div class="row mt-5" v-if="permissions.CL_Create">
@@ -66,6 +69,7 @@
         selectedChecklist: null,
         selectedProperty: null,
         portfolioProperties: [],
+        hasArchivedLists: false,
         overview: {
           checklists: [],
           availableChecklists: []
@@ -113,6 +117,7 @@
         this.$http.get(`/api/checklists/archived`).then(response => {
           if (response.data) {
             this.overview.checklists.push(...response.data)
+            this.hasArchivedLists = true
           }
         })
       }
