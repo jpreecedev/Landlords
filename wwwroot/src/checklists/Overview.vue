@@ -44,7 +44,7 @@
     </div>
     <div class="row mt-3">
       <div class="col">
-        <button v-if="permissions.CL_Create" @click="createChecklistInstance(selectedChecklist)" class="btn btn-primary pointer">Create checklist</button>
+        <button v-if="permissions.CL_Create" @click="createChecklistInstance(selectedChecklist, selectedProperty)" class="btn btn-primary pointer">Create checklist</button>
       </div>
     </div>
   </main>
@@ -82,8 +82,8 @@
       })
     },
     methods: {
-      createChecklistInstance: function (selectedChecklist) {
-        this.$http.post(`/api/checklists/?checklistId=${selectedChecklist.id}`).then(response => {
+      createChecklistInstance: function (selectedChecklist, selectedProperty) {
+        this.$http.post(`/api/checklists/?checklistId=${selectedChecklist.id}${selectedProperty ? `&portfolioId=${selectedProperty.portfolioId}&propertyDetailsId=` + selectedProperty.id : null}`).then(response => {
           this.$router.push({ name: 'editor', params: { checklistId: response.data.id } })
         })
       },
@@ -104,6 +104,13 @@
       },
       redirectToCreate: function () {
         this.$router.push({ name: 'template' })
+      }
+    },
+    watch: {
+      selectedChecklist: function (value) {
+        if (!value || !value.isPropertyMandatory) {
+          this.selectedProperty = null
+        }
       }
     }
   }

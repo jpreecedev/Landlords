@@ -26,6 +26,14 @@
 
         public bool IsPropertyMandatory { get; set; }
 
+        public Portfolio Portfolio { get; set; }
+
+        public Guid? PortfolioId { get; set; }
+
+        public PropertyDetails PropertyDetails { get; set; }
+
+        public Guid? PropertyDetailsId { get; set; }
+
         public string Image { get; set; }
 
         public string Description { get; set; }

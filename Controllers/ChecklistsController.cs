@@ -35,19 +35,19 @@
         [Permission(Permissions_CL.GetById, Permissions_CL.GetByRouteId, Permissions_CL.GetByDescription)]
         public async Task<IActionResult> Get(Guid checklistId)
         {
-            return Ok(await _checklistDataProvider.GetChecklistByIdAsync(User.GetUserId(), checklistId));
+            return Ok(await _checklistInstanceDataProvider.GetChecklistByIdAsync(User.GetUserId(), checklistId));
         }
 
         [HttpPost, ValidateAntiForgeryToken]
         [Permission(Permissions_CL.CreateId, Permissions_CL.CreateRouteId, Permissions_CL.CreateDescription)]
-        public async Task<IActionResult> Post(Guid checklistId)
+        public async Task<IActionResult> Post(Guid checklistId, Guid? portfolioId, Guid? propertyDetailsId)
         {
             if (checklistId.IsDefault())
             {
                 return BadRequest("Unable to validate payload");
             }
 
-            return Ok(await _checklistInstanceDataProvider.CreateChecklistInstanceAsync(User.GetUserId(), checklistId));
+            return Ok(await _checklistInstanceDataProvider.CreateChecklistInstanceAsync(User.GetUserId(), checklistId, portfolioId, propertyDetailsId));
         }
 
         [HttpPost("template"), ValidateAntiForgeryToken]

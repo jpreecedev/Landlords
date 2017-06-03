@@ -48,14 +48,15 @@
         public async Task<ICollection<PropertyBasicDetailsViewModel>> GetBasicDetailsAsync(Guid userId)
         {
             return await Context.ApplicationUserPortfolios.Where(aup => aup.UserId == userId)
-                .Join(Context.PropertyDetails, aup => aup.PortfolioId, details => details.PortfolioId, (portfolio, details) => new {PortfolioName = portfolio.Portfolio.DisplayName, PropertyDetails = details})
+                .Join(Context.PropertyDetails, aup => aup.PortfolioId, details => details.PortfolioId, (portfolio, details) => new {Portfolio = portfolio.Portfolio, PropertyDetails = details})
                 .Where(c => !c.PropertyDetails.IsDeleted)
                 .Select(c => new PropertyBasicDetailsViewModel
                 {
-                    PortfolioName = c.PortfolioName,
+                    PortfolioId = c.Portfolio.Id,
+                    PortfolioName = c.Portfolio.DisplayName,
                     Id = c.PropertyDetails.Id,
                     PropertyReference = c.PropertyDetails.Reference,
-                    PropertyStreetAddress = c.PropertyDetails.PropertyStreetAddress
+                    PropertyStreetAddress = c.PropertyDetails.PropertyStreetAddress,
                 })
                 .ToListAsync();
         }

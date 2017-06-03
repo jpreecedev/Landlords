@@ -29,6 +29,8 @@
             Origin = origin;
             Description = checklist.Description;
             IsArchived = checklist.IsArchived;
+            PortfolioId = checklist.PortfolioId;
+            PropertyDetailsId = checklist.PropertyDetailsId;
         }
 
         public ChecklistViewModel(Checklist checklist, ICollection<ChecklistItem> checklistItems, string origin)
@@ -59,5 +61,10 @@
         public string Origin { get; set; }
         public string Description { get; set; }
         public bool IsArchived { get; set; }
+
+        public Guid? PortfolioId { get; set; }
+        public Guid? PropertyDetailsId { get; set; }
+        public string PropertyReference { get; set; }
+        public string PropertyStreetAddress { get; set; }
     }
 }

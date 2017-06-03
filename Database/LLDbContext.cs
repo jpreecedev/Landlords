@@ -37,7 +37,7 @@
 
             modelBuilder.Entity<ChecklistInstance>()
                 .HasMany(c => (List<ChecklistItemInstance>) c.ChecklistItems);
-
+            
             base.OnModelCreating(modelBuilder);
         }
 

@@ -66,14 +66,6 @@
             };
         }
 
-        public async Task<ChecklistViewModel> GetChecklistByIdAsync(Guid userId, Guid checklistId)
-        {
-            var checklist = await Context.ChecklistInstances.FirstOrDefaultAsync(c => c.UserId == userId && c.Id == checklistId);
-            var checklistItems = await Context.ChecklistItemInstances.Where(c => c.ChecklistInstanceId == checklistId).OrderBy(c => c.Order).ToListAsync();
-
-            return new ChecklistViewModel(checklist, checklistItems, ChecklistOrigin.User.ToString());
-        }
-
         public async Task<ChecklistViewModel> CreateChecklistTemplateAsync(Guid userId, ChecklistViewModel checklist, string userOrigin)
         {
             // TODO, review all logic here

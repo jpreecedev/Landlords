@@ -2,6 +2,10 @@
   <main class="container">
     <div>
       <h1>New tenant</h1>
+      <h2 v-if="checklist">
+        <span v-if="checklist.propertyReference">{{checklist.propertyReference}}</span> 
+        <span v-if="checklist.propertyStreetAddress">({{ checklist.propertyStreetAddress }})</span>
+      </h2>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
     </div>
     <div>
