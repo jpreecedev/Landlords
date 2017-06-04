@@ -61,8 +61,13 @@
                 <div class="form-group row">
                   <div class="col" :class="{ 'has-danger': errors.has('openingBalance') }">
                     <label class="col-form-label" for="openingBalance">Opening Balance</label>
-                    <input type="number" class="form-control" v-model="account.openingBalance" v-validate="'required'" id="openingBalance" name="openingBalance" data-vv-validate-on="blur" placeholder="0.00">
+                    <div class="input-group">
+                      <span class="input-group-addon">£</span>
+                      <input type="number" class="form-control" v-model="account.openingBalance" v-validate="'required'" id="openingBalance" name="openingBalance" data-vv-validate-on="blur" placeholder="0.00">
+                      <span class="input-group-addon">.00</span>
+                    </div>
                   </div>
+                </div>
                 </div>
               </div>
             </div>
@@ -70,8 +75,8 @@
         </div>
         <div class="row mt-3">
           <div class="col">
-            <button v-if="permissions.AC_Update" type="submit" class="btn btn-primary">Save</button>
-            <input v-if="permissions.AC_Update" type="reset" class="btn btn-secondary" value="Reset" />
+            <md-button v-if="permissions.AC_Update" type="submit" class="md-raised md-primary">Save</md-button>
+            <md-button v-if="permissions.AC_Update" type="reset" class="md-raised md-default">Reset</md-button>
           </div>
         </div>
       </fieldset>

@@ -19,8 +19,8 @@
           <div class="card-block">
             <h4 class="card-title">{{ checklist.name }}</h4>
             <p v-if="checklist.description" class="card-text">{{ checklist.description }}</p>
-            <router-link v-if="permissions.CL_GetById" :to="{name: 'editor', params: {checklistId: checklist.id}}" class="pointer btn btn-secondary">View</router-link>
-            <a v-if="permissions.CL_Archive && !checklist.isArchived" href="#" @click="archive(checklist)" class="pointer btn btn-secondary">Archive</a>
+            <router-link tag="md-button" v-if="permissions.CL_GetById" :to="{name: 'editor', params: {checklistId: checklist.id}}" class="pointer md-raised md-default">View</router-link>
+            <md-button v-if="permissions.CL_Archive && !checklist.isArchived" @click="archive(checklist)" class="pointer md-raised md-default">Archive</md-button>
           </div>
           <div class="card-footer text-muted">
             <span v-if="!checklist.propertyReference && !checklist.propertyStreetAddress">General</span>
@@ -30,7 +30,7 @@
 
       </div>
       <div class="mt-3" v-if="permissions.CL_Archived && !hasArchivedLists">
-        <button @click="getArchived()" class="pointer btn btn-secondary">View Archived</button>
+        <md-button @click="getArchived()" class="pointer md-raised md-default">View Archived</md-button>
       </div>
     </div>
     <div class="row mt-5" v-if="permissions.CL_Create">
@@ -51,7 +51,7 @@
     </div>
     <div class="row mt-3" v-if="permissions.CL_Create">
       <div class="col">
-        <button @click="createChecklistInstance(selectedChecklist, selectedProperty)" class="btn btn-primary pointer">Create checklist</button>
+        <md-button @click="createChecklistInstance(selectedChecklist, selectedProperty)" class="md-raised md-primary pointer">Create checklist</md-button>
       </div>
     </div>
   </main>

@@ -22,8 +22,8 @@
               <span v-show="errors.has('password')" v-bind:title="errors.first('password')" class="form-control-feedback">Enter your password</span>
             </div>
           </div>
-          <button type="submit" v-bind:disabled="loggingIn" class="btn btn-primary">Log in</button>
-          <button class="btn btn-secondary" @click="reset()" type="reset">Reset</button>
+          <md-button type="submit" v-bind:disabled="loggingIn" class="md-raised md-primary">Log in</md-button>
+          <md-button type="reset" class="md-raised md-default" @click="reset()">Reset</md-button>
         </fieldset>
       </form>
     </div>

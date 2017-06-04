@@ -7,7 +7,9 @@ import Interceptors from 'src/interceptors'
 import VeeValidate from 'vee-validate'
 import Autocomplete from 'v-autocomplete'
 import router from './routes'
+import VueMaterial from 'vue-material'
 
+import 'vue-material/dist/vue-material.css'
 import 'src/extensions'
 import 'assets/styles/app.scss'
 import 'v-autocomplete/dist/v-autocomplete.css'
@@ -21,6 +23,9 @@ Vue.use(AuthService)
 Vue.use(Interceptors)
 Vue.use(VeeValidate)
 Vue.use(Autocomplete)
+
+Vue.use(VueMaterial.MdCore)
+Vue.use(VueMaterial.MdButton)
 
 new Vue({
   el: '#app',

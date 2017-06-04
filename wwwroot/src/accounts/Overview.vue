@@ -31,7 +31,7 @@
         </tr>
       </tbody>
     </table>
-    <button v-if="permissions.AC_New" type="button" class="btn btn-primary pointer" @click="addAccount()">Add an account</button>    
+    <md-button v-if="permissions.AC_New" type="button" class="md-raised md-primary pointer" @click="addAccount()">Add an account</md-button>    
   </main>
 </template>
 

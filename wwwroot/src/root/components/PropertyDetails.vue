@@ -20,7 +20,7 @@
           <div class="property-image" v-for="propertyImage in propertyDetails.propertyImages">
             <img class="img-thumbnail" v-if="propertyImage.fileName" v-bind:src="'/static/uploads/' + propertyDetails.portfolioId + '/' + propertyImage.fileName" v-bind:alt="propertyImage.fileName" v-bind:title="propertyImage.fileName">
             <div v-if="permissions.PI_Delete" class="overlay">
-              <button type="button" class="btn btn-danger pointer" @click="deleteImage(propertyImage)">Delete</button>
+              <md-button type="button" class="md-raised md-warn pointer" @click="deleteImage(propertyImage)">Delete</md-button>
             </div>
           </div>
           <div class="row mt-4" v-if="isUploading">
@@ -233,8 +233,8 @@
         </div>
         <div class="row mt-3">
           <div class="col">
-            <button v-if="permissions.PD_Update" type="submit" class="btn btn-primary">Save</button>
-            <input v-if="permissions.PD_Update" type="reset" class="btn btn-secondary" value="Reset" />
+            <md-button v-if="permissions.PD_Update" type="submit" class="md-raised md-primary">Save</md-button>
+            <md-button v-if="permissions.PD_Update" type="reset" class="md-raised md-secondary">Reset</md-button>
           </div>
         </div>
       </fieldset>

@@ -42,7 +42,7 @@
                   <label class="col-12 col-form-label" for="secondaryPhoneNumber">Email address</label>
                   <div class="col-12">
                     <p>{{ profile.emailAddress }}</p>
-                    <button v-if="!profile.emailConfirmed" @click="resendVerificationEmail()" type="button" class="btn btn-danger pointer">Re-send verification email</button>
+                    <md-button v-if="!profile.emailConfirmed" @click="resendVerificationEmail()" type="button" class="md-raised md-warn pointer">Re-send verification email</md-button>
                   </div>
                 </div>
               </div>
@@ -88,8 +88,8 @@
         </div>
         <div class="row mt-3">
           <div class="col">
-            <button v-if="permissions.P_Update" type="submit" class="btn btn-primary">Save</button>
-            <input v-if="permissions.P_Update" type="reset" class="btn btn-secondary" value="Reset" />
+            <md-button v-if="permissions.P_Update" type="submit" class="md-raised md-primary">Save</md-button>
+            <md-button v-if="permissions.P_Update" type="reset" class="md-raised md-default">Reset</md-button>
           </div>
         </div>
       </fieldset>

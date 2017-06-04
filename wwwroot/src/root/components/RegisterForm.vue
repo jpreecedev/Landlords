@@ -44,8 +44,8 @@
               <span v-show="errors.has('password:confirmed')" class="form-control-feedback">{{ errors.first('password:confirmed') }}</span>
             </div>
           </div>     
-          <button type="submit" v-bind:disabled="registering" id="register" name="register" class="btn btn-primary">Register</button>
-          <button type="reset" @click="reset()" class="btn btn-secondary">Reset</button>
+          <md-button type="submit" v-bind:disabled="registering" id="register" name="register" class="md-raised md-primary">Register</md-button>
+          <md-button type="reset" @click="reset()" class="md-raised md-default">Reset</md-button>
         </fieldset>
       </form>
     </div>
