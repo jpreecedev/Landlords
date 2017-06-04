@@ -20,7 +20,7 @@
       <div class="col-3 offset-9">
         <div class="alert alert-danger text-center">
           <p>Danger Zone!! Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-          <md-button class="md-raised md-warn pointer" @click="deleteChecklist()">Delete Checklist</md-button>
+          <md-button class="md-raised md-warn pointer" @click.native="deleteChecklist()">Delete Checklist</md-button>
         </div>
       </div>
     </div>

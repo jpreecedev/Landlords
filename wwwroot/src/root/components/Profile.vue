@@ -42,7 +42,7 @@
                   <label class="col-12 col-form-label" for="secondaryPhoneNumber">Email address</label>
                   <div class="col-12">
                     <p>{{ profile.emailAddress }}</p>
-                    <md-button v-if="!profile.emailConfirmed" @click="resendVerificationEmail()" type="button" class="md-raised md-warn pointer">Re-send verification email</md-button>
+                    <md-button v-if="!profile.emailConfirmed" @click.native="resendVerificationEmail()" type="button" class="md-raised md-warn pointer">Re-send verification email</md-button>
                   </div>
                 </div>
               </div>

@@ -27,7 +27,7 @@
         </tr>
       </tbody>
     </table>
-    <md-button v-if="permissions.PD_New" type="button" class="md-raised md-primary pointer" @click="addProperty()">Add a property</md-button>    
+    <md-button v-if="permissions.PD_New" type="button" class="md-raised md-primary pointer" @click.native="addProperty()">Add a property</md-button>    
   </main>
 </template>
 

@@ -20,7 +20,7 @@
           <div class="property-image" v-for="propertyImage in propertyDetails.propertyImages">
             <img class="img-thumbnail" v-if="propertyImage.fileName" v-bind:src="'/static/uploads/' + propertyDetails.portfolioId + '/' + propertyImage.fileName" v-bind:alt="propertyImage.fileName" v-bind:title="propertyImage.fileName">
             <div v-if="permissions.PI_Delete" class="overlay">
-              <md-button type="button" class="md-raised md-warn pointer" @click="deleteImage(propertyImage)">Delete</md-button>
+              <md-button type="button" class="md-raised md-warn pointer" @click.native="deleteImage(propertyImage)">Delete</md-button>
             </div>
           </div>
           <div class="row mt-4" v-if="isUploading">
@@ -117,8 +117,9 @@
                 <div class="form-group row mt-4">
                   <div class="form-check col">
                     <label class="form-check-label">
-                      <input type="checkbox" class="form-check-input" v-model="propertyDetails.isAvailableForLetting" id="isAvailableForLetting" name="isAvailableForLetting">
+                      <md-checkbox v-model="propertyDetails.isAvailableForLetting" id="isAvailableForLetting" name="isAvailableForLetting">
                         This property is available for letting
+                      </md-checkbox>
                     </label>
                   </div>
                 </div>

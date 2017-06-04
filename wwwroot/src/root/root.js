@@ -26,6 +26,7 @@ Vue.use(Autocomplete)
 
 Vue.use(VueMaterial.MdCore)
 Vue.use(VueMaterial.MdButton)
+Vue.use(VueMaterial.MdCheckbox)
 
 new Vue({
   el: '#app',

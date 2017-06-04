@@ -23,7 +23,7 @@
             </div>
           </div>
           <md-button type="submit" v-bind:disabled="loggingIn" class="md-raised md-primary">Log in</md-button>
-          <md-button type="reset" class="md-raised md-default" @click="reset()">Reset</md-button>
+          <md-button type="reset" class="md-raised md-default" @click.native="reset()">Reset</md-button>
         </fieldset>
       </form>
     </div>

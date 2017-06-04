@@ -45,7 +45,7 @@
             </div>
           </div>     
           <md-button type="submit" v-bind:disabled="registering" id="register" name="register" class="md-raised md-primary">Register</md-button>
-          <md-button type="reset" @click="reset()" class="md-raised md-default">Reset</md-button>
+          <md-button type="reset" @click.native="reset()" class="md-raised md-default">Reset</md-button>
         </fieldset>
       </form>
     </div>

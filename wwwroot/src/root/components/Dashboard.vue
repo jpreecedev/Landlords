@@ -8,7 +8,7 @@
     </div>
     <main class="container">
       <h1>Hello, Authenticated World!</h1>
-      <md-button class="md-raised md-primary" @click="callServer()">Make authenticated call</md-button>
+      <md-button class="md-raised md-primary" @click.native="callServer()">Make authenticated call</md-button>
     </main>
   </div>
 </template>

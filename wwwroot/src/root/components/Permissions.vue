@@ -35,8 +35,8 @@
           <div class="col-auto">
             <div class="h-100 d-flex align-items-center">
               <div>
-                <md-button @click="removePermission" v-bind:disabled="!selectedUser || !allocatedPermissions.length" type="button" class="md-raised md-default d-block mb-3 w-100">&#10007;</md-button>
-                <md-button @click="addPermission" v-bind:disabled="!selectedUser || !selectedPermissions.length" type="button" class="md-raised md-default d-block w-100">&rarr;</md-button>
+                <md-button @click.native="removePermission" v-bind:disabled="!selectedUser || !allocatedPermissions.length" type="button" class="md-raised md-default d-block mb-3 w-100">&#10007;</md-button>
+                <md-button @click.native="addPermission" v-bind:disabled="!selectedUser || !selectedPermissions.length" type="button" class="md-raised md-default d-block w-100">&rarr;</md-button>
               </div>
             </div>
           </div>
