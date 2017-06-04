@@ -2,6 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Landlords.ViewModels;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
     using Model;
@@ -54,5 +56,6 @@
         public DbSet<ChecklistItem> ChecklistItems { get; set; }
         public DbSet<ChecklistInstance> ChecklistInstances { get; set; }
         public DbSet<ChecklistItemInstance> ChecklistItemInstances { get; set; }
+        public DbSet<Account> Accounts { get; set; }
     }
 }

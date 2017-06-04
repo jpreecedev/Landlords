@@ -10,7 +10,7 @@
         Task<PropertyDetailsViewModel> NewAsync(Guid portfolioId);
         Task<ICollection<PropertyDetailsViewModel>> GetListAsync(Guid portfolioId);
         Task<PropertyDetailsViewModel> GetDetailsAsync(Guid propertyId);
-        Task UpdateAsync(PropertyDetailsViewModel viewModel);
+        Task UpdateAsync(Guid portfolioId, PropertyDetailsViewModel viewModel);
         Task<ICollection<PropertyBasicDetailsViewModel>> GetBasicDetailsAsync(Guid userId);
     }
 }

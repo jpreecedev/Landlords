@@ -8,9 +8,10 @@ using Landlords.Database;
 namespace Landlords.Migrations
 {
     [DbContext(typeof(LLDbContext))]
-    partial class LLDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170604070918_UpdateAccountEntity")]
+    partial class UpdateAccountEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
@@ -109,10 +110,6 @@ namespace Landlords.Migrations
                     b.Property<string>("Name");
 
                     b.Property<string>("Number");
-
-                    b.Property<DateTime>("Opened");
-
-                    b.Property<decimal>("OpeningBalance");
 
                     b.Property<Guid>("PortfolioId");
 

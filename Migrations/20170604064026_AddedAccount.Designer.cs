@@ -8,9 +8,10 @@ using Landlords.Database;
 namespace Landlords.Migrations
 {
     [DbContext(typeof(LLDbContext))]
-    partial class LLDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170604064026_AddedAccount")]
+    partial class AddedAccount
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
@@ -110,10 +111,6 @@ namespace Landlords.Migrations
 
                     b.Property<string>("Number");
 
-                    b.Property<DateTime>("Opened");
-
-                    b.Property<decimal>("OpeningBalance");
-
                     b.Property<Guid>("PortfolioId");
 
                     b.Property<string>("ProviderName");
@@ -122,9 +119,13 @@ namespace Landlords.Migrations
 
                     b.Property<string>("Type");
 
+                    b.Property<Guid>("UserId");
+
                     b.HasKey("Id");
 
                     b.HasIndex("PortfolioId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Accounts");
                 });
@@ -586,6 +587,11 @@ namespace Landlords.Migrations
                     b.HasOne("Model.Portfolio", "Portfolio")
                         .WithMany()
                         .HasForeignKey("PortfolioId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Model.Database.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

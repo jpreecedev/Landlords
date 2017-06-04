@@ -32,9 +32,9 @@
             return new PropertyDetailsViewModel(entity);
         }
 
-        public async Task UpdateAsync(PropertyDetailsViewModel viewModel)
+        public async Task UpdateAsync(Guid portfolioId, PropertyDetailsViewModel viewModel)
         {
-            var existingEntity = await Context.PropertyDetails.Where(details => !details.IsDeleted)
+            var existingEntity = await Context.PropertyDetails.Where(details => details.PortfolioId == portfolioId && !details.IsDeleted)
                 .FirstOrDefaultAsync(details => details.Id == viewModel.Id);
 
             if (existingEntity != null)

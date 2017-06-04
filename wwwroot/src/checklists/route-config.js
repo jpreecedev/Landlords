@@ -1,6 +1,6 @@
-import Checklists from '../Checklists'
-import Overview from '../Overview'
-import Editor from '../Editor'
+import Checklists from './Checklists'
+import Overview from './Overview'
+import Editor from './Editor'
 
 import guardRoute from 'root/routes/route-guards'
 

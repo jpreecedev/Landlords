@@ -63,7 +63,8 @@
         {
             if (ModelState.IsValid)
             {
-                await _propertyDataProvider.UpdateAsync(value);
+                var portfolioId = User.GetPortfolioId();
+                await _propertyDataProvider.UpdateAsync(portfolioId, value);
                 return Ok();
             }
             
