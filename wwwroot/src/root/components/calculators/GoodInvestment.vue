@@ -66,12 +66,12 @@
                     <p class="mb-2">Rental income period</p>
                     <div class="form-check form-check-inline">
                       <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Monthly" value="Monthly" v-model="rentalIncomeFrequency" checked> Monthly
+                        <md-radio name="inlineRadioOptions" id="Monthly" md-value="Monthly" v-model="rentalIncomeFrequency" checked>Monthly</md-radio>
                       </label>
                     </div>
                     <div class="form-check form-check-inline">
                       <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Annual" value="Annual" v-model="rentalIncomeFrequency"> Annual
+                        <md-radio name="inlineRadioOptions" id="Annual" md-value="Annual" v-model="rentalIncomeFrequency">Annual</md-radio>
                       </label>
                     </div>
                   </div>
@@ -102,12 +102,12 @@
                     <p class="mb-2">Agency fees period</p>
                     <div class="form-check form-check-inline">
                       <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="agencyFeesPeriodGroup" id="Monthly" value="Monthly" v-model="agencyFeeFrequency" checked> Monthly
+                        <md-radio name="agencyFeesPeriodGroup" id="Monthly" md-value="Monthly" v-model="agencyFeeFrequency" checked>Monthly</md-radio>
                       </label>
                     </div>
                     <div class="form-check form-check-inline">
                       <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="agencyFeesPeriodGroup" id="Annual" value="Annual" v-model="agencyFeeFrequency"> Annual
+                        <md-radio name="agencyFeesPeriodGroup" id="Annual" md-value="Annual" v-model="agencyFeeFrequency">Annual</md-radio>
                       </label>
                     </div>
                   </div>
@@ -127,12 +127,12 @@
                     <p class="mb-2">Maintenance fees period</p>
                     <div class="form-check form-check-inline">
                       <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="maintenanceFeesPeriodGroup" id="Monthly" value="Monthly" v-model="maintenanceFeeFrequency" checked> Monthly
+                        <md-radio name="maintenanceFeesPeriodGroup" id="Monthly" md-value="Monthly" v-model="maintenanceFeeFrequency" checked>Monthly</md-radio>
                       </label>
                     </div>
                     <div class="form-check form-check-inline">
                       <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="maintenanceFeesPeriodGroup" id="Annual" value="Annual" v-model="maintenanceFeeFrequency"> Annual
+                        <md-radio name="maintenanceFeesPeriodGroup" id="Annual" md-value="Annual" v-model="maintenanceFeeFrequency">Annual</md-radio>
                       </label>
                     </div>
                   </div>
@@ -163,17 +163,17 @@
                     <p class="mb-2">Which tax band are you in?</p>
                     <div class="form-check form-check-inline">
                       <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="taxBandRadioGroup" id="basicRate" value="BasicRate" v-model="taxBand"> Basic Rate (20%)
+                        <md-radio name="taxBandRadioGroup" id="basicRate" md-value="BasicRate" v-model="taxBand">Basic Rate (20%)</md-radio>
                       </label>
                     </div>
                     <div class="form-check form-check-inline">
                       <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="taxBandRadioGroup" id="higher" value="Higher" v-model="taxBand" checked> Higher (40%)
+                        <md-radio name="taxBandRadioGroup" id="higher" md-value="Higher" v-model="taxBand" checked>Higher (40%)</md-radio>
                       </label>
                     </div>
                     <div class="form-check form-check-inline">
                       <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="taxBandRadioGroup" id="top" value="Top" v-model="taxBand" checked> Top (45%)
+                        <md-radio name="taxBandRadioGroup" id="top" md-value="Top" v-model="taxBand">Top (45%)</md-radio>
                       </label>
                     </div>
                   </div>

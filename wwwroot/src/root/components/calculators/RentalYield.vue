@@ -39,12 +39,12 @@
                   <p class="mb-2">Rental income period</p>
                   <div class="form-check form-check-inline">
                     <label class="form-check-label">
-                      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Monthly" value="Monthly" v-model="rentalyield.frequency" checked> Monthly
+                      <md-radio name="inlineRadioOptions" id="Monthly" md-value="Monthly" v-model="rentalyield.frequency" checked>Monthly</md-radio>
                     </label>
                   </div>
                   <div class="form-check form-check-inline">
                     <label class="form-check-label">
-                      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="Annual" value="Annual" v-model="rentalyield.frequency"> Annual
+                      <md-radio name="inlineRadioOptions" id="Annual" md-value="Annual" v-model="rentalyield.frequency">Annual</md-radio>
                     </label>
                   </div>
                 </div>
