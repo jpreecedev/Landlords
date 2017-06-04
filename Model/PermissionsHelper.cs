@@ -19,7 +19,11 @@
             Permissions_CI.ToggleCompletedId,
             Permissions_CI.ToggleExpandedId,
             Permissions_CI.MoveId,
-            Permissions_CI.ApplyTemplateId
+            Permissions_CI.ApplyTemplateId,
+            Permissions_AC.GetById,
+            Permissions_AC.NewId,
+            Permissions_AC.OverviewId,
+            Permissions_AC.UpdateId,
         };
 
         public static readonly string[] Landlord =
@@ -44,10 +48,25 @@
             Permissions_CI.ToggleCompletedId,
             Permissions_CI.ToggleExpandedId,
             Permissions_CI.MoveId,
-            Permissions_CI.ApplyTemplateId
+            Permissions_CI.ApplyTemplateId,
+            Permissions_AC.GetById,
+            Permissions_AC.NewId,
+            Permissions_AC.OverviewId,
+            Permissions_AC.UpdateId,
         };
 
-        public static readonly string[] Accountant = { };
+        public static readonly string[] Accountant =
+        {
+            Permissions_P.ViewId,
+            Permissions_PD.ViewId,
+            Permissions_PD.GetListId,
+            Permissions_PD.GetById,
+            Permissions_PD.GetBasicId,
+            Permissions_CL.GetById,
+            Permissions_CL.OverviewId,
+            Permissions_AC.GetById,
+            Permissions_AC.OverviewId
+        };
 
         public static readonly string[] OtherUser =
         {
@@ -55,8 +74,11 @@
             Permissions_PD.ViewId,
             Permissions_PD.GetListId,
             Permissions_PD.GetById,
+            Permissions_PD.GetBasicId,
             Permissions_CL.GetById,
             Permissions_CL.OverviewId,
+            Permissions_AC.GetById,
+            Permissions_AC.OverviewId
         };
 
         public static readonly string[] AgencyAdministrator =

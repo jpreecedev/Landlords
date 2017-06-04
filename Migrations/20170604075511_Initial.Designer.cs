@@ -8,13 +8,13 @@ using Landlords.Database;
 namespace Landlords.Migrations
 {
     [DbContext(typeof(LLDbContext))]
-    [Migration("20170513113022_AddedEmailTemplate")]
-    partial class AddedEmailTemplate
+    [Migration("20170604075511_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.1.1")
+                .HasAnnotation("ProductVersion", "1.1.2")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<System.Guid>", b =>
@@ -98,6 +98,38 @@ namespace Landlords.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Model.Account", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Created");
+
+                    b.Property<DateTime?>("Deleted");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Number");
+
+                    b.Property<DateTime>("Opened");
+
+                    b.Property<decimal>("OpeningBalance");
+
+                    b.Property<Guid>("PortfolioId");
+
+                    b.Property<string>("ProviderName");
+
+                    b.Property<string>("SortCode");
+
+                    b.Property<string>("Type");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PortfolioId");
+
+                    b.ToTable("Accounts");
+                });
+
             modelBuilder.Entity("Model.Agency", b =>
                 {
                     b.Property<Guid>("Id")
@@ -138,6 +170,134 @@ namespace Landlords.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("ApplicationUserPortfolios");
+                });
+
+            modelBuilder.Entity("Model.Checklist", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Created");
+
+                    b.Property<DateTime?>("Deleted");
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Image");
+
+                    b.Property<bool>("IsAvailableDownstream");
+
+                    b.Property<bool>("IsPropertyMandatory");
+
+                    b.Property<string>("Name");
+
+                    b.Property<Guid>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Checklists");
+                });
+
+            modelBuilder.Entity("Model.ChecklistInstance", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("ChecklistId");
+
+                    b.Property<DateTime>("Created");
+
+                    b.Property<DateTime?>("Deleted");
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Image");
+
+                    b.Property<bool>("IsArchived");
+
+                    b.Property<bool>("IsAvailableDownstream");
+
+                    b.Property<bool>("IsPropertyMandatory");
+
+                    b.Property<string>("Name");
+
+                    b.Property<Guid>("PortfolioId");
+
+                    b.Property<Guid?>("PropertyDetailsId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChecklistId");
+
+                    b.HasIndex("PortfolioId");
+
+                    b.HasIndex("PropertyDetailsId");
+
+                    b.ToTable("ChecklistInstances");
+                });
+
+            modelBuilder.Entity("Model.ChecklistItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("ChecklistId");
+
+                    b.Property<DateTime>("Created");
+
+                    b.Property<DateTime?>("Deleted");
+
+                    b.Property<string>("DisplayText");
+
+                    b.Property<bool>("IsExpanded");
+
+                    b.Property<string>("Key");
+
+                    b.Property<int>("Order");
+
+                    b.Property<string>("Payload");
+
+                    b.Property<string>("Template");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChecklistId");
+
+                    b.ToTable("ChecklistItems");
+                });
+
+            modelBuilder.Entity("Model.ChecklistItemInstance", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("ChecklistInstanceId");
+
+                    b.Property<DateTime>("Created");
+
+                    b.Property<DateTime?>("Deleted");
+
+                    b.Property<string>("DisplayText");
+
+                    b.Property<bool>("IsCompleted");
+
+                    b.Property<bool>("IsExpanded");
+
+                    b.Property<string>("Key");
+
+                    b.Property<int>("Order");
+
+                    b.Property<string>("Payload");
+
+                    b.Property<string>("Template");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChecklistInstanceId");
+
+                    b.ToTable("ChecklistItemInstances");
                 });
 
             modelBuilder.Entity("Model.Database.ApplicationRole", b =>
@@ -422,6 +582,14 @@ namespace Landlords.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("Model.Account", b =>
+                {
+                    b.HasOne("Model.Portfolio", "Portfolio")
+                        .WithMany()
+                        .HasForeignKey("PortfolioId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("Model.ApplicationUserPortfolio", b =>
                 {
                     b.HasOne("Model.Agency", "Agency")
@@ -436,6 +604,47 @@ namespace Landlords.Migrations
                     b.HasOne("Model.Database.ApplicationUser", "User")
                         .WithMany("Portfolios")
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Model.Checklist", b =>
+                {
+                    b.HasOne("Model.Database.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Model.ChecklistInstance", b =>
+                {
+                    b.HasOne("Model.Checklist", "Checklist")
+                        .WithMany()
+                        .HasForeignKey("ChecklistId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Model.Portfolio", "Portfolio")
+                        .WithMany()
+                        .HasForeignKey("PortfolioId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Model.PropertyDetails", "PropertyDetails")
+                        .WithMany()
+                        .HasForeignKey("PropertyDetailsId");
+                });
+
+            modelBuilder.Entity("Model.ChecklistItem", b =>
+                {
+                    b.HasOne("Model.Checklist")
+                        .WithMany("ChecklistItems")
+                        .HasForeignKey("ChecklistId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Model.ChecklistItemInstance", b =>
+                {
+                    b.HasOne("Model.ChecklistInstance")
+                        .WithMany("ChecklistItems")
+                        .HasForeignKey("ChecklistInstanceId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
