@@ -29,10 +29,12 @@
                 <div class="form-group col">
                   <label for="multiplier">Multiplier (use the default if unsure)</label>
                     <div>
-                      <select v-model="multiplier" class="form-control" id="multiplier" name="multiplier" required>
-                        <option disabled value="">Select a multiplier</option>
-                        <option v-for="multiplier in multipliers" v-bind:value="multiplier">{{ multiplier }}</option>
-                      </select>
+                      <md-input-container>
+                        <md-select v-model="multiplier" id="multiplier" name="multiplier" required>
+                          <md-option disabled value="">Select a multiplier</md-option>
+                          <md-option v-for="multiplier in multipliers" :key="multiplier" v-bind:value="multiplier">{{ multiplier }}</md-option>
+                        </md-select>
+                      </md-input-container>
                     </div>
                 </div>
               </div>

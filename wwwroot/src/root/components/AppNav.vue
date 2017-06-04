@@ -47,7 +47,7 @@
             <a class="nav-link">View Profile</a>
           </router-link>
           <li class="nav-item">
-            <a class="pointer nav-link d-inline-block" @click.native="logout()">Log Out.</a>
+            <a class="pointer nav-link d-inline-block" @click="logout()">Log Out.</a>
           </li>
         </ul>
       </div>

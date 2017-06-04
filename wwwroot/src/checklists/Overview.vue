@@ -35,18 +35,22 @@
     </div>
     <div class="row mt-5" v-if="permissions.CL_Create">
       <div class="col-6" v-if="overview.availableChecklists && overview.availableChecklists.length">
-        <h2>Available checklist templates</h2>          
-        <select v-model="selectedChecklist" class="form-control">
-          <option v-for="checklist in overview.availableChecklists" v-bind:value="checklist" v-bind:disabled="checklist.isPropertyMandatory && portfolioProperties.length < 1">{{ checklist.origin }}: {{ checklist.name }}</option>
-        </select>  
+        <h2>Available checklist templates</h2>   
+        <md-input-container>       
+          <md-select v-model="selectedChecklist">
+            <md-option v-for="checklist in overview.availableChecklists" :key="checklist.name" v-bind:value="checklist.name" v-bind:disabled="checklist.isPropertyMandatory && portfolioProperties.length < 1">{{ checklist.origin }}: {{ checklist.name }}</md-option>
+          </md-select>
+        </md-input-container>
       </div>
     </div>
     <div class="row mt-5" v-if="permissions.CL_Create && portfolioProperties && portfolioProperties.length">
       <div class="col-6">
         <h3>Select a property from your portfolio</h3>
-        <select v-model="selectedProperty" v-bind:disabled="!selectedChecklist || !selectedChecklist.isPropertyMandatory" class="form-control">
-          <option v-for="property in portfolioProperties" v-bind:value="property">{{ property.propertyReference }}<span v-if="property.propertyStreetAddress"> ({{property.propertyStreetAddress}})</span></option>
-        </select>
+        <md-input-container>       
+          <md-select v-model="selectedProperty" v-bind:disabled="!selectedChecklist">
+            <md-option v-for="property in portfolioProperties" :key="property.id" v-bind:value="property.id">{{ property.propertyReference }}<span v-if="property.propertyStreetAddress"> ({{property.propertyStreetAddress}})</span></md-option>
+          </md-select>
+        </md-input-container>
       </div>
     </div>
     <div class="row mt-3" v-if="permissions.CL_Create">
@@ -85,7 +89,7 @@
           return this.$http.get(`/api/propertydetails/basicdetails`).then(response => {
             if (response.data) {
               this.portfolioProperties = response.data
-              this.selectedProperty = this.portfolioProperties[0]
+              this.selectedProperty = this.portfolioProperties[0].id
             }
           })
         }
@@ -96,7 +100,7 @@
           var first = this.overview.availableChecklists.filter(c => !c.isPropertyMandatory)[0]
           index = this.overview.availableChecklists.indexOf(first)
         }
-        this.selectedChecklist = this.overview.availableChecklists[index]
+        this.selectedChecklist = this.overview.availableChecklists[index].name
       })
     },
     methods: {
@@ -127,7 +131,7 @@
         if (!value || !value.isPropertyMandatory) {
           this.selectedProperty = null
         } else {
-          this.selectedProperty = this.portfolioProperties[0]
+          this.selectedProperty = this.portfolioProperties[0].id
         }
       }
     }

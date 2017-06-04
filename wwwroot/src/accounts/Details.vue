@@ -33,22 +33,26 @@
                   </div>
                 </div>
                 <div class="form-group row" :class="{ 'has-danger': errors.has('type') }">
-                  <label class="col-12 col-form-label" for="type">Account Type</label>
                   <div class="col-12">
-                    <select v-model="account.type" v-validate="'required'" data-vv-validate-on="blur" class="form-control" id="type" name="type" required>
-                      <option disabled value="">Select an account type</option>
-                      <option v-for="accountType in accountTypes" v-bind:value="accountType">{{ accountType }}</option>
-                    </select>
+                    <md-input-container>
+                      <label for="type">Account Type</label>
+                      <md-select v-model="account.type" v-validate="'required'" data-vv-validate-on="blur" id="type" name="type" required>
+                        <md-option disabled value="">Select an account type</md-option>
+                        <md-option v-for="accountType in accountTypes" :key="accountType" v-bind:value="accountType">{{ accountType }}</md-option>
+                      </md-select>
+                    </md-input-container>
                     <span v-show="errors.has('type')" v-bind:title="errors.first('type')" class="form-control-feedback">Select a valid account type</span>
                   </div>
                 </div>
                 <div class="form-group row" :class="{ 'has-danger': errors.has('providerName') }">
-                  <label class="col-12 col-form-label" for="providerName">Provider Name</label>
                   <div class="col-12">
-                    <select v-model="account.providerName" v-validate="'required'" data-vv-validate-on="blur" class="form-control" id="providerName" name="providerName" required>
-                      <option disabled value="">Select a provider</option>
-                      <option v-for="providerName in accountProviders" v-bind:value="providerName">{{ providerName }}</option>
-                    </select>
+                    <md-input-container>
+                      <label for="providerName">Provider Name</label>
+                      <md-select v-model="account.providerName" v-validate="'required'" data-vv-validate-on="blur" id="providerName" name="providerName" required>
+                        <md-option disabled value="">Select a provider</md-option>
+                        <md-option v-for="providerName in accountProviders" :key="providerName" v-bind:value="providerName">{{ providerName }}</md-option>
+                      </md-select>
+                    </md-input-container>
                     <span v-show="errors.has('providerName')" v-bind:title="errors.first('providerName')" class="form-control-feedback">Select a valid provider</span>
                   </div>
                 </div>

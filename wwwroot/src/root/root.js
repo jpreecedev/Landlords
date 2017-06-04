@@ -28,6 +28,11 @@ Vue.use(VueMaterial.MdCore)
 Vue.use(VueMaterial.MdButton)
 Vue.use(VueMaterial.MdCheckbox)
 Vue.use(VueMaterial.MdRadio)
+Vue.use(VueMaterial.MdSelect)
+Vue.use(VueMaterial.MdMenu)
+Vue.use(VueMaterial.MdList)
+Vue.use(VueMaterial.MdBackdrop)
+Vue.use(VueMaterial.MdInputContainer)
 
 new Vue({
   el: '#app',
