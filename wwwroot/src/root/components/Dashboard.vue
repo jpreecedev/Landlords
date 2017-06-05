@@ -2,12 +2,12 @@
   <div>
     <div class="jumbotron">
       <div class="container">
-        <h1 class="display-3">Landlord World!</h1>
+        <h1 class="md-display-4">Landlord World!</h1>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem quae, quas reiciendis earum ad eius cum molestiae possimus fuga ipsam nobis, tempora sed et, dicta tempore odio repellat ratione, aspernatur.</p>
       </div>
     </div>
     <main class="container">
-      <h1>Hello, Authenticated World!</h1>
+      <h1 class="md-display-2">Hello, Authenticated World!</h1>
       <md-button class="md-raised md-primary" @click.native="callServer()">Make authenticated call</md-button>
     </main>
   </div>

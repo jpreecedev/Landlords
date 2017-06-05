@@ -1,7 +1,7 @@
 <template>
   <main class="container">
     <div> 
-      <h1>Account details</h1>
+      <h1 class="md-display-2">Account details</h1>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
     </div>
     <div id="errorMessage" class="alert alert-danger" v-show="errors.any()">

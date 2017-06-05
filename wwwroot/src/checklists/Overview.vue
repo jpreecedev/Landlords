@@ -1,12 +1,12 @@
 <template>
   <main class="container">
     <div>
-      <h1>Overview</h1>
+      <h1 class="md-display-2">Overview</h1>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
     </div>
     <permissions-warning :permission="permissions.CL_Overview" />
     <div class="mt-5">
-      <h2>Your checklists</h2>
+      <h2 class="md-display-1">Your checklists</h2>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium sint, odio, optio, expedita alias dolorum dicta iusto aliquam eos doloremque fuga iste fugiat quam sed eius corporis suscipit. Voluptatum, assumenda.</p>
      
       <template v-if="!overview.checklists || !overview.checklists.length">
@@ -35,7 +35,7 @@
     </div>
     <div class="row mt-5" v-if="permissions.CL_Create">
       <div class="col-6" v-if="overview.availableChecklists && overview.availableChecklists.length">
-        <h2>Available checklist templates</h2>   
+        <h2 class="md-display-1">Available checklist templates</h2>   
         <md-input-container>       
           <md-select v-model="selectedChecklist">
             <md-option v-for="checklist in overview.availableChecklists" :key="checklist.name" v-bind:value="checklist.name" v-bind:disabled="checklist.isPropertyMandatory && portfolioProperties.length < 1">{{ checklist.origin }}: {{ checklist.name }}</md-option>
@@ -45,7 +45,7 @@
     </div>
     <div class="row mt-5" v-if="permissions.CL_Create && portfolioProperties && portfolioProperties.length">
       <div class="col-6">
-        <h3>Select a property from your portfolio</h3>
+        <h3 class="md-headline">Select a property from your portfolio</h3>
         <md-input-container>       
           <md-select v-model="selectedProperty" v-bind:disabled="!selectedChecklist">
             <md-option v-for="property in portfolioProperties" :key="property.id" v-bind:value="property.id">{{ property.propertyReference }}<span v-if="property.propertyStreetAddress"> ({{property.propertyStreetAddress}})</span></md-option>

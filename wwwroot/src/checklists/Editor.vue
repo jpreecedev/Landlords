@@ -1,8 +1,8 @@
 <template>
   <main class="container">
     <div>
-      <h1>New tenant</h1>
-      <h2 v-if="checklist">
+      <h1 class="md-display-2">New tenant</h1>
+      <h2 class="md-display-1" v-if="checklist">
         <span v-if="checklist.propertyReference">{{checklist.propertyReference}}</span> 
         <span v-if="checklist.propertyStreetAddress">({{ checklist.propertyStreetAddress }})</span>
       </h2>
