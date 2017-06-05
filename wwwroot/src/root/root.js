@@ -37,6 +37,8 @@ Vue.use(VueMaterial.MdIcon)
 Vue.use(VueMaterial.MdToolbar)
 Vue.use(VueMaterial.MdLayout)
 Vue.use(VueMaterial.MdAvatar)
+Vue.use(VueMaterial.MdTable)
+Vue.use(VueMaterial.MdCard)
 
 new Vue({
   el: '#app',
