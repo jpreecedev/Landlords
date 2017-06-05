@@ -22,6 +22,7 @@
           <md-card-content>
             <span v-if="!checklist.propertyReference && !checklist.propertyStreetAddress">General</span>
             <span v-if="checklist.propertyReference">{{ checklist.propertyReference }}</span>
+            <span v-if="checklist.propertyStreetAddress"> ({{ checklist.propertyStreetAddress }})</span>
           </md-card-content>
           <md-card-actions>
             <md-button v-if="permissions.CL_GetById" @click.native="$router.push({name: 'editor', params: {checklistId: checklist.id}})" class="md-default">View</md-button>

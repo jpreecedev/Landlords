@@ -21,7 +21,7 @@ export default {
   transition: all .3s ease;
 }
 .fade-enter {
-  transform: translateX(10px);
+  transform: translateY(10px);
   opacity: 0;
 }
 .fade-leave-to, .fade-leave-active {
