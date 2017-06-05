@@ -8,27 +8,29 @@
     <div class="mt-5">
       <h2 class="md-display-1">Your checklists</h2>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium sint, odio, optio, expedita alias dolorum dicta iusto aliquam eos doloremque fuga iste fugiat quam sed eius corporis suscipit. Voluptatum, assumenda.</p>
-     
-      <template v-if="!overview.checklists || !overview.checklists.length">
-        <p>You have not created any checklists yet.</p>
-      </template>
-
-      <div class="card-deck">
-        <div class="card col-3 pl-0 pr-0" v-for="checklist in overview.checklists">
-          <img class="card-img-top" src="../assets/images/checklist.png" v-bind:alt="checklist.name">
-          <div class="card-block">
-            <h4 class="card-title">{{ checklist.name }}</h4>
-            <p v-if="checklist.description" class="card-text">{{ checklist.description }}</p>
-            <md-button v-if="permissions.CL_GetById" @click.native="$router.push({name: 'editor', params: {checklistId: checklist.id}})" class="pointer md-raised md-default">View</md-button>
-            <md-button v-if="permissions.CL_Archive && !checklist.isArchived" @click.native="archive(checklist)" class="pointer md-raised md-default">Archive</md-button>
-          </div>
-          <div class="card-footer text-muted">
+      <p v-if="!overview.checklists || !overview.checklists.length">You have not created any checklists yet.</p>
+      
+      <md-layout>
+        <md-card md-with-hover v-for="checklist in overview.checklists" :key="checklist">
+          <md-card-header>
+            <div class="md-title">{{ checklist.name }}</div>
+            <div class="md-subhead" v-if="checklist.description">{{ checklist.description }}</div>
+          </md-card-header>
+          <md-card-media>
+            <img class="card-img-top" src="../assets/images/checklist.png" v-bind:alt="checklist.name">
+          </md-card-media>
+          <md-card-content>
             <span v-if="!checklist.propertyReference && !checklist.propertyStreetAddress">General</span>
             <span v-if="checklist.propertyReference">{{ checklist.propertyReference }}</span>
-          </div>
-        </div>
-
+          </md-card-content>
+          <md-card-actions>
+            <md-button v-if="permissions.CL_GetById" @click.native="$router.push({name: 'editor', params: {checklistId: checklist.id}})" class="md-default">View</md-button>
+            <md-button v-if="permissions.CL_Archive && !checklist.isArchived" @click.native="archive(checklist)" class="md-default">Archive</md-button>
+          </md-card-actions>
+        </md-card>
+      </md-layout>
       </div>
+
       <div class="mt-3" v-if="permissions.CL_Archived && !hasArchivedLists">
         <md-button @click.native="getArchived()" class="pointer md-raised md-default">View Archived</md-button>
       </div>
@@ -140,4 +142,8 @@
   
 <style lang="scss" scoped>
   
+  .md-card {
+    margin: 0 4px 16px 4px;
+  }
+
 </style>
