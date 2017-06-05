@@ -47,11 +47,9 @@
         Accounts
       </router-link>
 
-      <template v-if="auth.isLoggedIn">
-        <router-link v-if="permissions.P_View" tag="md-avatar" class="md-avatar" to="/profile">
-          <img src="../../assets/images/avatar.jpg" alt="Avatar">
-        </router-link>        
-      </template>
+      <md-avatar v-if="auth.isLoggedIn">
+        <img src="../../assets/images/avatar.jpg" alt="Avatar">
+      </md-avatar>
 
       <md-menu md-size="3" md-direction="bottom left">
         <md-button md-menu-trigger class="md-icon-button">
@@ -59,8 +57,14 @@
         </md-button>
 
         <md-menu-content>
-          <md-menu-item @click.native="logout()">
+          <md-menu-item v-if="auth.isLoggedIn" @click.native="logout()">
             Log out
+          </md-menu-item>
+          <md-menu-item v-if="!auth.isLoggedIn" @click.native="$router.push('/registration')">
+            Log in
+          </md-menu-item>
+          <md-menu-item v-if="permissions.P_View" @click.native="$router.push('/profile')">
+            View profile
           </md-menu-item>
         </md-menu-content>
       </md-menu>
