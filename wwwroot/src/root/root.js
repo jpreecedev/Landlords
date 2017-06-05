@@ -33,6 +33,10 @@ Vue.use(VueMaterial.MdMenu)
 Vue.use(VueMaterial.MdList)
 Vue.use(VueMaterial.MdBackdrop)
 Vue.use(VueMaterial.MdInputContainer)
+Vue.use(VueMaterial.MdIcon)
+Vue.use(VueMaterial.MdToolbar)
+Vue.use(VueMaterial.MdLayout)
+Vue.use(VueMaterial.MdAvatar)
 
 new Vue({
   el: '#app',
