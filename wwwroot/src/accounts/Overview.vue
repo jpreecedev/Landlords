@@ -4,33 +4,36 @@
       <h1>Bank accounts</h1>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
     </div>
-    <table class="table table-striped table-hover">
-      <thead class="thead-inverse">
-        <tr>
-          <th>Account name</th>
-          <th>Type</th>
-          <th>Provider</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-if="data.accounts" v-for="entry in data.accounts">
-          <td>
-            <router-link v-if="permissions.AC_GetById" :to="{name: 'accounts-details', params: {accountId: entry.id}}">
-              <account-display :account="entry" />
-            </router-link>
-            <span v-else>
-              <account-display :account="entry" />
-            </span>
-          </td>
-          <td>
-            {{ entry.type }}
-          </td>
-          <td>
-            {{ entry.providerName }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
+
+    <md-table-card>
+      <md-table>
+        <md-table-header class="thead-inverse">
+          <md-table-row>
+            <md-table-head>Account name</md-table-head>
+            <md-table-head>Type</md-table-head>
+            <md-table-head>Provider</md-table-head>
+          </md-table-row>
+        </md-table-header>
+        <md-table-body>
+          <md-table-row v-if="data.accounts" v-for="entry in data.accounts" :key="entry">
+            <md-table-cell>
+              <router-link v-if="permissions.AC_GetById" :to="{name: 'accounts-details', params: {accountId: entry.id}}">
+                <account-display :account="entry" />
+              </router-link>
+              <span v-else>
+                <account-display :account="entry" />
+              </span>
+            </md-table-cell>
+            <md-table-cell>
+              {{ entry.type }}
+            </md-table-cell>
+            <md-table-cell>
+              {{ entry.providerName }}
+            </md-table-cell>
+          </md-table-row>
+        </md-table-body>
+      </md-table>
+    </md-table-card>
     <md-button v-if="permissions.AC_New" type="button" class="md-raised md-primary pointer" @click.native="addAccount()">Add an account</md-button>    
   </main>
 </template>
