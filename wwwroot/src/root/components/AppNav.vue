@@ -53,9 +53,17 @@
         </router-link>        
       </template>
 
-      <md-button class="md-icon-button">
-        <md-icon>more_vert</md-icon>
-      </md-button>
+      <md-menu md-size="3" md-direction="bottom left">
+        <md-button md-menu-trigger class="md-icon-button">
+          <md-icon>more_vert</md-icon>
+        </md-button>
+
+        <md-menu-content>
+          <md-menu-item @click.native="logout()">
+            Log out
+          </md-menu-item>
+        </md-menu-content>
+      </md-menu>
 
     </md-toolbar>
   </nav>
