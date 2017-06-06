@@ -37,9 +37,11 @@
               <div class="card-block">
                 <h3 class="card-title">Overview</h3>
                 <div class="form-group row">
-                  <label class="col-12 col-form-label" for="reference">Property Reference</label>
                   <div class="col-12">
-                    <input v-model="propertyDetails.reference" class="form-control" id="reference" name="reference" type="text" required>
+                    <md-input-container>
+                      <label for="reference">Property Reference</label>
+                      <md-input v-model="propertyDetails.reference" id="reference" name="reference" required />
+                    </md-input-container>
                   </div>
                 </div>
                 <div class="form-group row" :class="{ 'has-danger': errors.has('propertyType') }">
@@ -54,8 +56,10 @@
                 </div>
                 <div class="form-group row">
                   <div class="col" :class="{ 'has-danger': errors.has('bedrooms') }">
-                    <label class="col-form-label" for="bedrooms">Number of bedrooms</label>
-                    <input type="number" class="form-control" v-model="propertyDetails.bedrooms" v-validate="'required'" id="bedrooms" name="bedrooms" data-vv-validate-on="blur" placeholder="Bedrooms">
+                    <md-input-container>
+                      <label for="bedrooms">Number of bedrooms</label>
+                      <md-input type="number" v-model="propertyDetails.bedrooms" id="bedrooms" name="bedrooms" placeholder="Bedrooms" />
+                    </md-input-container>                    
                   </div>
                   <div class="col" :class="{ 'has-danger': errors.has('furnishing') }">
                     <label class="col-form-label" for="furnishing">Furnishing</label>
@@ -79,29 +83,36 @@
               <div class="card-block">
                 <h3 class="card-title">Address</h3>
                 <div class="form-group row" :class="{ 'has-danger': errors.has('propertyStreetAddress') }">
-                  <label class="col-12 col-form-label" for="propertyStreetAddress">Street address</label>
                   <div class="col-12">
-                    <textarea v-model="propertyDetails.propertyStreetAddress" v-validate="'required'" data-vv-validate-on="blur" class="form-control" id="propertyStreetAddress" name="propertyStreetAddress" required>
-                    </textarea>
+                    <md-input-container>
+                      <label for="propertyStreetAddress">Street address</label>
+                      <md-textarea v-model="propertyDetails.propertyStreetAddress" id="propertyStreetAddress" name="propertyStreetAddress" required />
+                    </md-input-container>
                     <span v-show="errors.has('propertyStreetAddress')" v-bind:title="errors.first('propertyStreetAddress')" class="form-control-feedback">Enter a valid street address</span>
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-12 col-form-label" for="propertyTownOrCity">Town or City</label>
                   <div class="col-12">
-                    <input v-model="propertyDetails.propertyTownOrCity" class="form-control" id="propertyTownOrCity" name="propertyTownOrCity" type="text" required>
+                    <md-input-container>
+                      <label for="propertyTownOrCity">Town or City</label>
+                      <md-input v-model="propertyDetails.propertyTownOrCity" id="propertyTownOrCity" name="propertyTownOrCity" required />
+                    </md-input-container>
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-12 col-form-label" for="propertyCountyOrRegion">County or Region</label>
                   <div class="col-12">
-                    <input v-model="propertyDetails.propertyCountyOrRegion" class="form-control" id="propertyCountyOrRegion" name="propertyCountyOrRegion" type="text" required>
+                    <md-input-container>
+                      <label for="propertyCountyOrRegion">County or Region</label>
+                      <md-input v-model="propertyDetails.propertyCountyOrRegion" id="propertyCountyOrRegion" name="propertyCountyOrRegion" required />
+                    </md-input-container>
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-12 col-form-label" for="propertyPostcode">Postcode</label>          
                   <div class="col-12">
-                    <input v-model="propertyDetails.propertyPostcode" class="form-control" id="propertyPostcode" name="propertyPostcode" type="text" required>
+                    <md-input-container>
+                      <label for="propertyPostcode">Postcode</label>          
+                      <md-input v-model="propertyDetails.propertyPostcode" id="propertyPostcode" name="propertyPostcode" required />
+                    </md-input-container>
                   </div>
                 </div>
                 <div class="form-group row" :class="{ 'has-danger': errors.has('propertyCountry') }">
@@ -115,12 +126,10 @@
                   </div>
                 </div>
                 <div class="form-group row mt-4">
-                  <div class="form-check col">
-                    <label class="form-check-label">
-                      <md-checkbox v-model="propertyDetails.isAvailableForLetting" id="isAvailableForLetting" name="isAvailableForLetting">
-                        This property is available for letting
-                      </md-checkbox>
-                    </label>
+                  <div class="col">
+                    <md-checkbox v-model="propertyDetails.isAvailableForLetting" id="isAvailableForLetting" name="isAvailableForLetting">
+                    This property is available for letting
+                    </md-checkbox>
                   </div>
                 </div>
               </div>
@@ -136,39 +145,36 @@
                     <datepicker v-model="propertyDetails.purchaseDate" id="purchaseDate" name="purchaseDate" placeholder="Select date..." input-class="form-control"></datepicker>
                   </div>
                   <div class="col">
-                    <label class="col-form-label" for="purchasePrice">Purchase Price</label>
-                    <div class="input-group">
-                      <span class="input-group-addon">£</span>
-                      <input v-model="propertyDetails.purchasePrice" class="form-control" id="purchasePrice" name="purchasePrice" type="number">                    
-                      <span class="input-group-addon">.00</span>
-                    </div>
+                    <md-input-container>
+                      <md-icon>£</md-icon>
+                      <label for="purchasePrice">Purchase Price</label>
+                      <md-input v-model="propertyDetails.purchasePrice" type="number" id="purchasePrice" name="purchasePrice"></md-input>
+                    </md-input-container>
                   </div>
                 </div>
                 <div class="form-group row">
                   <div class="col">
-                    <label class="col-form-label" for="mortgageAmount">Mortgage Amount</label>                    
-                    <div class="input-group">
-                      <span class="input-group-addon">£</span>
-                      <input v-model="propertyDetails.mortgageAmount" class="form-control" id="mortgageAmount" name="mortgageAmount" type="number">                    
-                      <span class="input-group-addon">.00</span>
-                    </div>
+                    <md-input-container>
+                      <md-icon>£</md-icon>
+                      <label for="mortgageAmount">Mortgage Amount</label>                    
+                      <md-input v-model="propertyDetails.mortgageAmount" id="mortgageAmount" name="mortgageAmount" type="number" />
+                    </md-input-container>
                   </div>
                   <div class="col">
-                      <label class="col-form-label" for="interestRate">Interest Rate</label>
-                      <div class="input-group">
-                        <input v-model="propertyDetails.interestRate" class="form-control" id="interestRate" name="interestRate" type="number">
-                        <span class="input-group-addon">%</span>
-                      </div>
+                    <md-input-container>
+                      <label for="interestRate">Interest Rate</label>
+                      <md-input v-model="propertyDetails.interestRate" id="interestRate" name="interestRate" type="number" />
+                      <md-icon>%</md-icon>
+                    </md-input-container>
                   </div>
                 </div>
                 <div class="form-group row">
                   <div class="col-6">
-                    <label class="col-form-label" for="monthlyPayment">Monthly Repayment</label>                    
-                    <div class="input-group">
-                      <span class="input-group-addon">£</span>
-                      <input v-model="propertyDetails.monthlyPayment" class="form-control" id="monthlyPayment" name="monthlyPayment" type="number">                    
-                      <span class="input-group-addon">.00</span>
-                    </div>
+                    <md-input-container>
+                      <md-icon>£</md-icon>
+                      <label for="monthlyPayment">Monthly Repayment</label>  
+                      <md-input v-model="propertyDetails.monthlyPayment" id="monthlyPayment" name="monthlyPayment" type="number" />                    
+                    </md-input-container>
                   </div>
                   <div class="col-6">
                     <label class="col-form-label" for="mortgageProvider">Mortgage Provider</label>
@@ -193,16 +199,15 @@
                 <h6 class="card-subtitle mb-2 text-muted">Enter expected rents for this property.</h6>
                 <div class="form-group row">
                   <div class="col">
-                    <label class="col-form-label" for="targetRent">Target Rent</label>
-                    <div class="input-group">
-                      <span class="input-group-addon">£</span>
-                      <input v-model="propertyDetails.targetRent" class="form-control" id="targetRent" name="targetRent" type="number" required>
-                      <span class="input-group-addon">.00</span>
-                    </div>
+                    <md-input-container>
+                      <md-icon>£</md-icon>
+                      <label for="targetRent">Target Rent</label>
+                      <md-input v-model="propertyDetails.targetRent" id="targetRent" name="targetRent" type="number" />
+                    </md-input-container>
                   </div>
                   <div class="col">
                     <label class="col-form-label" for="paymentTerm">Payment Term</label>
-                    <select v-model="propertyDetails.paymentTerm" class="form-control" id="paymentTerm" name="paymentTerm" required>
+                    <select v-model="propertyDetails.paymentTerm" class="form-control" id="paymentTerm" name="paymentTerm">
                       <option disabled value="">Select a payment term</option>
                       <option v-for="paymentTerm in paymentTerms" v-bind:value="paymentTerm">{{ paymentTerm }}</option>
                     </select>
@@ -220,12 +225,11 @@
                     <datepicker v-model="propertyDetails.sellingDate" id="sellingDate" name="sellingDate" placeholder="Select date..." input-class="form-control"></datepicker>
                   </div>
                   <div class="col">
-                    <label class="col-form-label" for="sellingPrice">Selling Price</label>
-                    <div class="input-group">
-                      <span class="input-group-addon">£</span>
-                      <input v-model="propertyDetails.sellingPrice" class="form-control" id="sellingPrice" name="sellingPrice" type="number" required>
-                      <span class="input-group-addon">.00</span>
-                    </div>
+                    <md-input-container>
+                      <md-icon>£</md-icon>
+                      <label for="sellingPrice">Selling Price</label>
+                      <md-input v-model="propertyDetails.sellingPrice" id="sellingPrice" name="sellingPrice" type="number" required />
+                    </md-input-container>
                   </div>
                 </div>
               </div>
