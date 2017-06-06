@@ -1,5 +1,5 @@
 <template>
-  <main class="container">
+  <main>
     <div>
       <h1 class="md-display-2">How much can I borrow?</h1>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
@@ -11,7 +11,7 @@
           <form role="form" class="card-block" novalidate>
             <fieldset>
               <div class="row">
-                <div class="form-group col" :class="{ 'has-danger': errors.has('grossIncome') }">
+                <div class="col" :class="{ 'has-danger': errors.has('grossIncome') }">
                   <label for="grossIncome">
                   Your annual gross income<br/>
                   <small class="text-muted">How much you earn, including everybody who will be included on the mortgage, BEFORE tax</small>                
@@ -26,7 +26,7 @@
                 </div>
               </div>
               <div class="row">
-                <div class="form-group col">
+                <div class="col">
                   <label for="multiplier">Multiplier (use the default if unsure)</label>
                     <div>
                       <md-input-container>

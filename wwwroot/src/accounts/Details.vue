@@ -1,5 +1,5 @@
 <template>
-  <main class="container">
+  <main>
     <div> 
       <h1 class="md-display-2">Account details</h1>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
@@ -14,25 +14,25 @@
           <div class="col-6">
             <div class="card">
               <div class="card-block">
-                <div class="form-group row">
+                <div class="row">
                   <label class="col-12 col-form-label" for="name">Account Name</label>
                   <div class="col-12">
                     <input v-model="account.name" class="form-control" id="name" name="name" type="text" required>
                   </div>
                 </div>
-                <div class="form-group row">
+                <div class="row">
                   <label class="col-12 col-form-label" for="number">Account Number</label>
                   <div class="col-12">
                     <input v-model="account.number" class="form-control" id="number" name="name" type="text" required>
                   </div>
                 </div>
-                <div class="form-group row">
+                <div class="row">
                   <label class="col-12 col-form-label" for="sortCode">Sort Code</label>
                   <div class="col-12">
                     <input v-model="account.sortCode" class="form-control" id="sortCode" name="name" type="text" required>
                   </div>
                 </div>
-                <div class="form-group row" :class="{ 'has-danger': errors.has('type') }">
+                <div class="row" :class="{ 'has-danger': errors.has('type') }">
                   <div class="col-12">
                     <md-input-container>
                       <label for="type">Account Type</label>
@@ -44,7 +44,7 @@
                     <span v-show="errors.has('type')" v-bind:title="errors.first('type')" class="form-control-feedback">Select a valid account type</span>
                   </div>
                 </div>
-                <div class="form-group row" :class="{ 'has-danger': errors.has('providerName') }">
+                <div class="row" :class="{ 'has-danger': errors.has('providerName') }">
                   <div class="col-12">
                     <md-input-container>
                       <label for="providerName">Provider Name</label>
@@ -56,13 +56,13 @@
                     <span v-show="errors.has('providerName')" v-bind:title="errors.first('providerName')" class="form-control-feedback">Select a valid provider</span>
                   </div>
                 </div>
-                <div class="form-group row">
+                <div class="row">
                   <label class="col-12 col-form-label" for="opened">Date Opened</label>          
                   <div class="col-12">
                     <datepicker v-model="account.opened" id="opened" name="opened" placeholder="Select date..." input-class="form-control"></datepicker>
                   </div>
                 </div>
-                <div class="form-group row">
+                <div class="row">
                   <div class="col" :class="{ 'has-danger': errors.has('openingBalance') }">
                     <label class="col-form-label" for="openingBalance">Opening Balance</label>
                     <div class="input-group">

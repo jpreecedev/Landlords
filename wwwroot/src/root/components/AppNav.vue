@@ -94,14 +94,6 @@ export default {
 
 <style lang="scss" scoped>
 
-  .whiteframe {
-    height: 88px;    
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 10;
-  }
-
   .md-title {
     flex: 1;
   }

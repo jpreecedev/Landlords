@@ -1,5 +1,5 @@
 <template>
-  <main class="container">
+  <main>
     <div> 
       <h1 class="md-display-2">Property Details</h1>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
@@ -36,7 +36,7 @@
             <div class="card">
               <div class="card-block">
                 <h3 class="card-title">Overview</h3>
-                <div class="form-group row">
+                <div class="row">
                   <div class="col-12">
                     <md-input-container>
                       <label for="reference">Property Reference</label>
@@ -44,7 +44,7 @@
                     </md-input-container>
                   </div>
                 </div>
-                <div class="form-group row" :class="{ 'has-danger': errors.has('propertyType') }">
+                <div class="row" :class="{ 'has-danger': errors.has('propertyType') }">
                   <label class="col-12 col-form-label" for="propertyType">Property Type</label>
                   <div class="col-12">
                     <select v-model="propertyDetails.propertyType" v-validate="'required'" data-vv-validate-on="blur" class="form-control" id="propertyType" name="propertyType"  required>
@@ -54,7 +54,7 @@
                     <span v-show="errors.has('propertyType')" v-bind:title="errors.first('propertyType')" class="form-control-feedback">Select a valid property type</span>
                   </div>
                 </div>
-                <div class="form-group row">
+                <div class="row">
                   <div class="col" :class="{ 'has-danger': errors.has('bedrooms') }">
                     <md-input-container>
                       <label for="bedrooms">Number of bedrooms</label>
@@ -70,7 +70,7 @@
                     <span v-show="errors.has('furnishing')" v-bind:title="errors.first('furnishing')" class="form-control-feedback">Select a valid furnishing</span>
                   </div>                
                 </div>
-                <div class="form-group row">
+                <div class="row">
                   <label class="col-12 col-form-label" for="constructionDate">Construction Date</label>          
                   <div class="col-12">
                     <datepicker v-model="propertyDetails.constructionDate" id="constructionDate" name="constructionDate" placeholder="Select date..." input-class="form-control"></datepicker>
@@ -82,7 +82,7 @@
             <div class="card mt-3">
               <div class="card-block">
                 <h3 class="card-title">Address</h3>
-                <div class="form-group row" :class="{ 'has-danger': errors.has('propertyStreetAddress') }">
+                <div class="row" :class="{ 'has-danger': errors.has('propertyStreetAddress') }">
                   <div class="col-12">
                     <md-input-container>
                       <label for="propertyStreetAddress">Street address</label>
@@ -91,7 +91,7 @@
                     <span v-show="errors.has('propertyStreetAddress')" v-bind:title="errors.first('propertyStreetAddress')" class="form-control-feedback">Enter a valid street address</span>
                   </div>
                 </div>
-                <div class="form-group row">
+                <div class="row">
                   <div class="col-12">
                     <md-input-container>
                       <label for="propertyTownOrCity">Town or City</label>
@@ -99,7 +99,7 @@
                     </md-input-container>
                   </div>
                 </div>
-                <div class="form-group row">
+                <div class="row">
                   <div class="col-12">
                     <md-input-container>
                       <label for="propertyCountyOrRegion">County or Region</label>
@@ -107,7 +107,7 @@
                     </md-input-container>
                   </div>
                 </div>
-                <div class="form-group row">
+                <div class="row">
                   <div class="col-12">
                     <md-input-container>
                       <label for="propertyPostcode">Postcode</label>          
@@ -115,7 +115,7 @@
                     </md-input-container>
                   </div>
                 </div>
-                <div class="form-group row" :class="{ 'has-danger': errors.has('propertyCountry') }">
+                <div class="row" :class="{ 'has-danger': errors.has('propertyCountry') }">
                   <label class="col-12 col-form-label" for="propertyCountry">Country</label>          
                   <div class="col-12">
                     <select v-model="propertyDetails.propertyCountry" v-validate="'required'" data-vv-validate-on="blur" class="form-control" id="propertyCountry" name="propertyCountry" required>
@@ -125,7 +125,7 @@
                     <span v-show="errors.has('propertyCountry')" v-bind:title="errors.first('propertyCountry')" class="form-control-feedback">Select a valid country</span>
                   </div>
                 </div>
-                <div class="form-group row mt-4">
+                <div class="row mt-4">
                   <div class="col">
                     <md-checkbox v-model="propertyDetails.isAvailableForLetting" id="isAvailableForLetting" name="isAvailableForLetting">
                     This property is available for letting
@@ -139,7 +139,7 @@
             <div class="card">
               <div class="card-block">
                 <h4 class="card-title">Ownership</h4>
-                <div class="form-group row">
+                <div class="row">
                   <div class="col">
                     <label class="col-form-label" for="purchaseDate">Purchase Date</label>
                     <datepicker v-model="propertyDetails.purchaseDate" id="purchaseDate" name="purchaseDate" placeholder="Select date..." input-class="form-control"></datepicker>
@@ -152,7 +152,7 @@
                     </md-input-container>
                   </div>
                 </div>
-                <div class="form-group row">
+                <div class="row">
                   <div class="col">
                     <md-input-container>
                       <md-icon>£</md-icon>
@@ -168,7 +168,7 @@
                     </md-input-container>
                   </div>
                 </div>
-                <div class="form-group row">
+                <div class="row">
                   <div class="col-6">
                     <md-input-container>
                       <md-icon>£</md-icon>
@@ -184,7 +184,7 @@
                     </select>
                   </div>
                 </div>
-                <div class="form-group row">
+                <div class="row">
                   <div class="col">
                     <label class="col-form-label" for="currentDealExpirationDate">Current deal expiration date</label>
                     <p class="mb-2 text-muted">Tell us the date when your current mortgage deal/product expires</p>
@@ -197,7 +197,7 @@
               <div class="card-block">
                 <h4 class="card-title">Projected Rent</h4>
                 <h6 class="card-subtitle mb-2 text-muted">Enter expected rents for this property.</h6>
-                <div class="form-group row">
+                <div class="row">
                   <div class="col">
                     <md-input-container>
                       <md-icon>£</md-icon>
@@ -219,7 +219,7 @@
               <div class="card-block">
                 <h4 class="card-title">Selling Details</h4>
                 <h6 class="card-subtitle mb-2 text-muted">Tell us the actual or expected selling price.</h6>
-                <div class="form-group row">
+                <div class="row">
                   <div class="col">
                     <label class="col-form-label" for="sellingDate">Selling Date</label>
                     <datepicker v-model="propertyDetails.sellingDate" id="sellingDate" name="sellingDate" placeholder="Select date..." input-class="form-control"></datepicker>
@@ -364,19 +364,12 @@ export default {
 
 <style lang="scss" scoped>
 
-  @import '../../assets/styles/app';
-
   .property-image-container {
 
-    background-color: $gray-lighter;
     margin-bottom: 2rem;
     overflow-x: scroll;
     overflow-y: hidden;
     white-space: nowrap;
-
-    @include media-breakpoint-up(lg) {
-      padding: remc(24px) remc(16px);      
-    }
 
     .property-image {
       position: relative;
@@ -392,11 +385,7 @@ export default {
         max-width: 200px;
         max-height: 150px;
         height: auto;
-        &:hover {
-          background-color: $gray-lightest;
-        }
         &.placeholder {
-          border: 3px dashed $gray-light; 
           border-radius: 30px;
           cursor: pointer;
         }

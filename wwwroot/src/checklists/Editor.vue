@@ -1,5 +1,5 @@
 <template>
-  <main class="container">
+  <main>
     <div>
       <h1 class="md-display-2">New tenant</h1>
       <h2 class="md-display-1" v-if="checklist">

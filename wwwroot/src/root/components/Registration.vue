@@ -1,5 +1,5 @@
 <template>
-  <main class="container">
+  <main>
     <div class="alert alert-danger" v-if="expired">
       Your session has expired, please log in again.
     </div>

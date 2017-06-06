@@ -1,5 +1,5 @@
 <template>
-  <main class="container">
+  <main>
     <div> 
       <h1 class="md-display-2">Permissions</h1>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
@@ -13,7 +13,7 @@
     </div> 
     <form role="form" novalidate>
       <fieldset>
-        <div class="form-group row">
+        <div class="row">
           <label class="col-12 col-form-label" for="searchForUser">Search for user</label>
           <div class="col-12">
             <v-autocomplete :items="filteredUsers" placeholder="Enter name or email" v-model="selectedUser" :auto-select-one-item="false" :get-label="getLabel" :component-item='template' @change="change"></v-autocomplete>
@@ -21,7 +21,7 @@
         </div>
         <div class="row mt-4">
           <div class="col">
-            <div class="form-group row">
+            <div class="row">
               <label class="col-12 col-form-label" for="permission">Available Permissions</label>
               <div class="col-12">
                 <select v-model="selectedPermissions" class="form-control" id="permission" name="permission" size="20" multiple>
@@ -41,7 +41,7 @@
             </div>
           </div>
           <div class="col">
-            <div class="form-group row">
+            <div class="row">
               <label class="col-12 col-form-label" for="userPermission">Allocated Permissions</label>
               <div class="col-12">
                 <select v-model="allocatedPermissions" class="form-control" id="userPermission" name="userPermission" size="20" multiple>

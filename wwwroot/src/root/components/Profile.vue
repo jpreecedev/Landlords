@@ -1,5 +1,5 @@
 <template>
-  <main class="container">
+  <main>
     <div>
       <h1 class="md-display-2">Profile</h1>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
@@ -24,21 +24,21 @@
             <div class="card">
               <div class="card-block">
                 <h3 class="card-title">Personal Details</h3>
-                <div class="form-group row" :class="{ 'has-danger': errors.has('firstName') }">
+                <div class="row" :class="{ 'has-danger': errors.has('firstName') }">
                   <label class="col-12 col-form-label" for="firstName">First name</label>
                   <div class="col-12">
                     <input v-model="profile.firstName" class="form-control" id="firstName" name="firstName" type="text" placeholder="Your first name" v-validate="'required'" data-vv-validate-on="change" required>
                     <span v-show="errors.has('firstName')" v-bind:title="errors.first('firstName')" class="form-control-feedback">Enter a valid first name</span>
                   </div>
                 </div>
-                <div class="form-group row" :class="{ 'has-danger': errors.has('lastName') }">
+                <div class="row" :class="{ 'has-danger': errors.has('lastName') }">
                   <label class="col-12 col-form-label" for="lastName">Last name</label>
                   <div class="col-12">
                     <input v-model="profile.lastName" id="lastName" name="lastName" type="text" placeholder="Your last name" class="form-control" v-validate="'required'" data-vv-validate-on="change" required>
                     <span v-show="errors.has('lastName')" v-bind:title="errors.first('lastName')" class="form-control-feedback">Enter a valid last name</span>
                   </div>
                 </div>
-                <div class="form-group row">
+                <div class="row">
                   <label class="col-12 col-form-label" for="secondaryPhoneNumber">Email address</label>
                   <div class="col-12">
                     <p>{{ profile.emailAddress }}</p>
@@ -52,7 +52,7 @@
             <div class="card">
               <div class="card-block">
                 <h3 class="card-title">Contact Details</h3>
-                <div class="form-group row">
+                <div class="row">
                   <label class="col-12 col-form-label" for="availableFrom">Available From</label>
                   <div class="col-12">
                     <select v-model="profile.availableFrom" class="form-control" id="availableFrom" name="availableFrom">
@@ -61,7 +61,7 @@
                     </select>
                   </div>
                 </div>
-                <div class="form-group row">
+                <div class="row">
                   <label class="col-12 col-form-label" for="availableTo">Available To</label>
                   <div class="col-12">
                     <select v-model="profile.availableTo" class="form-control" id="availableTo" name="availableTo">
@@ -70,13 +70,13 @@
                     </select>
                   </div>
                 </div>
-                <div class="form-group row">
+                <div class="row">
                   <label class="col-12 col-form-label" for="phoneNumber">Main Phone Number</label>
                   <div class="col-12">
                     <input v-model="profile.phoneNumber" class="form-control" id="phoneNumber" name="phoneNumber" type="tel" required>
                   </div>
                 </div>
-                <div class="form-group row">
+                <div class="row">
                   <label class="col-12 col-form-label" for="secondaryPhoneNumber">Secondary Phone Number</label>
                   <div class="col-12">
                     <input v-model="profile.secondaryPhoneNumber" class="form-control" id="secondaryPhoneNumber" name="secondaryPhoneNumber" type="tel" required>

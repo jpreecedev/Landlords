@@ -2,7 +2,7 @@
   <main>
     <div class="jumbotron">
       <div class="container">
-        <h1 class="display-3">Hello, landlords!</h1>
+        <h1 class="md-display-4">Hello, landlords!</h1>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae iure, vel iste aliquid laborum, nesciunt ullam mollitia nostrum, expedita delectus deleniti hic repellat dolor recusandae, qui perferendis aliquam aut ratione!</p>
         <p><md-button @click.native="$router.push({name: 'registration'})" class="md-raised md-primary" role="button">Go to registration &raquo;</md-button></p>
       </div>

@@ -14,8 +14,6 @@ import 'src/extensions'
 import 'assets/styles/app.scss'
 import 'v-autocomplete/dist/v-autocomplete.css'
 
-require('bootstrap')
-
 Vue.config.productionTip = false
 
 Vue.use(VueResource)

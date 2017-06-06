@@ -1,5 +1,5 @@
 <template>
-  <main class="container">
+  <main>
     <div>
       <h1 class="md-display-2">Is this property a good investment?</h1>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
@@ -12,7 +12,7 @@
               <div class="card-block">
                 <h4 class="card-title">Basic details about your property</h4>
                 <div class="row">
-                  <div class="form-group col" :class="{ 'has-danger': errors.has('pricePaid') }">
+                  <div class="col" :class="{ 'has-danger': errors.has('pricePaid') }">
                     <label for="pricePaid" class="form-control-label">Price paid</label>
                     <div class="input-group">
                       <span class="input-group-addon">&pound;</span>
@@ -24,7 +24,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="form-group col" :class="{ 'has-danger': errors.has('annualInterestRate') }">
+                  <div class="col" :class="{ 'has-danger': errors.has('annualInterestRate') }">
                     <label for="annualInterestRate" class="form-control-label">Interest rate (annual)</label>
                     <div class="input-group">
                       <input type="number" step="1" class="form-control" id="annualInterestRate" name="annualInterestRate" v-model="annualInterestRate" v-validate="'required|min_value:0.1|max_value:20'" data-vv-validate-on="change" placeholder="Interest Rate">
@@ -36,7 +36,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="form-group col" :class="{ 'has-danger': errors.has('mortgageLength') }">
+                  <div class="col" :class="{ 'has-danger': errors.has('mortgageLength') }">
                     <label for="mortgageLength" class="form-control-label">Mortgage length</label>
                     <div class="input-group">
                       <input type="number" step="1" class="form-control" id="mortgageLength" name="mortgageLength" v-model="mortgageLength" v-validate="'required|min_value:1|max_value:50'" data-vv-validate-on="change" placeholder="Mortgage length">
@@ -49,7 +49,7 @@
                 </div>
                 <h4 class="card-title mt-3">Income</h4>
                 <div class="row">
-                  <div class="form-group col" :class="{ 'has-danger': errors.has('expectedRentalIncome') }">
+                  <div class="col" :class="{ 'has-danger': errors.has('expectedRentalIncome') }">
                     <label for="expectedRentalIncome" class="form-control-label">Expected rental income</label>
                     <div class="input-group">
                       <span class="input-group-addon">&pound;</span>
@@ -62,7 +62,7 @@
                   </div>
                 </div>
                 <div class="row mt-2">
-                  <div class="form-group col">
+                  <div class="col">
                     <p class="mb-2">Rental income period</p>
                     <div class="form-check form-check-inline">
                       <label class="form-check-label">
@@ -78,7 +78,7 @@
                 </div>
                 <h4 class="card-title mt-3">Capital Gains</h4>
                 <div class="row">
-                  <div class="form-group col">
+                  <div class="col">
                     <label for="anticipatedAnnualIncrease">Anticipated increase in property value (annual)</label>
                     <div class="input-group">
                       <input type="number" step="1" class="form-control" id="anticipatedAnnualIncrease" name="anticipatedAnnualIncrease" v-model="anticipatedAnnualIncrease" placeholder="Anticipated Annual Increase">
@@ -88,7 +88,7 @@
                 </div>
                 <h4 class="card-title mt-3">Outgoings</h4>
                 <div class="row">
-                  <div class="form-group col">
+                  <div class="col">
                     <label for="agencyFee">Agency fees</label>
                     <div class="input-group">
                       <span class="input-group-addon">&pound;</span>
@@ -98,7 +98,7 @@
                   </div>
                 </div>
                 <div class="row mt-2">
-                  <div class="form-group col">
+                  <div class="col">
                     <p class="mb-2">Agency fees period</p>
                     <div class="form-check form-check-inline">
                       <label class="form-check-label">
@@ -113,7 +113,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="form-group col">
+                  <div class="col">
                     <label for="maintenanceFees">Maintenance fees</label>
                     <div class="input-group">
                       <span class="input-group-addon">&pound;</span>
@@ -123,7 +123,7 @@
                   </div>
                 </div>
                 <div class="row mt-2">
-                  <div class="form-group col">
+                  <div class="col">
                     <p class="mb-2">Maintenance fees period</p>
                     <div class="form-check form-check-inline">
                       <label class="form-check-label">
@@ -138,7 +138,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="form-group col">
+                  <div class="col">
                     <label for="buildingsInsurance">Buildings insurance (per year)</label>
                     <div class="input-group">
                       <span class="input-group-addon">&pound;</span>
@@ -148,7 +148,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="form-group col">
+                  <div class="col">
                     <label for="contentsInsurance">Contents insurance (per year)</label>
                     <div class="input-group">
                       <span class="input-group-addon">&pound;</span>
@@ -159,7 +159,7 @@
                 </div>
                 <h4 class="card-title mt-3">Taxation</h4>
                 <div class="row mt-2">
-                  <div class="form-group col">
+                  <div class="col">
                     <p class="mb-2">Which tax band are you in?</p>
                     <div class="form-check form-check-inline">
                       <label class="form-check-label">
@@ -180,7 +180,7 @@
                 </div>
                 <h4 class="card-title mt-3">Other</h4>
                 <div class="row">
-                  <div class="form-group col">
+                  <div class="col">
                     <label for="contingency">Contingency</label>
                     <div class="input-group">
                       <span class="input-group-addon">&pound;</span>
@@ -190,7 +190,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="form-group col">
+                  <div class="col">
                     <label for="otherCosts">Other costs</label>
                     <div class="input-group">
                       <span class="input-group-addon">&pound;</span>
