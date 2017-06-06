@@ -1,76 +1,78 @@
 <template>
-  <nav>
-    <md-toolbar class="md-medium">
+  <md-whiteframe class="whiteframe" md-elevation="2">
+    <nav>
+      <md-toolbar class="md-medium">
 
-      <md-button class="md-icon-button">
-        <md-icon>menu</md-icon>
-      </md-button>
-
-      <h2 class="md-title">Landlords</h2>
-      <router-link tag="button" class="md-button" v-if="auth.isLoggedIn" to="/dashboard">Dashboard</router-link>
-      <router-link v-if="permissions.LL_List" tag="button" class="md-button" to="/agency/landlord-list">
-        Landlord List
-      </router-link>
-      <router-link v-if="!auth.isLoggedIn" tag="button" class="md-button" to="/registration">
-        Registration
-      </router-link>
-      <router-link v-if="permissions.PD_GetList" tag="button" class="md-button" to="/manager/property-list">
-        Property List
-      </router-link>
-      <router-link v-if="permissions.PE_List" tag="button" class="md-button" to="/permissions">
-        Permissions
-      </router-link>
-      <router-link v-if="permissions.CL_Overview" tag="button" class="md-button" to="/checklists/">
-        Checklists
-      </router-link>
-
-      <md-menu md-size="6" md-direction="bottom left">
-        <md-button md-menu-trigger>Calculators</md-button>
-
-        <md-menu-content>
-          <md-menu-item @click.native="$router.push('/calculators/rental-yield')">
-            Rental Yield
-          </md-menu-item>
-          <md-menu-item @click.native="$router.push('/calculators/monthly-payment')">
-            Monthly Payment
-          </md-menu-item>
-          <md-menu-item @click.native="$router.push('/calculators/how-much-can-i-borrow')">
-            How much can I borrow?
-          </md-menu-item>
-          <md-menu-item @click.native="$router.push('/calculators/is-this-property-a-good-investment')">
-            Is this property a good investment?
-          </md-menu-item>
-        </md-menu-content>
-      </md-menu>
-
-      <router-link v-if="permissions.AC_Overview" tag="button" class="md-button" to="/accounts/">
-        Accounts
-      </router-link>
-
-      <md-avatar v-if="auth.isLoggedIn">
-        <img src="../../assets/images/avatar.jpg" alt="Avatar">
-      </md-avatar>
-
-      <md-menu md-size="3" md-direction="bottom left">
-        <md-button md-menu-trigger class="md-icon-button">
-          <md-icon>more_vert</md-icon>
+        <md-button class="md-icon-button">
+          <md-icon>menu</md-icon>
         </md-button>
 
-        <md-menu-content>
-          <md-menu-item v-if="auth.isLoggedIn" @click.native="logout()">
-            Log out
-          </md-menu-item>
-          <md-menu-item v-if="!auth.isLoggedIn" @click.native="$router.push('/registration')">
-            Log in
-          </md-menu-item>
-          <md-menu-item v-if="permissions.P_View" @click.native="$router.push('/profile')">
-            View profile
-          </md-menu-item>
-        </md-menu-content>
-      </md-menu>
+        <h2 class="md-title">Landlords</h2>
+        <router-link tag="button" class="md-button" v-if="auth.isLoggedIn" to="/dashboard">Dashboard</router-link>
+        <router-link v-if="permissions.LL_List" tag="button" class="md-button" to="/agency/landlord-list">
+          Landlord List
+        </router-link>
+        <router-link v-if="!auth.isLoggedIn" tag="button" class="md-button" to="/registration">
+          Registration
+        </router-link>
+        <router-link v-if="permissions.PD_GetList" tag="button" class="md-button" to="/manager/property-list">
+          Property List
+        </router-link>
+        <router-link v-if="permissions.PE_List" tag="button" class="md-button" to="/permissions">
+          Permissions
+        </router-link>
+        <router-link v-if="permissions.CL_Overview" tag="button" class="md-button" to="/checklists/">
+          Checklists
+        </router-link>
 
-    </md-toolbar>
-  </nav>
+        <md-menu md-size="6" md-direction="bottom left">
+          <md-button md-menu-trigger>Calculators</md-button>
+
+          <md-menu-content>
+            <md-menu-item @click.native="$router.push('/calculators/rental-yield')">
+              Rental Yield
+            </md-menu-item>
+            <md-menu-item @click.native="$router.push('/calculators/monthly-payment')">
+              Monthly Payment
+            </md-menu-item>
+            <md-menu-item @click.native="$router.push('/calculators/how-much-can-i-borrow')">
+              How much can I borrow?
+            </md-menu-item>
+            <md-menu-item @click.native="$router.push('/calculators/is-this-property-a-good-investment')">
+              Is this property a good investment?
+            </md-menu-item>
+          </md-menu-content>
+        </md-menu>
+
+        <router-link v-if="permissions.AC_Overview" tag="button" class="md-button" to="/accounts/">
+          Accounts
+        </router-link>
+
+        <md-menu md-size="3" md-direction="bottom left">
+          <md-button md-menu-trigger class="md-icon-button">
+            <md-icon>more_vert</md-icon>
+          </md-button>
+
+          <md-menu-content>
+            <md-menu-item v-if="auth.isLoggedIn" @click.native="logout()">
+              Log out
+            </md-menu-item>
+            <md-menu-item v-if="!auth.isLoggedIn" @click.native="$router.push('/registration')">
+              Log in
+            </md-menu-item>
+            <md-menu-item v-if="permissions.P_View" @click.native="$router.push('/profile')">
+              View profile
+            </md-menu-item>
+          </md-menu-content>
+        </md-menu>
+
+        <md-avatar v-if="auth.isLoggedIn">
+          <img src="../../assets/images/avatar.jpg" alt="Avatar">
+        </md-avatar>
+
+      </md-toolbar>
+    </nav>
+  </md-whiteframe>
 </template>
 
 <script>
@@ -91,6 +93,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+  .whiteframe {
+    height: 88px;    
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+  }
 
   .md-title {
     flex: 1;

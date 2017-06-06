@@ -39,6 +39,7 @@ Vue.use(VueMaterial.MdLayout)
 Vue.use(VueMaterial.MdAvatar)
 Vue.use(VueMaterial.MdTable)
 Vue.use(VueMaterial.MdCard)
+Vue.use(VueMaterial.MdWhiteframe)
 
 new Vue({
   el: '#app',
