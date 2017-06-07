@@ -1,14 +1,26 @@
 <template>
   <div>
-    <span class="d-block">{{ account.name }}</span>
-    <span class="d-inline-block mr-2" v-if="account.number">{{ account.number }}</span>
-    <span class="d-inline-block" v-if="account.sortCode">{{ account.sortCode }}</span>
+    <router-link v-if="permissions.AC_GetById" :to="{name: 'accounts-details', params: {accountId: account.id}}">
+      <p>{{ account.name }}</p>
+    </router-link>
+    <span v-else>
+      <p>{{ account.name }}</p>
+    </span>
+    <p>
+      <span class="d-inline-block mr-2" v-if="account.number">{{ account.number }}</span>
+      <span class="d-inline-block" v-if="account.sortCode">{{ account.sortCode }}</span>
+    </p>
   </div>
 </template>
 
 <script>
 export default {
   name: 'account-display',
+  data () {
+    return {
+      permissions: this.$store.state.permissions
+    }
+  },
   props: {
     'account': {
       type: Object,
@@ -19,5 +31,5 @@ export default {
 </script>
   
 <style lang="scss" scoped>
-
+  
 </style>

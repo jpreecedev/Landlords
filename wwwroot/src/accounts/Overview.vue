@@ -17,12 +17,7 @@
         <md-table-body>
           <md-table-row v-if="data.accounts" v-for="entry in data.accounts" :key="entry">
             <md-table-cell>
-              <router-link v-if="permissions.AC_GetById" :to="{name: 'accounts-details', params: {accountId: entry.id}}">
-                <account-display :account="entry" />
-              </router-link>
-              <span v-else>
-                <account-display :account="entry" />
-              </span>
+              <account-display :account="entry" />
             </md-table-cell>
             <md-table-cell>
               {{ entry.type }}
@@ -34,7 +29,9 @@
         </md-table-body>
       </md-table>
     </md-table-card>
-    <md-button v-if="permissions.AC_New" type="button" class="md-raised md-primary pointer" @click.native="addAccount()">Add an account</md-button>    
+
+    <md-button v-if="permissions.AC_New" type="button" class="md-raised md-primary pointer mt-4" @click.native="addAccount()">Add an account</md-button>   
+
   </main>
 </template>
 

@@ -30,8 +30,9 @@
         </md-table-body>
       </md-table>
     </md-table-card>
+    
+    <md-button v-if="permissions.PD_New" type="button" class="md-raised md-primary mt-4" @click.native="addProperty()">Add a property</md-button>            
 
-    <md-button v-if="permissions.PD_New" type="button" class="md-raised md-primary pointer" @click.native="addProperty()">Add a property</md-button>    
   </main>
 </template>
 

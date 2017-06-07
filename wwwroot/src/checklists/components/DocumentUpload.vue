@@ -7,7 +7,7 @@
       </div>
       <div class="col">
         <label class="col-form-label" v-bind:for="checklistItem.key + 'actioned'">Date actioned</label>
-        <datepicker v-model="checklistItem.actioned" id="checklistItem.key + 'actioned'" name="checklistItem.key + 'actioned'" placeholder="Select date..." input-class="form-control"></datepicker>
+        <date-picker v-model="checklistItem.actioned" id="checklistItem.key + 'actioned'" name="checklistItem.key + 'actioned'" placeholder="Select date..."></date-picker>
       </div>
     </div>
     <div class="row">
@@ -23,11 +23,11 @@
 </template>
 
 <script>
-import Datepicker from 'vuejs-datepicker'
+import myDatepicker from 'vue-datepicker'
 
 export default {
   name: 'document-upload',
-  components: { Datepicker },
+  components: { 'date-picker': myDatepicker },
   props: {
     'checklistId': {
       type: String,

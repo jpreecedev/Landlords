@@ -33,7 +33,7 @@
       </div>
 
       <div class="mt-3" v-if="permissions.CL_Archived && !hasArchivedLists">
-        <md-button @click.native="getArchived()" class="pointer md-raised md-default">View Archived</md-button>
+        <md-button @click.native="getArchived()" class="pointer md-raised md-primary">View Archived</md-button>
       </div>
     </div>
     <div class="row mt-5" v-if="permissions.CL_Create">
