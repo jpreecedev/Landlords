@@ -11,37 +11,38 @@
           <fieldset>
             <div class="row">
               <div class="col-xs-12">
-                <md-input-container>
-                  <md-icon>&pound;</md-icon>
+                <md-input-container :class="{ 'md-input-invalid': errors.has('mortgageAmount') }">
                   <label for="mortgageAmount">Total amount borrowed</label>
-                  <md-input type="number" id="mortgageAmount" min="0" name="mortgageAmount" v-model="mortgageAmount" />
+                  <md-input type="number" id="mortgageAmount" min="0" name="mortgageAmount" v-model="mortgageAmount" data-vv-name="mortgageAmount" v-validate="'required|min_value:10000'" data-vv-validate-on="change" required />
+                  <span v-if="errors.has('mortgageAmount:required')" class="md-error">Enter the amount borrowed</span>
+                  <span v-else-if="errors.has('mortgageAmount:min_value')" class="md-error">Enter at least &pound;10,000</span>
                 </md-input-container>
-                <span v-show="errors.has('mortgageAmount:required')" v-bind:title="errors.first('mortgageAmount')" class="form-control-feedback">Enter the amount borrowed</span>
-                <span v-show="errors.has('mortgageAmount:min_value')" v-bind:title="errors.first('mortgageAmount')" class="form-control-feedback">Enter at least &pound;10,000</span>
               </div>
             </div>
             <div class="row">
               <div class="col-xs-12 col-md-6">
-                <md-input-container>
-                  <md-icon>%</md-icon>
+                <md-input-container :class="{ 'md-input-invalid': errors.has('annualInterestRate') }">
                   <label for="annualInterestRate">Interest rate % (annual)</label>
-                  <md-input type="number" id="annualInterestRate" name="annualInterestRate" min="0.1" step="0.1" v-model="annualInterestRate" />
+                  <md-input type="number" id="annualInterestRate" name="annualInterestRate" min="0.1" step="0.1" v-model="annualInterestRate" data-vv-name="annualInterestRate" v-validate="'required|min_value:0.1'" data-vv-validate-on="change" required />
+                  <span v-if="errors.has('annualInterestRate:required')" class="md-error">Enter the amount borrowed</span>
+                  <span v-else-if="errors.has('annualInterestRate:min_value')" class="md-error">Enter at least 0.1%</span>
                 </md-input-container>
               </div>
             </div>
             <div class="row">
               <div class="col-xs-12 col-md-6">              
-                <md-input-container>
-                  <md-icon>alarm</md-icon>
+                <md-input-container :class="{ 'md-input-invalid': errors.has('mortgageLength') }">
                   <label for="mortgageLength">Mortgage length</label>
-                  <md-input type="number" id="mortgageLength" name="mortgageLength" step="1" min="1" max="50" v-model="mortgageLength" />
-                  <md-icon>yrs</md-icon>
+                  <md-input type="number" id="mortgageLength" name="mortgageLength" step="1" min="1" max="50" v-model="mortgageLength" data-vv-name="mortgageLength" v-validate="'required|min_value:1|max_value:50'" data-vv-validate-on="change" required />
+                  <span v-if="errors.has('mortgageLength:required')" class="md-error">Enter the mortgage length</span>
+                  <span v-else-if="errors.has('mortgageLength:min_value')" class="md-error">Enter at least 1 year</span>
+                  <span v-else-if="errors.has('mortgageLength:max_value')" class="md-error">Enter up to 50 years</span>
                 </md-input-container>
               </div>
             </div>
             <div class="row mt-4" v-if="!calculateMonthlyPayment">
               <div class="col">
-                <p class="text-danger">Please fix any validation errors highlighted in red to see your results</p>
+                <p class="md-warn">Please fix any validation errors to see your results</p>
               </div>
             </div>
             <div class="row mt-4" v-if="calculateMonthlyPayment">

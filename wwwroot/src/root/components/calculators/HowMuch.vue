@@ -6,52 +6,43 @@
     </div>
 
     <div class="row">
-      <div class="col-6">
-        <div class="card">
-          <form role="form" class="card-block" novalidate>
-            <fieldset>
-              <div class="row">
-                <div class="col" :class="{ 'has-danger': errors.has('grossIncome') }">
-                  <label for="grossIncome">
-                  Your annual gross income<br/>
-                  <small class="text-muted">How much you earn, including everybody who will be included on the mortgage, BEFORE tax</small>                
-                  </label>
-                  <div class="input-group">
-                    <span class="input-group-addon">£</span>
-                    <input type="number" class="form-control" id="grossIncome" name="grossIncome" min="1000" step="1" v-model="grossIncome" v-validate="'required|min_value:1000'" data-vv-validate-on="change" placeholder="Gross income">
-                    <span class="input-group-addon">.00</span>
-                  </div>
-                  <span v-show="errors.has('grossIncome:required')" v-bind:title="errors.first('grossIncome')" class="form-control-feedback">Enter your annual gross income</span>
-                  <span v-show="errors.has('grossIncome:min_value')" v-bind:title="errors.first('grossIncome')" class="form-control-feedback">Enter at least &pound;1,000</span>
-                </div>
+      <div class="col-xs-12">
+        <form role="form" novalidate>
+          <fieldset>
+            <div class="row">
+              <div class="col-xs-12 col-md-6">
+                <md-input-container :class="{ 'md-input-invalid': errors.has('grossIncome') }">
+                  <label for="grossIncome">Your annual gross income</label>
+                  <md-input type="number" id="grossIncome" name="grossIncome" min="1000" step="1" v-model="grossIncome" data-vv-name="grossIncome" v-validate="'required|min_value:1000'" data-vv-validate-on="change" required />
+                  <span v-if="errors.has('grossIncome:required')" class="md-error">Enter your annual gross income</span>
+                  <span v-else-if="errors.has('grossIncome:min_value')" class="md-error">Enter at least &pound;1,000</span>
+                </md-input-container>
               </div>
-              <div class="row">
-                <div class="col">
+            </div>
+            <div class="row">
+              <div class="col-xs-12 col-md-6">
+                <md-input-container>
                   <label for="multiplier">Multiplier (use the default if unsure)</label>
-                    <div>
-                      <md-input-container>
-                        <md-select v-model="multiplier" id="multiplier" name="multiplier" required>
-                          <md-option disabled value="">Select a multiplier</md-option>
-                          <md-option v-for="multiplier in multipliers" :key="multiplier" v-bind:value="multiplier">{{ multiplier }}</md-option>
-                        </md-select>
-                      </md-input-container>
-                    </div>
-                </div>
+                  <md-select v-model="multiplier" id="multiplier" name="multiplier">
+                    <md-option disabled>Select a multiplier</md-option>
+                    <md-option v-for="multiplier in multipliers" :key="multiplier" v-bind:value="multiplier">{{ multiplier }}</md-option>
+                  </md-select>
+                </md-input-container>
               </div>
-              <div class="row mt-4" v-if="!calculateAmountCanBorrow">
-                <div class="col">
-                  <p class="text-danger">Please fix any validation errors highlighted in red to see your results</p>
-                </div>
+            </div>
+            <div class="row mt-4" v-if="!calculateAmountCanBorrow">
+              <div class="col-xs-12">
+                <p class="md-warn">Please fix any validation errors to see your results</p>
               </div>
-              <div class="row mt-4" v-if="calculateAmountCanBorrow">
-                <div class="col">
-                  <p><strong>You could potentially borrow up to:</strong> £{{ calculateAmountCanBorrow }}.
-                  </p>
-                </div>
+            </div>
+            <div class="row mt-4" v-if="calculateAmountCanBorrow">
+              <div class="col-xs-12">
+                <p><strong>You could potentially borrow up to:</strong> £{{ calculateAmountCanBorrow }}.
+                </p>
               </div>
-            </fieldset>
-          </form>
-        </div>
+            </div>
+          </fieldset>
+        </form>
       </div>
     </div>
   </main>

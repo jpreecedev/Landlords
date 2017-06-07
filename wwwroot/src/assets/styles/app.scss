@@ -32,8 +32,14 @@ main, footer {
   width: 1140px;
 }
 
+main {
+  margin-bottom: 10rem;
+}
+
 fieldset {
-  border-width: 0;
+  padding: 0;
+  margin: 1rem 0 0 0;
+  border: 0;
 }
 
 .jumbotron ~ main {
@@ -142,4 +148,8 @@ fieldset {
 
 .mb-5 {
   margin-bottom: 3rem !important;
+}
+
+.md-card {
+  border-radius: 0;
 }

@@ -5,7 +5,7 @@
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
     </div>
     <div id="errorMessage" class="alert alert-danger" v-show="errors.any()">
-      <span v-show="!errors.has('GenericError')">Please fix validation errors highlighted in red and try and submit the form again</span>
+      <span v-show="!errors.has('GenericError')">Please fix validation errors and try and submit the form again</span>
       <span v-show="errors.has('GenericError')">{{ errors.first('GenericError') }}</span>
     </div>    
     <form @submit.prevent="validateBeforeSubmit" role="form" enctype="multipart/form-data" novalidate>
@@ -146,7 +146,6 @@
                   </div>
                   <div class="col">
                     <md-input-container>
-                      <md-icon>£</md-icon>
                       <label for="purchasePrice">Purchase Price</label>
                       <md-input v-model="propertyDetails.purchasePrice" type="number" id="purchasePrice" name="purchasePrice"></md-input>
                     </md-input-container>
@@ -155,7 +154,6 @@
                 <div class="row">
                   <div class="col">
                     <md-input-container>
-                      <md-icon>£</md-icon>
                       <label for="mortgageAmount">Mortgage Amount</label>                    
                       <md-input v-model="propertyDetails.mortgageAmount" id="mortgageAmount" name="mortgageAmount" type="number" />
                     </md-input-container>
@@ -164,14 +162,12 @@
                     <md-input-container>
                       <label for="interestRate">Interest Rate</label>
                       <md-input v-model="propertyDetails.interestRate" id="interestRate" name="interestRate" type="number" />
-                      <md-icon>%</md-icon>
                     </md-input-container>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-6">
                     <md-input-container>
-                      <md-icon>£</md-icon>
                       <label for="monthlyPayment">Monthly Repayment</label>  
                       <md-input v-model="propertyDetails.monthlyPayment" id="monthlyPayment" name="monthlyPayment" type="number" />                    
                     </md-input-container>
@@ -200,7 +196,6 @@
                 <div class="row">
                   <div class="col">
                     <md-input-container>
-                      <md-icon>£</md-icon>
                       <label for="targetRent">Target Rent</label>
                       <md-input v-model="propertyDetails.targetRent" id="targetRent" name="targetRent" type="number" />
                     </md-input-container>
@@ -226,7 +221,6 @@
                   </div>
                   <div class="col">
                     <md-input-container>
-                      <md-icon>£</md-icon>
                       <label for="sellingPrice">Selling Price</label>
                       <md-input v-model="propertyDetails.sellingPrice" id="sellingPrice" name="sellingPrice" type="number" required />
                     </md-input-container>

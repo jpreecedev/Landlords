@@ -11,43 +11,38 @@
           <fieldset>
             <div class="row">
               <div class="col-xs-12">
-                <md-input-container class="input-group">
-                  <md-icon>&pound;</md-icon>
-                  <label for="purchasePrice" class="form-control-label">Total cost of property</label>          
-                  <md-input type="number" id="purchasePrice" name="purchasePrice" v-model="rentalyield.purchasePrice" min="10000" />
+                <md-input-container :class="{ 'md-input-invalid': errors.has('purchasePrice') }">
+                  <label for="purchasePrice">Total cost of property</label>          
+                  <md-input type="number" id="purchasePrice" name="purchasePrice" v-model="rentalyield.purchasePrice" min="10000" data-vv-name="purchasePrice" v-validate="'required|min_value:10000'" data-vv-validate-on="change" required />
+                  <span v-if="errors.has('purchasePrice:required')" class="md-error">Enter the amount paid for the property</span>
+                  <span v-else-if="errors.has('purchasePrice:min_value')" class="md-error">Enter at least &pound;10,000</span>
                 </md-input-container>
-                <span v-show="errors.has('purchasePrice:required')" v-bind:title="errors.first('purchasePrice')" class="form-control-feedback">Enter the amount paid for the property</span>
-                <span v-show="errors.has('purchasePrice:min_value')" v-bind:title="errors.first('purchasePrice')" class="form-control-feedback">Enter at least &pound;10,000</span>
               </div>
             </div>
             <div class="row">
               <div class="col-xs-12">
-                <md-input-container>
-                  <md-icon>&pound;</md-icon>
+                <md-input-container :class="{ 'md-input-invalid': errors.has('rentalValue') }">
                   <label for="rentalValue">Expected rental income</label>
-                  <md-input type="number" id="rentalValue" name="rentalValue" min="1" step="1" v-model="rentalyield.rentalValue" />
+                  <md-input type="number" id="rentalValue" name="rentalValue" min="1" step="1" v-model="rentalyield.rentalValue" data-vv-name="rentalValue" v-validate="'required|min_value:1'" data-vv-validate-on="change" required />
+                  <span v-if="errors.has('rentalValue:required')" class="md-error">Enter the expected rental income</span>
+                  <span v-else-if="errors.has('rentalValue:min_value')" class="md-error">Enter at least &pound;1</span>
                 </md-input-container>
-                <span v-show="errors.has('rentalValue:required')" v-bind:title="errors.first('rentalValue')" class="form-control-feedback">Enter the expected rental income</span>
-                <span v-show="errors.has('rentalValue:min_value')" v-bind:title="errors.first('rentalValue')" class="form-control-feedback">Enter at least &pound;1</span>
               </div>
             </div>
             <div class="row">
               <div class="col">
-                <p class="mb-0">Rental income period</p>
-                
+                <p class="mb-0">Rental income period</p>                
                   <label class="form-check-label">
                     <md-radio name="inlineRadioOptions" id="Monthly" md-value="Monthly" v-model="rentalyield.frequency" checked>Monthly</md-radio>
-                  </label>
-                
+                  </label>                
                   <label class="form-check-label">
                     <md-radio name="inlineRadioOptions" id="Annual" md-value="Annual" v-model="rentalyield.frequency">Annual</md-radio>
-                  </label>
-                
+                  </label>                
               </div>
             </div>
             <div class="row mt-4" v-if="!calculateRentalYield">
               <div class="col">
-                <p class="text-danger">Please fix any validation errors highlighted in red to see your results</p>
+                <p class="md-warn">Please fix any validation errors to see your results</p>
               </div>
             </div>
             <div class="row mt-4" v-if="calculateRentalYield">

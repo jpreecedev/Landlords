@@ -3,7 +3,7 @@
     <div class="card-block">
       <h3 class="card-title">Sign In</h3>
       <div id="errorMessage" class="alert alert-danger" v-show="errors.any()">
-        <span v-show="!errors.has('GenericError')">Please fix validation errors highlighted in red and try and submit the form again</span>
+        <span v-show="!errors.has('GenericError')">Please fix validation errors and try and submit the form again</span>
         <span v-show="errors.has('GenericError')">{{ errors.first('GenericError') }}</span>
       </div>
       <form @submit.prevent="validateBeforeSubmit" role="form" novalidate>
