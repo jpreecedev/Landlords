@@ -12,7 +12,7 @@
               </md-card-header>
               <md-card-content>
                 <div class="row">
-                  <div class="col-xs-12 col-md-6">
+                  <div class="col-xs-12">
                     <md-input-container :class="{ 'md-input-invalid': errors.has('pricePaid') }">
                       <label for="pricePaid" class="form-control-label">Price paid</label>
                       <md-input type="number" step="1" class="form-control" min="10000" id="pricePaid" name="pricePaid" v-model="pricePaid" data-vv-name="pricePaid" v-validate="'required|min_value:10000'" data-vv-validate-on="change" required />
@@ -22,7 +22,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-xs-12 col-md-6">
+                  <div class="col-xs-12">
                     <md-input-container :class="{ 'md-input-invalid': errors.has('annualInterestRate') }">
                       <label for="annualInterestRate">Interest rate (annual)</label>
                       <md-input type="number" step="1" min="0" max="20" id="annualInterestRate" name="annualInterestRate" v-model="annualInterestRate" data-vv-name="annualInterestRate" v-validate="'required|min_value:0.1|max_value:20'" data-vv-validate-on="change" required />
@@ -33,7 +33,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-xs-12 col-md-6">
+                  <div class="col-xs-12">
                     <md-input-container :class="{ 'md-input-invalid': errors.has('mortgageLength') }">
                       <label for="mortgageLength">Mortgage length</label>
                       <md-input type="number" step="1" min="0" max="50" id="mortgageLength" name="mortgageLength" v-model="mortgageLength" data-vv-name="mortgageLength" v-validate="'required|min_value:1|max_value:50'" data-vv-validate-on="change" required />
@@ -51,7 +51,7 @@
               </md-card-header>
               <md-card-content>
                 <div class="row">
-                  <div class="col-xs-12 col-md-6">
+                  <div class="col-xs-12">
                     <md-input-container :class="{ 'md-input-invalid': errors.has('expectedRentalIncome') }">
                       <label for="expectedRentalIncome">Expected rental income</label>
                       <md-input type="number" step="100" min="0" max="1000000" id="expectedRentalIncome" name="expectedRentalIncome" v-model="expectedRentalIncome" data-vv-name="expectedRentalIncome" v-validate="'required|min_value:1|max_value:1000000'" data-vv-validate-on="change" required />
@@ -62,7 +62,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-xs-12 col-md-6">                    
+                  <div class="col-xs-12">                    
                     <md-radio name="inlineRadioOptions" id="Monthly" md-value="Monthly" v-model="rentalIncomeFrequency" checked>Monthly</md-radio>                    
                     <md-radio name="inlineRadioOptions" id="Annual" md-value="Annual" v-model="rentalIncomeFrequency">Annual</md-radio>
                   </div>
@@ -96,7 +96,7 @@
               </md-card-header>
               <md-card-content>
                 <div class="row">
-                  <div class="col-xs-12 col-md-6">
+                  <div class="col-xs-12">
                     <md-input-container>
                       <label for="contingency">Contingency</label>
                       <md-input type="number" step="1" id="contingency" name="contingency" v-model="contingency" />
@@ -104,7 +104,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-xs-12 col-md-6">
+                  <div class="col-xs-12">
                     <md-input-container>
                       <label for="otherCosts">Other costs</label>
                       <md-input type="number" step="1" id="otherCosts" name="otherCosts" v-model="otherCosts" />
@@ -139,7 +139,7 @@
               </md-card-header>
               <md-card-content>
                 <div class="row">
-                  <div class="col-xs-12 col-md-6">
+                  <div class="col-xs-12">
                     <md-input-container>
                       <label for="agencyFee">Agency fees</label>
                       <md-input type="number" step="1" id="agencyFee" name="agencyFee" v-model="agencyFee" />
@@ -162,7 +162,7 @@
               </md-card-header>
               <md-card-content>
                 <div class="row">
-                  <div class="col-xs-12 col-md-6">
+                  <div class="col-xs-12">
                     <md-input-container>
                       <label for="maintenanceFees">Maintenance fees</label>
                       <md-input type="number" step="1" id="maintenanceFees" name="maintenanceFees" v-model="maintenanceFees" />
@@ -170,7 +170,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-xs-12 col-md-6">
+                  <div class="col-xs-12">
                     <label class="form-check-label">
                       <md-radio name="maintenanceFeesPeriodGroup" id="Monthly" md-value="Monthly" v-model="maintenanceFeeFrequency" checked>Monthly</md-radio>
                     </label>
@@ -187,7 +187,7 @@
               </md-card-header>
               <md-card-content>
                 <div class="row">
-                  <div class="col-xs-12 col-md-6">
+                  <div class="col-xs-12">
                     <md-input-container>
                       <label for="buildingsInsurance">Buildings insurance (per year)</label>
                       <md-input type="number" step="1" class="form-control" id="buildingsInsurance" name="buildingsInsurance" v-model="buildingsInsurance" />
@@ -195,7 +195,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-xs-12 col-md-6">
+                  <div class="col-xs-12">
                     <md-input-container>
                       <label for="contentsInsurance">Contents insurance (per year)</label>
                       <md-input type="number" step="1" class="form-control" id="contentsInsurance" name="contentsInsurance" v-model="contentsInsurance" />

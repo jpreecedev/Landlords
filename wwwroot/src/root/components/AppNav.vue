@@ -12,9 +12,6 @@
         <router-link v-if="permissions.LL_List" tag="button" class="md-button" to="/agency/landlord-list">
           Landlord List
         </router-link>
-        <router-link v-if="!auth.isLoggedIn" tag="button" class="md-button" to="/registration">
-          Registration
-        </router-link>
         <router-link v-if="permissions.PD_GetList" tag="button" class="md-button" to="/manager/property-list">
           Property List
         </router-link>
@@ -23,6 +20,9 @@
         </router-link>
         <router-link v-if="permissions.CL_Overview" tag="button" class="md-button" to="/checklists/">
           Checklists
+        </router-link>
+        <router-link v-if="!auth.isLoggedIn" tag="button" class="md-button" to="/registration/">
+          Log in or Register
         </router-link>
 
         <md-menu md-size="6" md-direction="bottom left">
@@ -48,7 +48,7 @@
           Accounts
         </router-link>
 
-        <md-menu md-size="3" md-direction="bottom left">
+        <md-menu md-size="3" v-if="auth.isLoggedIn" md-direction="bottom left">
           <md-button md-menu-trigger class="md-icon-button">
             <md-icon>more_vert</md-icon>
           </md-button>
@@ -56,9 +56,6 @@
           <md-menu-content>
             <md-menu-item v-if="auth.isLoggedIn" @click.native="logout()">
               Log out
-            </md-menu-item>
-            <md-menu-item v-if="!auth.isLoggedIn" @click.native="$router.push('/registration')">
-              Log in
             </md-menu-item>
             <md-menu-item v-if="permissions.P_View" @click.native="$router.push('/profile')">
               View profile

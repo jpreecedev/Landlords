@@ -25,7 +25,7 @@
             <span v-if="checklist.propertyStreetAddress"> ({{ checklist.propertyStreetAddress }})</span>
           </md-card-content>
           <md-card-actions>
-            <md-button v-if="permissions.CL_GetById" @click.native="$router.push({name: 'editor', params: {checklistId: checklist.id}})" class="md-default">View</md-button>
+            <md-button v-if="permissions.CL_GetById" @click.native="$router.push({name: 'editor', params: {checklistId: checklist.id}})" class="md-primary">View</md-button>
             <md-button v-if="permissions.CL_Archive && !checklist.isArchived" @click.native="archive(checklist)" class="md-default">Archive</md-button>
           </md-card-actions>
         </md-card>

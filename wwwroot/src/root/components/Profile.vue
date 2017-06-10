@@ -166,7 +166,6 @@
         this.$validator.validateAll().then(() => {
           this.profile.availableFrom = this.availableFrom
           this.profile.availableTo = this.availableTo
-          debugger
           var bag = new ErrorBag()
           this.$http.post('/api/profile', { ...this.profile })
             .then(response => {
