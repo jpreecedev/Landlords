@@ -5,7 +5,9 @@
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
     </div>
 
-    <md-table-card>
+    <p v-if="!data.transactions || !data.transactions.length">There are no transactions to display.</p>
+
+    <md-table-card v-if="data.transactions && data.transactions.length">
       <md-table>
         <md-table-header class="thead-inverse">
           <md-table-row>
@@ -38,6 +40,22 @@
       </md-table>
     </md-table-card>
 
+    <div class="row">
+      <div class="col-xs-12 col-md-6">
+        <md-card>
+          <md-card-header>
+            <div class="md-title">Import transactions</div>
+            <div class="md-subhead">Please upload your bank statements in CSV format</div>
+          </md-card-header>
+          <md-card-content>       
+            <md-input-container>
+              <md-file v-model="file" multiple placeholder="Browse for a bank statement on your computer"></md-file>
+            </md-input-container>
+            <md-progress v-if="progress" :md-progress="progress"></md-progress>
+          </md-card-content>
+        </md-card>
+      </div>
+    </div>
   </main>
 </template>
 
@@ -48,6 +66,8 @@ export default {
     return {
       permissions: this.$store.state.permissions,
       accountId: this.$route.params.accountId,
+      file: null,
+      progress: 0,
       data: {
         transactions: []
       }

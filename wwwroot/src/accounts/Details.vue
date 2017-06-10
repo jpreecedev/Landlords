@@ -15,7 +15,7 @@
             <md-card>
               <md-card-content>       
                 <div class="row">
-                  <div class="col-xs-12 col-md-6">
+                  <div class="col-xs-12">
                     <md-input-container>
                       <label for="opened">Date Opened</label>          
                       <datepicker v-model="account.opened" id="opened" name="opened" placeholder="Select date..." class="md-input"></datepicker>
@@ -23,7 +23,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-xs-12 col-md-6">
+                  <div class="col-xs-12">
                     <md-input-container>
                       <label for="name">Account Name</label>
                       <md-input v-model="account.name" id="name" name="name" type="text" required />
@@ -31,7 +31,7 @@
                   </div>
                 </div>         
                 <div class="row">
-                  <div class="col-xs-12 col-md-6">
+                  <div class="col-xs-12">
                     <md-input-container>
                       <label for="number">Account Number</label>
                       <md-input v-model="account.number" id="number" name="name" type="text" required />
@@ -39,7 +39,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-xs-12 col-md-6">
+                  <div class="col-xs-12">
                     <md-input-container>
                       <label for="sortCode">Sort Code</label>
                       <md-input v-model="account.sortCode" id="sortCode" name="name" type="text" required />
@@ -47,7 +47,7 @@
                   </div>
                 </div>
                 <div class="row" :class="{ 'md-input-invalid': errors.has('type') }">
-                  <div class="col-xs-12 col-md-6">
+                  <div class="col-xs-12">
                     <md-input-container>
                       <label for="type">Account Type</label>
                       <md-select v-model="account.type" v-validate="'required'" data-vv-validate-on="blur" id="type" name="type" required>
@@ -59,7 +59,7 @@
                   </div>
                 </div>
                 <div class="row" :class="{ 'md-input-invalid': errors.has('providerName') }">
-                  <div class="col-xs-12 col-md-6">
+                  <div class="col-xs-12">
                     <md-input-container>
                       <label for="providerName">Provider Name</label>
                       <md-select v-model="account.providerName" v-validate="'required'" data-vv-validate-on="blur" id="providerName" name="providerName" required>
@@ -71,7 +71,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-xs-12 col-md-6" :class="{ 'md-input-invalid': errors.has('openingBalance') }">
+                  <div class="col-xs-12" :class="{ 'md-input-invalid': errors.has('openingBalance') }">
                     <md-input-container>
                       <label class="col-form-label" for="openingBalance">Opening Balance</label>
                       <md-input type="number" v-model="account.openingBalance" data-vv-name="openingBalance" v-validate="'required'" id="openingBalance" name="openingBalance" data-vv-validate-on="blur" />

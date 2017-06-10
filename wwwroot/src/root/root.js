@@ -38,6 +38,8 @@ Vue.use(VueMaterial.MdAvatar)
 Vue.use(VueMaterial.MdTable)
 Vue.use(VueMaterial.MdCard)
 Vue.use(VueMaterial.MdWhiteframe)
+Vue.use(VueMaterial.MdFile)
+Vue.use(VueMaterial.MdProgress)
 
 new Vue({
   el: '#app',
