@@ -10,7 +10,7 @@ import router from './routes'
 import VueMaterial from 'vue-material'
 
 import 'vue-material/dist/vue-material.css'
-import 'src/extensions'
+import 'src/filters'
 import 'assets/styles/app.scss'
 import 'v-autocomplete/dist/v-autocomplete.css'
 

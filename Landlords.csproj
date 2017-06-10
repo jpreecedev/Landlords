@@ -16,6 +16,7 @@
     <None Remove="wwwroot\**" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="csvhelper" Version="2.16.3" />
     <PackageReference Include="MailKit" Version="1.16.1" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.2" />

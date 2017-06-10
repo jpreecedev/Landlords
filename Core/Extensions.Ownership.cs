@@ -50,7 +50,7 @@
             }
 
             return await context.ApplicationUserPortfolios.AsNoTracking()
-                .Join(context.Accounts, portfolio => portfolio.Id, account => account.PortfolioId, (portfolio, account) => new {ApplicationUserPortfolio = portfolio, Account = account})
+                .Join(context.Accounts, aup => aup.PortfolioId, account => account.PortfolioId, (portfolio, account) => new {ApplicationUserPortfolio = portfolio, Account = account})
                 .Where(c => c.ApplicationUserPortfolio.UserId == userId && c.ApplicationUserPortfolio.PortfolioId == portfolioId && c.Account.Id == accountId)
                 .AnyAsync();
         }

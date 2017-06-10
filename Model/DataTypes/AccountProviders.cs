@@ -5,6 +5,7 @@
         public const string Santander = "Santander";
         public const string Halifax = "Halifax";
         public const string Nationwide = "Nationwide";
+        public const string LloydsBank = "LloydsBank";
 
         public static string[] GetDefaultAccountProviders()
         {
@@ -12,7 +13,8 @@
             {
                 Santander,
                 Halifax,
-                Nationwide
+                Nationwide,
+                LloydsBank
             };
         }
     }

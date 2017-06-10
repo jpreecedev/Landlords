@@ -18,9 +18,24 @@
     using Landlords.Permissions;
     using Microsoft.AspNetCore.Authorization;
     using Landlords.Interfaces;
+    using Model.DataTypes;
+    using Model.Entities;
+    using Statements;
 
     public static class Extensions
     {
+        public static IStatementProcessor GetStatementProcessor(this Account account)
+        {
+            switch (account.ProviderName)
+            {
+                case AccountProviders.LloydsBank:
+                    return new LloydsCSV();
+
+                default:
+                    throw new ArgumentOutOfRangeException("No statement processor available");
+            }
+        }
+
         public static IEnumerable<IdentityError> ToGeneric(this IEnumerable<IdentityError> errors)
         {
             return errors.Select(c => new IdentityError {Code = "GenericError", Description = c.Description});
