@@ -7,14 +7,14 @@
       You have been logged out
     </div>
     <div> 
-      <h1 class="md-display-2">Please Sign In or Register using the forms below</h1>
+      <h1 class="md-display-2">Please sign in or register</h1>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
     </div>
     <div class="row mt-5">
-      <div class="col-12 col-md-5">
+      <div class="col-xs-12 col-md-5">
         <loginform />
       </div>
-      <div class="col-12 col-md-7">
+      <div class="col-xs-12 col-md-offset-1 col-md-6">
         <registerform />
       </div>
     </div>

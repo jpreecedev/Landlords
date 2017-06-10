@@ -1,32 +1,38 @@
 <template>
-  <div class="card">
-    <div class="card-block">
-      <h3 class="card-title">Sign In</h3>
-      <div id="errorMessage" class="alert alert-danger" v-show="errors.any()">
-        <span v-show="!errors.has('GenericError')">Please fix validation errors and try and submit the form again</span>
-        <span v-show="errors.has('GenericError')">{{ errors.first('GenericError') }}</span>
-      </div>
-      <form @submit.prevent="validateBeforeSubmit" role="form" novalidate>
-        <fieldset>
-          <div class="row" :class="{ 'has-danger': errors.has('emailAddress') }">
-            <label for="emailAddress" class="col-3">Email Address</label>
-            <div class="col-9">
-              <input type="email" class="form-control" id="emailAddress" name="emailAddress" placeholder="Enter your email" v-validate="'required|email'" v-model="credentials.username" data-vv-validate-on="change" required>
-              <span v-show="errors.has('emailAddress')" v-bind:title="errors.first('emailAddress')" class="form-control-feedback">Enter a valid email address</span>
+  <div>
+    <form @submit.prevent="validateBeforeSubmit" role="form" novalidate>
+      <fieldset>
+        <md-card>
+          <md-card-header>
+            <div class="md-title">Sign In</div>
+          </md-card-header>
+          <md-card-content>
+            <div class="row">
+              <div class="col-xs-12">
+                <md-input-container :class="{ 'md-input-invalid': errors.has('emailAddress') }">
+                  <label for="emailAddress">Email Address</label>
+                  <md-input type="email" id="emailAddress" name="emailAddress" data-vv-name="emailAddress" v-validate="'required|email'" v-model="credentials.username" data-vv-validate-on="change" required />
+                  <span v-if="errors.has('emailAddress')" class="md-error">Enter a valid email address</span>
+                </md-input-container>
+              </div>
             </div>
-          </div>
-          <div class="row" :class="{ 'has-danger': errors.has('password') }">
-            <label for="password" class="col-3">Password</label>
-            <div class="col-9">
-              <input type="password" class="form-control" id="password" name="password" placeholder="Password" v-model="credentials.password" v-validate="'required|min:8'" data-vv-validate-on="change" required>
-              <span v-show="errors.has('password')" v-bind:title="errors.first('password')" class="form-control-feedback">Enter your password</span>
+            <div class="row">
+              <div class="col-xs-12">
+                <md-input-container :class="{ 'md-input-invalid': errors.has('password') }">
+                  <label for="password">Password</label>
+                  <md-input type="password" id="password" name="password" data-vv-name="password" v-model="credentials.password" v-validate="'required|min:8'" data-vv-validate-on="change" required />
+                  <span v-if="errors.has('password')" class="md-error">Enter your password</span>
+                </md-input-container>
+              </div>
             </div>
-          </div>
-          <md-button type="submit" v-bind:disabled="loggingIn" class="md-raised md-primary">Log in</md-button>
-          <md-button type="reset" class="md-raised md-default" @click.native="reset()">Reset</md-button>
-        </fieldset>
-      </form>
-    </div>
+          </md-card-content>
+          <md-card-actions>
+            <md-button type="submit" v-bind:disabled="loggingIn" class="md-primary">Log in</md-button>
+            <md-button type="reset" class="md-default" @click.native="reset()">Reset</md-button>
+          </md-card-actions>
+        </md-card>
+      </fieldset>
+    </form>
   </div>
 </template>
 
