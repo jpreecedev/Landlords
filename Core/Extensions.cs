@@ -146,6 +146,7 @@
                 .AddScoped<IChecklistInstanceDataProvider, ChecklistInstanceDataProvider>()
                 .AddScoped<IChecklistItemDataProvider, ChecklistItemDataProvider>()
                 .AddScoped<IAccountsDataProvider, AccountsDataProvider>()
+                .AddScoped<ITransactionsDataProvider, TransactionsDataProvider>()
                 .AddScoped<IUserRepository, UserRepository>()
                 .AddScoped<ILLDbContext, LLDbContext>()
                 .AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>()

@@ -9,7 +9,7 @@
         DbSet<PropertyDetails> PropertyDetails { get; set; }
 
         DbSet<PropertyImage> PropertyImages { get; set; }
-        
+
         DbSet<ApplicationUser> Users { get; set; }
 
         DbSet<UserPermission> UserPermissions { get; set; }
@@ -23,9 +23,13 @@
         DbSet<EmailTemplate> EmailTemplates { get; set; }
 
         DbSet<Checklist> Checklists { get; set; }
-        
+
         DbSet<ChecklistInstance> ChecklistInstances { get; set; }
-        
+
+        DbSet<Account> Accounts { get; set; }
+
+        DbSet<Transaction> Transactions { get; set; }
+
         DbSet<T> Set<T>() where T : class;
     }
 }

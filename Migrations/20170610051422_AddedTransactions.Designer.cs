@@ -8,9 +8,10 @@ using Landlords.Database;
 namespace Landlords.Migrations
 {
     [DbContext(typeof(LLDbContext))]
-    partial class LLDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170610051422_AddedTransactions")]
+    partial class AddedTransactions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
@@ -529,7 +530,7 @@ namespace Landlords.Migrations
 
                     b.Property<Guid>("AccountId");
 
-                    b.Property<decimal>("Balance");
+                    b.Property<decimal>("Amount");
 
                     b.Property<DateTime>("Created");
 
@@ -540,10 +541,6 @@ namespace Landlords.Migrations
                     b.Property<string>("DestinationAccountNumber");
 
                     b.Property<string>("DestinationSortCode");
-
-                    b.Property<decimal>("In");
-
-                    b.Property<decimal>("Out");
 
                     b.Property<string>("PaymentType");
 

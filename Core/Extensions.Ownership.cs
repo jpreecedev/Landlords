@@ -41,5 +41,18 @@
 
             return await context.ApplicationUserPortfolios.AnyAsync(c => c.UserId == userId && c.PortfolioId == portfolioId);
         }
+
+        public static async Task<bool> OwnsAccountAsync(this Guid userId, Guid portfolioId, Guid accountId, ILLDbContext context)
+        {
+            if (userId.IsDefault() || portfolioId.IsDefault() || accountId.IsDefault() || context == null)
+            {
+                return false;
+            }
+
+            return await context.ApplicationUserPortfolios.AsNoTracking()
+                .Join(context.Accounts, portfolio => portfolio.Id, account => account.PortfolioId, (portfolio, account) => new {ApplicationUserPortfolio = portfolio, Account = account})
+                .Where(c => c.ApplicationUserPortfolio.UserId == userId && c.ApplicationUserPortfolio.PortfolioId == portfolioId && c.Account.Id == accountId)
+                .AnyAsync();
+        }
     }
 }

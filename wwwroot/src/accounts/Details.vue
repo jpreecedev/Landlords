@@ -13,7 +13,15 @@
         <div class="row">
           <div class="col-xs-12 col-md-6">
             <md-card>
-              <md-card-content>
+              <md-card-content>       
+                <div class="row">
+                  <div class="col-xs-12 col-md-6">
+                    <md-input-container>
+                      <label for="opened">Date Opened</label>          
+                      <datepicker v-model="account.opened" id="opened" name="opened" placeholder="Select date..." class="md-input"></datepicker>
+                    </md-input-container>
+                  </div>
+                </div>
                 <div class="row">
                   <div class="col-xs-12 col-md-6">
                     <md-input-container>
@@ -21,7 +29,7 @@
                       <md-input v-model="account.name" id="name" name="name" type="text" required />
                     </md-input-container>
                   </div>
-                </div>
+                </div>         
                 <div class="row">
                   <div class="col-xs-12 col-md-6">
                     <md-input-container>
@@ -60,12 +68,6 @@
                       </md-select>
                     </md-input-container>
                     <span v-show="errors.has('providerName')" v-bind:title="errors.first('providerName')" class="form-control-feedback">Select a valid provider</span>
-                  </div>
-                </div>
-                <div class="row">
-                  <label for="opened">Date Opened</label>          
-                  <div class="col-xs-12 col-md-6">
-                    <datepicker v-model="account.opened" id="opened" name="opened" placeholder="Select date..."></datepicker>
                   </div>
                 </div>
                 <div class="row">

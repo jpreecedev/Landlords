@@ -53,6 +53,7 @@
             Permissions_AC.NewId,
             Permissions_AC.OverviewId,
             Permissions_AC.UpdateId,
+            Permissions_TR.GetById
         };
 
         public static readonly string[] Accountant =
@@ -65,7 +66,8 @@
             Permissions_CL.GetById,
             Permissions_CL.OverviewId,
             Permissions_AC.GetById,
-            Permissions_AC.OverviewId
+            Permissions_AC.OverviewId,
+            Permissions_TR.GetById
         };
 
         public static readonly string[] OtherUser =

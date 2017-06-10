@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-link v-if="permissions.AC_GetById" :to="{name: 'accounts-details', params: {accountId: account.id}}">
+    <router-link v-if="permissions.TR_GetById" :to="'/accounts/transactions/' + account.id">
       <p>{{ account.name }}</p>
     </router-link>
     <span v-else>

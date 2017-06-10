@@ -57,5 +57,6 @@
         public DbSet<ChecklistInstance> ChecklistInstances { get; set; }
         public DbSet<ChecklistItemInstance> ChecklistItemInstances { get; set; }
         public DbSet<Account> Accounts { get; set; }
+        public DbSet<Transaction> Transactions { get; set; }
     }
 }

@@ -8,17 +8,17 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Filters;
 
-    public class MustOwnPropertyDetailsAttribute : BasePermissionsAttribute
+    public class MustOwnAccountAttribute : BasePermissionsAttribute
     {
-        public MustOwnPropertyDetailsAttribute() : base(typeof(MustOwnPropertyDetailsChecker))
+        public MustOwnAccountAttribute() : base(typeof(MustOwnAccountChecker))
         {
         }
 
-        private class MustOwnPropertyDetailsChecker : Attribute, IAsyncResourceFilter
+        private class MustOwnAccountChecker : Attribute, IAsyncResourceFilter
         {
             private readonly ILLDbContext _context;
 
-            public MustOwnPropertyDetailsChecker(ILLDbContext context)
+            public MustOwnAccountChecker(ILLDbContext context)
             {
                 _context = context;
             }
@@ -26,10 +26,11 @@
             public async Task OnResourceExecutionAsync(ResourceExecutingContext context, ResourceExecutionDelegate next)
             {
                 var userId = context.HttpContext.User.GetUserId();
-                var propertyId = TryParse(context.HttpContext.Request.Path.Value.Split('/').LastOrDefault())
-                                 ?? TryParse(context.HttpContext.Request.Query["entityId"]);
+                var portfolioId = context.HttpContext.User.GetPortfolioId();
+                var accountId = TryParse(context.HttpContext.Request.Path.Value.Split('/').LastOrDefault())
+                                ?? TryParse(context.HttpContext.Request.Query["entityId"]);
 
-                if (!await userId.OwnsPropertyDetailsAsync(propertyId.GetValueOrDefault(), _context))
+                if (!await userId.OwnsAccountAsync(portfolioId, accountId.GetValueOrDefault(), _context))
                 {
                     context.Result = new ChallengeResult();
                 }

@@ -12,6 +12,7 @@
             <md-table-head>Account name</md-table-head>
             <md-table-head>Type</md-table-head>
             <md-table-head>Provider</md-table-head>
+            <md-table-head>Actions</md-table-head>
           </md-table-row>
         </md-table-header>
         <md-table-body>
@@ -24,6 +25,11 @@
             </md-table-cell>
             <md-table-cell>
               {{ entry.providerName }}
+            </md-table-cell>
+            <md-table-cell>
+              <router-link v-if="permissions.AC_GetById" tag="a" class="md-icon-button" :to="'/accounts/details/' + entry.id">
+                <md-icon>edit</md-icon>
+              </router-link>
             </md-table-cell>
           </md-table-row>
         </md-table-body>
