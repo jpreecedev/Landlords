@@ -6,7 +6,7 @@
     using Model.DataTypes;
     using Model.Validation;
     using System.Collections.Generic;
-    using System.ComponentModel;
+    using Model.Entities;
 
     //TODO: Use automapper
     public class PropertyDetailsViewModel : IPropertyDetails

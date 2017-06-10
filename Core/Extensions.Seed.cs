@@ -13,6 +13,7 @@
     using Permissions;
     using System.Reflection;
     using Model.DataTypes;
+    using Model.Entities;
 
     public static class SeedExtensions
     {

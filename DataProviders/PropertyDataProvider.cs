@@ -1,6 +1,5 @@
 ﻿namespace Landlords.DataProviders
 {
-    using Model;
     using Landlords.Database;
     using Landlords.ViewModels;
     using System;
@@ -10,6 +9,7 @@
     using System.Linq;
     using Microsoft.AspNetCore.Hosting;
     using Landlords.Interfaces;
+    using Model.Entities;
 
     public class PropertyDataProvider : BaseDataProvider, IPropertyDataProvider
     {

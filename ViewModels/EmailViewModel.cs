@@ -1,6 +1,6 @@
 ﻿namespace Landlords.ViewModels
 {
-    using Model;
+    using Model.Entities;
 
     public class EmailViewModel
     {

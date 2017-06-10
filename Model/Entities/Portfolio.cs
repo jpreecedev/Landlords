@@ -1,4 +1,4 @@
-﻿namespace Model
+﻿namespace Model.Entities
 {
     using System.Collections.Generic;
 

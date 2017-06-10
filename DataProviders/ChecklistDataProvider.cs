@@ -9,9 +9,8 @@
     using Microsoft.EntityFrameworkCore;
     using ViewModels;
     using System.Collections.Generic;
-    using Core;
-    using Model;
     using Model.Database;
+    using Model.Entities;
 
     public class ChecklistDataProvider : BaseDataProvider, IChecklistDataProvider
     {

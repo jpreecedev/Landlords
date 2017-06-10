@@ -8,9 +8,9 @@
     using Interfaces;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.EntityFrameworkCore;
-    using Model;
     using Model.Database;
     using ViewModels;
+    using Model.Entities;
 
     public class PermissionsDataProvider : BaseDataProvider, IPermissionsDataProvider
     {

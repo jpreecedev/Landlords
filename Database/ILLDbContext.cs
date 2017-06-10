@@ -1,8 +1,8 @@
 ﻿namespace Landlords.Database
 {
     using Microsoft.EntityFrameworkCore;
-    using Model;
     using Model.Database;
+    using Model.Entities;
 
     public interface ILLDbContext
     {

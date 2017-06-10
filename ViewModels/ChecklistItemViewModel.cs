@@ -1,7 +1,7 @@
 ﻿namespace Landlords.ViewModels
 {
     using System;
-    using Model;
+    using Model.Entities;
 
     public class ChecklistItemViewModel
     {

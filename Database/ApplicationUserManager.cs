@@ -8,9 +8,9 @@
     using Microsoft.Extensions.Options;
     using Model.Database;
     using System.Threading.Tasks;
-    using Model;
     using System.Linq;
     using Microsoft.EntityFrameworkCore;
+    using Model.Entities;
 
     public class ApplicationUserManager : UserManager<ApplicationUser>
     {

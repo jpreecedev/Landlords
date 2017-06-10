@@ -2,12 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using Landlords.ViewModels;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
-    using Model;
     using Model.Database;
+    using Model.Entities;
 
     public class LLDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>, ILLDbContext
     {

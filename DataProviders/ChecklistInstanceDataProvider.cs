@@ -8,8 +8,8 @@
     using Interfaces;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.EntityFrameworkCore;
-    using Model;
     using ViewModels;
+    using Model.Entities;
 
     public class ChecklistInstanceDataProvider : BaseDataProvider, IChecklistInstanceDataProvider
     {

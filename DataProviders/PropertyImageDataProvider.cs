@@ -7,10 +7,10 @@
     using Database;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
-    using Model;
     using Landlords.ViewModels;
     using Microsoft.EntityFrameworkCore;
     using Landlords.Interfaces;
+    using Model.Entities;
 
     public class PropertyImageDataProvider : BaseDataProvider, IPropertyImageDataProvider
     {

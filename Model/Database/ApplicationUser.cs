@@ -1,6 +1,7 @@
 ﻿namespace Model.Database
 {
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+    using Model.Entities;
     using System;
     using System.Collections.Generic;
 

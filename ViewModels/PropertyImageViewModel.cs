@@ -3,6 +3,7 @@
     using System;
     using Model;
     using Model.Validation;
+    using Model.Entities;
 
     public class PropertyImageViewModel : IPropertyImage
     {

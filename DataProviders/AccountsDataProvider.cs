@@ -10,6 +10,7 @@
     using ViewModels;
     using Model;
     using Model.DataTypes;
+    using Model.Entities;
 
     public class AccountsDataProvider : BaseDataProvider, IAccountsDataProvider
     {

@@ -1,6 +1,6 @@
 ﻿namespace Model
 {
-    using System;
+    using Model.Entities;
 
     public interface IPropertyImage
     {
