@@ -4,9 +4,9 @@
       <h1 class="md-display-2">Profile</h1>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
     </div>
-    <div id="errorMessage" class="alert alert-danger" v-show="errors.any()">
-      <span v-show="!errors.has('GenericError')">Please fix validation errors and try and submit the form again</span>
-      <span v-show="errors.has('GenericError')">{{ errors.first('GenericError') }}</span>
+    <div id="errorMessage" class="alert alert-danger" v-if="errors.any()">
+      <span v-if="!errors.has('GenericError')">Please fix validation errors and try and submit the form again</span>
+      <span v-if="errors.has('GenericError')">{{ errors.first('GenericError') }}</span>
     </div>
     <div class="alert alert-success" v-if="saved">
       Your profile has been updated
@@ -20,74 +20,90 @@
     <form @submit.prevent="validateBeforeSubmit" role="form" novalidate>
       <fieldset v-bind:disabled="!permissions.P_Update">
         <div class="row">
-          <div class="col">
-            <div class="card">
-              <div class="card-block">
-                <h3 class="card-title">Personal Details</h3>
-                <div class="row" :class="{ 'has-danger': errors.has('firstName') }">
-                  <label class="col-12 col-form-label" for="firstName">First name</label>
-                  <div class="col-12">
-                    <input v-model="profile.firstName" class="form-control" id="firstName" name="firstName" type="text" placeholder="Your first name" v-validate="'required'" data-vv-validate-on="change" required>
-                    <span v-show="errors.has('firstName')" v-bind:title="errors.first('firstName')" class="form-control-feedback">Enter a valid first name</span>
-                  </div>
-                </div>
-                <div class="row" :class="{ 'has-danger': errors.has('lastName') }">
-                  <label class="col-12 col-form-label" for="lastName">Last name</label>
-                  <div class="col-12">
-                    <input v-model="profile.lastName" id="lastName" name="lastName" type="text" placeholder="Your last name" class="form-control" v-validate="'required'" data-vv-validate-on="change" required>
-                    <span v-show="errors.has('lastName')" v-bind:title="errors.first('lastName')" class="form-control-feedback">Enter a valid last name</span>
+          <div class="col-xs-12 col-md-6">
+            <md-card>
+              <md-card-header>
+                <div class="md-title">Personal details</div>
+              </md-card-header>
+              <md-card-content>
+                <div class="row">
+                  <div class="col-xs-12">
+                    <md-input-container :class="{ 'md-input-invalid': errors.has('firstName') }">
+                      <label for="firstName">First name</label>
+                      <md-input v-model="profile.firstName" id="firstName" name="firstName" type="text" data-vv-name="firstName" v-validate="'required'" data-vv-validate-on="change" required />
+                      <span v-if="errors.has('firstName')" class="md-error">Enter a valid first name</span>
+                    </md-input-container>
                   </div>
                 </div>
                 <div class="row">
-                  <label class="col-12 col-form-label" for="secondaryPhoneNumber">Email address</label>
-                  <div class="col-12">
+                  <div class="col-xs-12">
+                    <md-input-container :class="{ 'md-input-invalid': errors.has('lastName') }">
+                      <label for="lastName">Last name</label>
+                      <md-input v-model="profile.lastName" id="lastName" name="lastName" type="text" data-vv-name="lastName" v-validate="'required'" data-vv-validate-on="change" required />
+                      <span v-if="errors.has('lastName')" class="md-error">Enter a valid last name</span>
+                    </md-input-container>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-12">
+                    <label for="secondaryPhoneNumber">Email address</label>
                     <p>{{ profile.emailAddress }}</p>
-                    <md-button v-if="!profile.emailConfirmed" @click.native="resendVerificationEmail()" type="button" class="md-raised md-warn pointer">Re-send verification email</md-button>
+                    <md-button v-if="!profile.emailConfirmed" @click.native="resendVerificationEmail()" type="button" class="md-raised md-warn ml-0 pointer">Re-send verification email</md-button>
                   </div>
                 </div>
-              </div>
-            </div>
+              </md-card-content>
+            </md-card>
           </div>
-          <div class="col">
-            <div class="card">
-              <div class="card-block">
-                <h3 class="card-title">Contact Details</h3>
+          <div class="col-xs-12 col-md-6">
+            <md-card>
+              <md-card-header>
+                <div class="md-title">Contact details</div>
+              </md-card-header>
+              <md-card-content>
                 <div class="row">
-                  <label class="col-12 col-form-label" for="availableFrom">Available From</label>
-                  <div class="col-12">
-                    <select v-model="profile.availableFrom" class="form-control" id="availableFrom" name="availableFrom">
-                      <option disabled value="">Select a time</option>
-                      <option v-for="time in times" v-bind:value="time.value">{{ time.display }}</option>
-                    </select>
+                  <div class="col-xs-12">
+                    <md-input-container>
+                      <label for="availableFrom">Available From</label>
+                      <md-select v-model="availableFrom" id="availableFrom" name="availableFrom">
+                        <md-option disabled value="">Select a time</md-option>
+                        <md-option v-for="time in times" :key="time" :value="time.value">{{ time.display }}</md-option>
+                      </md-select>
+                    </md-input-container>
                   </div>
                 </div>
                 <div class="row">
-                  <label class="col-12 col-form-label" for="availableTo">Available To</label>
-                  <div class="col-12">
-                    <select v-model="profile.availableTo" class="form-control" id="availableTo" name="availableTo">
-                      <option disabled value="">Select a time</option>
-                      <option v-for="time in times" v-bind:value="time.value">{{ time.display }}</option>
-                    </select>
+                  <div class="col-xs-12">
+                    <md-input-container>
+                      <label for="availableTo">Available To</label>
+                      <md-select v-model="availableTo" id="availableTo" name="availableTo">
+                        <md-option disabled value="">Select a time</md-option>
+                        <md-option v-for="time in times" :key="time" v-bind:value="time.value">{{ time.display }}</md-option>
+                      </md-select>
+                    </md-input-container>
                   </div>
                 </div>
                 <div class="row">
-                  <label class="col-12 col-form-label" for="phoneNumber">Main Phone Number</label>
-                  <div class="col-12">
-                    <input v-model="profile.phoneNumber" class="form-control" id="phoneNumber" name="phoneNumber" type="tel" required>
+                  <div class="col-xs-12">
+                    <md-input-container>
+                      <label for="phoneNumber">Main Phone Number</label>
+                      <md-input v-model="profile.phoneNumber" id="phoneNumber" name="phoneNumber" type="tel" required />
+                    </md-input-container>
                   </div>
                 </div>
                 <div class="row">
-                  <label class="col-12 col-form-label" for="secondaryPhoneNumber">Secondary Phone Number</label>
-                  <div class="col-12">
-                    <input v-model="profile.secondaryPhoneNumber" class="form-control" id="secondaryPhoneNumber" name="secondaryPhoneNumber" type="tel" required>
+                  <div class="col-xs-12">
+                    <md-input-container>
+                      <label for="secondaryPhoneNumber">Secondary Phone Number</label>
+                      <md-input v-model="profile.secondaryPhoneNumber" id="secondaryPhoneNumber" name="secondaryPhoneNumber" type="tel" required />
+                    </md-input-container>
                   </div>
                 </div>
-              </div>
-            </div>
+              </md-card-content>
+            </md-card>
           </div>
         </div>
         <div class="row mt-3">
-          <div class="col">
+          <div class="col-xs-12">
             <md-button v-if="permissions.P_Update" type="submit" class="md-raised md-primary">Save</md-button>
             <md-button v-if="permissions.P_Update" type="reset" class="md-raised md-default">Reset</md-button>
           </div>
@@ -106,10 +122,12 @@
     data () {
       return {
         permissions: this.$store.state.permissions,
-        times: utils.getTimesForSelectList(),
+        times: [],
         saved: false,
         resentVerification: false,
         confirmed: this.$route.query.confirmed,
+        availableFrom: '',
+        availableTo: '',
         profile: {
           userId: '',
           firstName: '',
@@ -141,10 +159,14 @@
           }
         })
       })
+      this.times = utils.getTimesForSelectList()
     },
     methods: {
       validateBeforeSubmit: function () {
         this.$validator.validateAll().then(() => {
+          this.profile.availableFrom = this.availableFrom
+          this.profile.availableTo = this.availableTo
+          debugger
           var bag = new ErrorBag()
           this.$http.post('/api/profile', { ...this.profile })
             .then(response => {
