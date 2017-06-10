@@ -73,7 +73,7 @@
                 <div class="row">
                   <label class="col-12 col-form-label" for="constructionDate">Construction Date</label>          
                   <div class="col-12">
-                    <date-picker v-model="propertyDetails.constructionDate" id="constructionDate" name="constructionDate" placeholder="Select date..." input-class="form-control"></date-picker>
+                    <datepicker v-model="propertyDetails.constructionDate" id="constructionDate" name="constructionDate" placeholder="Select date..." input-class="form-control"></datepicker>
                   </div>
                 </div>
               </div>
@@ -142,7 +142,7 @@
                 <div class="row">
                   <div class="col">
                     <label class="col-form-label" for="purchaseDate">Purchase Date</label>
-                    <date-picker v-model="propertyDetails.purchaseDate" id="purchaseDate" name="purchaseDate" placeholder="Select date..." input-class="form-control"></date-picker>
+                    <datepicker v-model="propertyDetails.purchaseDate" id="purchaseDate" name="purchaseDate" placeholder="Select date..." input-class="form-control"></datepicker>
                   </div>
                   <div class="col">
                     <md-input-container>
@@ -184,7 +184,7 @@
                   <div class="col">
                     <label class="col-form-label" for="currentDealExpirationDate">Current deal expiration date</label>
                     <p class="mb-2 text-muted">Tell us the date when your current mortgage deal/product expires</p>
-                    <date-picker v-model="propertyDetails.currentDealExpirationDate" id="currentDealExpirationDate" name="currentDealExpirationDate" placeholder="Select date..." input-class="form-control"></date-picker>
+                    <datepicker v-model="propertyDetails.currentDealExpirationDate" id="currentDealExpirationDate" name="currentDealExpirationDate" placeholder="Select date..." input-class="form-control"></datepicker>
                   </div>
                 </div>
               </div>
@@ -217,7 +217,7 @@
                 <div class="row">
                   <div class="col">
                     <label class="col-form-label" for="sellingDate">Selling Date</label>
-                    <date-picker v-model="propertyDetails.sellingDate" id="sellingDate" name="sellingDate" placeholder="Select date..."></date-picker>
+                    <datepicker v-model="propertyDetails.sellingDate" id="sellingDate" name="sellingDate" placeholder="Select date..."></datepicker>
                   </div>
                   <div class="col">
                     <md-input-container>
@@ -242,14 +242,14 @@
 </template>
 
 <script>
-import myDatepicker from 'vue-datepicker'
+import Datepicker from 'vuejs-datepicker'
 import { ErrorBag } from 'vee-validate'
 import utils from 'utils'
 import FileUploadService from 'services/file-upload.service'
 
 export default {
   name: 'propertyDetails',
-  components: { 'date-picker': myDatepicker },
+  components: { Datepicker },
   data () {
     return {
       permissions: this.$store.state.permissions,

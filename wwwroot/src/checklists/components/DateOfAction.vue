@@ -3,18 +3,18 @@
     <div class="row">
       <div class="col-6">
         <label class="col-form-label" v-bind:for="checklistItem.key + 'actioned'">Date actioned</label>
-        <date-picker v-model="checklistItem.payload" @selected="save()" id="checklistItem.key + 'actioned'" name="checklistItem.key + 'actioned'" placeholder="Select date..."></date-picker>
+        <datepicker v-model="checklistItem.payload" @selected="save()" id="checklistItem.key + 'actioned'" name="checklistItem.key + 'actioned'" placeholder="Select date..."></datepicker>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import myDatepicker from 'vue-datepicker'
+import Datepicker from 'vuejs-datepicker'
 
 export default {
   name: 'date-of-action',
-  components: { 'date-picker': myDatepicker },
+  components: { Datepicker },
   props: {
     'checklistId': {
       type: String,

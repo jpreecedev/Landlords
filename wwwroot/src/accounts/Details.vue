@@ -65,7 +65,7 @@
                 <div class="row">
                   <label for="opened">Date Opened</label>          
                   <div class="col-xs-12 col-md-6">
-                    <date-picker :date="account.opened" id="opened" name="opened"></date-picker>
+                    <datepicker v-model="account.opened" id="opened" name="opened" placeholder="Select date..."></datepicker>
                   </div>
                 </div>
                 <div class="row">
@@ -92,13 +92,13 @@
 </template>
 
 <script>
-import myDatepicker from 'vue-datepicker'
+import Datepicker from 'vuejs-datepicker'
 import { ErrorBag } from 'vee-validate'
 import utils from 'utils'
 
 export default {
   name: 'accountDetails',
-  components: { 'date-picker': myDatepicker },
+  components: { Datepicker },
   data () {
     return {
       permissions: this.$store.state.permissions,
