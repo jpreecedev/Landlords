@@ -24,12 +24,25 @@
 
     public static class Extensions
     {
+        public static decimal ToDecimal(this string input)
+        {
+            if (decimal.TryParse(input, out decimal result))
+            {
+                return result;
+            }
+
+            return 0;
+        }
+
         public static IStatementProcessor GetStatementProcessor(this Account account)
         {
             switch (account.ProviderName)
             {
                 case AccountProviders.LloydsBank:
                     return new LloydsCSV();
+
+                case AccountProviders.Santander:
+                    return new SantanderCSV();
 
                 default:
                     throw new ArgumentOutOfRangeException("No statement processor available");
