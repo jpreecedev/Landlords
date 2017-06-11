@@ -1,12 +1,10 @@
 <template>
   <main>
-    <div> 
-      <h1 class="md-display-2">Property Details</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
-    </div>
-    <div id="errorMessage" class="alert alert-danger" v-show="errors.any()">
-      <span v-show="!errors.has('GenericError')">Please fix validation errors and try and submit the form again</span>
-      <span v-show="errors.has('GenericError')">{{ errors.first('GenericError') }}</span>
+    <h1 class="md-display-2">Property Details</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
+    <div id="errorMessage" class="alert alert-danger" v-if="errors.any()">
+      <span v-if="!errors.has('GenericError')">Please fix validation errors and try and submit the form again</span>
+      <span v-else-if="errors.has('GenericError')">{{ errors.first('GenericError') }}</span>
     </div>    
     <form @submit.prevent="validateBeforeSubmit" role="form" enctype="multipart/form-data" novalidate>
       <fieldset v-bind:disabled="!permissions.PD_Update">
@@ -24,75 +22,84 @@
             </div>
           </div>
           <div class="row mt-4" v-if="isUploading">
-            <div class="col">
+            <div class="col-xs-12">
               <div class="progress">
                 <div class="progress-bar" role="progressbar" v-bind:aria-valuenow="progress" aria-valuemin="0" aria-valuemax="100" v-bind:style="{ width: progress + '%', height: '20px' }">{{ progress }}%</div>
               </div>
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col">
-            <div class="card">
-              <div class="card-block">
-                <h3 class="card-title">Overview</h3>
+        <div class="row mt-4">
+          <div class="col-xs-12 col-md-6">
+            <md-card>
+              <md-card-header>
+                <div class="md-title">Overview</div>
+              </md-card-header>
+              <md-card-content>
                 <div class="row">
-                  <div class="col-12">
+                  <div class="col-xs-12">
                     <md-input-container>
                       <label for="reference">Property Reference</label>
                       <md-input v-model="propertyDetails.reference" id="reference" name="reference" required />
                     </md-input-container>
                   </div>
                 </div>
-                <div class="row" :class="{ 'has-danger': errors.has('propertyType') }">
-                  <label class="col-12 col-form-label" for="propertyType">Property Type</label>
-                  <div class="col-12">
-                    <select v-model="propertyDetails.propertyType" v-validate="'required'" data-vv-validate-on="blur" class="form-control" id="propertyType" name="propertyType"  required>
-                      <option disabled value="">Select a property type</option>
-                      <option v-for="propertyType in propertyTypes" v-bind:value="propertyType">{{ propertyType }}</option>
-                    </select>
-                    <span v-show="errors.has('propertyType')" v-bind:title="errors.first('propertyType')" class="form-control-feedback">Select a valid property type</span>
+                <div class="row">
+                  <div class="col-xs-12">
+                    <md-input-container :class="{ 'md-input-invalid' : errors.has('propertyType') }">
+                      <label for="propertyType">Property Type</label>
+                      <md-select v-model="propertyDetails.propertyType" data-vv-name="propertyType" v-validate="'required'" data-vv-validate-on="blur" id="propertyType" name="propertyType"  required>
+                        <md-option disabled value="">Select a property type</md-option>
+                        <md-option v-for="propertyType in propertyTypes" v-bind:value="propertyType" :key="propertyType">{{ propertyType }}</md-option>
+                      </md-select>
+                      <span v-if="errors.has('propertyType')" class="md-error">Select a valid property type</span>
+                    </md-input-container>
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col" :class="{ 'has-danger': errors.has('bedrooms') }">
+                  <div class="col-xs-12 col-md-6" :class="{ 'md-input-invalid' : errors.has('bedrooms') }">
                     <md-input-container>
                       <label for="bedrooms">Number of bedrooms</label>
-                      <md-input type="number" v-model="propertyDetails.bedrooms" id="bedrooms" name="bedrooms" placeholder="Bedrooms" />
+                      <md-input type="number" v-model="propertyDetails.bedrooms" id="bedrooms" name="bedrooms" />
                     </md-input-container>                    
                   </div>
-                  <div class="col" :class="{ 'has-danger': errors.has('furnishing') }">
-                    <label class="col-form-label" for="furnishing">Furnishing</label>
-                    <select v-model="propertyDetails.furnishing" v-validate="'required'" data-vv-validate-on="blur" class="form-control" id="furnishing" name="furnishing" required>
-                      <option disabled value="">Select a furnishing type</option>
-                      <option v-for="furnishing in furnishings" v-bind:value="furnishing">{{ furnishing }}</option>
-                    </select>
-                    <span v-show="errors.has('furnishing')" v-bind:title="errors.first('furnishing')" class="form-control-feedback">Select a valid furnishing</span>
+                  <div class="col-xs-12 col-md-6">
+                    <md-input-container :class="{ 'md-input-invalid' : errors.has('furnishing') }">
+                      <label for="furnishing">Furnishing</label>
+                      <md-select v-model="propertyDetails.furnishing" data-vv-name="furnishing" v-validate="'required'" data-vv-validate-on="blur" id="furnishing" name="furnishing" required>
+                        <md-option disabled value="">Select a furnishing type</md-option>
+                        <md-option v-for="furnishing in furnishings" v-bind:value="furnishing" :key="furnishing">{{ furnishing }}</md-option>
+                      </md-select>
+                      <span v-if="errors.has('furnishing')" class="md-error">Select a valid furnishing</span>
+                    </md-input-container>
                   </div>                
                 </div>
                 <div class="row">
-                  <label class="col-12 col-form-label" for="constructionDate">Construction Date</label>          
-                  <div class="col-12">
-                    <datepicker v-model="propertyDetails.constructionDate" id="constructionDate" name="constructionDate" placeholder="Select date..." input-class="form-control"></datepicker>
+                  <div class="col-xs-12">
+                    <md-input-container>
+                      <label for="constructionDate">Construction Date</label>          
+                      <datepicker v-model="propertyDetails.constructionDate" id="constructionDate" name="constructionDate" placeholder="Select date..."></datepicker>
+                    </md-input-container>
                   </div>
                 </div>
-              </div>
-            </div>
-
-            <div class="card mt-3">
-              <div class="card-block">
-                <h3 class="card-title">Address</h3>
-                <div class="row" :class="{ 'has-danger': errors.has('propertyStreetAddress') }">
-                  <div class="col-12">
-                    <md-input-container>
+              </md-card-content>
+            </md-card>
+            <md-card>
+              <md-card-header>
+                <div class="md-title">Address</div>
+              </md-card-header>
+              <md-card-content>
+                <div class="row">
+                  <div class="col-xs-12">
+                    <md-input-container :class="{ 'md-input-invalid' : errors.has('propertyStreetAddress') }">
                       <label for="propertyStreetAddress">Street address</label>
-                      <md-textarea v-model="propertyDetails.propertyStreetAddress" id="propertyStreetAddress" name="propertyStreetAddress" required />
+                      <md-textarea v-model="propertyDetails.propertyStreetAddress" id="propertyStreetAddress" rows="3" name="propertyStreetAddress" required />
+                      <span v-if="errors.has('propertyStreetAddress')" class="md-error">Enter a valid street address</span>
                     </md-input-container>
-                    <span v-show="errors.has('propertyStreetAddress')" v-bind:title="errors.first('propertyStreetAddress')" class="form-control-feedback">Enter a valid street address</span>
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-12">
+                  <div class="col-xs-12">
                     <md-input-container>
                       <label for="propertyTownOrCity">Town or City</label>
                       <md-input v-model="propertyDetails.propertyTownOrCity" id="propertyTownOrCity" name="propertyTownOrCity" required />
@@ -100,7 +107,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-12">
+                  <div class="col-xs-12">
                     <md-input-container>
                       <label for="propertyCountyOrRegion">County or Region</label>
                       <md-input v-model="propertyDetails.propertyCountyOrRegion" id="propertyCountyOrRegion" name="propertyCountyOrRegion" required />
@@ -108,43 +115,49 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-12">
+                  <div class="col-xs-12">
                     <md-input-container>
                       <label for="propertyPostcode">Postcode</label>          
                       <md-input v-model="propertyDetails.propertyPostcode" id="propertyPostcode" name="propertyPostcode" required />
                     </md-input-container>
                   </div>
                 </div>
-                <div class="row" :class="{ 'has-danger': errors.has('propertyCountry') }">
-                  <label class="col-12 col-form-label" for="propertyCountry">Country</label>          
-                  <div class="col-12">
-                    <select v-model="propertyDetails.propertyCountry" v-validate="'required'" data-vv-validate-on="blur" class="form-control" id="propertyCountry" name="propertyCountry" required>
-                      <option disabled value="">Select a Country</option>
-                      <option v-for="propertyCountry in countries" v-bind:value="propertyCountry">{{ propertyCountry }}</option>
-                    </select>
-                    <span v-show="errors.has('propertyCountry')" v-bind:title="errors.first('propertyCountry')" class="form-control-feedback">Select a valid country</span>
+                <div class="row">
+                  <div class="col-xs-12">
+                    <md-input-container :class="{ 'md-input-invalid' : errors.has('propertyCountry') }">
+                      <label for="propertyCountry">Country</label>          
+                      <md-select v-model="propertyDetails.propertyCountry" v-validate="'required'" data-vv-validate-on="blur" id="propertyCountry" name="propertyCountry" required>
+                        <md-option disabled value="">Select a Country</md-option>
+                        <md-option v-for="propertyCountry in countries" v-bind:value="propertyCountry" :key="propertyCountry">{{ propertyCountry }}</md-option>
+                      </md-select>
+                      <span v-if="errors.has('propertyCountry')" class="md-error">Select a valid country</span>
+                    </md-input-container>
                   </div>
                 </div>
-                <div class="row mt-4">
-                  <div class="col">
+                <div class="row">
+                  <div class="col-xs-12">
                     <md-checkbox v-model="propertyDetails.isAvailableForLetting" id="isAvailableForLetting" name="isAvailableForLetting">
                     This property is available for letting
                     </md-checkbox>
                   </div>
                 </div>
-              </div>
-            </div>          
+              </md-card-content>
+            </md-card>
           </div>
-          <div class="col">
-            <div class="card">
-              <div class="card-block">
-                <h4 class="card-title">Ownership</h4>
+          <div class="col-xs-12 col-md-6">
+            <md-card>
+              <md-card-header>
+                <div class="md-title">Ownership</div>
+              </md-card-header>
+              <md-card-content>
                 <div class="row">
-                  <div class="col">
-                    <label class="col-form-label" for="purchaseDate">Purchase Date</label>
-                    <datepicker v-model="propertyDetails.purchaseDate" id="purchaseDate" name="purchaseDate" placeholder="Select date..." input-class="form-control"></datepicker>
+                  <div class="col-xs-12 col-md-6">
+                    <md-input-container>
+                      <label for="purchaseDate">Purchase Date</label>
+                      <datepicker v-model="propertyDetails.purchaseDate" id="purchaseDate" name="purchaseDate"></datepicker>
+                    </md-input-container>
                   </div>
-                  <div class="col">
+                  <div class="col-xs-12 col-md-6">
                     <md-input-container>
                       <label for="purchasePrice">Purchase Price</label>
                       <md-input v-model="propertyDetails.purchasePrice" type="number" id="purchasePrice" name="purchasePrice"></md-input>
@@ -152,13 +165,13 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col">
+                  <div class="col-xs-12 col-md-6">
                     <md-input-container>
                       <label for="mortgageAmount">Mortgage Amount</label>                    
                       <md-input v-model="propertyDetails.mortgageAmount" id="mortgageAmount" name="mortgageAmount" type="number" />
                     </md-input-container>
                   </div>
-                  <div class="col">
+                  <div class="col-xs-12 col-md-6">
                     <md-input-container>
                       <label for="interestRate">Interest Rate</label>
                       <md-input v-model="propertyDetails.interestRate" id="interestRate" name="interestRate" type="number" />
@@ -166,72 +179,81 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-6">
+                  <div class="col-xs-12 col-md-6">
                     <md-input-container>
                       <label for="monthlyPayment">Monthly Repayment</label>  
                       <md-input v-model="propertyDetails.monthlyPayment" id="monthlyPayment" name="monthlyPayment" type="number" />                    
                     </md-input-container>
                   </div>
-                  <div class="col-6">
-                    <label class="col-form-label" for="mortgageProvider">Mortgage Provider</label>
-                    <select v-model="propertyDetails.mortgageProvider" class="form-control" id="mortgageProvider" name="mortgageProvider">
-                      <option disabled value="">Select a mortgage provider</option>
-                      <option v-for="mortgageProvider in mortgageProviders" v-bind:value="mortgageProvider">{{ mortgageProvider }}</option>
-                    </select>
+                  <div class="col-xs-12 col-md-6">
+                    <md-input-container>
+                      <label for="mortgageProvider">Mortgage Provider</label>
+                      <md-select v-model="propertyDetails.mortgageProvider" id="mortgageProvider" name="mortgageProvider">
+                        <md-option disabled value="">Select a mortgage provider</md-option>
+                        <md-option v-for="mortgageProvider in mortgageProviders" v-bind:value="mortgageProvider" :key="mortgageProvider">{{ mortgageProvider }}</md-option>
+                      </md-select>
+                    </md-input-container>
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col">
-                    <label class="col-form-label" for="currentDealExpirationDate">Current deal expiration date</label>
-                    <p class="mb-2 text-muted">Tell us the date when your current mortgage deal/product expires</p>
-                    <datepicker v-model="propertyDetails.currentDealExpirationDate" id="currentDealExpirationDate" name="currentDealExpirationDate" placeholder="Select date..." input-class="form-control"></datepicker>
+                  <div class="col-xs-12">
+                    <md-input-container>
+                      <label for="currentDealExpirationDate">Current deal expiration date</label>
+                      <datepicker v-model="propertyDetails.currentDealExpirationDate" id="currentDealExpirationDate" name="currentDealExpirationDate"></datepicker>
+                    </md-input-container>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div class="card mt-3">
-              <div class="card-block">
-                <h4 class="card-title">Projected Rent</h4>
-                <h6 class="card-subtitle mb-2 text-muted">Enter expected rents for this property.</h6>
+              </md-card-content>
+            </md-card>          
+            <md-card>
+              <md-card-header>
+                <div class="md-title">Projected Rent</div>
+              </md-card-header>
+              <md-card-content>
                 <div class="row">
-                  <div class="col">
+                  <div class="col-xs-12 col-md-6">
                     <md-input-container>
                       <label for="targetRent">Target Rent</label>
                       <md-input v-model="propertyDetails.targetRent" id="targetRent" name="targetRent" type="number" />
                     </md-input-container>
                   </div>
-                  <div class="col">
-                    <label class="col-form-label" for="paymentTerm">Payment Term</label>
-                    <select v-model="propertyDetails.paymentTerm" class="form-control" id="paymentTerm" name="paymentTerm">
-                      <option disabled value="">Select a payment term</option>
-                      <option v-for="paymentTerm in paymentTerms" v-bind:value="paymentTerm">{{ paymentTerm }}</option>
-                    </select>
+                  <div class="col-xs-12 col-md-6">
+                    <md-input-container>
+                      <label for="paymentTerm">Payment Term</label>
+                      <md-select v-model="propertyDetails.paymentTerm" id="paymentTerm" name="paymentTerm">
+                        <md-option disabled value="">Select a payment term</md-option>
+                        <md-option v-for="paymentTerm in paymentTerms" v-bind:value="paymentTerm" :key="paymentTerm">{{ paymentTerm }}</md-option>
+                      </md-select>
+                    </md-input-container>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div class="card mt-3">
-              <div class="card-block">
-                <h4 class="card-title">Selling Details</h4>
-                <h6 class="card-subtitle mb-2 text-muted">Tell us the actual or expected selling price.</h6>
+              </md-card-content>
+            </md-card>          
+            <md-card>
+              <md-card-header>
+                <div class="md-title">Selling Details</div>
+              </md-card-header>
+              <md-card-content>
                 <div class="row">
-                  <div class="col">
-                    <label class="col-form-label" for="sellingDate">Selling Date</label>
-                    <datepicker v-model="propertyDetails.sellingDate" id="sellingDate" name="sellingDate" placeholder="Select date..."></datepicker>
+                  <div class="col-xs-12 col-md-6">
+                    <md-input-container>
+                      <label for="sellingDate">Selling Date</label>
+                      <datepicker v-model="propertyDetails.sellingDate" id="sellingDate" name="sellingDate"></datepicker>
+                    </md-input-container>
                   </div>
-                  <div class="col">
+                  <div class="col-xs-12 col-md-6">
                     <md-input-container>
                       <label for="sellingPrice">Selling Price</label>
                       <md-input v-model="propertyDetails.sellingPrice" id="sellingPrice" name="sellingPrice" type="number" required />
                     </md-input-container>
                   </div>
                 </div>
-              </div>
-            </div>
+              </md-card-content>
+            </md-card>
           </div>
         </div>
         <div class="row mt-3">
-          <div class="col">
+          <div class="col-xs-12">
             <md-button v-if="permissions.PD_Update" type="submit" class="md-raised md-primary">Save</md-button>
             <md-button v-if="permissions.PD_Update" type="reset" class="md-raised md-secondary">Reset</md-button>
           </div>
@@ -360,15 +382,16 @@ export default {
 
   .property-image-container {
 
-    margin-bottom: 2rem;
-    overflow-x: scroll;
+    overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
+    padding: 20px 0;
+    background-color: #fafafa;
 
     .property-image {
       position: relative;
       display: inline-block;
-      margin-right: remc(16px);
+      margin-right: 16px;
       label {
         input[type="file"] {
           position: fixed;
