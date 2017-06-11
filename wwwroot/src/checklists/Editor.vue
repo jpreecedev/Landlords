@@ -1,13 +1,11 @@
 <template>
   <main>
-    <div>
-      <h1 class="md-display-2">New tenant</h1>
-      <h2 class="md-display-1" v-if="checklist">
-        <span v-if="checklist.propertyReference">{{checklist.propertyReference}}</span> 
-        <span v-if="checklist.propertyStreetAddress">({{ checklist.propertyStreetAddress }})</span>
-      </h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
-    </div>
+    <h1 class="md-display-2">New tenant</h1>
+    <h2 class="md-display-1" v-if="checklist">
+      <span v-if="checklist.propertyReference">{{checklist.propertyReference}}</span> 
+      <span v-if="checklist.propertyStreetAddress">({{ checklist.propertyStreetAddress }})</span>
+    </h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
     <div>
       <p class="text-muted">There are {{ outstandingActions }} outstanding actions.</p>
       <form>

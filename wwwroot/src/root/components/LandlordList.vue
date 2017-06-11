@@ -1,9 +1,7 @@
 <template>
   <main>
-    <div> 
-      <h1 class="md-display-2">Landlord List</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
-    </div>
+    <h1 class="md-display-2">Landlord List</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
     <table class="table table-striped table-hover">
       <thead class="thead-inverse">
         <tr>

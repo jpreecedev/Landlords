@@ -1,9 +1,7 @@
 <template>
   <main>
-    <div> 
-      <h1 class="md-display-2">Transactions</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
-    </div>
+    <h1 class="md-display-2">Transactions</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
 
     <p v-if="!transactions || !transactions.length">There are no transactions to display.</p>
 

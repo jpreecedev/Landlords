@@ -1,9 +1,7 @@
 <template>
   <main>
-    <div>
-      <h1 class="md-display-2">Overview</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
-    </div>
+    <h1 class="md-display-2">Overview</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
     <permissions-warning :permission="permissions.CL_Overview" />
     <div class="mt-5">
       <h2 class="md-display-1">Your checklists</h2>

@@ -1,9 +1,7 @@
 <template>
   <main>
-    <div> 
-      <h1 class="md-display-2">Account details</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
-    </div>
+    <h1 class="md-display-2">Account details</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
     <div id="errorMessage" class="alert alert-danger" v-show="errors.any()">
       <span v-show="!errors.has('GenericError')">Please fix validation errors and try and submit the form again</span>
       <span v-show="errors.has('GenericError')">{{ errors.first('GenericError') }}</span>

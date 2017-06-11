@@ -38,9 +38,9 @@
               <md-card-content>
                 <div class="row">
                   <div class="col-xs-12">
-                    <md-input-container>
+                    <md-input-container :class="{ 'md-input-invalid' : errors.has('reference') }">
                       <label for="reference">Property Reference</label>
-                      <md-input v-model="propertyDetails.reference" id="reference" name="reference" required />
+                      <md-input v-model="propertyDetails.reference" id="reference" name="reference" data-vv-name="reference" v-validate="'required'" data-vv-validate-on="change" required />
                     </md-input-container>
                   </div>
                 </div>
@@ -48,7 +48,7 @@
                   <div class="col-xs-12">
                     <md-input-container :class="{ 'md-input-invalid' : errors.has('propertyType') }">
                       <label for="propertyType">Property Type</label>
-                      <md-select v-model="propertyDetails.propertyType" data-vv-name="propertyType" v-validate="'required'" data-vv-validate-on="blur" id="propertyType" name="propertyType"  required>
+                      <md-select v-model="propertyDetails.propertyType" data-vv-name="propertyType" v-validate="'required'" data-vv-validate-on="change" id="propertyType" name="propertyType" required>
                         <md-option disabled value="">Select a property type</md-option>
                         <md-option v-for="propertyType in propertyTypes" v-bind:value="propertyType" :key="propertyType">{{ propertyType }}</md-option>
                       </md-select>
@@ -57,8 +57,8 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-xs-12 col-md-6" :class="{ 'md-input-invalid' : errors.has('bedrooms') }">
-                    <md-input-container>
+                  <div class="col-xs-12 col-md-6">
+                    <md-input-container :class="{ 'md-input-invalid' : errors.has('bedrooms') }">
                       <label for="bedrooms">Number of bedrooms</label>
                       <md-input type="number" v-model="propertyDetails.bedrooms" id="bedrooms" name="bedrooms" />
                     </md-input-container>                    
@@ -66,7 +66,7 @@
                   <div class="col-xs-12 col-md-6">
                     <md-input-container :class="{ 'md-input-invalid' : errors.has('furnishing') }">
                       <label for="furnishing">Furnishing</label>
-                      <md-select v-model="propertyDetails.furnishing" data-vv-name="furnishing" v-validate="'required'" data-vv-validate-on="blur" id="furnishing" name="furnishing" required>
+                      <md-select v-model="propertyDetails.furnishing" data-vv-name="furnishing" v-validate="'required'" data-vv-validate-on="change" id="furnishing" name="furnishing" required>
                         <md-option disabled value="">Select a furnishing type</md-option>
                         <md-option v-for="furnishing in furnishings" v-bind:value="furnishing" :key="furnishing">{{ furnishing }}</md-option>
                       </md-select>
@@ -78,7 +78,7 @@
                   <div class="col-xs-12">
                     <md-input-container>
                       <label for="constructionDate">Construction Date</label>          
-                      <datepicker v-model="propertyDetails.constructionDate" id="constructionDate" name="constructionDate" placeholder="Select date..."></datepicker>
+                      <datepicker v-model="propertyDetails.constructionDate" id="constructionDate" name="constructionDate"></datepicker>
                     </md-input-container>
                   </div>
                 </div>
@@ -93,32 +93,35 @@
                   <div class="col-xs-12">
                     <md-input-container :class="{ 'md-input-invalid' : errors.has('propertyStreetAddress') }">
                       <label for="propertyStreetAddress">Street address</label>
-                      <md-textarea v-model="propertyDetails.propertyStreetAddress" id="propertyStreetAddress" rows="3" name="propertyStreetAddress" required />
+                      <md-textarea v-model="propertyDetails.propertyStreetAddress" data-vv-name="propertyStreetAddress" v-validate="'required'" data-vv-validate-on="change"  id="propertyStreetAddress" rows="3" name="propertyStreetAddress" required />
                       <span v-if="errors.has('propertyStreetAddress')" class="md-error">Enter a valid street address</span>
                     </md-input-container>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-xs-12">
-                    <md-input-container>
+                    <md-input-container :class="{ 'md-input-invalid' : errors.has('propertyTownOrCity') }">
                       <label for="propertyTownOrCity">Town or City</label>
-                      <md-input v-model="propertyDetails.propertyTownOrCity" id="propertyTownOrCity" name="propertyTownOrCity" required />
+                      <md-input v-model="propertyDetails.propertyTownOrCity" data-vv-name="propertyTownOrCity" v-validate="'required'" data-vv-validate-on="change"  id="propertyTownOrCity" name="propertyTownOrCity" required />
+                      <span v-if="errors.has('propertyTownOrCity')" class="md-error">Enter a valid town or city</span>
                     </md-input-container>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-xs-12">
-                    <md-input-container>
+                    <md-input-container :class="{ 'md-input-invalid' : errors.has('propertyCountyOrRegion') }">
                       <label for="propertyCountyOrRegion">County or Region</label>
-                      <md-input v-model="propertyDetails.propertyCountyOrRegion" id="propertyCountyOrRegion" name="propertyCountyOrRegion" required />
+                      <md-input v-model="propertyDetails.propertyCountyOrRegion" data-vv-name="propertyCountyOrRegion" v-validate="'required'" data-vv-validate-on="change"  id="propertyCountyOrRegion" name="propertyCountyOrRegion" required />
+                      <span v-if="errors.has('propertyCountyOrRegion')" class="md-error">Enter a valid town or city</span>
                     </md-input-container>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-xs-12">
-                    <md-input-container>
+                    <md-input-container :class="{ 'md-input-invalid' : errors.has('propertyPostcode') }">
                       <label for="propertyPostcode">Postcode</label>          
-                      <md-input v-model="propertyDetails.propertyPostcode" id="propertyPostcode" name="propertyPostcode" required />
+                      <md-input v-model="propertyDetails.propertyPostcode" data-vv-name="propertyPostcode" v-validate="'required'" data-vv-validate-on="change"  id="propertyPostcode" name="propertyPostcode" required />
+                      <span v-if="errors.has('propertyPostcode')" class="md-error">Enter a valid postal code</span>
                     </md-input-container>
                   </div>
                 </div>
@@ -126,7 +129,7 @@
                   <div class="col-xs-12">
                     <md-input-container :class="{ 'md-input-invalid' : errors.has('propertyCountry') }">
                       <label for="propertyCountry">Country</label>          
-                      <md-select v-model="propertyDetails.propertyCountry" v-validate="'required'" data-vv-validate-on="blur" id="propertyCountry" name="propertyCountry" required>
+                      <md-select v-model="propertyDetails.propertyCountry" data-vv-name="propertyCountry" v-validate="'required'" data-vv-validate-on="change" id="propertyCountry" name="propertyCountry" required>
                         <md-option disabled value="">Select a Country</md-option>
                         <md-option v-for="propertyCountry in countries" v-bind:value="propertyCountry" :key="propertyCountry">{{ propertyCountry }}</md-option>
                       </md-select>
@@ -244,7 +247,7 @@
                   <div class="col-xs-12 col-md-6">
                     <md-input-container>
                       <label for="sellingPrice">Selling Price</label>
-                      <md-input v-model="propertyDetails.sellingPrice" id="sellingPrice" name="sellingPrice" type="number" required />
+                      <md-input v-model="propertyDetails.sellingPrice" id="sellingPrice" name="sellingPrice" type="number" data-vv-name="sellingPrice" v-validate="'required'" data-vv-validate-on="change" />
                     </md-input-container>
                   </div>
                 </div>
@@ -382,16 +385,14 @@ export default {
 
   .property-image-container {
 
-    overflow-x: auto;
-    overflow-y: hidden;
-    white-space: nowrap;
-    padding: 20px 0;
+    padding: 0 20px;
     background-color: #fafafa;
 
     .property-image {
       position: relative;
       display: inline-block;
-      margin-right: 16px;
+      margin: 16px 16px 0 0;
+      vertical-align: top;
       label {
         input[type="file"] {
           position: fixed;
@@ -402,9 +403,14 @@ export default {
         max-width: 200px;
         max-height: 150px;
         height: auto;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 5px;
         &.placeholder {
-          border-radius: 30px;
           cursor: pointer;
+        }
+        &:hover {
+          box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
         }
       }
       .img-thumbnail {

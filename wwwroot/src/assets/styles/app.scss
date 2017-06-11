@@ -5,6 +5,10 @@
 
 @import '../../../node_modules/flexboxgrid/dist/flexboxgrid.min.css';
 
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
 .pointer {
   cursor: pointer;
 }
