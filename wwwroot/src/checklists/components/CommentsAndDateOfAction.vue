@@ -1,14 +1,15 @@
 <template>
-  <div class="card-block">
-    <div class="row">
-      <div class="col">
-        <label class="col-form-label" v-bind:for="checklistItem.key + 'comments'">Comments</label>
-        <textarea v-model="checklistItem.payload.comments" @blur="save()" class="form-control" v-bind:id="checklistItem.key + 'comments'" placeholder="Enter any comments here" v-bind:name="checklistItem.key + 'comments'" type="text" rows="4"></textarea>                    
-      </div>
-      <div class="col">
-        <label class="col-form-label" v-bind:for="checklistItem.key + 'actioned'">Date actioned</label>
-        <datepicker v-model="checklistItem.payload.actioned" @input="save()" id="checklistItem.key + 'actioned'" name="checklistItem.key + 'actioned'" placeholder="Select date..."></datepicker>
-      </div>
+  <div class="row">
+    <div class="col-xs-12 col-md-6">
+      <md-input-container>
+        <label v-bind:for="checklistItem.key + 'comments'">Comments</label>
+        <md-textarea v-model="checklistItem.payload.comments" @blur="save()" class="form-control" v-bind:id="checklistItem.key + 'comments'" v-bind:name="checklistItem.key + 'comments'" type="text"></md-textarea>                    
+      </md-input-container>
+    </div>
+    <div class="col-xs-12 col-md-6">
+      <md-input-container>
+        <datepicker class="md-input" v-model="checklistItem.payload.actioned" @input="save()" id="checklistItem.key + 'actioned'" name="checklistItem.key + 'actioned'"></datepicker>
+      </md-input-container>
     </div>
   </div>
 </template>

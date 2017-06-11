@@ -1,22 +1,23 @@
 <template>
-  <div class="card-block">
+  <div>
     <div class="row">
-      <div class="col">
-        <label class="col-form-label" v-bind:for="checklistItem.key + 'comments'">Comments</label>
-        <textarea v-model="checklistItem.comments" class="form-control" v-bind:id="checklistItem.key + 'comments'" placeholder="Enter any comments here" v-bind:name="checklistItem.key + 'comments'" type="text" rows="4"></textarea>                    
+      <div class="col-xs-12 col-md-6">
+        <md-input-container>
+          <label v-bind:for="checklistItem.key + 'comments'">Comments</label>
+          <md-textarea v-model="checklistItem.comments" v-bind:id="checklistItem.key + 'comments'" placeholder="Enter any comments here" v-bind:name="checklistItem.key + 'comments'"></md-textarea>                    
+        </md-input-container>
       </div>
-      <div class="col">
-        <label class="col-form-label" v-bind:for="checklistItem.key + 'actioned'">Date actioned</label>
-        <datepicker v-model="checklistItem.actioned" id="checklistItem.key + 'actioned'" name="checklistItem.key + 'actioned'" placeholder="Select date..."></datepicker>
+      <div class="col-xs-12 col-md-6">
+        <md-input-container>
+          <datepicker v-model="checklistItem.actioned" id="checklistItem.key + 'actioned'" name="checklistItem.key + 'actioned'" placeholder="Select date..."></datepicker>
+        </md-input-container>
       </div>
     </div>
     <div class="row">
-      <div class="col">
-        <p class="mb-2">Upload one or more supporting documents</p>
-        <label class="custom-file">
-          <input type="file" id="file" class="pointer custom-file-input">
-          <span class="custom-file-control"></span>
-        </label>
+      <div class="col-xs-12">
+          <md-input-container>
+            <md-file v-model="file" placeholder="Browse for a file on your computer" />
+          </md-input-container>
       </div>
     </div>
   </div>
@@ -40,6 +41,7 @@ export default {
   },
   data () {
     return {
+      file: null,
       permissions: this.$store.state.permissions
     }
   }

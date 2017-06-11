@@ -1,30 +1,20 @@
 <template>
-  <div id="accordion" v-if="checklist && checklist.checklistItems && checklist.checklistItems.length" role="tablist" aria-multiselectable="true">
-    <div class="card" v-for="item in checklist.checklistItems">
-      <div class="card-header" role="tab" v-bind:id="item.key">
-        <h5 class="mb-0">
-          <div class="form-check">            
-            <div class="sort" v-if="permissions.CI_Move">
-              <span v-if="item.order < checklist.checklistItems.length" class="pointer" @click.native="move('down', item)" title="Move down">&darr;</span>
-              <span v-if="item.order > 1" class="pointer" @click.native="move('up', item)" title="Move up">&uarr;</span>
-            </div>
-            <label class="form-check-label">
-              <md-checkbox v-if="permissions.CI_ToggleCompleted" v-model="item.isCompleted" @change="toggleCompleted(item)"></md-checkbox>                                      
-              <span v-if="!item.isCompleted">{{ item.displayText }}</span>
-              <del class="text-muted" v-if="item.isCompleted">{{ item.displayText }}</del>                    
-            </label>
-            <p class="pointer float-right d-inline-block mb-0 text-right" @click.native="expand(item)">{{ item.isExpanded ? 'Collapse' : 'Expand' }} {{ item.isExpanded ? '&#9660;' : '&#9658;' }}</p>                  
-          </div>
-        </h5>
-      </div>
-      <div v-bind:id="item.key" v-bind:class="{'show': item.isExpanded}" role="tabpanel" v-bind:aria-labelledby="item.key" class="collapse">
+  <div class="accordion" v-if="checklist && checklist.checklistItems && checklist.checklistItems.length">
+    <div class="tab" v-for="(item, index) in checklist.checklistItems">
+      <input :id="'tab-' + index" type="radio" name="tabs2">
+      <label v-bind:for="'tab-' + index">
+        <md-checkbox v-if="permissions.CI_ToggleCompleted" v-model="item.isCompleted" @click.native="toggleCompleted(item)"></md-checkbox>
+        <span v-if="!item.isCompleted">{{ item.displayText }}</span>
+        <del class="text-muted" v-if="item.isCompleted">{{ item.displayText }}</del>           
+      </label>
+      <div class="tab-content">
         <document-upload v-if="item.template === 'DocumentUpload'" :checklistId="checklist.id" :checklistItem="item" />
-        <comments-date-of-action v-if="item.template === 'CommentsAndDateOfAction'" :checklistId="checklist.id" :checklistItem="item" />
-        <comments-only v-if="item.template === 'CommentsOnly'" :checklistId="checklist.id" :checklistItem="item" />
-        <date-of-action v-if="item.template === 'DateOfAction'" :checklistId="checklist.id" :checklistItem="item" />
+        <comments-date-of-action v-else-if="item.template === 'CommentsAndDateOfAction'" :checklistId="checklist.id" :checklistItem="item" />
+        <comments-only v-else-if="item.template === 'CommentsOnly'" :checklistId="checklist.id" :checklistItem="item" />
+        <date-of-action v-else-if="item.template === 'DateOfAction'" :checklistId="checklist.id" :checklistItem="item" />
       </div>
     </div>
-  </div>  
+  </div>
 </template>
 
 <script>
@@ -65,12 +55,73 @@ export default {
 </script>
   
 <style lang="scss" scoped>
-  .sort {
-    display: inline-block;
-    width: 30px;
-    vertical-align: top;
+  .tab {
+    position: relative;
+    margin-bottom: 1px;
+    width: 100%;
+    overflow: hidden;
   }
-  .form-check-label{
-    max-width: 80%;
+
+  input {
+    position: absolute;
+    opacity: 0;
+    z-index: -1;
   }
+
+  label {
+    position: relative;
+    display: block;
+    padding: 0 0 0 1em;
+    line-height: 3;
+    background-color: #3f51b5;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .tab-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .35s;
+  }
+
+  .tab-content p {
+    margin: 1em;
+  }
+
+  input:checked ~ .tab-content {
+    max-height: 30rem;
+    height: auto;
+    padding: 30px 60px;
+    background-color: #E8EAF6;
+  }
+
+  label::after {
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: block;
+    width: 3em;
+    height: 3em;
+    line-height: 3;
+    text-align: center;
+    -webkit-transition: all .35s;
+    -o-transition: all .35s;
+    transition: all .35s;
+  }
+
+  input {
+    &[type=checkbox] + label::after {
+      content: "+";
+    }
+    &[type=radio] + label::after {
+      content: "\25BC";
+    }
+    &[type=checkbox]:checked + label::after {
+      transform: rotate(315deg);
+    }
+    &[type=radio]:checked + label::after {
+      transform: rotateX(180deg);
+    }
+  }
+
 </style>

@@ -157,3 +157,34 @@ fieldset {
 .vdp-datepicker {
   width: 100%;
 }
+
+.alert {
+  &.alert-info,
+  &.alert-success,
+  &.alert-warning,
+  &.alert-danger {
+    margin: 10px 0;
+    padding: 20px;
+  }
+  
+  &.alert-info {
+      color: #00529B;
+      background-color: #BDE5F8;
+  }
+
+  &.alert-success {
+      color: #4F8A10;
+      background-color: #DFF2BF;
+  }
+
+  &.alert-warning {
+      color: #9F6000;
+      background-color: #FEEFB3;
+  }
+
+  &.alert-danger {
+      color: #F44336;
+      background-color: #FFEBEE;
+  }
+
+}

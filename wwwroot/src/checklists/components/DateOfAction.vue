@@ -1,9 +1,10 @@
 <template>
   <div class="card-block">
     <div class="row">
-      <div class="col-6">
-        <label class="col-form-label" v-bind:for="checklistItem.key + 'actioned'">Date actioned</label>
-        <datepicker v-model="checklistItem.payload" @selected="save()" id="checklistItem.key + 'actioned'" name="checklistItem.key + 'actioned'" placeholder="Select date..."></datepicker>
+      <div class="col-xs-12 col-md-6">
+        <md-input-container>
+          <datepicker v-model="checklistItem.payload" @selected="save()" id="checklistItem.key + 'actioned'" name="checklistItem.key + 'actioned'" placeholder="Select date..."></datepicker>
+        </md-input-container>
       </div>
     </div>
   </div>

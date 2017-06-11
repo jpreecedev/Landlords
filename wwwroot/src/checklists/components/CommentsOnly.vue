@@ -1,10 +1,10 @@
 <template>
-  <div class="card-block">
-    <div class="row">
-      <div class="col">
-        <label class="col-form-label" v-bind:for="checklistItem.key + 'comments'">Comments</label>
-        <textarea v-model="checklistItem.payload.comments" @blur="save()" class="form-control" v-bind:id="checklistItem.key + 'comments'" placeholder="Enter any comments here" v-bind:name="checklistItem.key + 'comments'" type="text" rows="4"></textarea>                    
-      </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <md-input-container>
+        <label v-bind:for="checklistItem.key + 'comments'">Comments</label>
+        <md-textarea v-model="checklistItem.payload.comments" @blur="save()" v-bind:id="checklistItem.key + 'comments'" v-bind:name="checklistItem.key + 'comments'"></md-textarea>                    
+      </md-input-container>
     </div>
   </div>
 </template>
