@@ -20,7 +20,6 @@
           <md-card-content>
             <span v-if="!checklist.propertyReference && !checklist.propertyStreetAddress">General</span>
             <span v-if="checklist.propertyReference">{{ checklist.propertyReference }}</span>
-            <span v-if="checklist.propertyStreetAddress"> ({{ checklist.propertyStreetAddress }})</span>
           </md-card-content>
           <md-card-actions>
             <md-button v-if="permissions.CL_GetById" @click.native="$router.push({name: 'editor', params: {checklistId: checklist.id}})" class="md-primary">View</md-button>
@@ -34,29 +33,43 @@
         <md-button @click.native="getArchived()" class="pointer md-raised md-primary">View Archived</md-button>
       </div>
     </div>
-    <div class="row mt-5" v-if="permissions.CL_Create">
-      <div class="col-6" v-if="overview.availableChecklists && overview.availableChecklists.length">
-        <h2 class="md-display-1">Available checklist templates</h2>   
-        <md-input-container>       
-          <md-select v-model="selectedChecklist">
-            <md-option v-for="checklist in overview.availableChecklists" :key="checklist.name" v-bind:value="checklist.name" v-bind:disabled="checklist.isPropertyMandatory && portfolioProperties.length < 1">{{ checklist.origin }}: {{ checklist.name }}</md-option>
-          </md-select>
-        </md-input-container>
-      </div>
-    </div>
-    <div class="row mt-5" v-if="permissions.CL_Create && portfolioProperties && portfolioProperties.length">
-      <div class="col-6">
-        <h3 class="md-headline">Select a property from your portfolio</h3>
-        <md-input-container>       
-          <md-select v-model="selectedProperty" v-bind:disabled="!selectedChecklist">
-            <md-option v-for="property in portfolioProperties" :key="property.id" v-bind:value="property.id">{{ property.propertyReference }}<span v-if="property.propertyStreetAddress"> ({{property.propertyStreetAddress}})</span></md-option>
-          </md-select>
-        </md-input-container>
+    <div class="row mt-5" v-if="permissions.CL_Create && overview.availableChecklists && overview.availableChecklists.length">
+      <div class="col-xs-6">
+        <md-card>
+          <md-card-header>
+            <div class="md-title">Create a checklist</div>
+            <div class="md-subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam quibusdam incidunt, dolor laudantium delectus mollitia error perspiciatis dicta vero expedita aliquam adipisci tempora blanditiis quo, possimus, animi quisquam, in quae.</div>
+          </md-card-header>
+          <md-card-content>
+            <div class="row">
+              <div class="col-xs-12">
+                <md-input-container>       
+                  <label for="availableChecklists">Select a checklist template</label>
+                  <md-select v-model="selectedChecklist" name="availableChecklists" @change="selectedChecklistChanged($event)">
+                    <md-option v-for="checklist in overview.availableChecklists" :key="checklist.name" v-bind:value="checklist.id" v-bind:disabled="checklist.isPropertyMandatory && portfolioProperties.length < 1">{{ checklist.origin }}: {{ checklist.name }}</md-option>
+                  </md-select>
+                </md-input-container>
+              </div>
+            </div>
+            <div class="row" v-if="selectedChecklist && isPropertyMandatory && portfolioProperties && portfolioProperties.length">
+              <div class="col-xs-12">
+                <md-input-container>       
+                  <label for="portfolio">Select a property from your portfolio (this can be optional)</label>
+                  <md-select v-model="selectedProperty" v-bind:disabled="!selectedChecklist" name="portfolio">
+                    <md-option v-for="property in portfolioProperties" :key="property.id" v-bind:value="property.id">{{ property.propertyReference }}<span v-if="property.propertyStreetAddress"> ({{property.propertyStreetAddress}})</span></md-option>
+                  </md-select>
+                </md-input-container>
+              </div>
+            </div>
+          </md-card-content>
+          <md-card-actions>
+            <md-button @click.native="createChecklistInstance(selectedChecklist, selectedProperty)" class="md-primary">Create checklist</md-button>
+          </md-card-actions>
+        </md-card>
       </div>
     </div>
     <div class="row mt-3" v-if="permissions.CL_Create">
       <div class="col">
-        <md-button @click.native="createChecklistInstance(selectedChecklist, selectedProperty)" class="md-raised md-primary pointer">Create checklist</md-button>
       </div>
     </div>
   </main>
@@ -75,6 +88,7 @@
         selectedProperty: null,
         portfolioProperties: [],
         hasArchivedLists: false,
+        isPropertyMandatory: false,
         overview: {
           checklists: [],
           availableChecklists: []
@@ -95,18 +109,11 @@
           })
         }
       })
-      .then(() => {
-        var index = 0
-        if (!this.portfolioProperties || !this.portfolioProperties.length) {
-          var first = this.overview.availableChecklists.filter(c => !c.isPropertyMandatory)[0]
-          index = this.overview.availableChecklists.indexOf(first)
-        }
-        this.selectedChecklist = this.overview.availableChecklists[index].name
-      })
     },
     methods: {
       createChecklistInstance: function (selectedChecklist, selectedProperty) {
-        this.$http.post(`/api/checklists/?checklistId=${selectedChecklist.id}${selectedProperty ? `&portfolioId=${selectedProperty.portfolioId}&propertyDetailsId=` + selectedProperty.id : ''}`).then(response => {
+        debugger
+        this.$http.post(`/api/checklists/?checklistId=${selectedChecklist}&propertyDetailsId=${selectedProperty}`).then(response => {
           this.$router.push({ name: 'editor', params: { checklistId: response.data.id } })
         })
       },
@@ -125,14 +132,14 @@
             this.hasArchivedLists = true
           }
         })
-      }
-    },
-    watch: {
-      selectedChecklist: function (value) {
-        if (!value || !value.isPropertyMandatory) {
+      },
+      selectedChecklistChanged: function (checklistId) {
+        var checklist = this.overview.availableChecklists.find(item => item.id === checklistId)
+        if (checklist) {
+          this.isPropertyMandatory = checklist.isPropertyMandatory
+        }
+        if (!this.isPropertyMandatory) {
           this.selectedProperty = null
-        } else {
-          this.selectedProperty = this.portfolioProperties[0].id
         }
       }
     }
