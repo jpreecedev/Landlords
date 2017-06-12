@@ -6,7 +6,6 @@
     <wizard ref="wizard" trigger="startNewTenancyButton" journey="startTenancy">
       <starttenancyjourney></starttenancyjourney>
     </wizard>
-
     <md-button class="md-primary md-raised" id="startNewTenancyButton" @click.native="openDialog('wizard')">Start a new tenancy</md-button>
 
   </main>
