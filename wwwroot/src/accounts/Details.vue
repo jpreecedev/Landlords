@@ -16,7 +16,7 @@
                   <div class="col-xs-12">
                     <md-input-container>
                       <label for="opened">Date Opened</label>          
-                      <datepicker v-model="account.opened" id="opened" name="opened" placeholder="Select date..." class="md-input"></datepicker>
+                      <md-input v-model="account.opened" id="opened" name="opened" placeholder="Select date..." type="date" />
                     </md-input-container>
                   </div>
                 </div>
@@ -92,13 +92,11 @@
 </template>
 
 <script>
-import Datepicker from 'vuejs-datepicker'
 import { ErrorBag } from 'vee-validate'
 import utils from 'utils'
 
 export default {
   name: 'accountDetails',
-  components: { Datepicker },
   data () {
     return {
       permissions: this.$store.state.permissions,

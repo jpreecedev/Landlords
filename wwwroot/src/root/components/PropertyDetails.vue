@@ -78,7 +78,7 @@
                   <div class="col-xs-12">
                     <md-input-container>
                       <label for="constructionDate">Construction Date</label>          
-                      <datepicker v-model="propertyDetails.constructionDate" id="constructionDate" name="constructionDate"></datepicker>
+                      <md-input v-model="propertyDetails.constructionDate" id="constructionDate" name="constructionDate" type="date" />
                     </md-input-container>
                   </div>
                 </div>
@@ -157,7 +157,7 @@
                   <div class="col-xs-12 col-md-6">
                     <md-input-container>
                       <label for="purchaseDate">Purchase Date</label>
-                      <datepicker v-model="propertyDetails.purchaseDate" id="purchaseDate" name="purchaseDate"></datepicker>
+                      <md-input v-model="propertyDetails.purchaseDate" id="purchaseDate" name="purchaseDate" type="date" />
                     </md-input-container>
                   </div>
                   <div class="col-xs-12 col-md-6">
@@ -202,7 +202,7 @@
                   <div class="col-xs-12">
                     <md-input-container>
                       <label for="currentDealExpirationDate">Current deal expiration date</label>
-                      <datepicker v-model="propertyDetails.currentDealExpirationDate" id="currentDealExpirationDate" name="currentDealExpirationDate"></datepicker>
+                      <md-input v-model="propertyDetails.currentDealExpirationDate" id="currentDealExpirationDate" name="currentDealExpirationDate" type="date" />
                     </md-input-container>
                   </div>
                 </div>
@@ -241,7 +241,7 @@
                   <div class="col-xs-12 col-md-6">
                     <md-input-container>
                       <label for="sellingDate">Selling Date</label>
-                      <datepicker v-model="propertyDetails.sellingDate" id="sellingDate" name="sellingDate"></datepicker>
+                      <md-input v-model="propertyDetails.sellingDate" id="sellingDate" name="sellingDate" type="date" />
                     </md-input-container>
                   </div>
                   <div class="col-xs-12 col-md-6">
@@ -267,14 +267,12 @@
 </template>
 
 <script>
-import Datepicker from 'vuejs-datepicker'
 import { ErrorBag } from 'vee-validate'
 import utils from 'utils'
 import FileUploadService from 'services/file-upload.service'
 
 export default {
   name: 'propertyDetails',
-  components: { Datepicker },
   data () {
     return {
       permissions: this.$store.state.permissions,

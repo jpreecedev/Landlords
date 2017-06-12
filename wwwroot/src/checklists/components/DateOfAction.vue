@@ -3,7 +3,8 @@
     <div class="row">
       <div class="col-xs-12 col-md-6">
         <md-input-container>
-          <datepicker v-model="checklistItem.payload" @selected="save()" id="checklistItem.key + 'actioned'" name="checklistItem.key + 'actioned'" placeholder="Select date..."></datepicker>
+          <label v-bind:for="checklistItem.key + 'actioned'">Actioned</label>
+          <md-input v-model="checklistItem.payload" @selected="save()" :id="checklistItem.key + 'actioned'" :name="checklistItem.key + 'actioned'" type="date" />
         </md-input-container>
       </div>
     </div>
@@ -11,11 +12,8 @@
 </template>
 
 <script>
-import Datepicker from 'vuejs-datepicker'
-
 export default {
   name: 'date-of-action',
-  components: { Datepicker },
   props: {
     'checklistId': {
       type: String,
