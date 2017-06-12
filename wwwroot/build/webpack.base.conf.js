@@ -32,6 +32,7 @@ module.exports = {
       'checklists': resolve("src/checklists"),
       'accounts': resolve("src/accounts"),
       'common': resolve("src/common"),
+      'wizard-journeys': resolve("src/wizard-journeys"),
       'src': resolve("src")
     }
   },

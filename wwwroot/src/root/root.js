@@ -12,6 +12,7 @@ import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.css'
 import 'src/extensions'
 import 'src/filters'
+import CommonComponents from 'src/common'
 import 'assets/styles/app.scss'
 import 'v-autocomplete/dist/v-autocomplete.css'
 
@@ -41,6 +42,9 @@ Vue.use(VueMaterial.MdCard)
 Vue.use(VueMaterial.MdWhiteframe)
 Vue.use(VueMaterial.MdFile)
 Vue.use(VueMaterial.MdProgress)
+Vue.use(VueMaterial.MdDialog)
+
+Vue.use(CommonComponents)
 
 new Vue({
   el: '#app',
