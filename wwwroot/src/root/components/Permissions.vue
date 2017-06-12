@@ -12,17 +12,17 @@
     <form role="form" novalidate>
       <fieldset>
         <div class="row">
-          <label class="col-12 col-form-label" for="searchForUser">Search for user</label>
-          <div class="col-12">
+          <label class="col-xs-12" for="searchForUser">Search for user</label>
+          <div class="col-xs-12 col-md-6">
             <v-autocomplete :items="filteredUsers" placeholder="Enter name or email" v-model="selectedUser" :auto-select-one-item="false" :get-label="getLabel" :component-item='template' @change="change"></v-autocomplete>
           </div>
         </div>
         <div class="row mt-4">
-          <div class="col">
+          <div class="col-xs-5">
             <div class="row">
-              <label class="col-12 col-form-label" for="permission">Available Permissions</label>
-              <div class="col-12">
-                <select v-model="selectedPermissions" class="form-control" id="permission" name="permission" size="20" multiple>
+              <label class="col-xs-12" for="permission">Available Permissions</label>
+              <div class="col-xs-12">
+                <select v-model="selectedPermissions" id="permission" name="permission" size="20" multiple>
                   <optgroup v-for="group in allPermissions" v-bind:label="group.key">
                     <option v-for="permission in group.items" v-bind:value="permission.permissionId">{{ permission.description }}</option>
                   </optgroup>
@@ -30,19 +30,19 @@
               </div>
             </div>
           </div>
-          <div class="col-auto">
-            <div class="h-100 d-flex align-items-center">
+          <div class="col-xs">
+            <div class="h-100 d-flex align-items-center justify-content-center">
               <div>
                 <md-button @click.native="removePermission" v-bind:disabled="!selectedUser || !allocatedPermissions.length" type="button" class="md-raised md-default d-block mb-3 w-100">&#10007;</md-button>
                 <md-button @click.native="addPermission" v-bind:disabled="!selectedUser || !selectedPermissions.length" type="button" class="md-raised md-default d-block w-100">&rarr;</md-button>
               </div>
             </div>
           </div>
-          <div class="col">
+          <div class="col-xs-5">
             <div class="row">
-              <label class="col-12 col-form-label" for="userPermission">Allocated Permissions</label>
-              <div class="col-12">
-                <select v-model="allocatedPermissions" class="form-control" id="userPermission" name="userPermission" size="20" multiple>
+              <label class="col-xs-12" for="userPermission">Allocated Permissions</label>
+              <div class="col-xs-12">
+                <select v-model="allocatedPermissions" id="userPermission" name="userPermission" size="20" multiple>
                   <template v-if="selectedUser && selectedUser.permissions">
                     <optgroup v-for="group in selectedUser.permissions" v-bind:label="group.key">
                       <option v-for="userPermission in group.items" v-bind:value="userPermission.permissionId">{{ userPermission.description }}</option>
@@ -179,6 +179,17 @@ export default {
 
 select {
   max-height: 378px;
+  width: 100%;
+  display: block;
+  padding: .5rem .75rem;
+  font-size: 1rem;
+  line-height: 1.25;
+  color: #464a4c;
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: .25rem;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  margin: 0;
 }
 
 .v-autocomplete {

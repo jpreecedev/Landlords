@@ -15,7 +15,7 @@
         <md-table-body>
           <md-table-row v-for="entry in data" :key="entry">
             <md-table-cell>
-              <img class="img-thumbnail" v-if="entry.leadImage" v-bind:src="'/static/uploads/' + entry.portfolioId + '/' + entry.leadImage.fileName" v-bind:alt="entry.leadImage.fileName">
+              <img class="img-thumbnail mt-2 mb-2" v-if="entry.leadImage" v-bind:src="'/static/uploads/' + entry.portfolioId + '/' + entry.leadImage.fileName" v-bind:alt="entry.leadImage.fileName">
             </md-table-cell>
             <md-table-cell>
               <router-link v-if="permissions.PD_View" :to="'/manager/property-details/' + entry.id">{{ entry.reference }}</router-link>

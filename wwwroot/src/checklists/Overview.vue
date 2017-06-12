@@ -9,18 +9,18 @@
       <p v-if="!overview.checklists || !overview.checklists.length">You have not created any checklists yet.</p>
       
       <md-layout>
-        <md-card md-with-hover v-for="checklist in overview.checklists" :key="checklist">
+        <md-card v-for="checklist in overview.checklists" :key="checklist">
           <md-card-header>
             <div class="md-title">{{ checklist.name }}</div>
-            <div class="md-subhead" v-if="checklist.description">{{ checklist.description }}</div>
+            <div class="md-subhead">
+              <span v-if="!checklist.propertyReference && !checklist.propertyStreetAddress">General</span>
+              <span v-if="checklist.propertyReference">{{ checklist.propertyReference }}</span>
+              <span v-if="checklist.propertyStreetAddress"> ({{ checklist.propertyStreetAddress }})</span>
+            </div>
           </md-card-header>
           <md-card-media>
             <img class="card-img-top" src="../assets/images/checklist.png" v-bind:alt="checklist.name">
           </md-card-media>
-          <md-card-content>
-            <span v-if="!checklist.propertyReference && !checklist.propertyStreetAddress">General</span>
-            <span v-if="checklist.propertyReference">{{ checklist.propertyReference }}</span>
-          </md-card-content>
           <md-card-actions>
             <md-button v-if="permissions.CL_GetById" @click.native="$router.push({name: 'editor', params: {checklistId: checklist.id}})" class="md-primary">View</md-button>
             <md-button v-if="permissions.CL_Archive && !checklist.isArchived" @click.native="archive(checklist)" class="md-default">Archive</md-button>
@@ -38,7 +38,7 @@
         <md-card>
           <md-card-header>
             <div class="md-title">Create a checklist</div>
-            <div class="md-subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam quibusdam incidunt, dolor laudantium delectus mollitia error perspiciatis dicta vero expedita aliquam adipisci tempora blanditiis quo, possimus, animi quisquam, in quae.</div>
+            <div class="md-subhead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam quibusdam incidunt, dolor laudantium delectus mollitia error perspiciatis dicta vero expedita aliquam adipisci tempora blanditiis quo, possimus, animi quisquam, in quae.</div>
           </md-card-header>
           <md-card-content>
             <div class="row">
@@ -150,6 +150,13 @@
   
   .md-card {
     margin: 0 4px 16px 4px;
+
+    .md-card-media {
+      img {
+        width: auto;
+        max-height: 180px;
+      }
+    }
   }
 
 </style>

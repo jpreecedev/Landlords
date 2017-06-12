@@ -58,6 +58,24 @@ fieldset {
   display: inline-block !important;
 }
 
+.d-flex {
+  display: flex !important;
+}
+
+.h-100 {
+  height: 100% !important;
+}
+
+.align-items-center {
+  -webkit-box-align: center !important;
+  align-items: center !important;
+}
+
+.justify-content-center {
+  justify-content: center !important;
+  -webkit-box-pack: center !important;
+}
+
 .mr-0 {
   margin-right: 0 !important;
 }
@@ -158,6 +176,19 @@ fieldset {
   border-radius: 0;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: .5rem;
+}
+
+p {
+  margin: 0 0 1rem;
+}
+
 .alert {
   &.alert-info,
   &.alert-success,
@@ -197,4 +228,9 @@ fieldset {
   &:not(:first-child) {
     box-shadow: 0 3px 5px rgba(0, 0, 0, .2), 0 2px 2px rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .12);
   }
+}
+
+.md-table-head-text, 
+.md-table-cell-container {
+  font-size: .875rem;
 }
