@@ -43,6 +43,7 @@ Vue.use(VueMaterial.MdWhiteframe)
 Vue.use(VueMaterial.MdFile)
 Vue.use(VueMaterial.MdProgress)
 Vue.use(VueMaterial.MdDialog)
+Vue.use(VueMaterial.MdTabs)
 
 Vue.use(CommonComponents)
 

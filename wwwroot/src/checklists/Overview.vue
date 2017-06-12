@@ -53,12 +53,7 @@
             </div>
             <div class="row" v-if="selectedChecklist && isPropertyMandatory && portfolioProperties && portfolioProperties.length">
               <div class="col-xs-12">
-                <md-input-container>       
-                  <label for="portfolio">Select a property from your portfolio (this can be optional)</label>
-                  <md-select v-model="selectedProperty" v-bind:disabled="!selectedChecklist" name="portfolio">
-                    <md-option v-for="property in portfolioProperties" :key="property.id" v-bind:value="property.id">{{ property.propertyReference }}<span v-if="property.propertyStreetAddress"> ({{property.propertyStreetAddress}})</span></md-option>
-                  </md-select>
-                </md-input-container>
+                <portfolio-properties name="portfolio" @selected="portfolioPropertySelected" :disabled="!selectedChecklist" :properties="portfolioProperties" />
               </div>
             </div>
           </md-card-content>
@@ -141,6 +136,9 @@
         if (!this.isPropertyMandatory) {
           this.selectedProperty = null
         }
+      },
+      portfolioPropertySelected: function (value) {
+        this.selectedProperty = value
       }
     }
   }
