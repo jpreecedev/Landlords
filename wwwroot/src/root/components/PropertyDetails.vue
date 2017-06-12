@@ -247,7 +247,7 @@
                   <div class="col-xs-12 col-md-6">
                     <md-input-container>
                       <label for="sellingPrice">Selling Price</label>
-                      <md-input v-model="propertyDetails.sellingPrice" id="sellingPrice" name="sellingPrice" type="number" data-vv-name="sellingPrice" v-validate="'required'" data-vv-validate-on="change" />
+                      <md-input v-model="propertyDetails.sellingPrice" id="sellingPrice" name="sellingPrice" type="number" />
                     </md-input-container>
                   </div>
                 </div>
@@ -385,7 +385,7 @@ export default {
 
   .property-image-container {
 
-    padding: 0 20px;
+    padding: 0 16px 16px 16px;
     background-color: #fafafa;
 
     .property-image {

@@ -9,15 +9,16 @@
       </div>
       <div class="col-xs-12 col-md-6">
         <md-input-container>
-          <datepicker v-model="checklistItem.actioned" id="checklistItem.key + 'actioned'" name="checklistItem.key + 'actioned'" placeholder="Select date..."></datepicker>
+          <label v-bind:for="checklistItem.key + 'actioned'">Actioned</label>
+          <md-input v-model="checklistItem.actioned" id="checklistItem.key + 'actioned'" name="checklistItem.key + 'actioned'" type="date"></md-input>
         </md-input-container>
       </div>
     </div>
     <div class="row">
       <div class="col-xs-12">
-          <md-input-container>
-            <md-file v-model="file" placeholder="Browse for a file on your computer" />
-          </md-input-container>
+        <md-input-container>
+          <md-file v-model="file" placeholder="Browse for a file on your computer" />
+        </md-input-container>
       </div>
     </div>
   </div>

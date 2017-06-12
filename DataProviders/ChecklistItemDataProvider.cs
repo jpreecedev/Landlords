@@ -25,24 +25,6 @@
             }
         }
 
-        public async Task ToggleChecklistItemExpandedAsync(Guid portfolioId, Guid checklistId, Guid checklistItemId, bool expanded)
-        {
-            var checklistItems = await (from checklist in Context.ChecklistInstances
-                join checklistItem in Context.ChecklistItemInstances on checklist.Id equals checklistItem.ChecklistInstanceId into itemJoin
-                from item in itemJoin.DefaultIfEmpty()
-                where checklist.PortfolioId == portfolioId && checklist.Id == checklistId
-                select item).ToListAsync();
-
-            checklistItems.ForEach(item => item.IsExpanded = false);
-
-            var selectedItem = checklistItems.FirstOrDefault(c => c.Id == checklistItemId);
-            if (selectedItem != null)
-            {
-                selectedItem.IsExpanded = expanded;
-                await Context.SaveChangesAsync();
-            }
-        }
-
         public async Task MoveAsync(Guid portfolioId, Guid checklistId, Guid checklistItemId, string direction)
         {
             var checklistItems = await(from checklist in Context.ChecklistInstances

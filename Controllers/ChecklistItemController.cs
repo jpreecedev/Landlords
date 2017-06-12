@@ -29,21 +29,7 @@
                 return BadRequest("Unable to validate payload");
             }
 
-            await _checklistItemDataProvider.ToggleChecklistItemCompletedAsync(User.GetUserId(), checklistId, checklistItemId, completed);
-            return Ok();
-        }
-
-        [HttpPost("expanded")]
-        [ValidateAntiForgeryToken]
-        [Permission(Permissions_CI.ToggleExpandedId, Permissions_CI.ToggleExpandedRouteId, Permissions_CI.ToggleExpandedDescription)]
-        public async Task<IActionResult> Expanded(Guid checklistId, Guid checklistItemId, bool expanded)
-        {
-            if (checklistId.IsDefault() || checklistItemId.IsDefault())
-            {
-                return BadRequest("Unable to validate payload");
-            }
-
-            await _checklistItemDataProvider.ToggleChecklistItemExpandedAsync(User.GetUserId(), checklistId, checklistItemId, expanded);
+            await _checklistItemDataProvider.ToggleChecklistItemCompletedAsync(User.GetPortfolioId(), checklistId, checklistItemId, completed);
             return Ok();
         }
 
@@ -71,7 +57,7 @@
                 return BadRequest("Unable to validate payload");
             }
 
-            await _checklistItemDataProvider.ApplyTemplatePayloadAsync(User.GetUserId(), checklistId, checklistItemId, payload?.ToString());
+            await _checklistItemDataProvider.ApplyTemplatePayloadAsync(User.GetPortfolioId(), checklistId, checklistItemId, payload?.ToString());
             return Ok();
         }
     }

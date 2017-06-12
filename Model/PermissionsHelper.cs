@@ -17,7 +17,6 @@
             Permissions_CL.OverviewId,
             Permissions_CL.UpdateId,
             Permissions_CI.ToggleCompletedId,
-            Permissions_CI.ToggleExpandedId,
             Permissions_CI.MoveId,
             Permissions_CI.ApplyTemplateId,
             Permissions_AC.GetById,
@@ -46,7 +45,6 @@
             Permissions_CL.OverviewId,
             Permissions_CL.UpdateId,
             Permissions_CI.ToggleCompletedId,
-            Permissions_CI.ToggleExpandedId,
             Permissions_CI.MoveId,
             Permissions_CI.ApplyTemplateId,
             Permissions_AC.GetById,
@@ -94,7 +92,6 @@
             Permissions_CL.OverviewId,
             Permissions_CL.UpdateId,
             Permissions_CI.ToggleCompletedId,
-            Permissions_CI.ToggleExpandedId,
             Permissions_CI.MoveId,
             Permissions_CI.ApplyTemplateId
         };
@@ -110,7 +107,6 @@
             Permissions_CL.OverviewId,
             Permissions_CL.UpdateId,
             Permissions_CI.ToggleCompletedId,
-            Permissions_CI.ToggleExpandedId,
             Permissions_CI.MoveId,
             Permissions_CI.ApplyTemplateId
         };

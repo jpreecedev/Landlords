@@ -28,6 +28,11 @@
 
                     while (reader.Read())
                     {
+                        if (reader.CurrentRecord[0] == "Arranged overdraft limit")
+                        {
+                            continue;
+                        }
+
                         var item = new TransactionViewModel()
                         {
                             AccountId = accountId,

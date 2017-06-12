@@ -1,9 +1,9 @@
 <template>
   <div class="accordion" v-if="checklist && checklist.checklistItems && checklist.checklistItems.length">
     <div class="tab" v-for="(item, index) in checklist.checklistItems">
-      <input :id="'tab-' + index" type="radio" name="tabs2">
+      <input :id="'tab-' + index" type="radio" name="tabs2" @change.native="expand(item)" :checked="index === 0" />
       <label v-bind:for="'tab-' + index">
-        <md-checkbox v-if="permissions.CI_ToggleCompleted" v-model="item.isCompleted" @click.native="toggleCompleted(item)"></md-checkbox>
+        <md-checkbox v-if="permissions.CI_ToggleCompleted" v-model="item.isCompleted" @change="toggleCompleted(item, $event)"></md-checkbox>
         <span v-if="!item.isCompleted">{{ item.displayText }}</span>
         <del class="text-muted" v-if="item.isCompleted">{{ item.displayText }}</del>           
       </label>
@@ -38,13 +38,8 @@ export default {
     }
   },
   methods: {
-    expand: function (item) {
-      var expanded = item.isExpanded
-      this.$emit('collapseAll')
-      item.isExpanded = !expanded
-      this.$emit('toggleExpanded', item)
-    },
-    toggleCompleted: function (item) {
+    toggleCompleted: function (item, newState) {
+      item.isCompleted = newState
       this.$emit('toggleCompleted', item)
     },
     move: function (direction, item) {
