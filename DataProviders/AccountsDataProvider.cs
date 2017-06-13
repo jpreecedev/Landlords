@@ -75,7 +75,7 @@
 
         public async Task UpdateAsync(Guid portfolioId, AccountViewModel account)
         {
-            var existingEntity = await Context.Accounts.Where(c => c.PortfolioId == portfolioId && c.Id == account.Id && !c.IsDeleted).FirstOrDefaultAsync();
+            var existingEntity = await Context.Accounts.FirstOrDefaultAsync(c => c.PortfolioId == portfolioId && c.Id == account.Id && !c.IsDeleted);
             if (existingEntity != null)
             {
                 existingEntity.MapFrom(account);

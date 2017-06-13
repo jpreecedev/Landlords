@@ -30,6 +30,10 @@
 
         DbSet<Transaction> Transactions { get; set; }
 
+        DbSet<Tenant> Tenants { get; set; }
+
+        DbSet<TenantAddress> TenantAddresses { get; set; }
+
         DbSet<T> Set<T>() where T : class;
     }
 }

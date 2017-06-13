@@ -2,6 +2,7 @@
 {
     using Model.Validation;
     using System;
+    using System.Collections.ObjectModel;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
     using System.Reflection;
@@ -53,7 +54,14 @@
                     var pv = property.GetValue(viewModel);
                     if (pv != null)
                     {
-                        p.SetValue(this, pv);
+                        try
+                        {
+                            p.SetValue(this, pv);
+                        }
+                        catch (Exception)
+                        {
+                            //TODO: Remove this.  This method doesn't like generic collections
+                        }
                     }
                 }
             }

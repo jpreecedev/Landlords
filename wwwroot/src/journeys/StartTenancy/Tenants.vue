@@ -21,6 +21,12 @@
               </md-input-container>
             </div>
             <div class="col-xs-12 col-md-6">
+              <md-input-container :class="{ 'md-input-invalid': errors.has('middleName') }">
+                <label for="middleName">Middle name(s)</label>
+                <md-input v-model="tenant.middleName" id="middleName" name="middleName" type="text" />
+              </md-input-container>
+            </div>
+            <div class="col-xs-12 col-md-6">
               <md-input-container :class="{ 'md-input-invalid': errors.has('lastName') }">
                 <label for="lastName">Last name</label>
                 <md-input v-model="tenant.lastName" id="lastName" name="lastName" type="text" data-vv-name="lastName" v-validate="'required'" data-vv-validate-on="change" required />
@@ -124,6 +130,7 @@
       return {
         tenants: [{
           firstName: null,
+          middleName: null,
           lastName: null,
           isLeadTenant: true,
           isAdult: true,
@@ -149,6 +156,7 @@
         this.tenants.forEach(tenant => { tenant.isChecked = false })
         this.tenants.push({
           firstName: null,
+          middleName: null,
           lastName: null,
           isLeadTenant: false,
           isAdult: isAdult,

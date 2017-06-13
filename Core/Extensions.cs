@@ -178,6 +178,7 @@
                 .AddScoped<IUserRepository, UserRepository>()
                 .AddScoped<ILLDbContext, LLDbContext>()
                 .AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>()
+                .AddScoped<ITenantsDataProvider, TenantsDataProvider>()
                 .AddTransient<IEmailSender, EmailSender>();
 
             return serviceCollection;

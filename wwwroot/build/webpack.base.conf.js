@@ -33,6 +33,7 @@ module.exports = {
       'accounts': resolve("src/accounts"),
       'common': resolve("src/common"),
       'journeys': resolve("src/journeys"),
+      'tenants': resolve("src/tenants"),
       'src': resolve("src")
     }
   },

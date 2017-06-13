@@ -21,6 +21,9 @@
         <router-link v-if="permissions.CL_Overview" tag="button" class="md-button" to="/checklists/">
           Checklists
         </router-link>
+        <router-link v-if="permissions.TE_GetListById" tag="button" class="md-button" to="/tenants/">
+          Tenants
+        </router-link>
         <router-link v-if="!auth.isLoggedIn" tag="button" class="md-button" to="/registration/">
           Log in or Register
         </router-link>

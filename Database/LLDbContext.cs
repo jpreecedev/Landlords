@@ -37,6 +37,9 @@
 
             modelBuilder.Entity<ChecklistInstance>()
                 .HasMany(c => (List<ChecklistItemInstance>) c.ChecklistItems);
+
+            modelBuilder.Entity<Tenant>()
+                .HasMany(c => (List<TenantAddress>) c.Addresses);
             
             base.OnModelCreating(modelBuilder);
         }
@@ -56,5 +59,7 @@
         public DbSet<ChecklistItemInstance> ChecklistItemInstances { get; set; }
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<Tenant> Tenants { get; set; }
+        public DbSet<TenantAddress> TenantAddresses { get; set; }
     }
 }
