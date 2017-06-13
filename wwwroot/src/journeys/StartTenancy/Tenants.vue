@@ -1,12 +1,116 @@
 <template>
   <md-tab md-icon="face">
-    <div class="row">
-      <div class="col-xs-12 col-md-6">
-      </div>
-      <div class="col-xs-12 col-md-6">
+    <h2 class="md-title mt-0">Who are the tenants?</h2>
 
+    <div class="accordion">
+      <div class="tab" v-for="(tenant, index) in tenants">
+        <input :id="'tab-' + index" type="radio" name="tabs2" :checked="tenant.isChecked" />
+        <label v-bind:for="'tab-' + index">
+          <span v-if="tenant.isLeadTenant">Lead Tenant</span>
+          <span v-else-if="tenant.isAdult">Additional Adult Tenant</span>
+          <span v-else-if="!tenant.isAdult">Child Occupier</span>
+        </label>
+        <div class="tab-content">
+          <div class="md-subheading">What is the {{ tenant.isAdult ? 'tenants' : 'childs' }} name?</div>
+          <div class="row">
+            <div class="col-xs-12 col-md-6">
+              <md-input-container :class="{ 'md-input-invalid': errors.has('firstName') }">
+                <label for="firstName">First name</label>
+                <md-input v-model="tenant.firstName" id="firstName" name="firstName" type="text" data-vv-name="firstName" v-validate="'required'" data-vv-validate-on="change" required />
+                <span v-if="errors.has('firstName')" class="md-error">Enter a valid first name</span>
+              </md-input-container>
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <md-input-container :class="{ 'md-input-invalid': errors.has('lastName') }">
+                <label for="lastName">Last name</label>
+                <md-input v-model="tenant.lastName" id="lastName" name="lastName" type="text" data-vv-name="lastName" v-validate="'required'" data-vv-validate-on="change" required />
+                <span v-if="errors.has('lastName')" class="md-error">Enter a valid last name</span>
+              </md-input-container>
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <md-input-container :class="{ 'md-input-invalid': errors.has('dateOfBirth') }">
+                <label for="dateOfBirth">Date of Birth</label>
+                <md-input v-model="tenant.dateOfBirth" id="dateOfBirth" name="dateOfBirth" type="date" />
+                <span v-if="errors.has('dateOfBirth')" class="md-error">Enter a date of birth</span>
+              </md-input-container>
+            </div>
+          </div>
+          <template v-if="tenant.isAdult">
+            <div class="md-subheading mt-3">Now, tell us the tenants current address</div>
+            <div class="row">
+              <div class="col-xs-6">
+                <md-input-container :class="{ 'md-input-invalid' : errors.has('street') }">
+                  <label for="street">Street address</label>
+                  <md-textarea v-model="tenant.address.street" data-vv-name="street" v-validate="'required'" data-vv-validate-on="change"  id="street" name="street" required />
+                  <span v-if="errors.has('street')" class="md-error">Enter a valid street address</span>
+                </md-input-container>
+              </div>
+              <div class="col-xs-6">
+                <md-input-container :class="{ 'md-input-invalid' : errors.has('townOrCity') }">
+                  <label for="townOrCity">Town or City</label>
+                  <md-input v-model="tenant.address.townOrCity" data-vv-name="townOrCity" v-validate="'required'" data-vv-validate-on="change"  id="townOrCity" name="townOrCity" required />
+                  <span v-if="errors.has('townOrCity')" class="md-error">Enter a valid town or city</span>
+                </md-input-container>
+              </div>
+              <div class="col-xs-6">
+                <md-input-container :class="{ 'md-input-invalid' : errors.has('countyOrRegion') }">
+                  <label for="countyOrRegion">County or Region</label>
+                  <md-input v-model="tenant.address.countyOrRegion" data-vv-name="countyOrRegion" v-validate="'required'" data-vv-validate-on="change"  id="countyOrRegion" name="countyOrRegion" required />
+                  <span v-if="errors.has('countyOrRegion')" class="md-error">Enter a valid county or region</span>
+                </md-input-container>
+              </div>
+              <div class="col-xs-6">
+                <md-input-container :class="{ 'md-input-invalid' : errors.has('postcode') }">
+                  <label for="postcode">Postcode</label>
+                  <md-input v-model="tenant.address.postcode" data-vv-name="postcode" v-validate="'required'" data-vv-validate-on="change"  id="postcode" name="postcode" required />
+                  <span v-if="errors.has('postcode')" class="md-error">Enter a valid postal code</span>
+                </md-input-container>
+              </div>
+              <div class="col-xs-6">
+                <md-input-container :class="{ 'md-input-invalid' : errors.has('country') }">
+                  <label for="country">Country</label>
+                  <md-select v-model="tenant.address.country" data-vv-name="country" v-validate="'required'" data-vv-validate-on="change" id="country" name="country" required>
+                    <md-option disabled value="">Select a Country</md-option>
+                    <md-option v-for="country in viewdata.countries" v-bind:value="country" :key="country">{{ country }}</md-option>
+                  </md-select>
+                  <span v-if="errors.has('country')" class="md-error">Select a valid country</span>
+                </md-input-container>
+              </div>
+            </div>
+          </template>
+          <template v-if="tenant.isAdult">
+            <div class="md-subheading mt-3">And finally, their contact details</div>
+            <div class="row">
+              <div class="col-xs-6">
+                <md-input-container :class="{ 'md-input-invalid' : errors.has('mainContactNumber') }">
+                  <label for="mainContactNumber">Main contact number</label>
+                  <md-textarea v-model="tenant.mainContactNumber" data-vv-name="mainContactNumber" v-validate="'required'" data-vv-validate-on="change"  id="mainContactNumber" name="mainContactNumber" required />
+                  <span v-if="errors.has('mainContactNumber')" class="md-error">Enter a valid contact number</span>
+                </md-input-container>
+              </div>
+              <div class="col-xs-6">
+                <md-input-container :class="{ 'md-input-invalid' : errors.has('secondaryContactNumber') }">
+                  <label for="secondaryContactNumber">Another contact number</label>
+                  <md-textarea v-model="tenant.secondaryContactNumber" data-vv-name="secondaryContactNumber" v-validate="'required'" data-vv-validate-on="change"  id="secondaryContactNumber" name="secondaryContactNumber" required />
+                  <span v-if="errors.has('secondaryContactNumber')" class="md-error">Enter a valid contact number</span>
+                </md-input-container>
+              </div>
+              <div class="col-xs-6">
+                <md-input-container :class="{ 'md-input-invalid': errors.has('emailAddress') }">
+                  <label for="emailAddress">Email Address</label>
+                  <md-input type="email" id="emailAddress" name="emailAddress" data-vv-name="emailAddress" v-validate="'required|email'" v-model="tenant.emailAddress" data-vv-validate-on="change" required />
+                  <span v-if="errors.has('emailAddress')" class="md-error">Enter a valid email address</span>
+                </md-input-container>
+              </div>
+            </div>
+          </template>
+        </div>
       </div>
     </div>
+
+    <md-button class="md-raised md-primary" @click.native="addOccupier(true)">Add adult tenant</md-button>
+    <md-button class="md-raised" @click.native="addOccupier(false)">Add child</md-button>
+
   </md-tab>
 </template>
 
@@ -18,12 +122,48 @@
     },
     data () {
       return {
+        tenants: [{
+          firstName: null,
+          lastName: null,
+          isLeadTenant: true,
+          isAdult: true,
+          isChecked: true,
+          mainContactNumber: null,
+          secondaryContactNumber: null,
+          emailAddress: null,
+          address: {
+            street: null,
+            townOrCity: null,
+            countyOrRegion: null,
+            postcode: null,
+            country: null
+          }
+        }],
         permissions: this.$store.state.permissions
       }
     },
     created () {
     },
     methods: {
+      addOccupier: function (isAdult) {
+        this.tenants.forEach(tenant => { tenant.isChecked = false })
+        this.tenants.push({
+          firstName: null,
+          lastName: null,
+          isLeadTenant: false,
+          isAdult: isAdult,
+          isChecked: true,
+          mainContactNumber: null,
+          secondaryContactNumber: null,
+          emailAddress: null,
+          address: {
+            street: null,
+            townOrCity: null,
+            countyOrRegion: null,
+            postcode: null,
+            country: null
+          }})
+      }
     }
   }
 
