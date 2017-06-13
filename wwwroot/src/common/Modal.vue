@@ -12,7 +12,7 @@
 </template>
 
 <script>
-  import startTenancy from 'wizard-journeys/StartTenancy'
+  import startTenancy from 'journeys/StartTenancy'
 
   export default {
     props: {
@@ -35,9 +35,5 @@
 </script>
 
 <style lang="scss">
-
-  .md-tabs .md-tabs-content {
-    width: 600px;
-  }
 
 </style>

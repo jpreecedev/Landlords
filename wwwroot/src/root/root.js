@@ -9,10 +9,12 @@ import Autocomplete from 'v-autocomplete'
 import router from './routes'
 import VueMaterial from 'vue-material'
 
+import CommonComponents from 'src/common'
+import Journeys from 'journeys'
+
 import 'vue-material/dist/vue-material.css'
 import 'src/extensions'
 import 'src/filters'
-import CommonComponents from 'src/common'
 import 'assets/styles/app.scss'
 import 'v-autocomplete/dist/v-autocomplete.css'
 
@@ -46,6 +48,7 @@ Vue.use(VueMaterial.MdDialog)
 Vue.use(VueMaterial.MdTabs)
 
 Vue.use(CommonComponents)
+Vue.use(Journeys)
 
 new Vue({
   el: '#app',
