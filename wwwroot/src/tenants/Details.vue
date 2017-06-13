@@ -2,7 +2,7 @@
   <main>
     <h1 class="md-display-2">Tenant details</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
-    <div id="errorMessage" class="alert alert-danger" v-show="errors.any()">
+    <div id="errorMessage" class="alert error" v-show="errors.any()">
       <span v-show="!errors.has('GenericError')">Please fix validation errors and try and submit the form again</span>
       <span v-show="errors.has('GenericError')">{{ errors.first('GenericError') }}</span>
     </div>
@@ -146,8 +146,8 @@
         </div>
         <div class="row mt-3">
           <div class="col-xs-12">
-            <md-button v-if="permissions.TE_Update" type="submit" class="md-raised md-primary">Save</md-button>
-            <md-button v-if="permissions.TE_Update" type="reset" class="md-raised md-default">Reset</md-button>
+            <v-btn primary light v-if="permissions.TE_Update" type="submit">Save</v-btn>
+            <v-btn flat v-if="permissions.TE_Update" type="reset">Reset</v-btn>
           </div>
         </div>
       </fieldset>

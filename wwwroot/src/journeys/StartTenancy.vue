@@ -1,14 +1,37 @@
 <template>
   <section>
     <h1 class="md-display-1">Start a new tenancy</h1>
-    <md-tabs class="md-transparent" :md-fixed="true" :md-centered="true">
-
-      <announcement />
-      <starttenancy-home :viewdata="viewData" />
-      <tenants :viewdata="viewData" />
-      <payments :viewdata="viewData" />
-
-    </md-tabs>
+    <v-stepper v-model="e1">
+      <v-stepper-header>
+        <v-stepper-step step="1" :complete="e1 > 1">Before we start</v-stepper-step>
+        <v-divider></v-divider>
+        <v-stepper-step step="2" :complete="e1 > 2">Property</v-stepper-step>
+        <v-divider></v-divider>
+        <v-stepper-step step="3" :complete="e1 > 3">Tenants</v-stepper-step>
+        <v-divider></v-divider>
+        <v-stepper-step step="4" :complete="e1 > 4">Payment</v-stepper-step>
+        <v-divider></v-divider>
+      </v-stepper-header>
+      <v-stepper-content step="1">
+        <announcement />
+        <v-btn primary @click.native="e1 = 2" light>Continue</v-btn>
+        <v-btn flat dark>Cancel</v-btn>
+      </v-stepper-content>
+      <v-stepper-content step="2">
+        <starttenancy-home :viewdata="viewData" />
+        <v-btn primary @click.native="e1 = 3" light>Continue</v-btn>
+        <v-btn flat dark>Cancel</v-btn>
+      </v-stepper-content>
+      <v-stepper-content step="3">
+        <tenants :viewdata="viewData" />
+        <v-btn primary @click.native="e1 = 4" light>Continue</v-btn>
+        <v-btn flat dark>Cancel</v-btn>
+      </v-stepper-content>
+      <v-stepper-content step="4">
+        <payments :viewdata="viewData" />
+        <v-btn flat dark>Cancel</v-btn>
+      </v-stepper-content>
+    </v-stepper>
   </section>
 </template>
 
@@ -19,6 +42,7 @@
     name: 'startTenancy',
     data () {
       return {
+        e1: 0,
         permissions: this.$store.state.permissions,
         viewData: {}
       }

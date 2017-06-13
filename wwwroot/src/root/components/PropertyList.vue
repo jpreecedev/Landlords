@@ -28,8 +28,8 @@
         </md-table-body>
       </md-table>
     </md-table-card>
-    
-    <md-button v-if="permissions.PD_New" type="button" class="md-raised md-primary mt-4" @click.native="addProperty()">Add a property</md-button>            
+
+    <v-btn primary light v-if="permissions.PD_New" type="button" class="mt-4" @click.native="addProperty()">Add a property</v-btn>
 
   </main>
 </template>
@@ -57,11 +57,11 @@ export default {
   }
 }
 </script>
-  
+
 <style lang="scss" scoped>
 
 thead > tr > th:first-of-type {
   width: 175px;
 }
-  
+
 </style>

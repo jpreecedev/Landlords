@@ -1,12 +1,12 @@
-<template>  
+<template>
   <md-dialog :ref="journey" :md-open-from="'#' + trigger" >
     <md-dialog-title>{{ title }}</md-dialog-title>
     <md-dialog-content>
       <starttenancy v-if="journey === 'startTenancy'"></starttenancy>
     </md-dialog-content>
     <md-dialog-actions>
-      <md-button @click.native="closeDialog()">Cancel</md-button>
-      <md-button class="md-primary" @click.native="closeDialog()">Next</md-button>
+      <v-btn @click.native="closeDialog()">Cancel</v-btn>
+      <v-btn class="md-primary" @click.native="closeDialog()">Next</v-btn>
     </md-dialog-actions>
   </md-dialog>
 </template>

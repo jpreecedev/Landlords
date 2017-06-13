@@ -8,11 +8,14 @@ import VeeValidate from 'vee-validate'
 import Autocomplete from 'v-autocomplete'
 import router from './routes'
 import VueMaterial from 'vue-material'
+import Vuetify from 'vuetify'
 
 import CommonComponents from 'src/common'
 import Journeys from 'journeys'
 
 import 'vue-material/dist/vue-material.css'
+import 'vuetify/dist/vuetify.min.css'
+
 import 'src/extensions'
 import 'src/filters'
 import 'assets/styles/app.scss'
@@ -46,6 +49,8 @@ Vue.use(VueMaterial.MdFile)
 Vue.use(VueMaterial.MdProgress)
 Vue.use(VueMaterial.MdDialog)
 Vue.use(VueMaterial.MdTabs)
+
+Vue.use(Vuetify)
 
 Vue.use(CommonComponents)
 Vue.use(Journeys)

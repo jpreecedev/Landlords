@@ -2,7 +2,7 @@
   <main>
     <h1 class="md-display-2">New tenant</h1>
     <h2 class="md-display-1" v-if="checklist">
-      <span v-if="checklist.propertyReference">{{checklist.propertyReference}}</span> 
+      <span v-if="checklist.propertyReference">{{checklist.propertyReference}}</span>
       <span v-if="checklist.propertyStreetAddress">({{ checklist.propertyStreetAddress }})</span>
     </h2>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
@@ -16,9 +16,9 @@
     </div>
     <div class="row mt-5" v-if="permissions.CL_DeleteById">
       <div class="col-3 offset-9">
-        <div class="alert alert-danger text-center">
+        <div class="alert error text-center">
           <p>Danger Zone!! Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-          <md-button class="md-raised md-warn pointer" @click.native="deleteChecklist()">Delete Checklist</md-button>
+          <v-btn error light @click.native="deleteChecklist()">Delete Checklist</v-btn>
         </div>
       </div>
     </div>

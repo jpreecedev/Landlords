@@ -27,8 +27,8 @@
             </div>
           </md-card-content>
           <md-card-actions>
-            <md-button type="submit" v-bind:disabled="loggingIn" class="md-primary">Log in</md-button>
-            <md-button type="reset" class="md-default" @click.native="reset()">Reset</md-button>
+            <v-btn primary flat type="submit" :disabled="loggingIn">Log in</v-btn>
+            <v-btn flat type="reset" @click.native="reset()">Reset</v-btn>
           </md-card-actions>
         </md-card>
       </fieldset>

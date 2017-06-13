@@ -1,12 +1,12 @@
 <template>
   <main>
-    <div class="alert alert-danger" v-if="expired">
+    <div class="alert error" v-if="expired">
       Your session has expired, please log in again.
     </div>
-    <div class="alert alert-success" v-if="loggedOut">
+    <div class="alert success" v-if="loggedOut">
       You have been logged out
     </div>
-    <div> 
+    <div>
       <h1 class="md-display-2">Please sign in or register</h1>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
     </div>

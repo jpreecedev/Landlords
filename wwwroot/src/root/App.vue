@@ -1,11 +1,11 @@
 <template>
-  <div id="app">
+  <v-app light>
     <app-nav></app-nav>
     <transition name="fade">
       <router-view></router-view>
     </transition>
     <app-footer></app-footer>
-  </div>
+  </v-app>
 </template>
 
 <script>

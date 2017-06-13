@@ -30,7 +30,7 @@
       </md-table>
     </md-table-card>
 
-    <md-button v-if="permissions.TE_New" type="button" class="md-raised md-primary pointer mt-4" @click.native="addTenant()">Add a tenant</md-button>
+    <v-btn primary light v-if="permissions.TE_New" type="button" class="mt-4" @click.native="addTenant()">Add a tenant</v-btn>
   </main>
 </template>
 

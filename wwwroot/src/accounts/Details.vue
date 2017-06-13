@@ -2,20 +2,20 @@
   <main>
     <h1 class="md-display-2">Account details</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
-    <div id="errorMessage" class="alert alert-danger" v-show="errors.any()">
+    <div id="errorMessage" class="alert error" v-show="errors.any()">
       <span v-show="!errors.has('GenericError')">Please fix validation errors and try and submit the form again</span>
       <span v-show="errors.has('GenericError')">{{ errors.first('GenericError') }}</span>
-    </div>    
+    </div>
     <form @submit.prevent="validateBeforeSubmit" role="form" novalidate>
       <fieldset v-bind:disabled="!permissions.AC_Update">
         <div class="row">
           <div class="col-xs-12 col-md-6">
             <md-card>
-              <md-card-content>       
+              <md-card-content>
                 <div class="row">
                   <div class="col-xs-12">
                     <md-input-container>
-                      <label for="opened">Date Opened</label>          
+                      <label for="opened">Date Opened</label>
                       <md-input v-model="account.opened" id="opened" name="opened" placeholder="Select date..." type="date" />
                     </md-input-container>
                   </div>
@@ -27,7 +27,7 @@
                       <md-input v-model="account.name" id="name" name="name" type="text" required />
                     </md-input-container>
                   </div>
-                </div>         
+                </div>
                 <div class="row">
                   <div class="col-xs-12">
                     <md-input-container>
@@ -82,8 +82,8 @@
         </div>
         <div class="row mt-3">
           <div class="col-xs-12">
-            <md-button v-if="permissions.AC_Update" type="submit" class="md-raised md-primary">Save</md-button>
-            <md-button v-if="permissions.AC_Update" type="reset" class="md-raised md-default">Reset</md-button>
+            <v-btn primary light v-if="permissions.AC_Update" type="submit">Save</v-btn>
+            <v-btn flat dark v-if="permissions.AC_Update" type="reset">Reset</v-btn>
           </div>
         </div>
       </fieldset>
@@ -146,7 +146,7 @@ export default {
 }
 
 </script>
-  
+
 <style lang="scss" scoped>
-  
+
 </style>

@@ -2,10 +2,10 @@
   <main>
     <h1 class="md-display-2">Property Details</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
-    <div id="errorMessage" class="alert alert-danger" v-if="errors.any()">
+    <div id="errorMessage" class="alert error" v-if="errors.any()">
       <span v-if="!errors.has('GenericError')">Please fix validation errors and try and submit the form again</span>
       <span v-else-if="errors.has('GenericError')">{{ errors.first('GenericError') }}</span>
-    </div>    
+    </div>
     <form @submit.prevent="validateBeforeSubmit" role="form" enctype="multipart/form-data" novalidate>
       <fieldset v-bind:disabled="!permissions.PD_Update">
         <div class="property-image-container" v-if="(permissions.PI_Upload) || (!permissions.PI_Upload && propertyDetails.propertyImages.length)">
@@ -18,7 +18,7 @@
           <div class="property-image" v-for="propertyImage in propertyDetails.propertyImages">
             <img class="img-thumbnail" v-if="propertyImage.fileName" v-bind:src="'/static/uploads/' + propertyDetails.portfolioId + '/' + propertyImage.fileName" v-bind:alt="propertyImage.fileName" v-bind:title="propertyImage.fileName">
             <div v-if="permissions.PI_Delete" class="overlay">
-              <md-button type="button" class="md-raised md-warn pointer" @click.native="deleteImage(propertyImage)">Delete</md-button>
+              <v-btn warning type="button" @click.native="deleteImage(propertyImage)">Delete</v-btn>
             </div>
           </div>
           <div class="row mt-4" v-if="isUploading">
@@ -61,7 +61,7 @@
                     <md-input-container :class="{ 'md-input-invalid' : errors.has('bedrooms') }">
                       <label for="bedrooms">Number of bedrooms</label>
                       <md-input type="number" v-model="propertyDetails.bedrooms" id="bedrooms" name="bedrooms" />
-                    </md-input-container>                    
+                    </md-input-container>
                   </div>
                   <div class="col-xs-12 col-md-6">
                     <md-input-container :class="{ 'md-input-invalid' : errors.has('furnishing') }">
@@ -72,12 +72,12 @@
                       </md-select>
                       <span v-if="errors.has('furnishing')" class="md-error">Select a valid furnishing</span>
                     </md-input-container>
-                  </div>                
+                  </div>
                 </div>
                 <div class="row">
                   <div class="col-xs-12">
                     <md-input-container>
-                      <label for="constructionDate">Construction Date</label>          
+                      <label for="constructionDate">Construction Date</label>
                       <md-input v-model="propertyDetails.constructionDate" id="constructionDate" name="constructionDate" type="date" />
                     </md-input-container>
                   </div>
@@ -119,7 +119,7 @@
                 <div class="row">
                   <div class="col-xs-12">
                     <md-input-container :class="{ 'md-input-invalid' : errors.has('propertyPostcode') }">
-                      <label for="propertyPostcode">Postcode</label>          
+                      <label for="propertyPostcode">Postcode</label>
                       <md-input v-model="propertyDetails.propertyPostcode" data-vv-name="propertyPostcode" v-validate="'required'" data-vv-validate-on="change"  id="propertyPostcode" name="propertyPostcode" required />
                       <span v-if="errors.has('propertyPostcode')" class="md-error">Enter a valid postal code</span>
                     </md-input-container>
@@ -128,7 +128,7 @@
                 <div class="row">
                   <div class="col-xs-12">
                     <md-input-container :class="{ 'md-input-invalid' : errors.has('propertyCountry') }">
-                      <label for="propertyCountry">Country</label>          
+                      <label for="propertyCountry">Country</label>
                       <md-select v-model="propertyDetails.propertyCountry" data-vv-name="propertyCountry" v-validate="'required'" data-vv-validate-on="change" id="propertyCountry" name="propertyCountry" required>
                         <md-option disabled value="">Select a Country</md-option>
                         <md-option v-for="propertyCountry in countries" v-bind:value="propertyCountry" :key="propertyCountry">{{ propertyCountry }}</md-option>
@@ -170,7 +170,7 @@
                 <div class="row">
                   <div class="col-xs-12 col-md-6">
                     <md-input-container>
-                      <label for="mortgageAmount">Mortgage Amount</label>                    
+                      <label for="mortgageAmount">Mortgage Amount</label>
                       <md-input v-model="propertyDetails.mortgageAmount" id="mortgageAmount" name="mortgageAmount" type="number" />
                     </md-input-container>
                   </div>
@@ -184,8 +184,8 @@
                 <div class="row">
                   <div class="col-xs-12 col-md-6">
                     <md-input-container>
-                      <label for="monthlyPayment">Monthly Repayment</label>  
-                      <md-input v-model="propertyDetails.monthlyPayment" id="monthlyPayment" name="monthlyPayment" type="number" />                    
+                      <label for="monthlyPayment">Monthly Repayment</label>
+                      <md-input v-model="propertyDetails.monthlyPayment" id="monthlyPayment" name="monthlyPayment" type="number" />
                     </md-input-container>
                   </div>
                   <div class="col-xs-12 col-md-6">
@@ -207,7 +207,7 @@
                   </div>
                 </div>
               </md-card-content>
-            </md-card>          
+            </md-card>
             <md-card>
               <md-card-header>
                 <div class="md-title">Projected Rent</div>
@@ -231,7 +231,7 @@
                   </div>
                 </div>
               </md-card-content>
-            </md-card>          
+            </md-card>
             <md-card>
               <md-card-header>
                 <div class="md-title">Selling Details</div>
@@ -257,8 +257,8 @@
         </div>
         <div class="row mt-3">
           <div class="col-xs-12">
-            <md-button v-if="permissions.PD_Update" type="submit" class="md-raised md-primary">Save</md-button>
-            <md-button v-if="permissions.PD_Update" type="reset" class="md-raised md-secondary">Reset</md-button>
+            <v-btn primary light v-if="permissions.PD_Update" type="submit">Save</v-btn>
+            <v-btn flat v-if="permissions.PD_Update" type="reset">Reset</v-btn>
           </div>
         </div>
       </fieldset>

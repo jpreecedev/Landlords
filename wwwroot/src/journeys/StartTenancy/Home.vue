@@ -1,5 +1,5 @@
 <template>
-  <md-tab md-icon="home">
+  <div>
     <div class="row">
       <div class="col-xs-12 col-md-6">
         <div class="md-subheading">Please tell us which property you are renting out</div>
@@ -32,12 +32,12 @@
           <label for="startDate">Tenancy End Date</label>
           <md-input v-model="endDate" id="endDate" name="endDate" type="date" />
         </md-input-container>
-        <md-button :disabled="!startDate" @click.native="selectPeriod(3)" class="md-default">3 months</md-button>
-        <md-button :disabled="!startDate" @click.native="selectPeriod(6)" class="md-default">6 months</md-button>
-        <md-button :disabled="!startDate" @click.native="selectPeriod(12)" class="md-default">12 months</md-button>
+        <v-btn flat :disabled="!startDate" @click.native="selectPeriod(3)">3 months</v-btn>
+        <v-btn flat :disabled="!startDate" @click.native="selectPeriod(6)">6 months</v-btn>
+        <v-btn flat :disabled="!startDate" @click.native="selectPeriod(12)">12 months</v-btn>
       </div>
     </div>
-  </md-tab>
+  </div>
 </template>
 
 <script>

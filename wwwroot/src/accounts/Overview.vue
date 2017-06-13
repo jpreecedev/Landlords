@@ -33,7 +33,7 @@
       </md-table>
     </md-table-card>
 
-    <md-button v-if="permissions.AC_New" type="button" class="md-raised md-primary pointer mt-4" @click.native="addAccount()">Add an account</md-button>   
+    <v-btn primary light v-if="permissions.AC_New" class="md-raised md-primary mt-4" @click.native="addAccount()">Add an account</v-btn>
 
   </main>
 </template>
@@ -66,7 +66,7 @@ export default {
   }
 }
 </script>
-  
+
 <style lang="scss" scoped>
-  
+
 </style>

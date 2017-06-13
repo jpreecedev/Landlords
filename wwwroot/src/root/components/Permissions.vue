@@ -2,13 +2,13 @@
   <main>
     <h1 class="md-display-2">Permissions</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
-    <div id="errorMessage" class="alert alert-danger" v-show="errors.any()">
+    <div id="errorMessage" class="alert error" v-show="errors.any()">
       <span v-show="!errors.has('GenericError')">Please fix validation errors and try and submit the form again</span>
       <span v-show="errors.has('GenericError')">{{ errors.first('GenericError') }}</span>
     </div>
-    <div class="alert alert-success" v-if="saved">
+    <div class="alert success" v-if="saved">
       Permissions have been updated
-    </div> 
+    </div>
     <form role="form" novalidate>
       <fieldset>
         <div class="row">
@@ -23,8 +23,8 @@
               <label class="col-xs-12" for="permission">Available Permissions</label>
               <div class="col-xs-12">
                 <select v-model="selectedPermissions" id="permission" name="permission" size="20" multiple>
-                  <optgroup v-for="group in allPermissions" v-bind:label="group.key">
-                    <option v-for="permission in group.items" v-bind:value="permission.permissionId">{{ permission.description }}</option>
+                  <optgroup v-for="group in allPermissions" :label="group.key">
+                    <option v-for="permission in group.items" :value="permission.permissionId">{{ permission.description }}</option>
                   </optgroup>
                 </select>
               </div>
@@ -33,8 +33,8 @@
           <div class="col-xs">
             <div class="h-100 d-flex align-items-center justify-content-center">
               <div>
-                <md-button @click.native="removePermission" v-bind:disabled="!selectedUser || !allocatedPermissions.length" type="button" class="md-raised md-default d-block mb-3 w-100">&#10007;</md-button>
-                <md-button @click.native="addPermission" v-bind:disabled="!selectedUser || !selectedPermissions.length" type="button" class="md-raised md-default d-block w-100">&rarr;</md-button>
+                <v-btn outline @click.native="removePermission" :disabled="!selectedUser || !allocatedPermissions.length" type="button" class="d-block mb-3 w-100">&#10007;</v-btn>
+                <v-btn outline @click.native="addPermission" :disabled="!selectedUser || !selectedPermissions.length" type="button" class="d-block w-100">&rarr;</v-btn>
               </div>
             </div>
           </div>
@@ -44,8 +44,8 @@
               <div class="col-xs-12">
                 <select v-model="allocatedPermissions" id="userPermission" name="userPermission" size="20" multiple>
                   <template v-if="selectedUser && selectedUser.permissions">
-                    <optgroup v-for="group in selectedUser.permissions" v-bind:label="group.key">
-                      <option v-for="userPermission in group.items" v-bind:value="userPermission.permissionId">{{ userPermission.description }}</option>
+                    <optgroup v-for="group in selectedUser.permissions" :label="group.key">
+                      <option v-for="userPermission in group.items" :value="userPermission.permissionId">{{ userPermission.description }}</option>
                     </optgroup>
                   </template>
                 </select>
@@ -174,7 +174,7 @@ export default {
   }
 }
 </script>
-  
+
 <style lang="scss">
 
 select {

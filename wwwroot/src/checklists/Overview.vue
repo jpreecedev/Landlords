@@ -7,7 +7,7 @@
       <h2 class="md-display-1">Your checklists</h2>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium sint, odio, optio, expedita alias dolorum dicta iusto aliquam eos doloremque fuga iste fugiat quam sed eius corporis suscipit. Voluptatum, assumenda.</p>
       <p v-if="!overview.checklists || !overview.checklists.length">You have not created any checklists yet.</p>
-      
+
       <md-layout>
         <md-card v-for="checklist in overview.checklists" :key="checklist">
           <md-card-header>
@@ -22,15 +22,15 @@
             <img class="card-img-top" src="../assets/images/checklist.png" v-bind:alt="checklist.name">
           </md-card-media>
           <md-card-actions>
-            <md-button v-if="permissions.CL_GetById" @click.native="$router.push({name: 'editor', params: {checklistId: checklist.id}})" class="md-primary">View</md-button>
-            <md-button v-if="permissions.CL_Archive && !checklist.isArchived" @click.native="archive(checklist)" class="md-default">Archive</md-button>
+            <v-btn primary flat v-if="permissions.CL_GetById" @click.native="$router.push({name: 'editor', params: {checklistId: checklist.id}})">View</v-btn>
+            <v-btn flat v-if="permissions.CL_Archive && !checklist.isArchived" @click.native="archive(checklist)" class="md-default">Archive</v-btn>
           </md-card-actions>
         </md-card>
       </md-layout>
       </div>
 
       <div class="mt-3" v-if="permissions.CL_Archived && !hasArchivedLists">
-        <md-button @click.native="getArchived()" class="pointer md-raised md-primary">View Archived</md-button>
+        <v-btn primary light @click.native="getArchived()">View Archived</v-btn>
       </div>
     </div>
     <div class="row mt-5" v-if="permissions.CL_Create && overview.availableChecklists && overview.availableChecklists.length">
@@ -43,7 +43,7 @@
           <md-card-content>
             <div class="row">
               <div class="col-xs-12">
-                <md-input-container>       
+                <md-input-container>
                   <label for="availableChecklists">Select a checklist template</label>
                   <md-select v-model="selectedChecklist" name="availableChecklists" @change="selectedChecklistChanged($event)">
                     <md-option v-for="checklist in overview.availableChecklists" :key="checklist.name" v-bind:value="checklist.id" v-bind:disabled="checklist.isPropertyMandatory && portfolioProperties.length < 1">{{ checklist.origin }}: {{ checklist.name }}</md-option>
@@ -58,7 +58,7 @@
             </div>
           </md-card-content>
           <md-card-actions>
-            <md-button @click.native="createChecklistInstance(selectedChecklist, selectedProperty)" class="md-primary">Create checklist</md-button>
+            <v-btn primary flat @click.native="createChecklistInstance(selectedChecklist, selectedProperty)" class="md-primary">Create checklist</v-btn>
           </md-card-actions>
         </md-card>
       </div>
@@ -143,9 +143,9 @@
     }
   }
 </script>
-  
+
 <style lang="scss" scoped>
-  
+
   .md-card {
     margin: 0 4px 16px 4px;
 

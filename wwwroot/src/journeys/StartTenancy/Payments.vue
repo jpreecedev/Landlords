@@ -1,5 +1,5 @@
 <template>
-  <md-tab md-icon="attach_money">
+  <div>
     <div class="row">
       <div class="col-xs-12 col-md-6">
       </div>
@@ -7,7 +7,7 @@
 
       </div>
     </div>
-  </md-tab>
+  </div>
 </template>
 
 <script>

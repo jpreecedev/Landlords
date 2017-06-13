@@ -52,11 +52,11 @@
                   <span v-if="errors.has('password:confirmed')" class="md-error">{{ errors.first('password:confirmed') }}</span>
                 </md-input-container>
               </div>
-            </div>  
+            </div>
           </md-card-content>
           <md-card-actions>
-            <md-button type="submit" v-bind:disabled="registering" id="register" name="register" class="md-primary">Register</md-button>
-            <md-button type="reset" @click.native="reset()" class="md-default">Reset</md-button>
+            <v-btn primary flat type="submit" :disabled="registering" id="register" name="register">Register</v-btn>
+            <v-btn flat type="reset" @click.native="reset()">Reset</v-btn>
           </md-card-actions>
         </md-card>
       </fieldset>
@@ -129,11 +129,11 @@
   }
 
 </script>
-  
+
 <style lang="scss" scoped>
-  
+
   h3 {
     text-align: center;
   }
-  
+
 </style>

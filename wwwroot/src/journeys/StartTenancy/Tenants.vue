@@ -1,5 +1,5 @@
 <template>
-  <md-tab md-icon="face">
+  <div>
     <h2 class="md-title mt-0">Who are the tenants?</h2>
 
     <div class="accordion">
@@ -114,10 +114,10 @@
       </div>
     </div>
 
-    <md-button class="md-raised md-primary" @click.native="addOccupier(true)">Add adult tenant</md-button>
-    <md-button class="md-raised" @click.native="addOccupier(false)">Add child</md-button>
+    <v-btn primary light class="md-raised md-primary" @click.native="addOccupier(true)">Add adult tenant</v-btn>
+    <v-btn dark class="md-raised" @click.native="addOccupier(false)">Add child</v-btn>
 
-  </md-tab>
+  </div>
 </template>
 
 <script>

@@ -1,7 +1,7 @@
 <template>
-  <div v-if="!permission" class="alert alert-danger">
+  <div v-if="!permission" class="alert error">
     Sorry this resource is currently unavailable
-  </div>  
+  </div>
 </template>
 
 <script>

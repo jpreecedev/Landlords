@@ -2,17 +2,17 @@
   <main>
     <h1 class="md-display-2">Profile</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
-    <div id="errorMessage" class="alert alert-danger" v-if="errors.any()">
+    <div id="errorMessage" class="alert error" v-if="errors.any()">
       <span v-if="!errors.has('GenericError')">Please fix validation errors and try and submit the form again</span>
       <span v-if="errors.has('GenericError')">{{ errors.first('GenericError') }}</span>
     </div>
-    <div class="alert alert-success" v-if="saved">
+    <div class="alert success" v-if="saved">
       Your profile has been updated
     </div>
-    <div class="alert alert-success" v-if="resentVerification">
+    <div class="alert success" v-if="resentVerification">
       We have sent you a new verification email.  Please check your inbox.
     </div>
-    <div class="alert alert-success" v-if="confirmed">
+    <div class="alert success" v-if="confirmed">
       Your email address has been verified
     </div>
     <form @submit.prevent="validateBeforeSubmit" role="form" novalidate>
@@ -46,7 +46,7 @@
                   <div class="col-xs-12">
                     <label for="secondaryPhoneNumber">Email address</label>
                     <p>{{ profile.emailAddress }}</p>
-                    <md-button v-if="!profile.emailConfirmed" @click.native="resendVerificationEmail()" type="button" class="md-raised md-warn ml-0 pointer">Re-send verification email</md-button>
+                    <v-btn warning light v-if="!profile.emailConfirmed" @click.native="resendVerificationEmail()" type="button" class="ml-0">Re-send verification email</v-btn>
                   </div>
                 </div>
               </md-card-content>
@@ -102,8 +102,8 @@
         </div>
         <div class="row mt-3">
           <div class="col-xs-12">
-            <md-button v-if="permissions.P_Update" type="submit" class="md-raised md-primary">Save</md-button>
-            <md-button v-if="permissions.P_Update" type="reset" class="md-raised md-default">Reset</md-button>
+            <v-btn primary light v-if="permissions.P_Update" type="submit">Save</v-btn>
+            <v-btn flat v-if="permissions.P_Update" type="reset">Reset</v-btn>
           </div>
         </div>
       </fieldset>
@@ -197,7 +197,7 @@
   }
 
 </script>
-  
+
 <style lang="scss" scoped>
-  
+
 </style>
