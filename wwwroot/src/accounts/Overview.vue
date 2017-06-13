@@ -2,36 +2,25 @@
   <main>
     <h1 class="md-display-2">Bank accounts</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
-    <md-table-card>
-      <md-table>
-        <md-table-header class="thead-inverse">
-          <md-table-row>
-            <md-table-head>Account name</md-table-head>
-            <md-table-head>Type</md-table-head>
-            <md-table-head>Provider</md-table-head>
-            <md-table-head>Actions</md-table-head>
-          </md-table-row>
-        </md-table-header>
-        <md-table-body>
-          <md-table-row v-if="data.accounts" v-for="entry in data.accounts" :key="entry">
-            <md-table-cell>
-              <account-display :account="entry" />
-            </md-table-cell>
-            <md-table-cell>
-              {{ entry.type }}
-            </md-table-cell>
-            <md-table-cell>
-              {{ entry.providerName }}
-            </md-table-cell>
-            <md-table-cell>
-              <router-link v-if="permissions.AC_GetById" tag="a" class="md-icon-button" :to="'/accounts/details/' + entry.id">
-                <md-icon>edit</md-icon>
-              </router-link>
-            </md-table-cell>
-          </md-table-row>
-        </md-table-body>
-      </md-table>
-    </md-table-card>
+    <v-card>
+      <v-data-table :headers="headers" :items="data.accounts">
+        <template slot="items" scope="props">
+          <td>
+            <account-display :account="props.item" />
+          </td>
+          <td>{{ props.item.type }}</td>
+          <td>{{ props.item.providerName }}</td>
+          <td>
+            <router-link v-if="permissions.AC_GetById" tag="a" class="md-icon-button" :to="'/accounts/details/' + props.item.id">
+              <md-icon>edit</md-icon>
+            </router-link>
+          </td>
+        </template>
+        <template slot="pageText" scope="{ pageStart, pageStop }">
+          From {{ pageStart }} to {{ pageStop }}
+        </template>
+      </v-data-table>
+    </v-card>
 
     <v-btn primary light v-if="permissions.AC_New" class="md-raised md-primary mt-4" @click.native="addAccount()">Add an account</v-btn>
 
@@ -46,6 +35,26 @@ export default {
   components: { AccountDisplay },
   data () {
     return {
+      pagination: {},
+      headers: [
+        {
+          text: 'Account name',
+          left: true,
+          sortable: false
+        }, {
+          text: 'Type',
+          left: true,
+          sortable: false
+        }, {
+          text: 'Provider',
+          left: true,
+          sortable: false
+        }, {
+          text: 'Actions',
+          left: true,
+          sortable: false
+        }
+      ],
       permissions: this.$store.state.permissions,
       data: {
         accounts: []

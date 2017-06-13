@@ -8,11 +8,11 @@
           <fieldset>
             <div class="row">
               <div class="col-xs-12 col-md-6">
-                <md-input-container :class="{ 'md-input-invalid': errors.has('grossIncome') }">
+                <md-input-container :class="{ 'md-input-invalid': errorBag.has('grossIncome') }">
                   <label for="grossIncome">Your annual gross income</label>
                   <md-input type="number" id="grossIncome" name="grossIncome" min="1000" step="1" v-model="grossIncome" data-vv-name="grossIncome" v-validate="'required|min_value:1000'" data-vv-validate-on="change" required />
-                  <span v-if="errors.has('grossIncome:required')" class="md-error">Enter your annual gross income</span>
-                  <span v-else-if="errors.has('grossIncome:min_value')" class="md-error">Enter at least &pound;1,000</span>
+                  <span v-if="errorBag.has('grossIncome:required')" class="md-error">Enter your annual gross income</span>
+                  <span v-else-if="errorBag.has('grossIncome:min_value')" class="md-error">Enter at least &pound;1,000</span>
                 </md-input-container>
               </div>
             </div>

@@ -2,18 +2,18 @@
   <main>
     <h1 class="md-display-2">Permissions</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
-    <div id="errorMessage" class="alert error" v-show="errors.any()">
-      <span v-show="!errors.has('GenericError')">Please fix validation errors and try and submit the form again</span>
-      <span v-show="errors.has('GenericError')">{{ errors.first('GenericError') }}</span>
-    </div>
-    <div class="alert success" v-if="saved">
+    <v-alert error :value="errorBag.any()">
+      <span v-if="!errorBag.has('GenericError')">Please fix validation errors and try and submit the form again</span>
+      <span v-if="errorBag.has('GenericError')">{{ errorBag.first('GenericError') }}</span>
+    </v-alert>
+    <v-alert success :value="saved">
       Permissions have been updated
-    </div>
+    </v-alert>
     <form role="form" novalidate>
       <fieldset>
         <div class="row">
           <label class="col-xs-12" for="searchForUser">Search for user</label>
-          <div class="col-xs-12 col-md-6">
+          <div class="col-xs-12 col-md-5">
             <v-autocomplete :items="filteredUsers" placeholder="Enter name or email" v-model="selectedUser" :auto-select-one-item="false" :get-label="getLabel" :component-item='template' @change="change"></v-autocomplete>
           </div>
         </div>

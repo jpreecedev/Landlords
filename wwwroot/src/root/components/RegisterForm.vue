@@ -9,47 +9,47 @@
           <md-card-content>
             <div class="row">
               <div class="col-xs-12">
-                <md-input-container :class="{ 'md-input-invalid': errors.has('firstName') }">
+                <md-input-container :class="{ 'md-input-invalid': errorBag.has('firstName') }">
                   <label for="firstName">First name</label>
                   <md-input v-model="newUser.firstName" id="firstName" name="firstName" type="text" data-vv-name="firstName" v-validate="'required'" data-vv-validate-on="change" required />
-                  <span v-if="errors.has('firstName')" class="md-error">Enter a valid first name</span>
+                  <span v-if="errorBag.has('firstName')" class="md-error">Enter a valid first name</span>
                 </md-input-container>
               </div>
             </div>
             <div class="row">
               <div class="col-xs-12">
-                <md-input-container :class="{ 'md-input-invalid': errors.has('lastName') }">
+                <md-input-container :class="{ 'md-input-invalid': errorBag.has('lastName') }">
                   <label for="lastName">Last name</label>
                   <md-input v-model="newUser.lastName" id="lastName" name="lastName" type="text" data-vv-name="lastName" v-validate="'required'" data-vv-validate-on="change" required />
-                  <span v-if="errors.has('lastName')" class="md-error">Enter a valid last name</span>
+                  <span v-if="errorBag.has('lastName')" class="md-error">Enter a valid last name</span>
                 </md-input-container>
               </div>
             </div>
             <div class="row">
               <div class="col-xs-12">
-                <md-input-container :class="{ 'md-input-invalid': errors.has('emailAddress') }">
+                <md-input-container :class="{ 'md-input-invalid': errorBag.has('emailAddress') }">
                   <label for="email">E-mail</label>
                   <md-input v-model="newUser.emailAddress" id="emailAddress" name="emailAddress" type="text" data-vv-name="emailAddress" v-validate="'required|email'" data-vv-validate-on="none" required />
-                  <span v-if="errors.has('emailAddress')" class="md-error">Enter a valid email address</span>
+                  <span v-if="errorBag.has('emailAddress')" class="md-error">Enter a valid email address</span>
                 </md-input-container>
               </div>
             </div>
             <div class="row">
               <div class="col-xs-12">
-                <md-input-container :class="{ 'md-input-invalid': errors.has('password') }">
+                <md-input-container :class="{ 'md-input-invalid': errorBag.has('password') }">
                   <label for="password">Password</label>
                   <md-input v-model="newUser.password" id="password" name="password" type="password" data-vv-name="password" v-validate="'required|min:8|confirmed:repeatPassword'" data-vv-validate-on="change" required />
-                  <span v-if="errors.has('password:min')" class="md-error">{{ errors.first('password:min') }}</span>
-                  <span v-else-if="errors.has('password:required')" class="md-error">{{ errors.first('password:required') }}</span>
+                  <span v-if="errorBag.has('password:min')" class="md-error">{{ errorBag.first('password:min') }}</span>
+                  <span v-else-if="errorBag.has('password:required')" class="md-error">{{ errorBag.first('password:required') }}</span>
                 </md-input-container>
               </div>
             </div>
             <div class="row">
               <div class="col-xs-12">
-                <md-input-container :class="{ 'md-input-invalid': errors.has('password') }">
+                <md-input-container :class="{ 'md-input-invalid': errorBag.has('password') }">
                   <label for="repeatPassword">Repeat password </label>
                   <md-input id="repeatPassword" name="repeatPassword" type="password" data-vv-name="repeatPassword" v-validate="'required'" v-model="newUser.repeatPassword" data-vv-as="password confirmation" data-vv-validate-on="change" />
-                  <span v-if="errors.has('password:confirmed')" class="md-error">{{ errors.first('password:confirmed') }}</span>
+                  <span v-if="errorBag.has('password:confirmed')" class="md-error">{{ errorBag.first('password:confirmed') }}</span>
                 </md-input-container>
               </div>
             </div>

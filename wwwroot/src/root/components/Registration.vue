@@ -1,11 +1,11 @@
 <template>
   <main>
-    <div class="alert error" v-if="expired">
+    <v-alert error :value="expired" class="mb-4">
       Your session has expired, please log in again.
-    </div>
-    <div class="alert success" v-if="loggedOut">
+    </v-alert>
+    <v-alert success :value="loggedOut" class="mb-4">
       You have been logged out
-    </div>
+    </v-alert>
     <div>
       <h1 class="md-display-2">Please sign in or register</h1>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>

@@ -15,11 +15,9 @@
       </form>
     </div>
     <div class="row mt-5" v-if="permissions.CL_DeleteById">
-      <div class="col-3 offset-9">
-        <div class="alert error text-center">
-          <p>Danger Zone!! Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-          <v-btn error light @click.native="deleteChecklist()">Delete Checklist</v-btn>
-        </div>
+      <div class="col-xs-12 col-md-3 col-md-offset-9 text-center">
+        <p>Danger Zone!! Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+        <v-btn error light @click.native="deleteChecklist()">Delete Checklist</v-btn>
       </div>
     </div>
   </main>

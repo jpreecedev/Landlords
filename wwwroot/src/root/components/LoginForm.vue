@@ -9,19 +9,19 @@
           <md-card-content>
             <div class="row">
               <div class="col-xs-12">
-                <md-input-container :class="{ 'md-input-invalid': errors.has('emailAddress') }">
+                <md-input-container :class="{ 'md-input-invalid': errorBag.has('emailAddress') }">
                   <label for="emailAddress">Email Address</label>
                   <md-input type="email" id="emailAddress" name="emailAddress" data-vv-name="emailAddress" v-validate="'required|email'" v-model="credentials.username" data-vv-validate-on="change" required />
-                  <span v-if="errors.has('emailAddress')" class="md-error">Enter a valid email address</span>
+                  <span v-if="errorBag.has('emailAddress')" class="md-error">Enter a valid email address</span>
                 </md-input-container>
               </div>
             </div>
             <div class="row">
               <div class="col-xs-12">
-                <md-input-container :class="{ 'md-input-invalid': errors.has('password') }">
+                <md-input-container :class="{ 'md-input-invalid': errorBag.has('password') }">
                   <label for="password">Password</label>
                   <md-input type="password" id="password" name="password" data-vv-name="password" v-model="credentials.password" v-validate="'required|min:8'" data-vv-validate-on="change" required />
-                  <span v-if="errors.has('password')" class="md-error">Enter your password</span>
+                  <span v-if="errorBag.has('password')" class="md-error">Enter your password</span>
                 </md-input-container>
               </div>
             </div>

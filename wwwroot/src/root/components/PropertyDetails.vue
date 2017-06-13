@@ -2,10 +2,10 @@
   <main>
     <h1 class="md-display-2">Property Details</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
-    <div id="errorMessage" class="alert error" v-if="errors.any()">
-      <span v-if="!errors.has('GenericError')">Please fix validation errors and try and submit the form again</span>
-      <span v-else-if="errors.has('GenericError')">{{ errors.first('GenericError') }}</span>
-    </div>
+    <v-alert error :value="errorBag.any()">
+      <span v-if="!errorBag.has('GenericError')">Please fix validation errors and try and submit the form again</span>
+      <span v-else-if="errorBag.has('GenericError')">{{ errorBag.first('GenericError') }}</span>
+    </v-alert>
     <form @submit.prevent="validateBeforeSubmit" role="form" enctype="multipart/form-data" novalidate>
       <fieldset v-bind:disabled="!permissions.PD_Update">
         <div class="property-image-container" v-if="(permissions.PI_Upload) || (!permissions.PI_Upload && propertyDetails.propertyImages.length)">
@@ -38,7 +38,7 @@
               <md-card-content>
                 <div class="row">
                   <div class="col-xs-12">
-                    <md-input-container :class="{ 'md-input-invalid' : errors.has('reference') }">
+                    <md-input-container :class="{ 'md-input-invalid' : errorBag.has('reference') }">
                       <label for="reference">Property Reference</label>
                       <md-input v-model="propertyDetails.reference" id="reference" name="reference" data-vv-name="reference" v-validate="'required'" data-vv-validate-on="change" required />
                     </md-input-container>
@@ -46,31 +46,31 @@
                 </div>
                 <div class="row">
                   <div class="col-xs-12">
-                    <md-input-container :class="{ 'md-input-invalid' : errors.has('propertyType') }">
+                    <md-input-container :class="{ 'md-input-invalid' : errorBag.has('propertyType') }">
                       <label for="propertyType">Property Type</label>
                       <md-select v-model="propertyDetails.propertyType" data-vv-name="propertyType" v-validate="'required'" data-vv-validate-on="change" id="propertyType" name="propertyType" required>
                         <md-option disabled value="">Select a property type</md-option>
                         <md-option v-for="propertyType in propertyTypes" v-bind:value="propertyType" :key="propertyType">{{ propertyType }}</md-option>
                       </md-select>
-                      <span v-if="errors.has('propertyType')" class="md-error">Select a valid property type</span>
+                      <span v-if="errorBag.has('propertyType')" class="md-error">Select a valid property type</span>
                     </md-input-container>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-xs-12 col-md-6">
-                    <md-input-container :class="{ 'md-input-invalid' : errors.has('bedrooms') }">
+                    <md-input-container :class="{ 'md-input-invalid' : errorBag.has('bedrooms') }">
                       <label for="bedrooms">Number of bedrooms</label>
                       <md-input type="number" v-model="propertyDetails.bedrooms" id="bedrooms" name="bedrooms" />
                     </md-input-container>
                   </div>
                   <div class="col-xs-12 col-md-6">
-                    <md-input-container :class="{ 'md-input-invalid' : errors.has('furnishing') }">
+                    <md-input-container :class="{ 'md-input-invalid' : errorBag.has('furnishing') }">
                       <label for="furnishing">Furnishing</label>
                       <md-select v-model="propertyDetails.furnishing" data-vv-name="furnishing" v-validate="'required'" data-vv-validate-on="change" id="furnishing" name="furnishing" required>
                         <md-option disabled value="">Select a furnishing type</md-option>
                         <md-option v-for="furnishing in furnishings" v-bind:value="furnishing" :key="furnishing">{{ furnishing }}</md-option>
                       </md-select>
-                      <span v-if="errors.has('furnishing')" class="md-error">Select a valid furnishing</span>
+                      <span v-if="errorBag.has('furnishing')" class="md-error">Select a valid furnishing</span>
                     </md-input-container>
                   </div>
                 </div>
@@ -91,49 +91,49 @@
               <md-card-content>
                 <div class="row">
                   <div class="col-xs-12">
-                    <md-input-container :class="{ 'md-input-invalid' : errors.has('propertyStreetAddress') }">
+                    <md-input-container :class="{ 'md-input-invalid' : errorBag.has('propertyStreetAddress') }">
                       <label for="propertyStreetAddress">Street address</label>
                       <md-textarea v-model="propertyDetails.propertyStreetAddress" data-vv-name="propertyStreetAddress" v-validate="'required'" data-vv-validate-on="change"  id="propertyStreetAddress" rows="3" name="propertyStreetAddress" required />
-                      <span v-if="errors.has('propertyStreetAddress')" class="md-error">Enter a valid street address</span>
+                      <span v-if="errorBag.has('propertyStreetAddress')" class="md-error">Enter a valid street address</span>
                     </md-input-container>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-xs-12">
-                    <md-input-container :class="{ 'md-input-invalid' : errors.has('propertyTownOrCity') }">
+                    <md-input-container :class="{ 'md-input-invalid' : errorBag.has('propertyTownOrCity') }">
                       <label for="propertyTownOrCity">Town or City</label>
                       <md-input v-model="propertyDetails.propertyTownOrCity" data-vv-name="propertyTownOrCity" v-validate="'required'" data-vv-validate-on="change"  id="propertyTownOrCity" name="propertyTownOrCity" required />
-                      <span v-if="errors.has('propertyTownOrCity')" class="md-error">Enter a valid town or city</span>
+                      <span v-if="errorBag.has('propertyTownOrCity')" class="md-error">Enter a valid town or city</span>
                     </md-input-container>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-xs-12">
-                    <md-input-container :class="{ 'md-input-invalid' : errors.has('propertyCountyOrRegion') }">
+                    <md-input-container :class="{ 'md-input-invalid' : errorBag.has('propertyCountyOrRegion') }">
                       <label for="propertyCountyOrRegion">County or Region</label>
                       <md-input v-model="propertyDetails.propertyCountyOrRegion" data-vv-name="propertyCountyOrRegion" v-validate="'required'" data-vv-validate-on="change"  id="propertyCountyOrRegion" name="propertyCountyOrRegion" required />
-                      <span v-if="errors.has('propertyCountyOrRegion')" class="md-error">Enter a valid town or city</span>
+                      <span v-if="errorBag.has('propertyCountyOrRegion')" class="md-error">Enter a valid town or city</span>
                     </md-input-container>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-xs-12">
-                    <md-input-container :class="{ 'md-input-invalid' : errors.has('propertyPostcode') }">
+                    <md-input-container :class="{ 'md-input-invalid' : errorBag.has('propertyPostcode') }">
                       <label for="propertyPostcode">Postcode</label>
                       <md-input v-model="propertyDetails.propertyPostcode" data-vv-name="propertyPostcode" v-validate="'required'" data-vv-validate-on="change"  id="propertyPostcode" name="propertyPostcode" required />
-                      <span v-if="errors.has('propertyPostcode')" class="md-error">Enter a valid postal code</span>
+                      <span v-if="errorBag.has('propertyPostcode')" class="md-error">Enter a valid postal code</span>
                     </md-input-container>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-xs-12">
-                    <md-input-container :class="{ 'md-input-invalid' : errors.has('propertyCountry') }">
+                    <md-input-container :class="{ 'md-input-invalid' : errorBag.has('propertyCountry') }">
                       <label for="propertyCountry">Country</label>
                       <md-select v-model="propertyDetails.propertyCountry" data-vv-name="propertyCountry" v-validate="'required'" data-vv-validate-on="change" id="propertyCountry" name="propertyCountry" required>
                         <md-option disabled value="">Select a Country</md-option>
                         <md-option v-for="propertyCountry in countries" v-bind:value="propertyCountry" :key="propertyCountry">{{ propertyCountry }}</md-option>
                       </md-select>
-                      <span v-if="errors.has('propertyCountry')" class="md-error">Select a valid country</span>
+                      <span v-if="errorBag.has('propertyCountry')" class="md-error">Select a valid country</span>
                     </md-input-container>
                   </div>
                 </div>

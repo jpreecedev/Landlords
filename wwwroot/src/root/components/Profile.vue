@@ -2,19 +2,19 @@
   <main>
     <h1 class="md-display-2">Profile</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
-    <div id="errorMessage" class="alert error" v-if="errors.any()">
-      <span v-if="!errors.has('GenericError')">Please fix validation errors and try and submit the form again</span>
-      <span v-if="errors.has('GenericError')">{{ errors.first('GenericError') }}</span>
-    </div>
-    <div class="alert success" v-if="saved">
+    <v-alert error :value="errorBag.any()">
+      <span v-if="!errorBag.has('GenericError')">Please fix validation errors and try and submit the form again</span>
+      <span v-if="errorBag.has('GenericError')">{{ errorBag.first('GenericError') }}</span>
+    </v-alert>
+    <v-alert success :value="saved">
       Your profile has been updated
-    </div>
-    <div class="alert success" v-if="resentVerification">
+    </v-alert>
+    <v-alert info :value="resentVerification">
       We have sent you a new verification email.  Please check your inbox.
-    </div>
-    <div class="alert success" v-if="confirmed">
+    </v-alert>
+    <v-alert success :value="confirmed">
       Your email address has been verified
-    </div>
+    </v-alert>
     <form @submit.prevent="validateBeforeSubmit" role="form" novalidate>
       <fieldset v-bind:disabled="!permissions.P_Update">
         <div class="row">
@@ -26,19 +26,19 @@
               <md-card-content>
                 <div class="row">
                   <div class="col-xs-12">
-                    <md-input-container :class="{ 'md-input-invalid': errors.has('firstName') }">
+                    <md-input-container :class="{ 'md-input-invalid': errorBag.has('firstName') }">
                       <label for="firstName">First name</label>
                       <md-input v-model="profile.firstName" id="firstName" name="firstName" type="text" data-vv-name="firstName" v-validate="'required'" data-vv-validate-on="change" required />
-                      <span v-if="errors.has('firstName')" class="md-error">Enter a valid first name</span>
+                      <span v-if="errorBag.has('firstName')" class="md-error">Enter a valid first name</span>
                     </md-input-container>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-xs-12">
-                    <md-input-container :class="{ 'md-input-invalid': errors.has('lastName') }">
+                    <md-input-container :class="{ 'md-input-invalid': errorBag.has('lastName') }">
                       <label for="lastName">Last name</label>
                       <md-input v-model="profile.lastName" id="lastName" name="lastName" type="text" data-vv-name="lastName" v-validate="'required'" data-vv-validate-on="change" required />
-                      <span v-if="errors.has('lastName')" class="md-error">Enter a valid last name</span>
+                      <span v-if="errorBag.has('lastName')" class="md-error">Enter a valid last name</span>
                     </md-input-container>
                   </div>
                 </div>

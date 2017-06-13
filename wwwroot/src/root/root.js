@@ -26,7 +26,9 @@ Vue.config.productionTip = false
 Vue.use(VueResource)
 Vue.use(AuthService)
 Vue.use(Interceptors)
-Vue.use(VeeValidate)
+Vue.use(VeeValidate, {
+  errorBagName: 'errorBag'
+})
 Vue.use(Autocomplete)
 
 Vue.use(VueMaterial.MdCore)
