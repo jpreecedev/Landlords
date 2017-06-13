@@ -17,14 +17,6 @@
   display: block;
 }
 
-a {
-  &:not([href]) {
-    &:not([tabindex]) {
-      text-decoration: underline;
-    }
-  }
-}
-
 main, footer {
   margin-left: auto;
   margin-right: auto;
