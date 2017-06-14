@@ -4,30 +4,30 @@
     <v-toolbar-title class="hidden-sm-and-down">Landlords</v-toolbar-title>
 
     <v-toolbar-items>
-      <v-toolbar-item v-if="auth.isLoggedIn" to="/dashboard">
+      <router-link class="toolbar__item" v-if="auth.isLoggedIn" to="/dashboard">
         Dashboard
-      </v-toolbar-item>
-      <v-toolbar-item v-if="permissions.LL_List" to="/agency/landlord-list">
+      </router-link>
+      <router-link class="toolbar__item" v-if="permissions.LL_List" to="/agency/landlord-list">
         Landlord List
-      </v-toolbar-item>
-      <v-toolbar-item v-if="permissions.PD_GetList" to="/manager/property-list">
+      </router-link>
+      <router-link class="toolbar__item" v-if="permissions.PD_GetList" to="/manager/property-list">
         Property List
-      </v-toolbar-item>
-      <v-toolbar-item v-if="permissions.PE_List" to="/permissions">
+      </router-link>
+      <router-link class="toolbar__item" v-if="permissions.PE_List" to="/permissions">
         Permissions
-      </v-toolbar-item>
-      <v-toolbar-item v-if="permissions.CL_Overview" to="/checklists/">
+      </router-link>
+      <router-link class="toolbar__item" v-if="permissions.CL_Overview" to="/checklists/">
         Checklists
-      </v-toolbar-item>
-      <v-toolbar-item v-if="permissions.TE_GetListById" to="/tenants/">
+      </router-link>
+      <router-link class="toolbar__item" v-if="permissions.TE_GetListById" to="/tenants/">
         Tenants
-      </v-toolbar-item>
-      <v-toolbar-item v-if="!auth.isLoggedIn" to="/registration/">
+      </router-link>
+      <router-link class="toolbar__item" v-if="!auth.isLoggedIn" to="/registration/">
         Log in or Register
-      </v-toolbar-item>
-      <v-toolbar-item v-if="permissions.AC_Overview" to="/accounts/">
+      </router-link>
+      <router-link class="toolbar__item" v-if="permissions.AC_Overview" to="/accounts/">
         Accounts
-      </v-toolbar-item>
+      </router-link>
 
       <v-menu top left offset-y origin="bottom right" transition="v-slide-y-transition">
         <v-toolbar-item slot="activator">

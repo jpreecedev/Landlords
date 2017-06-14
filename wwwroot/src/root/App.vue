@@ -1,9 +1,7 @@
 <template>
   <v-app light>
     <app-nav></app-nav>
-    <transition name="fade">
-      <router-view></router-view>
-    </transition>
+    <router-view></router-view>
     <app-footer></app-footer>
   </v-app>
 </template>
@@ -24,18 +22,3 @@ export default {
 }
 
 </script>
-
-<style lang="scss">
-
-.fade-enter-active {
-  transition: all .3s ease;
-}
-.fade-enter {
-  transform: translateY(10px);
-  opacity: 0;
-}
-.fade-leave-to, .fade-leave-active {
-  opacity: 0
-}
-
-</style>
