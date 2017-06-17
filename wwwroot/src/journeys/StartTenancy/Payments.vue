@@ -7,13 +7,7 @@
       </div>
       <div class="col-xs-12 col-md-6">
         <div class="subheading">How often will the rent be paid?</div>
-        <md-input-container v-if="viewdata && viewdata.rentalFrequencies">
-          <label for="rentalFrequencies">Rental payment frequency</label>
-          <md-select v-model="selectedRentalFrequency" id="rentalFrequencies" name="rentalFrequencies">
-            <md-option disabled>Select a payment frequency</md-option>
-            <md-option v-for="rentalFrequencies in viewdata.rentalFrequencies" :key="rentalFrequencies" v-bind:value="rentalFrequencies">{{ rentalFrequencies }}</md-option>
-          </md-select>
-        </md-input-container>
+        <v-select v-if="viewdata && viewdata.rentalFrequencies" v-bind:items="viewdata.rentalFrequencies" v-model="selectedRentalFrequency" item-value="id" label="Select a rental frequency" dark single-line auto></v-select>
       </div>
     </div>
     <div class="row mt-3">

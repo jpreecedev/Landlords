@@ -7,13 +7,7 @@
       </div>
       <div class="col-xs-12 col-md-6">
         <div class="subheading">What kind of tenancy agreement is/will be in place?</div>
-        <md-input-container v-if="viewdata && viewdata.tenancyTypes">
-          <label for="tenancyType">Select a tenancy type</label>
-          <md-select v-model="selectedTenancyType" id="tenancyType" name="tenancyType">
-            <md-option disabled>Select a tenancy type</md-option>
-            <md-option v-for="tenancyType in viewdata.tenancyTypes" :key="tenancyType" v-bind:value="tenancyType">{{ tenancyType }}</md-option>
-          </md-select>
-        </md-input-container>
+        <v-select v-if="viewdata && viewdata.tenancyTypes" v-bind:items="viewdata.tenancyTypes" v-model="selectedTenancyType" item-value="id" label="Select a tenancy type" dark single-line auto></v-select>
       </div>
     </div>
     <div class="row">
@@ -69,8 +63,7 @@
         startDate: null,
         startDateModal: false,
         endDate: null,
-        endDateModal: false,
-        formatted: null
+        endDateModal: false
       }
     },
     created () {

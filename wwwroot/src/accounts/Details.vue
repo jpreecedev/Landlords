@@ -10,8 +10,8 @@
       <fieldset :disabled="!permissions.AC_Update">
         <div class="row">
           <div class="col-xs-12 col-md-6">
-            <md-card>
-              <md-card-content>
+            <v-card>
+              <v-card-text>
                 <div class="row">
                   <div class="col-xs-12">
                     <md-input-container :class="{ 'md-input-invalid': errorBag.has('opened') }">
@@ -79,8 +79,8 @@
                     </md-input-container>
                   </div>
                 </div>
-              </md-card-content>
-            </md-card>
+              </v-card-text>
+            </v-card>
           </div>
         </div>
         <div class="row mt-3">

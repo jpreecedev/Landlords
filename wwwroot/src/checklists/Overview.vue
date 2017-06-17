@@ -8,39 +8,46 @@
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium sint, odio, optio, expedita alias dolorum dicta iusto aliquam eos doloremque fuga iste fugiat quam sed eius corporis suscipit. Voluptatum, assumenda.</p>
       <p v-if="!overview.checklists || !overview.checklists.length">You have not created any checklists yet.</p>
 
-      <md-layout>
-        <md-card v-for="checklist in overview.checklists" :key="checklist">
-          <md-card-header>
-            <div class="md-title">{{ checklist.name }}</div>
-            <div class="md-subhead">
-              <span v-if="!checklist.propertyReference && !checklist.propertyStreetAddress">General</span>
-              <span v-if="checklist.propertyReference">{{ checklist.propertyReference }}</span>
-              <span v-if="checklist.propertyStreetAddress"> ({{ checklist.propertyStreetAddress }})</span>
-            </div>
-          </md-card-header>
-          <md-card-media>
-            <img class="card-img-top" src="../assets/images/checklist.png" v-bind:alt="checklist.name">
-          </md-card-media>
-          <md-card-actions>
-            <v-btn primary flat v-if="permissions.CL_GetById" @click.native="$router.push({name: 'editor', params: {checklistId: checklist.id}})">View</v-btn>
-            <v-btn flat v-if="permissions.CL_Archive && !checklist.isArchived" @click.native="archive(checklist)" class="md-default">Archive</v-btn>
-          </md-card-actions>
-        </md-card>
-      </md-layout>
-      </div>
-
-      <div class="mt-3" v-if="permissions.CL_Archived && !hasArchivedLists">
-        <v-btn primary light @click.native="getArchived()">View Archived</v-btn>
+      <div class="row">
+        <div class="col-xs-12 col-md-4 mt-3" v-for="checklist in overview.checklists" :key="checklist">
+          <v-card horizontal>
+            <v-card-row>
+              <img src="../assets/images/checklist.png" class="card__row__image" v-bind:alt="checklist.name">
+            </v-card-row>
+            <v-card-column>
+              <v-card-row>
+                <v-card-text>
+                  <strong>{{ checklist.name }}</strong><br>
+                  <small>
+                    <span v-if="!checklist.propertyReference && !checklist.propertyStreetAddress">General</span>
+                    <span v-if="checklist.propertyReference">{{ checklist.propertyReference }}</span>
+                    <span v-if="checklist.propertyStreetAddress"> ({{ checklist.propertyStreetAddress }})</span>
+                  </small>
+                </v-card-text>
+              </v-card-row>
+              <v-card-row actions>
+                <v-btn primary flat v-if="permissions.CL_GetById" @click.native="$router.push({name: 'editor', params: {checklistId: checklist.id}})">View</v-btn>
+                <v-btn flat v-if="permissions.CL_Archive && !checklist.isArchived" @click.native="archive(checklist)" class="md-default">Archive</v-btn>
+              </v-card-row>
+            </v-card-column>
+          </v-card>
+        </div>
       </div>
     </div>
+
+    <div class="mt-3" v-if="permissions.CL_Archived && !hasArchivedLists">
+      <v-btn primary light @click.native="getArchived()">View Archived</v-btn>
+    </div>
+
     <div class="row mt-5" v-if="permissions.CL_Create && overview.availableChecklists && overview.availableChecklists.length">
       <div class="col-xs-6">
-        <md-card>
-          <md-card-header>
-            <div class="md-title">Create a checklist</div>
-            <div class="md-subhead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam quibusdam incidunt, dolor laudantium delectus mollitia error perspiciatis dicta vero expedita aliquam adipisci tempora blanditiis quo, possimus, animi quisquam, in quae.</div>
-          </md-card-header>
-          <md-card-content>
+        <v-card>
+          <v-card-row class="primary white--text">
+            <v-card-title>
+            Create a checklist
+            </v-card-title>
+          </v-card-row>
+          <v-card-text>
             <div class="row">
               <div class="col-xs-12">
                 <md-input-container>
@@ -56,17 +63,19 @@
                 <portfolio-properties name="portfolio" @selected="portfolioPropertySelected" :disabled="!selectedChecklist" :properties="portfolioProperties" />
               </div>
             </div>
-          </md-card-content>
-          <md-card-actions>
+          </v-card-text>
+          <v-card-row actions>
             <v-btn primary flat @click.native="createChecklistInstance(selectedChecklist, selectedProperty)" class="md-primary">Create checklist</v-btn>
-          </md-card-actions>
-        </md-card>
+          </v-card-row>
+        </v-card>
       </div>
     </div>
+
     <div class="row mt-3" v-if="permissions.CL_Create">
       <div class="col">
       </div>
     </div>
+
   </main>
 </template>
 
@@ -146,15 +155,8 @@
 
 <style lang="scss" scoped>
 
-  .md-card {
-    margin: 0 4px 16px 4px;
-
-    .md-card-media {
-      img {
-        width: auto;
-        max-height: 180px;
-      }
-    }
+  .card__row__image {
+    padding: 1rem;
   }
 
 </style>

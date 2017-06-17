@@ -49,18 +49,21 @@
 
     <div class="row mt-5">
       <div class="col-xs-12 col-md-6">
-        <md-card>
-          <md-card-header>
-            <div class="md-title">Import transactions</div>
-            <div class="md-subhead">Please upload your bank statements in CSV format</div>
-          </md-card-header>
-          <md-card-content>       
-            <md-input-container>
-              <md-file v-model="file" multiple placeholder="Browse for a bank statement on your computer" @selected="filesChange('files', $event)" name="files" />
-            </md-input-container>
-            <md-progress v-if="progress" :md-progress="progress"></md-progress>
-          </md-card-content>
-        </md-card>
+        <v-card>
+          <v-card-row>
+            <v-card-title>
+              Upload your statement
+            </v-card-title>
+          </v-card-row>
+          <v-card-text>
+            <v-card-row>
+              <md-input-container>
+                <md-file v-model="file" multiple placeholder="Browse for a bank statement on your computer" @selected="filesChange('files', $event)" name="files" />
+              </md-input-container>
+              <md-progress v-if="progress" :md-progress="progress"></md-progress>
+            </v-card-row>
+          </v-card-text>
+        </v-card>
       </div>
     </div>
   </main>
@@ -118,7 +121,7 @@ export default {
   }
 }
 </script>
-  
+
 <style lang="scss" scoped>
-  
+
 </style>

@@ -74,14 +74,7 @@
             </div>
             <div class="row">
               <div class="col-xs-6">
-                <md-input-container :class="{ 'md-input-invalid' : errorBag.has('country') }">
-                  <label for="country">Country</label>
-                  <md-select v-model="tenant.address.country" data-vv-name="country" v-validate="'required'" data-vv-validate-on="change" id="country" name="country" required>
-                    <md-option disabled value="">Select a Country</md-option>
-                    <md-option v-for="country in viewdata.countries" v-bind:value="country" :key="country">{{ country }}</md-option>
-                  </md-select>
-                  <span v-if="errorBag.has('country')" class="md-error">Select a valid country</span>
-                </md-input-container>
+                <v-select v-if="viewdata && viewdata.countries" v-bind:items="viewdata.countries" v-model="tenant.address.country" item-value="id" label="Select a country" dark single-line auto></v-select>
               </div>
             </div>
           </template>

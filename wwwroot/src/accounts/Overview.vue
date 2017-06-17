@@ -11,8 +11,8 @@
           <td>{{ props.item.type }}</td>
           <td>{{ props.item.providerName }}</td>
           <td>
-            <router-link v-if="permissions.AC_GetById" tag="a" class="md-icon-button" :to="'/accounts/details/' + props.item.id">
-              <md-icon>edit</md-icon>
+            <router-link v-if="permissions.AC_GetById" :to="'/accounts/details/' + props.item.id">
+              <v-icon dark>edit</v-icon>
             </router-link>
           </td>
         </template>
