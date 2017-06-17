@@ -50,7 +50,8 @@
 
             var addressEntity = new TenantAddress
             {
-                TenantId = entity.Id
+                TenantId = entity.Id,
+                Created = DateTime.Now
             };
 
             await Context.TenantAddresses.AddAsync(addressEntity);

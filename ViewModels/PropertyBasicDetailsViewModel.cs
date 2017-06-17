@@ -15,5 +15,10 @@
         public Guid PortfolioId { get; set; }
 
         public string PortfolioName { get; set; }
+
+        public string Text
+        {
+            get { return PropertyStreetAddress; }
+        }
     }
 }

@@ -12,7 +12,7 @@
         [Permission(Permissions_J.StartTenancyId, Permissions_J.StartTenancyRouteId, Permissions_J.StartTenancyDescription)]
         public IActionResult GetViewData()
         {
-            return Ok(new StartTenancyWizardViewModel());
+            return Ok(new StartTenancyJourneyViewModel());
         }
     }
 }

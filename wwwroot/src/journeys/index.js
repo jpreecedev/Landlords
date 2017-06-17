@@ -1,13 +1,15 @@
 import startTenancy from './StartTenancy'
 import Announcement from './StartTenancy/Announcement'
-import Home from './StartTenancy/Home'
+import Property from './StartTenancy/Property'
 import Payments from './StartTenancy/Payments'
 import Tenants from './StartTenancy/Tenants'
+import TenantType from './StartTenancy/components/TenantType'
 
 export default function install (Vue) {
   Vue.component('starttenancy', startTenancy)
   Vue.component('announcement', Announcement)
-  Vue.component('starttenancy-home', Home)
+  Vue.component('property', Property)
   Vue.component('payments', Payments)
   Vue.component('tenants', Tenants)
+  Vue.component('tenant-type', TenantType)
 }

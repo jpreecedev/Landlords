@@ -1,37 +1,35 @@
 <template>
   <section>
     <h1 class="md-display-1">Start a new tenancy</h1>
-    <v-stepper v-model="e1">
+    <v-stepper v-model="step">
       <v-stepper-header>
-        <v-stepper-step step="1" :complete="e1 > 1">Before we start</v-stepper-step>
+        <v-stepper-step step="1" :complete="step > 1">Before we start</v-stepper-step>
         <v-divider></v-divider>
-        <v-stepper-step step="2" :complete="e1 > 2">Property</v-stepper-step>
+        <v-stepper-step step="2" :complete="step > 2">Property</v-stepper-step>
         <v-divider></v-divider>
-        <v-stepper-step step="3" :complete="e1 > 3">Tenants</v-stepper-step>
+        <v-stepper-step step="3" :complete="step > 3">Tenants</v-stepper-step>
         <v-divider></v-divider>
-        <v-stepper-step step="4" :complete="e1 > 4">Payment</v-stepper-step>
+        <v-stepper-step step="4" :complete="step > 4">Payment</v-stepper-step>
         <v-divider></v-divider>
       </v-stepper-header>
       <v-stepper-content step="1">
         <announcement />
-        <v-btn primary @click.native="e1 = 2" light>Continue</v-btn>
-        <v-btn flat dark>Cancel</v-btn>
       </v-stepper-content>
       <v-stepper-content step="2">
-        <starttenancy-home :viewdata="viewData" />
-        <v-btn primary @click.native="e1 = 3" light>Continue</v-btn>
-        <v-btn flat dark>Cancel</v-btn>
+        <property :viewdata="viewData" />
       </v-stepper-content>
       <v-stepper-content step="3">
         <tenants :viewdata="viewData" />
-        <v-btn primary @click.native="e1 = 4" light>Continue</v-btn>
-        <v-btn flat dark>Cancel</v-btn>
       </v-stepper-content>
       <v-stepper-content step="4">
         <payments :viewdata="viewData" />
-        <v-btn flat dark>Cancel</v-btn>
       </v-stepper-content>
     </v-stepper>
+
+    <v-btn primary @click.native="next()" light>{{ step === 4 ? 'Finished' : 'Continue' }}</v-btn>
+    <v-btn flat dark @click.native="back()">Go back</v-btn>
+    <v-btn flat dark>Cancel</v-btn>
+
   </section>
 </template>
 
@@ -42,9 +40,21 @@
     name: 'startTenancy',
     data () {
       return {
-        e1: 0,
+        step: 0,
         permissions: this.$store.state.permissions,
         viewData: {}
+      }
+    },
+    methods: {
+      next: function () {
+        if (this.step === 4) {
+          alert('done')
+        } else {
+          this.step = Number(this.step) + 1
+        }
+      },
+      back: function () {
+        this.step = Number(this.step) - 1
       }
     },
     created () {

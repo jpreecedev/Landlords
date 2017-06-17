@@ -5,16 +5,12 @@
 
 @import '../../../node_modules/flexboxgrid/dist/flexboxgrid.min.css';
 
-*, *:before, *:after {
-  box-sizing: border-box;
+ul {
+  margin-bottom: 1rem;
 }
 
 .pointer {
   cursor: pointer;
-}
-
-.form-control-feedback {
-  display: block;
 }
 
 main, footer {
@@ -95,78 +91,31 @@ p {
   }
 }
 
-.md-table-head-text,
-.md-table-cell-container {
-  font-size: .875rem;
+.expansion-panel {
+  margin-bottom: .5rem;
 }
 
-.accordion {
-  .tab {
-    position: relative;
-    margin-bottom: 1px;
-    width: 100%;
-    overflow: hidden;
+.expansion-panel__body {
+  background-color: #fff;
+  padding: 1rem 2rem;
+}
 
-    > label {
-      position: relative;
-      display: block;
-      padding: 0 0 0 1em;
-      line-height: 3;
-      background-color: #3f51b5;
-      color: #fff;
-      cursor: pointer;
-    }
-  }
+.expansion-panel__buttons {
+  padding-top: .75rem;
+}
 
-  input[type=radio] {
-    position: absolute;
-    opacity: 0;
-    z-index: -1;
-  }
+.stepper {
+  margin-bottom: 1rem;
+}
 
-  .tab-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height .35s;
-  }
+.stepper__content {
+  padding: 2rem 2rem 1rem 2rem;
+}
 
-  .tab-content p {
-    margin: 1em;
-  }
+.subheading ~ .input-group {
+  margin-top: .5rem;
+}
 
-  input:checked ~ .tab-content {
-    max-height: 100rem;
-    height: auto;
-    padding: 30px 60px;
-    background-color: #E8EAF6;
-  }
-
-  label::after {
-    position: absolute;
-    right: 0;
-    top: 0;
-    display: block;
-    width: 3em;
-    height: 3em;
-    line-height: 3;
-    text-align: center;
-    -webkit-transition: all .35s;
-    -o-transition: all .35s;
-    transition: all .35s;
-  }
-
-  input {
-    &[type=checkbox] + label::after {
-      content: "+";
-    }
-    &[type=radio] + label::after {
-      content: "\25BC";
-    }
-    &[type=checkbox]:checked + label::after {
-      transform: rotate(315deg);
-    }
-    &[type=radio]:checked + label::after {
-      transform: rotateX(180deg);
-    }
-  }
+.dialog__container {
+  display: block;
 }
