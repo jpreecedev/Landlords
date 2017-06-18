@@ -1,9 +1,13 @@
 <template>
-  <div id="app">
+  <v-app>
     <app-nav></app-nav>
-    <router-view></router-view>
+    <main>
+      <v-container fluid>
+        <router-view></router-view>
+      </v-container>
+    </main>
     <app-footer></app-footer>
-  </div>
+  </v-app>
 </template>
 
 <script>
@@ -16,7 +20,6 @@ export default {
   components: { AppNav, AppFooter },
   data () {
     return {
-      app: this.$store.state.app
     }
   }
 }
