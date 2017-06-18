@@ -3,7 +3,7 @@
     <div class="col-xs-12">
       <md-input-container>
         <label v-bind:for="checklistItem.key + 'comments'">Comments</label>
-        <md-textarea v-model="checklistItem.payload.comments" @blur.native="save()" v-bind:id="checklistItem.key + 'comments'" v-bind:name="checklistItem.key + 'comments'"></md-textarea>                    
+        <md-textarea v-model="checklistItem.payload.comments" @blur.native="save()" v-bind:id="checklistItem.key + 'comments'" v-bind:name="checklistItem.key + 'comments'"></md-textarea>
       </md-input-container>
     </div>
   </div>
@@ -45,7 +45,7 @@ export default {
   }
 }
 </script>
-  
+
 <style lang="scss" scoped>
-  
+
 </style>

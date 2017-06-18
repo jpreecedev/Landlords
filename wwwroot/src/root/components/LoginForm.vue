@@ -2,35 +2,33 @@
   <div>
     <form @submit.prevent="validateBeforeSubmit" role="form" novalidate>
       <fieldset>
-        <md-card>
-          <md-card-header>
-            <div class="md-title">Sign In</div>
-          </md-card-header>
-          <md-card-content>
-            <div class="row">
-              <div class="col-xs-12">
-                <md-input-container :class="{ 'md-input-invalid': errorBag.has('emailAddress') }">
-                  <label for="emailAddress">Email Address</label>
-                  <md-input type="email" id="emailAddress" name="emailAddress" data-vv-name="emailAddress" v-validate="'required|email'" v-model="credentials.username" data-vv-validate-on="change" required />
-                  <span v-if="errorBag.has('emailAddress')" class="md-error">Enter a valid email address</span>
-                </md-input-container>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-12">
-                <md-input-container :class="{ 'md-input-invalid': errorBag.has('password') }">
-                  <label for="password">Password</label>
-                  <md-input type="password" id="password" name="password" data-vv-name="password" v-model="credentials.password" v-validate="'required|min:8'" data-vv-validate-on="change" required />
-                  <span v-if="errorBag.has('password')" class="md-error">Enter your password</span>
-                </md-input-container>
-              </div>
-            </div>
-          </md-card-content>
-          <md-card-actions>
+        <v-card>
+          <v-card-row class="primary white--text">
+            <v-card-title>
+              Sign in
+            </v-card-title>
+          </v-card-row>
+          <v-card-text>
+            <v-card-row>
+              <md-input-container :class="{ 'md-input-invalid': errorBag.has('emailAddress') }">
+                <label for="emailAddress">Email Address</label>
+                <md-input type="email" id="emailAddress" name="emailAddress" data-vv-name="emailAddress" v-validate="'required|email'" v-model="credentials.username" data-vv-validate-on="change" required />
+                <span v-if="errorBag.has('emailAddress')" class="md-error">Enter a valid email address</span>
+              </md-input-container>
+            </v-card-row>
+            <v-card-row>
+              <md-input-container :class="{ 'md-input-invalid': errorBag.has('password') }">
+                <label for="password">Password</label>
+                <md-input type="password" id="password" name="password" data-vv-name="password" v-model="credentials.password" v-validate="'required|min:8'" data-vv-validate-on="change" required />
+                <span v-if="errorBag.has('password')" class="md-error">Enter your password</span>
+              </md-input-container>
+            </v-card-row>
+          </v-card-text>
+          <v-card-row actions>
             <v-btn primary flat type="submit" :disabled="loggingIn">Log in</v-btn>
             <v-btn flat type="reset" @click.native="reset()">Reset</v-btn>
-          </md-card-actions>
-        </md-card>
+          </v-card-row>
+        </v-card>
       </fieldset>
     </form>
   </div>

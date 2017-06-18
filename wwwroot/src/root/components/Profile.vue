@@ -19,85 +19,77 @@
       <fieldset v-bind:disabled="!permissions.P_Update">
         <div class="row">
           <div class="col-xs-12 col-md-6">
-            <md-card>
-              <md-card-header>
-                <div class="md-title">Personal details</div>
-              </md-card-header>
-              <md-card-content>
-                <div class="row">
-                  <div class="col-xs-12">
-                    <md-input-container :class="{ 'md-input-invalid': errorBag.has('firstName') }">
-                      <label for="firstName">First name</label>
-                      <md-input v-model="profile.firstName" id="firstName" name="firstName" type="text" data-vv-name="firstName" v-validate="'required'" data-vv-validate-on="change" required />
-                      <span v-if="errorBag.has('firstName')" class="md-error">Enter a valid first name</span>
-                    </md-input-container>
+            <v-card>
+              <v-card-title class="primary white--text">
+                Personal details
+              </v-card-title>
+              <v-card-text>
+                <v-card-row>
+                  <md-input-container :class="{ 'md-input-invalid': errorBag.has('firstName') }">
+                    <label for="firstName">First name</label>
+                    <md-input v-model="profile.firstName" id="firstName" name="firstName" type="text" data-vv-name="firstName" v-validate="'required'" data-vv-validate-on="change" required />
+                    <span v-if="errorBag.has('firstName')" class="md-error">Enter a valid first name</span>
+                  </md-input-container>
+                </v-card-row>
+                <v-card-row>
+                  <md-input-container :class="{ 'md-input-invalid': errorBag.has('lastName') }">
+                    <label for="lastName">Last name</label>
+                    <md-input v-model="profile.lastName" id="lastName" name="lastName" type="text" data-vv-name="lastName" v-validate="'required'" data-vv-validate-on="change" required />
+                    <span v-if="errorBag.has('lastName')" class="md-error">Enter a valid last name</span>
+                  </md-input-container>
+                </v-card-row>
+                <v-card-row>
+                  <div>
+                    <p>Email address
+                      <br>
+                      {{ profile.emailAddress }}
+                    </p>
                   </div>
-                </div>
-                <div class="row">
-                  <div class="col-xs-12">
-                    <md-input-container :class="{ 'md-input-invalid': errorBag.has('lastName') }">
-                      <label for="lastName">Last name</label>
-                      <md-input v-model="profile.lastName" id="lastName" name="lastName" type="text" data-vv-name="lastName" v-validate="'required'" data-vv-validate-on="change" required />
-                      <span v-if="errorBag.has('lastName')" class="md-error">Enter a valid last name</span>
-                    </md-input-container>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-xs-12">
-                    <label for="secondaryPhoneNumber">Email address</label>
-                    <p>{{ profile.emailAddress }}</p>
-                    <v-btn warning light v-if="!profile.emailConfirmed" @click.native="resendVerificationEmail()" type="button" class="ml-0">Re-send verification email</v-btn>
-                  </div>
-                </div>
-              </md-card-content>
-            </md-card>
+                </v-card-row>
+                <v-card-row actions>
+                  <v-btn warning flat light v-if="profile.emailConfirmed" @click.native="resendVerificationEmail()">Re-send verification email</v-btn>
+                </v-card-row>
+              </v-card-text>
+            </v-card>
           </div>
           <div class="col-xs-12 col-md-6">
-            <md-card>
-              <md-card-header>
-                <div class="md-title">Contact details</div>
-              </md-card-header>
-              <md-card-content>
-                <div class="row">
-                  <div class="col-xs-12">
-                    <md-input-container>
-                      <label for="availableFrom">Available From</label>
-                      <md-select v-model="availableFrom" id="availableFrom" name="availableFrom">
-                        <md-option disabled value="">Select a time</md-option>
-                        <md-option v-for="time in times" :key="time" :value="time.value">{{ time.display }}</md-option>
-                      </md-select>
-                    </md-input-container>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-xs-12">
-                    <md-input-container>
-                      <label for="availableTo">Available To</label>
-                      <md-select v-model="availableTo" id="availableTo" name="availableTo">
-                        <md-option disabled value="">Select a time</md-option>
-                        <md-option v-for="time in times" :key="time" v-bind:value="time.value">{{ time.display }}</md-option>
-                      </md-select>
-                    </md-input-container>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-xs-12">
-                    <md-input-container>
-                      <label for="phoneNumber">Main Phone Number</label>
-                      <md-input v-model="profile.phoneNumber" id="phoneNumber" name="phoneNumber" type="tel" required />
-                    </md-input-container>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-xs-12">
-                    <md-input-container>
-                      <label for="secondaryPhoneNumber">Secondary Phone Number</label>
-                      <md-input v-model="profile.secondaryPhoneNumber" id="secondaryPhoneNumber" name="secondaryPhoneNumber" type="tel" required />
-                    </md-input-container>
-                  </div>
-                </div>
-              </md-card-content>
-            </md-card>
+            <v-card>
+              <v-card-title class="primary white--text">
+                Contact details
+              </v-card-title>
+              <v-card-text>
+                <v-card-row>
+                  <md-input-container>
+                    <label for="availableFrom">Available From</label>
+                    <md-select v-model="availableFrom" id="availableFrom" name="availableFrom">
+                      <md-option disabled value="">Select a time</md-option>
+                      <md-option v-for="time in times" :key="time" :value="time.value">{{ time.display }}</md-option>
+                    </md-select>
+                  </md-input-container>
+                </v-card-row>
+                <v-card-row>
+                  <md-input-container>
+                    <label for="availableTo">Available To</label>
+                    <md-select v-model="availableTo" id="availableTo" name="availableTo">
+                      <md-option disabled value="">Select a time</md-option>
+                      <md-option v-for="time in times" :key="time" v-bind:value="time.value">{{ time.display }}</md-option>
+                    </md-select>
+                  </md-input-container>
+                </v-card-row>
+                <v-card-row>
+                  <md-input-container>
+                    <label for="phoneNumber">Main Phone Number</label>
+                    <md-input v-model="profile.phoneNumber" id="phoneNumber" name="phoneNumber" type="tel" required />
+                  </md-input-container>
+                </v-card-row>
+                <v-card-row>
+                  <md-input-container>
+                    <label for="secondaryPhoneNumber">Secondary Phone Number</label>
+                    <md-input v-model="profile.secondaryPhoneNumber" id="secondaryPhoneNumber" name="secondaryPhoneNumber" type="tel" required />
+                  </md-input-container>
+                </v-card-row>
+              </v-card-text>
+            </v-card>
           </div>
         </div>
         <div class="row mt-3">

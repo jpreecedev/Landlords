@@ -2,63 +2,54 @@
   <div>
     <form @submit.prevent="validateBeforeSubmit" role="form" novalidate>
       <fieldset>
-        <md-card>
-          <md-card-header>
-            <div class="md-title">Register</div>
-          </md-card-header>
-          <md-card-content>
-            <div class="row">
-              <div class="col-xs-12">
-                <md-input-container :class="{ 'md-input-invalid': errorBag.has('firstName') }">
-                  <label for="firstName">First name</label>
-                  <md-input v-model="newUser.firstName" id="firstName" name="firstName" type="text" data-vv-name="firstName" v-validate="'required'" data-vv-validate-on="change" required />
-                  <span v-if="errorBag.has('firstName')" class="md-error">Enter a valid first name</span>
-                </md-input-container>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-12">
-                <md-input-container :class="{ 'md-input-invalid': errorBag.has('lastName') }">
-                  <label for="lastName">Last name</label>
-                  <md-input v-model="newUser.lastName" id="lastName" name="lastName" type="text" data-vv-name="lastName" v-validate="'required'" data-vv-validate-on="change" required />
-                  <span v-if="errorBag.has('lastName')" class="md-error">Enter a valid last name</span>
-                </md-input-container>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-12">
-                <md-input-container :class="{ 'md-input-invalid': errorBag.has('emailAddress') }">
-                  <label for="email">E-mail</label>
-                  <md-input v-model="newUser.emailAddress" id="emailAddress" name="emailAddress" type="text" data-vv-name="emailAddress" v-validate="'required|email'" data-vv-validate-on="none" required />
-                  <span v-if="errorBag.has('emailAddress')" class="md-error">Enter a valid email address</span>
-                </md-input-container>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-12">
-                <md-input-container :class="{ 'md-input-invalid': errorBag.has('password') }">
-                  <label for="password">Password</label>
-                  <md-input v-model="newUser.password" id="password" name="password" type="password" data-vv-name="password" v-validate="'required|min:8|confirmed:repeatPassword'" data-vv-validate-on="change" required />
-                  <span v-if="errorBag.has('password:min')" class="md-error">{{ errorBag.first('password:min') }}</span>
-                  <span v-else-if="errorBag.has('password:required')" class="md-error">{{ errorBag.first('password:required') }}</span>
-                </md-input-container>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-12">
-                <md-input-container :class="{ 'md-input-invalid': errorBag.has('password') }">
-                  <label for="repeatPassword">Repeat password </label>
-                  <md-input id="repeatPassword" name="repeatPassword" type="password" data-vv-name="repeatPassword" v-validate="'required'" v-model="newUser.repeatPassword" data-vv-as="password confirmation" data-vv-validate-on="change" />
-                  <span v-if="errorBag.has('password:confirmed')" class="md-error">{{ errorBag.first('password:confirmed') }}</span>
-                </md-input-container>
-              </div>
-            </div>
-          </md-card-content>
-          <md-card-actions>
+        <v-card>
+          <v-card-title class="primary white--text">
+            Register
+          </v-card-title>
+          <v-card-text>
+            <v-card-row>
+              <md-input-container :class="{ 'md-input-invalid': errorBag.has('firstName') }">
+                <label for="firstName">First name</label>
+                <md-input v-model="newUser.firstName" id="firstName" name="firstName" type="text" data-vv-name="firstName" v-validate="'required'" data-vv-validate-on="change" required />
+                <span v-if="errorBag.has('firstName')" class="md-error">Enter a valid first name</span>
+              </md-input-container>
+            </v-card-row>
+            <v-card-row>
+              <md-input-container :class="{ 'md-input-invalid': errorBag.has('lastName') }">
+                <label for="lastName">Last name</label>
+                <md-input v-model="newUser.lastName" id="lastName" name="lastName" type="text" data-vv-name="lastName" v-validate="'required'" data-vv-validate-on="change" required />
+                <span v-if="errorBag.has('lastName')" class="md-error">Enter a valid last name</span>
+              </md-input-container>
+            </v-card-row>
+            <v-card-row>
+              <md-input-container :class="{ 'md-input-invalid': errorBag.has('emailAddress') }">
+                <label for="email">E-mail</label>
+                <md-input v-model="newUser.emailAddress" id="emailAddress" name="emailAddress" type="text" data-vv-name="emailAddress" v-validate="'required|email'" data-vv-validate-on="none" required />
+                <span v-if="errorBag.has('emailAddress')" class="md-error">Enter a valid email address</span>
+              </md-input-container>
+            </v-card-row>
+            <v-card-row>
+              <md-input-container :class="{ 'md-input-invalid': errorBag.has('password') }">
+                <label for="password">Password</label>
+                <md-input v-model="newUser.password" id="password" name="password" type="password" data-vv-name="password" v-validate="'required|min:8|confirmed:repeatPassword'" data-vv-validate-on="change" required />
+                <span v-if="errorBag.has('password:min')" class="md-error">{{ errorBag.first('password:min') }}</span>
+                <span v-else-if="errorBag.has('password:required')" class="md-error">{{ errorBag.first('password:required') }}</span>
+              </md-input-container>
+            </v-card-row>
+            <v-card-row>
+              <md-input-container :class="{ 'md-input-invalid': errorBag.has('password') }">
+                <label for="repeatPassword">Repeat password </label>
+                <md-input id="repeatPassword" name="repeatPassword" type="password" data-vv-name="repeatPassword" v-validate="'required'" v-model="newUser.repeatPassword" data-vv-as="password confirmation" data-vv-validate-on="change" />
+                <span v-if="errorBag.has('password:confirmed')" class="md-error">{{ errorBag.first('password:confirmed') }}</span>
+              </md-input-container>
+            </v-card-row>
+          </v-card-text>
+          <v-divider></v-divider>
+          <v-card-row actions>
             <v-btn primary flat type="submit" :disabled="registering" id="register" name="register">Register</v-btn>
             <v-btn flat type="reset" @click.native="reset()">Reset</v-btn>
-          </md-card-actions>
-        </md-card>
+          </v-card-row>
+        </v-card>
       </fieldset>
     </form>
   </div>
@@ -129,11 +120,3 @@
   }
 
 </script>
-
-<style lang="scss" scoped>
-
-  h3 {
-    text-align: center;
-  }
-
-</style>

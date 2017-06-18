@@ -6,12 +6,12 @@
       <fieldset>
         <div class="row">
           <div class="col-xs-12 col-md-6">
-            <md-card>
-              <md-card-header>
-                <div class="md-title">Basic details about your property</div>
-              </md-card-header>
-              <md-card-content>
-                <div class="row">
+            <v-card>
+              <v-card-title class="primary white--text">
+                Basic details about your property
+              </v-card-title>
+              <v-card-text>
+                <v-card-row class="row">
                   <div class="col-xs-12">
                     <md-input-container :class="{ 'md-input-invalid': errorBag.has('pricePaid') }">
                       <label for="pricePaid" class="form-control-label">Price paid</label>
@@ -20,8 +20,8 @@
                       <span v-else-if="errorBag.has('pricePaid:min_value')" class="md-error">Enter at least &pound;10,000</span>
                     </md-input-container>
                   </div>
-                </div>
-                <div class="row">
+                </v-card-row>
+                <v-card-row class="row">
                   <div class="col-xs-12">
                     <md-input-container :class="{ 'md-input-invalid': errorBag.has('annualInterestRate') }">
                       <label for="annualInterestRate">Interest rate (annual)</label>
@@ -31,8 +31,8 @@
                       <span v-else-if="errorBag.has('annualInterestRate:max_value')" class="md-error">Enter up to 20%</span>
                     </md-input-container>
                   </div>
-                </div>
-                <div class="row">
+                </v-card-row>
+                <v-card-row class="row">
                   <div class="col-xs-12">
                     <md-input-container :class="{ 'md-input-invalid': errorBag.has('mortgageLength') }">
                       <label for="mortgageLength">Mortgage length</label>
@@ -42,15 +42,13 @@
                       <span v-else-if="errorBag.has('mortgageLength:max_value')" class="md-error">Enter up to 50 years</span>
                     </md-input-container>
                   </div>
-                </div>
-              </md-card-content>
-            </md-card>
-            <md-card>
-              <md-card-header>
-                <div class="md-title">Income</div>
-              </md-card-header>
-              <md-card-content>
-                <div class="row">
+                </v-card-row>
+              </v-card-text>
+              <v-card-title>
+                Income
+              </v-card-title>
+              <v-card-text>
+                <v-card-row class="row">
                   <div class="col-xs-12">
                     <md-input-container :class="{ 'md-input-invalid': errorBag.has('expectedRentalIncome') }">
                       <label for="expectedRentalIncome">Expected rental income</label>
@@ -60,21 +58,19 @@
                       <span v-else-if="errorBag.has('expectedRentalIncome:max_value')" class="md-error">Enter up to &pound;1,000,000</span>
                     </md-input-container>
                   </div>
-                </div>
-                <div class="row">
+                </v-card-row>
+                <v-card-row class="row">
                   <div class="col-xs-12">
                     <md-radio name="inlineRadioOptions" id="Monthly" md-value="Monthly" v-model="rentalIncomeFrequency" checked>Monthly</md-radio>
                     <md-radio name="inlineRadioOptions" id="Annual" md-value="Annual" v-model="rentalIncomeFrequency">Annual</md-radio>
                   </div>
-                </div>
-              </md-card-content>
-            </md-card>
-            <md-card>
-              <md-card-header>
-                <div class="md-title">Taxation</div>
-              </md-card-header>
-              <md-card-content>
-                <div class="row">
+                </v-card-row>
+              </v-card-text>
+              <v-card-title>
+                Taxation
+              </v-card-title>
+              <v-card-text>
+                <v-card-row class="row">
                   <div class="col-xs-12">
                     <p>Which tax band are you in?</p>
                     <label>
@@ -87,40 +83,38 @@
                       <md-radio name="taxBandRadioGroup" id="top" md-value="Top" v-model="taxBand">Top (45%)</md-radio>
                     </label>
                   </div>
-                </div>
-              </md-card-content>
-            </md-card>
-            <md-card>
-              <md-card-header>
-                <div class="md-title">Other</div>
-              </md-card-header>
-              <md-card-content>
-                <div class="row">
+                </v-card-row>
+              </v-card-text>
+              <v-card-title>
+                Other
+              </v-card-title>
+              <v-card-text>
+                <v-card-row class="row">
                   <div class="col-xs-12">
                     <md-input-container>
                       <label for="contingency">Contingency</label>
                       <md-input type="number" step="1" id="contingency" name="contingency" v-model="contingency" />
                     </md-input-container>
                   </div>
-                </div>
-                <div class="row">
+                </v-card-row>
+                <v-card-row class="row">
                   <div class="col-xs-12">
                     <md-input-container>
                       <label for="otherCosts">Other costs</label>
                       <md-input type="number" step="1" id="otherCosts" name="otherCosts" v-model="otherCosts" />
                     </md-input-container>
                   </div>
-                </div>
-              </md-card-content>
-            </md-card>
+                </v-card-row>
+              </v-card-text>
+            </v-card>
           </div>
           <div class="col-xs-12 col-md-6">
-            <md-card>
-              <md-card-header>
-                <div class="md-title">Year on year growth</div>
-              </md-card-header>
-              <md-card-content>
-                <div class="row">
+            <v-card>
+              <v-card-title class="primary white--text">
+                Year on year growth
+              </v-card-title>
+              <v-card-text>
+                <v-card-row class="row">
                   <div class="col-xs-12 col-md-9">
                     <md-input-container :class="{ 'md-input-invalid': errorBag.has('anticipatedAnnualIncrease') }">
                       <label for="anticipatedAnnualIncrease">Expected increase in property value (per year)</label>
@@ -130,46 +124,42 @@
                       <span v-else-if="errorBag.has('anticipatedAnnualIncrease:max_value')" class="md-error">Enter up to 100%</span>
                     </md-input-container>
                   </div>
-                </div>
-              </md-card-content>
-            </md-card>
-            <md-card>
-              <md-card-header>
-                <div class="md-title">Agency Fees</div>
-              </md-card-header>
-              <md-card-content>
-                <div class="row">
+                </v-card-row>
+              </v-card-text>
+              <v-card-title>
+                Agency Fees
+              </v-card-title>
+              <v-card-text>
+                <v-card-row class="row">
                   <div class="col-xs-12">
                     <md-input-container>
                       <label for="agencyFee">Agency fees</label>
                       <md-input type="number" step="1" id="agencyFee" name="agencyFee" v-model="agencyFee" />
                     </md-input-container>
                   </div>
-                </div>
-                <div class="row">
+                </v-card-row>
+                <v-card-row class="row">
                   <label class="form-check-label">
                     <md-radio name="agencyFeesPeriodGroup" id="Monthly" md-value="Monthly" v-model="agencyFeeFrequency" checked>Monthly</md-radio>
                   </label>
                   <label class="form-check-label">
                     <md-radio name="agencyFeesPeriodGroup" id="Annual" md-value="Annual" v-model="agencyFeeFrequency">Annual</md-radio>
                   </label>
-                </div>
-              </md-card-content>
-            </md-card>
-            <md-card>
-              <md-card-header>
-                <div class="md-title">Maintenance Fees</div>
-              </md-card-header>
-              <md-card-content>
-                <div class="row">
+                </v-card-row>
+              </v-card-text>
+              <v-card-title>
+                Maintenance Fees
+              </v-card-title>
+              <v-card-text>
+                <v-card-row class="row">
                   <div class="col-xs-12">
                     <md-input-container>
                       <label for="maintenanceFees">Maintenance fees</label>
                       <md-input type="number" step="1" id="maintenanceFees" name="maintenanceFees" v-model="maintenanceFees" />
                     </md-input-container>
                   </div>
-                </div>
-                <div class="row">
+                </v-card-row>
+                <v-card-row class="row">
                   <div class="col-xs-12">
                     <label class="form-check-label">
                       <md-radio name="maintenanceFeesPeriodGroup" id="Monthly" md-value="Monthly" v-model="maintenanceFeeFrequency" checked>Monthly</md-radio>
@@ -178,57 +168,53 @@
                       <md-radio name="maintenanceFeesPeriodGroup" id="Annual" md-value="Annual" v-model="maintenanceFeeFrequency">Annual</md-radio>
                     </label>
                   </div>
-                </div>
-              </md-card-content>
-            </md-card>
-            <md-card>
-              <md-card-header>
-                <div class="md-title">Insurance</div>
-              </md-card-header>
-              <md-card-content>
-                <div class="row">
+                </v-card-row>
+              </v-card-text>
+              <v-card-title>
+                Insurance
+              </v-card-title>
+              <v-card-text>
+                <v-card-row class="row">
                   <div class="col-xs-12">
                     <md-input-container>
                       <label for="buildingsInsurance">Buildings insurance (per year)</label>
                       <md-input type="number" step="1" class="form-control" id="buildingsInsurance" name="buildingsInsurance" v-model="buildingsInsurance" />
                     </md-input-container>
                   </div>
-                </div>
-                <div class="row">
+                </v-card-row>
+                <v-card-row class="row">
                   <div class="col-xs-12">
                     <md-input-container>
                       <label for="contentsInsurance">Contents insurance (per year)</label>
                       <md-input type="number" step="1" class="form-control" id="contentsInsurance" name="contentsInsurance" v-model="contentsInsurance" />
                     </md-input-container>
                   </div>
-                </div>
-              </md-card-content>
-            </md-card>
+                </v-card-row>
+              </v-card-text>
+            </v-card>
           </div>
         </div>
         <div class="row mt-3">
           <div class="col-xs-12">
-            <md-card>
-              <md-card-header>
-                <div class="md-title">Your results</div>
-              </md-card-header>
-              <md-card-content>
+            <v-card>
+              <v-card-title class="primary white--text">
+                Your results
+              </v-card-title>
+              <v-card-text>
                 <div v-if="!calculateScore">
                   <p class="md-warn">Please fix any validation errors to see your results</p>
                 </div>
-                <div class="row" v-if="calculateScore">
+                <v-card-row class="row" v-if="calculateScore">
                   <p>The score based on the information provided is: <strong>{{ calculateScore.scoreDisplay }}</strong>.</p>
                   <p>The property may make <strong>&pound;{{ calculateScore.profit.formatWithSeparator() }}</strong> profit per year, and in <strong>{{ mortgageLength }}</strong> years will be worth around <strong>&pound;{{ getPropertyFutureValue().formatWithSeparator() }}</strong>.  You will pay around <strong>&pound;{{ getTotalMortgageInterest().formatWithSeparator() }}</strong> in interest on the mortgage (assuming the rate doesn't change).</p>
                   <p>This means that over <strong>{{ mortgageLength }}</strong> years, you could pocket up to <strong>&pound;{{ getPocketAmount().formatWithSeparator()  }}</strong>.</p>
-                </div>
-              </md-card-content>
-            </md-card>
-            <md-card v-if="calculateScore">
-              <md-card-content>
+                </v-card-row>
+              </v-card-text>
+              <v-card-text v-if="calculateScore">
                 <p>This is calculated by taking the potential gross profit of <strong>&pound;{{ getGrossProfit().formatWithSeparator() }}</strong>, subtracting your tax free allowance of <strong>&pound;{{ taxFreeAllowance.formatWithSeparator() }}</strong>, and then subtracting capital gains tax of approximately <strong>&pound;{{ getCapitalGainsTax().formatWithSeparator() }}</strong>.</p>
                 <p><strong>Note:</strong> These figures have not been adjusted for inflation.  Your actual return will vary and has been provided as a guideline only.</p>
-              </md-card-content>
-            </md-card>
+              </v-card-text>
+            </v-card>
           </div>
         </div>
       </fieldset>
@@ -327,7 +313,7 @@
         return this.getMonthlyPayment() + this.getAgencyFees() + this.getMaintenanceFees() + this.getInsuranceCosts() + this.otherCosts.toFloat() + this.contingency.toFloat()
       },
       calculateScore: function () {
-        if (this.errors.errors.length !== 0) {
+        if (this.errorBag.errors.length !== 0) {
           return false
         }
         return utils.calculateScore({
@@ -340,12 +326,3 @@
     }
   }
 </script>
-
-<style lang="scss" scoped>
-
-  .md-card-content > .row {
-    margin-left: 0;
-    margin-right: 0;
-  }
-
-</style>
