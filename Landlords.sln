@@ -1,11 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.7
+VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Landlords", "Landlords.csproj", "{A75D570D-6B75-469D-88C9-B389C1BE8AEF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{B4C41EC6-0781-4932-898F-AD123B83D275}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Landlords.Zoopla", "Landlords.Zoopla\Landlords.Zoopla.csproj", "{D47C75BE-080E-4442-BFFA-BA483E7D247D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Landlords.Shared", "Landlords.Shared\Landlords.Shared.csproj", "{8B889565-259A-4A75-AC7F-35C1F71254FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{B4C41EC6-0781-4932-898F-AD123B83D275}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4C41EC6-0781-4932-898F-AD123B83D275}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4C41EC6-0781-4932-898F-AD123B83D275}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D47C75BE-080E-4442-BFFA-BA483E7D247D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D47C75BE-080E-4442-BFFA-BA483E7D247D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D47C75BE-080E-4442-BFFA-BA483E7D247D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D47C75BE-080E-4442-BFFA-BA483E7D247D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B889565-259A-4A75-AC7F-35C1F71254FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B889565-259A-4A75-AC7F-35C1F71254FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B889565-259A-4A75-AC7F-35C1F71254FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B889565-259A-4A75-AC7F-35C1F71254FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

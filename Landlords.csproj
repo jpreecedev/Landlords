@@ -6,12 +6,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Landlords.Shared\**" />
+    <Compile Remove="Landlords.Zoopla\**" />
     <Compile Remove="Model\**" />
     <Compile Remove="wwwroot\**" />
+    <Content Remove="Landlords.Shared\**" />
+    <Content Remove="Landlords.Zoopla\**" />
     <Content Remove="Model\**" />
     <Content Remove="wwwroot\**" />
+    <EmbeddedResource Remove="Landlords.Shared\**" />
+    <EmbeddedResource Remove="Landlords.Zoopla\**" />
     <EmbeddedResource Remove="Model\**" />
     <EmbeddedResource Remove="wwwroot\**" />
+    <None Remove="Landlords.Shared\**" />
+    <None Remove="Landlords.Zoopla\**" />
     <None Remove="Model\**" />
     <None Remove="wwwroot\**" />
   </ItemGroup>
