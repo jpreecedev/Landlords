@@ -13,13 +13,12 @@ import Vuetify from 'vuetify'
 import CommonComponents from 'src/common'
 import Journeys from 'journeys'
 
-import 'vue-material/dist/vue-material.css'
-import 'vuetify/dist/vuetify.min.css'
-
 import 'src/extensions'
 import 'src/filters'
-import 'assets/styles/app.scss'
 import 'v-autocomplete/dist/v-autocomplete.css'
+
+import 'vuetify/dist/vuetify.min.css'
+import 'assets/styles/app.scss'
 
 Vue.config.productionTip = false
 

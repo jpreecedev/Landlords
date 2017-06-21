@@ -2,34 +2,23 @@
 @import 'variables';
 @import 'forms';
 @import 'mixins';
-
 @import '../../../node_modules/flexboxgrid/dist/flexboxgrid.min.css';
-
-ul {
-  margin-bottom: 1rem;
+html,
+body {
+  height: 100%;
 }
 
 .pointer {
   cursor: pointer;
 }
 
-nav {
-  top: 0;
-}
-
-main, footer {
+main {
   margin-left: auto;
   margin-right: auto;
-  margin-top: 3rem;
   max-width: 100%;
-  padding-left: 15px;
-  padding-right: 15px;
+  padding-top: 5rem;
   position: relative;
   width: 1140px;
-}
-
-main {
-  margin-bottom: 10rem;
 }
 
 fieldset {
@@ -38,7 +27,7 @@ fieldset {
   border: 0;
 }
 
-.jumbotron ~ main {
+.jumbotron~main {
   margin-top: 3rem;
 }
 
@@ -116,7 +105,7 @@ p {
   padding: 2rem 2rem 1rem 2rem;
 }
 
-.subheading ~ .input-group {
+.subheading~.input-group {
   margin-top: .5rem;
 }
 
@@ -126,4 +115,25 @@ p {
 
 .d-none {
   display: none;
+}
+
+.flex-center {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.fixed-top {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  top: 0;
+}
+
+.fixed-bottom {
+  bottom: 0;
+  height: 30px;
+  left: 0;
+  position: fixed;
+  width: 100%;
 }

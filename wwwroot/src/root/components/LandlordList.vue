@@ -1,6 +1,6 @@
 <template>
-  <main>
-    <h1 class="md-display-2">Landlord List</h1>
+  <div>
+    <h1 class="display-2">Landlord List</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
 
     <md-table-card>
@@ -27,7 +27,7 @@
         </md-table-body>
       </md-table>
     </md-table-card>
-  </main>
+  </div>
 </template>
 
 <script>
@@ -45,7 +45,7 @@ export default {
   }
 }
 </script>
-  
+
 <style lang="scss" scoped>
-  
+
 </style>

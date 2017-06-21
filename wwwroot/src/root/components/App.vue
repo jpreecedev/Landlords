@@ -1,6 +1,7 @@
 <template>
   <v-app>
     <app-nav></app-nav>
+    <app-header v-if="$route.path === '/'"></app-header>
     <main>
       <v-container fluid>
         <router-view></router-view>
@@ -14,10 +15,11 @@
 
 import AppNav from './AppNav.vue'
 import AppFooter from './AppFooter.vue'
+import AppHeader from './Header.vue'
 
 export default {
   name: 'app',
-  components: { AppNav, AppFooter },
+  components: { AppNav, AppFooter, AppHeader },
   data () {
     return {
     }
@@ -27,6 +29,10 @@ export default {
 </script>
 
 <style lang="scss">
+
+.application {
+  height: 100%;
+}
 
 .fade-enter-active {
   transition: all .3s ease;

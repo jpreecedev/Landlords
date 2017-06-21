@@ -1,6 +1,6 @@
 <template>
-  <main>
-    <h1 class="md-display-2">Monthly Payment Calculator</h1>
+  <div>
+    <h1 class="display-2">Monthly Payment Calculator</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
     <div class="row">
       <div class="col-xs-12 col-md-6">
@@ -51,7 +51,7 @@
         </form>
       </div>
     </div>
-  </main>
+  </div>
 </template>
 
 <script>

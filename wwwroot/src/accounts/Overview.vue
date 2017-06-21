@@ -1,6 +1,6 @@
 <template>
-  <main>
-    <h1 class="md-display-2">Bank accounts</h1>
+  <div>
+    <h1 class="display-2">Bank accounts</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
     <v-card>
       <v-data-table :headers="headers" :items="data.accounts">
@@ -24,7 +24,7 @@
 
     <v-btn primary light v-if="permissions.AC_New" class="md-raised md-primary mt-4" @click.native="addAccount()">Add an account</v-btn>
 
-  </main>
+  </div>
 </template>
 
 <script>

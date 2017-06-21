@@ -1,6 +1,6 @@
 <template>
   <section>
-    <h1 class="md-display-1">Start a new tenancy</h1>
+    <h1 class="display-1">Start a new tenancy</h1>
     <v-stepper v-model="step">
       <v-stepper-header>
         <v-stepper-step step="1" :complete="step > 1">Before we start</v-stepper-step>

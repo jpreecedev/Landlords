@@ -1,5 +1,5 @@
 <template>
-  <v-footer class="pa-3">
+  <v-footer class="fixed-bottom" :class="$route.path === '/' ? 'green' : ''">
     <v-spacer></v-spacer>
     <div>© {{ new Date().getFullYear() }}</div>
   </v-footer>
@@ -13,7 +13,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-
-</style>

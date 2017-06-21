@@ -1,6 +1,6 @@
 <template>
-  <main>
-    <h1 class="md-display-2">Tenant details</h1>
+  <div>
+    <h1 class="display-2">Tenant details</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
     <v-alert error :value="errorBag.any()">
       <span v-show="!errorBag.has('GenericError')">Please fix validation errors and try and submit the form again</span>
@@ -128,7 +128,7 @@
         </div>
       </fieldset>
     </form>
-  </main>
+  </div>
 </template>
 
 <script>

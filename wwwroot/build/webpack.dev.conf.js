@@ -17,14 +17,14 @@ module.exports = merge(baseWebpackConfig, {
   module: {
     rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap })
   },
-  
+
   devtool: '#cheap-module-eval-source-map',
 
   plugins: [
     new webpack.DefinePlugin({
       'process.env': config.dev.env
     }),
-    
+
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
 
@@ -33,13 +33,6 @@ module.exports = merge(baseWebpackConfig, {
       template: 'src/root/root.html',
       inject: true,
       chunks: ['app']
-    }),
-    
-    new HtmlWebpackPlugin({
-      filename: 'admin/index.html',
-      template: 'src/admin/admin.html',
-      inject: true,
-      chunks: ['admin']
     }),
 
     new WebpackCleanupPlugin(),

@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <div>
     <v-alert error :value="expired" class="mb-4">
       Your session has expired, please log in again.
     </v-alert>
@@ -7,7 +7,7 @@
       You have been logged out
     </v-alert>
     <div>
-      <h1 class="md-display-2">Please sign in or register</h1>
+      <h1 class="display-2">Please sign in or register</h1>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
     </div>
     <div class="row mt-5">
@@ -18,7 +18,7 @@
         <registerform />
       </div>
     </div>
-  </main>
+  </div>
 </template>
 
 <script>

@@ -1,6 +1,6 @@
 <template>
-  <main>
-    <h1 class="md-display-2">Is this property a good investment?</h1>
+  <div>
+    <h1 class="display-2">Is this property a good investment?</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
     <form role="form" novalidate>
       <fieldset>
@@ -219,7 +219,7 @@
         </div>
       </fieldset>
     </form>
-  </main>
+  </div>
 </template>
 
 <script>

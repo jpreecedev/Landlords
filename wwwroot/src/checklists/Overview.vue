@@ -1,10 +1,10 @@
 <template>
-  <main>
-    <h1 class="md-display-2">Overview</h1>
+  <div>
+    <h1 class="display-2">Overview</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
     <permissions-warning :permission="permissions.CL_Overview" />
     <div class="mt-5">
-      <h2 class="md-display-1">Your checklists</h2>
+      <h2 class="display-1">Your checklists</h2>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium sint, odio, optio, expedita alias dolorum dicta iusto aliquam eos doloremque fuga iste fugiat quam sed eius corporis suscipit. Voluptatum, assumenda.</p>
       <p v-if="!overview.checklists || !overview.checklists.length">You have not created any checklists yet.</p>
 
@@ -76,7 +76,7 @@
       </div>
     </div>
 
-  </main>
+  </div>
 </template>
 
 <script>

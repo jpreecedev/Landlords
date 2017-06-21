@@ -1,6 +1,6 @@
 <template>
-  <main>
-    <h1 class="md-display-2">Tenants</h1>
+  <div>
+    <h1 class="display-2">Tenants</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
     <md-table-card>
       <md-table>
@@ -31,7 +31,7 @@
     </md-table-card>
 
     <v-btn primary light v-if="permissions.TE_New" type="button" class="mt-4" @click.native="addTenant()">Add a tenant</v-btn>
-  </main>
+  </div>
 </template>
 
 <script>

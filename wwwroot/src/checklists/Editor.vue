@@ -1,7 +1,7 @@
 <template>
-  <main>
-    <h1 class="md-display-2">New tenant</h1>
-    <h2 class="md-display-1" v-if="checklist">
+  <div>
+    <h1 class="display-2">New tenant</h1>
+    <h2 class="display-1" v-if="checklist">
       <span v-if="checklist.propertyReference">{{checklist.propertyReference}}</span>
       <span v-if="checklist.propertyStreetAddress">({{ checklist.propertyStreetAddress }})</span>
     </h2>
@@ -20,7 +20,7 @@
         <v-btn error light @click.native="deleteChecklist()">Delete Checklist</v-btn>
       </div>
     </div>
-  </main>
+  </div>
 </template>
 
 <script>
