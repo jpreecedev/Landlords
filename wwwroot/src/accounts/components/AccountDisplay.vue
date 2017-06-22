@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="mt-2">
     <router-link v-if="permissions.TR_GetById" :to="'/accounts/transactions/' + account.id" class="mt-3 d-block">
       <span>{{ account.name }}</span>
     </router-link>
-    <p v-else>{{ account.name }}</p>
+    <span v-else>{{ account.name }}</span>
     <p>
       <span class="d-inline-block mr-2" v-if="account.number">{{ account.number }}</span>
       <span class="d-inline-block" v-if="account.sortCode">{{ account.sortCode }}</span>
@@ -27,7 +27,7 @@ export default {
   }
 }
 </script>
-  
+
 <style lang="scss" scoped>
-  
+
 </style>

@@ -2,11 +2,9 @@
   <v-expansion-panel v-if="checklist && checklist.checklistItems && checklist.checklistItems.length">
     <v-expansion-panel-content v-for="(item, index) in checklist.checklistItems" :key="index">
       <div slot="header">
-        <label :for="'tab-' + index">
-          <md-checkbox v-if="permissions.CI_ToggleCompleted" v-model="item.isCompleted" @change="toggleCompleted(item, $event)"></md-checkbox>
-          <span v-if="!item.isCompleted">{{ item.displayText }}</span>
-          <del class="text-muted" v-if="item.isCompleted">{{ item.displayText }}</del>
-        </label>
+        <v-checkbox v-if="permissions.CI_ToggleCompleted" v-model="item.isCompleted" class="accordion-checkbox" @change="newValue => { toggleCompleted(newValue, item); }" />
+        <span v-if="!item.isCompleted">{{ item.displayText }}</span>
+        <del class="text-muted" v-if="item.isCompleted">{{ item.displayText }}</del>
       </div>
       <v-card>
         <v-card-text>
@@ -41,8 +39,8 @@ export default {
     }
   },
   methods: {
-    toggleCompleted: function (item, newState) {
-      item.isCompleted = newState
+    toggleCompleted: function (newValue, item) {
+      item.isCompleted = newValue === true
       this.$emit('toggleCompleted', item)
     },
     move: function (direction, item) {
@@ -52,6 +50,25 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+  .accordion-checkbox {
+    height: auto;
+    width: auto;
+    margin: 0;
+    float: left;
+
+    &.input-group.input-group--selection-controls .input-group__input {
+      width: 2rem;
+      display: inline-block;
+    }
+
+    .input-group__details {
+      display: none;
+    }
+  }
+
+  del {
+    display: inline-block;
+  }
 
 </style>

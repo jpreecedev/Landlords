@@ -8,11 +8,7 @@
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
     <div>
       <p class="text-muted">There are {{ outstandingActions }} outstanding actions.</p>
-      <form>
-        <fieldset>
-          <accordion :checklist="checklist" v-on:toggleCompleted="toggleCompleted" v-on:move="move" />
-        </fieldset>
-      </form>
+      <accordion :checklist="checklist" v-on:toggleCompleted="toggleCompleted" v-on:move="move" />
     </div>
     <div class="row mt-5" v-if="permissions.CL_DeleteById">
       <div class="col-xs-12 col-md-3 col-md-offset-9 text-center">

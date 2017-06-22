@@ -5,54 +5,52 @@
     <div class="row">
       <div class="col-xs-12 col-md-6">
         <form role="form" novalidate>
-          <fieldset>
-            <div class="row">
-              <div class="col-xs-12">
-                <md-input-container :class="{ 'md-input-invalid': errorBag.has('purchasePrice') }">
-                  <label for="purchasePrice">Total cost of property</label>
-                  <md-input type="number" id="purchasePrice" name="purchasePrice" v-model="rentalyield.purchasePrice" min="10000" data-vv-name="purchasePrice" v-validate="'required|min_value:10000'" data-vv-validate-on="change" required />
-                  <span v-if="errorBag.has('purchasePrice:required')" class="md-error">Enter the amount paid for the property</span>
-                  <span v-else-if="errorBag.has('purchasePrice:min_value')" class="md-error">Enter at least &pound;10,000</span>
-                </md-input-container>
-              </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <md-input-container :class="{ 'md-input-invalid': errorBag.has('purchasePrice') }">
+                <label for="purchasePrice">Total cost of property</label>
+                <md-input type="number" id="purchasePrice" name="purchasePrice" v-model="rentalyield.purchasePrice" min="10000" data-vv-name="purchasePrice" v-validate="'required|min_value:10000'" data-vv-validate-on="change" required />
+                <span v-if="errorBag.has('purchasePrice:required')" class="md-error">Enter the amount paid for the property</span>
+                <span v-else-if="errorBag.has('purchasePrice:min_value')" class="md-error">Enter at least &pound;10,000</span>
+              </md-input-container>
             </div>
-            <div class="row">
-              <div class="col-xs-12">
-                <md-input-container :class="{ 'md-input-invalid': errorBag.has('rentalValue') }">
-                  <label for="rentalValue">Expected rental income</label>
-                  <md-input type="number" id="rentalValue" name="rentalValue" min="1" step="1" v-model="rentalyield.rentalValue" data-vv-name="rentalValue" v-validate="'required|min_value:1'" data-vv-validate-on="change" required />
-                  <span v-if="errorBag.has('rentalValue:required')" class="md-error">Enter the expected rental income</span>
-                  <span v-else-if="errorBag.has('rentalValue:min_value')" class="md-error">Enter at least &pound;1</span>
-                </md-input-container>
-              </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <md-input-container :class="{ 'md-input-invalid': errorBag.has('rentalValue') }">
+                <label for="rentalValue">Expected rental income</label>
+                <md-input type="number" id="rentalValue" name="rentalValue" min="1" step="1" v-model="rentalyield.rentalValue" data-vv-name="rentalValue" v-validate="'required|min_value:1'" data-vv-validate-on="change" required />
+                <span v-if="errorBag.has('rentalValue:required')" class="md-error">Enter the expected rental income</span>
+                <span v-else-if="errorBag.has('rentalValue:min_value')" class="md-error">Enter at least &pound;1</span>
+              </md-input-container>
             </div>
-            <div class="row">
-              <div class="col">
-                <p class="mb-0">Rental income period</p>
-                  <label class="form-check-label">
-                    <md-radio name="inlineRadioOptions" id="Monthly" md-value="Monthly" v-model="rentalyield.frequency" checked>Monthly</md-radio>
-                  </label>
-                  <label class="form-check-label">
-                    <md-radio name="inlineRadioOptions" id="Annual" md-value="Annual" v-model="rentalyield.frequency">Annual</md-radio>
-                  </label>
-              </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <p class="mb-0">Rental income period</p>
+                <label class="form-check-label">
+                  <md-radio name="inlineRadioOptions" id="Monthly" md-value="Monthly" v-model="rentalyield.frequency" checked>Monthly</md-radio>
+                </label>
+                <label class="form-check-label">
+                  <md-radio name="inlineRadioOptions" id="Annual" md-value="Annual" v-model="rentalyield.frequency">Annual</md-radio>
+                </label>
             </div>
-            <div class="row mt-4" v-if="!calculateRentalYield">
-              <div class="col">
-                <p class="md-warn">Please fix any validation errors to see your results</p>
-              </div>
+          </div>
+          <div class="row mt-4" v-if="!calculateRentalYield">
+            <div class="col">
+              <p class="md-warn">Please fix any validation errors to see your results</p>
             </div>
-            <div class="row mt-4" v-if="calculateRentalYield">
-              <div class="col">
-                <p><strong>Gross rental yield:</strong> {{ calculateRentalYield }}%.<br/>
-                  <span v-if="calculateRentalYield >= 10">This is an EXCELLENT gross yield.</span>
-                  <span v-if="calculateRentalYield >= 7 && calculateRentalYield <= 9.9">This is a GOOD gross yield.</span>
-                  <span v-if="calculateRentalYield >= 5 && calculateRentalYield <= 6.9">This is an 'OK' gross yield.</span>
-                  <span v-if="calculateRentalYield < 5">The gross yield is LOW.</span>
-                </p>
-              </div>
+          </div>
+          <div class="row mt-4" v-if="calculateRentalYield">
+            <div class="col">
+              <p><strong>Gross rental yield:</strong> {{ calculateRentalYield }}%.<br/>
+                <span v-if="calculateRentalYield >= 10">This is an EXCELLENT gross yield.</span>
+                <span v-if="calculateRentalYield >= 7 && calculateRentalYield <= 9.9">This is a GOOD gross yield.</span>
+                <span v-if="calculateRentalYield >= 5 && calculateRentalYield <= 6.9">This is an 'OK' gross yield.</span>
+                <span v-if="calculateRentalYield < 5">The gross yield is LOW.</span>
+              </p>
             </div>
-          </fieldset>
+          </div>
         </form>
       </div>
     </div>

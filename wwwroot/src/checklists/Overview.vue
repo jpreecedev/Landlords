@@ -18,7 +18,7 @@
               <v-card-row>
                 <v-card-text>
                   <strong>{{ checklist.name }}</strong><br>
-                  <small>
+                  <small class="description">
                     <span v-if="!checklist.propertyReference && !checklist.propertyStreetAddress">General</span>
                     <span v-if="checklist.propertyReference">{{ checklist.propertyReference }}</span>
                     <span v-if="checklist.propertyStreetAddress"> ({{ checklist.propertyStreetAddress }})</span>
@@ -27,7 +27,7 @@
               </v-card-row>
               <v-card-row actions>
                 <v-btn primary flat v-if="permissions.CL_GetById" @click.native="$router.push({name: 'editor', params: {checklistId: checklist.id}})">View</v-btn>
-                <v-btn flat v-if="permissions.CL_Archive && !checklist.isArchived" @click.native="archive(checklist)" class="md-default">Archive</v-btn>
+                <v-btn flat v-if="permissions.CL_Archive && !checklist.isArchived" @click.native="archive(checklist)">Archive</v-btn>
               </v-card-row>
             </v-card-column>
           </v-card>
@@ -65,7 +65,7 @@
             </div>
           </v-card-text>
           <v-card-row actions>
-            <v-btn primary flat @click.native="createChecklistInstance(selectedChecklist, selectedProperty)" class="md-primary">Create checklist</v-btn>
+            <v-btn primary flat @click.native="createChecklistInstance(selectedChecklist, selectedProperty)">Create checklist</v-btn>
           </v-card-row>
         </v-card>
       </div>
@@ -155,8 +155,18 @@
 
 <style lang="scss" scoped>
 
-  .card__row__image {
-    padding: 1rem;
+  .card__row {
+    margin-top: initial;
+    &__image {
+      padding: 1rem;
+      max-width: 100%;
+      height: auto;
+    }
+  }
+
+  .description {
+    display: block;
+    min-height: 33px;
   }
 
 </style>

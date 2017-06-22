@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 class="md-title mt-0">Who are the tenants?</h2>
+    <h2 class="title">Who are the tenants?</h2>
 
     <v-expansion-panel>
       <v-expansion-panel-content v-for="(tenant, index) in tenants" :key="tenant">

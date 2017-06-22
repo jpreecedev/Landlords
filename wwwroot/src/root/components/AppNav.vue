@@ -29,9 +29,9 @@
       </router-link>
 
       <v-menu offset-y transition="v-slide-y-transition">
-        <v-toolbar-item slot="activator">
+        <v-list-tile slot="activator">
           Calculators
-        </v-toolbar-item>
+        </v-list-tile>
         <v-list>
           <v-list-item>
             <v-list-tile @click.native="$router.push('/calculators/rental-yield')">

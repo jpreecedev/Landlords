@@ -10,50 +10,48 @@
       Permissions have been updated
     </v-alert>
     <form role="form" novalidate>
-      <fieldset>
-        <div class="row">
-          <label class="col-xs-12" for="searchForUser">Search for user</label>
-          <div class="col-xs-12 col-md-5">
-            <v-autocomplete :items="filteredUsers" placeholder="Enter name or email" v-model="selectedUser" :auto-select-one-item="false" :get-label="getLabel" :component-item='template' @change="change"></v-autocomplete>
+      <div class="row">
+        <label class="col-xs-12" for="searchForUser">Search for user</label>
+        <div class="col-xs-12 col-md-5">
+          <v-autocomplete :items="filteredUsers" placeholder="Enter name or email" v-model="selectedUser" :auto-select-one-item="false" :get-label="getLabel" :component-item='template' @change="change"></v-autocomplete>
+        </div>
+      </div>
+      <div class="row mt-4">
+        <div class="col-xs-5">
+          <div class="row">
+            <label class="col-xs-12" for="permission">Available Permissions</label>
+            <div class="col-xs-12">
+              <select v-model="selectedPermissions" id="permission" name="permission" size="20" multiple>
+                <optgroup v-for="group in allPermissions" :label="group.key">
+                  <option v-for="permission in group.items" :value="permission.permissionId">{{ permission.description }}</option>
+                </optgroup>
+              </select>
+            </div>
           </div>
         </div>
-        <div class="row mt-4">
-          <div class="col-xs-5">
-            <div class="row">
-              <label class="col-xs-12" for="permission">Available Permissions</label>
-              <div class="col-xs-12">
-                <select v-model="selectedPermissions" id="permission" name="permission" size="20" multiple>
-                  <optgroup v-for="group in allPermissions" :label="group.key">
-                    <option v-for="permission in group.items" :value="permission.permissionId">{{ permission.description }}</option>
+        <div class="col-xs">
+          <div class="h-100 d-flex align-items-center justify-content-center">
+            <div>
+              <v-btn outline @click.native="removePermission" :disabled="!selectedUser || !allocatedPermissions.length" type="button" class="d-block mb-3 w-100">&#10007;</v-btn>
+              <v-btn outline @click.native="addPermission" :disabled="!selectedUser || !selectedPermissions.length" type="button" class="d-block w-100">&rarr;</v-btn>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-5">
+          <div class="row">
+            <label class="col-xs-12" for="userPermission">Allocated Permissions</label>
+            <div class="col-xs-12">
+              <select v-model="allocatedPermissions" id="userPermission" name="userPermission" size="20" multiple>
+                <template v-if="selectedUser && selectedUser.permissions">
+                  <optgroup v-for="group in selectedUser.permissions" :label="group.key">
+                    <option v-for="userPermission in group.items" :value="userPermission.permissionId">{{ userPermission.description }}</option>
                   </optgroup>
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="col-xs">
-            <div class="h-100 d-flex align-items-center justify-content-center">
-              <div>
-                <v-btn outline @click.native="removePermission" :disabled="!selectedUser || !allocatedPermissions.length" type="button" class="d-block mb-3 w-100">&#10007;</v-btn>
-                <v-btn outline @click.native="addPermission" :disabled="!selectedUser || !selectedPermissions.length" type="button" class="d-block w-100">&rarr;</v-btn>
-              </div>
-            </div>
-          </div>
-          <div class="col-xs-5">
-            <div class="row">
-              <label class="col-xs-12" for="userPermission">Allocated Permissions</label>
-              <div class="col-xs-12">
-                <select v-model="allocatedPermissions" id="userPermission" name="userPermission" size="20" multiple>
-                  <template v-if="selectedUser && selectedUser.permissions">
-                    <optgroup v-for="group in selectedUser.permissions" :label="group.key">
-                      <option v-for="userPermission in group.items" :value="userPermission.permissionId">{{ userPermission.description }}</option>
-                    </optgroup>
-                  </template>
-                </select>
-              </div>
+                </template>
+              </select>
             </div>
           </div>
         </div>
-      </fieldset>
+      </div>
     </form>
   </div>
 </template>

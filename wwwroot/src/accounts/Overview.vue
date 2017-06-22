@@ -12,7 +12,7 @@
           <td>{{ props.item.providerName }}</td>
           <td>
             <router-link v-if="permissions.AC_GetById" :to="'/accounts/details/' + props.item.id">
-              <v-icon dark>edit</v-icon>
+              <v-icon>edit</v-icon>
             </router-link>
           </td>
         </template>
@@ -22,7 +22,7 @@
       </v-data-table>
     </v-card>
 
-    <v-btn primary light v-if="permissions.AC_New" class="md-raised md-primary mt-4" @click.native="addAccount()">Add an account</v-btn>
+    <v-btn primary light v-if="permissions.AC_New" class="mt-4" @click.native="addAccount()">Add an account</v-btn>
 
   </div>
 </template>
