@@ -5,47 +5,32 @@
 
     <p v-if="!transactions || !transactions.length">There are no transactions to display.</p>
 
-    <md-table-card v-if="transactions && transactions.length">
-      <md-table>
-        <md-table-header class="thead-inverse">
-          <md-table-row>
-            <md-table-head>Date</md-table-head>
-            <md-table-head>Reference</md-table-head>
-            <md-table-head>Money In</md-table-head>
-            <md-table-head>Money Out</md-table-head>
-            <md-table-head>Balance</md-table-head>
-          </md-table-row>
-        </md-table-header>
-        <md-table-body>
-          <md-table-row v-if="index >= (page - 1) * size && index < (page - 1) * size + size" v-for="(transaction, index) in transactions" :key="transaction">
-            <md-table-cell>
-              {{ transaction.date | formatDate }}
-            </md-table-cell>
-            <md-table-cell>
-              {{ transaction.reference }}
-            </md-table-cell>
-            <md-table-cell>
-              <span v-if="transaction.in">{{ transaction.in | currency('£') }}</span>
-              <span v-else>&nbsp;</span>
-            </md-table-cell>
-            <md-table-cell>
-              <span v-if="transaction.out">{{ transaction.out | currency('£') }}</span>
-              <span v-else>&nbsp;</span>
-            </md-table-cell>
-            <md-table-cell>
-              <span>{{ transaction.balance | currency('£') }}</span>
-            </md-table-cell>
-          </md-table-row>
-        </md-table-body>
-      </md-table>
-      <md-table-pagination
-        :md-size="size"
-        :md-total="transactions.length"
-        :md-page="page"
-        :md-page-options="[10, 25, 50]"
-        md-label="Transactions per page"
-        @pagination="onPagination" />
-    </md-table-card>
+    <v-card v-if="transactions && transactions.length">
+      <v-data-table :headers="headers" :items="transactions">
+        <template slot="items" scope="props">
+          <td>
+            {{ props.item.date | formatDate }}
+          </td>
+          <td>
+            {{ props.item.reference }}
+          </td>
+          <td>
+            <span v-if="props.item.in">{{ props.item.in | currency('£') }}</span>
+            <span v-else>&nbsp;</span>
+          </td>
+          <td>
+            <span v-if="props.item.out">{{ props.item.out | currency('£') }}</span>
+            <span v-else>&nbsp;</span>
+          </td>
+          <td>
+            <span>{{ props.item.balance | currency('£') }}</span>
+          </td>
+        </template>
+        <template slot="pageText" scope="{ pageStart, pageStop }">
+          From {{ pageStart }} to {{ pageStop }}
+        </template>
+      </v-data-table>
+    </v-card>
 
     <div class="row mt-5">
       <div class="col-xs-12 col-md-6">
@@ -76,8 +61,34 @@ export default {
   name: 'transactions',
   data () {
     return {
-      page: 1,
-      size: 10,
+      pagination: {},
+      headers: [
+        {
+          text: 'Date',
+          left: true,
+          sortable: false
+        },
+        {
+          text: 'Reference',
+          left: true,
+          sortable: false
+        },
+        {
+          text: 'Money',
+          left: true,
+          sortable: false
+        },
+        {
+          text: 'Money',
+          left: true,
+          sortable: false
+        },
+        {
+          text: 'Balance',
+          left: true,
+          sortable: false
+        }
+      ],
       permissions: this.$store.state.permissions,
       accountId: this.$route.params.accountId,
       file: null,
@@ -123,5 +134,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+  table.datatable.table tbody tr {
+    td:first-child {
+      width: 150px;
+    }
+  }
 </style>

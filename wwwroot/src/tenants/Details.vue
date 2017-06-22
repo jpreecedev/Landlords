@@ -43,9 +43,7 @@
                   </md-input-container>
                 </v-card-row>
               </v-card-text>
-            </v-card>
-            <v-card>
-              <v-card-title class="primary white--text">
+              <v-card-title>
                 Contact Details
               </v-card-title>
               <v-card-text>

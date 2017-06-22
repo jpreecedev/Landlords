@@ -61,11 +61,15 @@
           <v-icon>more_vert</v-icon>
         </v-btn>
         <v-list>
-          <v-list-item v-if="auth.isLoggedIn" @click.native="logout()">
-            Log out
+          <v-list-item v-if="auth.isLoggedIn">
+            <v-list-tile @click.native="logout()">
+              Log out
+            </v-list-tile>
           </v-list-item>
-          <v-list-item v-if="permissions.P_View" @click.native="$router.push('/profile')">
-            View profile
+          <v-list-item v-if="permissions.P_View">
+            <v-list-tile @click.native="$router.push('/profile')">
+              View profile
+            </v-list-tile>
           </v-list-item>
         </v-list>
       </v-menu>

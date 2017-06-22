@@ -1,5 +1,5 @@
 <template>
-  <v-footer class="fixed-bottom" :class="$route.path === '/' ? 'green' : ''">
+  <v-footer :class="{ 'green': $route.path === '/', 'fixed-bottom': $route.path !== '/' }">
     <v-spacer></v-spacer>
     <div>© {{ new Date().getFullYear() }}</div>
   </v-footer>

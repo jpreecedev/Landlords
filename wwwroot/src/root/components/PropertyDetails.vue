@@ -12,13 +12,17 @@
           <div v-if="permissions.PI_Upload" class="property-image">
             <label>
               <input type="file" accept="image/x-png,image/gif,image/jpeg" multiple @change="filesChange($event.target.name, $event.target.files)" name="files">
-              <img class="placeholder" src="../../assets/images/placeholder.png" alt="Add more images...">
+              <div class="thumbnail">
+                <img class="placeholder" src="../../assets/images/placeholder.png" alt="Add more images...">
+              </div>
             </label>
           </div>
           <div class="property-image" v-for="propertyImage in propertyDetails.propertyImages">
-            <img class="img-thumbnail" v-if="propertyImage.fileName" v-bind:src="'/static/uploads/' + propertyDetails.portfolioId + '/' + propertyImage.fileName" v-bind:alt="propertyImage.fileName" v-bind:title="propertyImage.fileName">
-            <div v-if="permissions.PI_Delete" class="overlay">
-              <v-btn warning type="button" @click.native="deleteImage(propertyImage)">Delete</v-btn>
+            <div class="thumbnail">
+              <img v-if="propertyImage.fileName" v-bind:src="'/static/uploads/' + propertyDetails.portfolioId + '/' + propertyImage.fileName" v-bind:alt="propertyImage.fileName" v-bind:title="propertyImage.fileName">
+              <div v-if="permissions.PI_Delete" class="overlay">
+                <v-btn warning type="button" @click.native="deleteImage(propertyImage)">Delete</v-btn>
+              </div>
             </div>
           </div>
           <div class="row mt-4" v-if="isUploading">
@@ -361,50 +365,13 @@ export default {
     .property-image {
       position: relative;
       display: inline-block;
-      margin: 16px 16px 0 0;
+      margin: 16px 8px 0 0;
       vertical-align: top;
       label {
         input[type="file"] {
           position: fixed;
           top: -1000px;
         }
-      }
-      img {
-        max-width: 200px;
-        max-height: 150px;
-        height: auto;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        padding: 5px;
-        &.placeholder {
-          cursor: pointer;
-        }
-        &:hover {
-          box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
-        }
-      }
-      .img-thumbnail {
-        opacity: 1;
-        transition: .5s ease;
-        backface-visibility: hidden;
-      }
-
-      .overlay {
-        transition: .5s ease;
-        opacity: 0;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%)
-      }
-
-      &:hover .img-thumbnail {
-        opacity: 0.3;
-      }
-
-      &:hover .overlay {
-        opacity: 1;
       }
     }
   }

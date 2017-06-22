@@ -2,34 +2,27 @@
   <div>
     <h1 class="display-2">Tenants</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
-    <md-table-card>
-      <md-table>
-        <md-table-header class="thead-inverse">
-          <md-table-row>
-            <md-table-head>Name</md-table-head>
-            <md-table-head>Contact Number</md-table-head>
-            <md-table-head>Email Address</md-table-head>
-          </md-table-row>
-        </md-table-header>
-        <md-table-body>
-          <md-table-row v-for="tenant in data" :key="tenant">
-            <md-table-cell>
-              <router-link v-if="permissions.TE_GetById" :to="'/tenants/details/' + tenant.id">
-                <span>{{ tenant.firstName + ' ' + tenant.lastName }}</span>
-              </router-link>
-              <span v-else>{{ tenant.firstName + ' ' + tenant.lastName }}</span>
-            </md-table-cell>
-            <md-table-cell>
-              {{ tenant.mainContactNumber }} <span v-if="tenant.secondaryContactNumber">or {{ tenant.secondaryContactNumber }}</span>
-            </md-table-cell>
-            <md-table-cell>
-              {{ tenant.emailAddress }}
-            </md-table-cell>
-          </md-table-row>
-        </md-table-body>
-      </md-table>
-    </md-table-card>
-
+    <v-card>
+      <v-data-table :headers="headers" :items="data">
+        <template slot="items" scope="props">
+          <td>
+            <router-link v-if="permissions.TE_GetById" :to="'/tenants/details/' + props.item.id">
+              <span>{{ props.item.firstName + ' ' + props.item.lastName }}</span>
+            </router-link>
+            <span v-else>{{ props.item.firstName + ' ' + props.item.lastName }}</span>
+          </td>
+          <td>
+            {{ props.item.mainContactNumber }} <span v-if="props.item.secondaryContactNumber">or {{ props.item.secondaryContactNumber }}</span>
+          </td>
+          <td>
+            {{ props.item.emailAddress }}
+          </td>
+        </template>
+        <template slot="pageText" scope="{ pageStart, pageStop }">
+          From {{ pageStart }} to {{ pageStop }}
+        </template>
+      </v-data-table>
+    </v-card>
     <v-btn primary light v-if="permissions.TE_New" type="button" class="mt-4" @click.native="addTenant()">Add a tenant</v-btn>
   </div>
 </template>
@@ -39,6 +32,24 @@ export default {
   name: 'tenants-overview',
   data () {
     return {
+      pagination: {},
+      headers: [
+        {
+          text: 'Name',
+          left: true,
+          sortable: false
+        },
+        {
+          text: 'Contact Number',
+          left: true,
+          sortable: false
+        },
+        {
+          text: 'Email Address',
+          left: true,
+          sortable: false
+        }
+      ],
       permissions: this.$store.state.permissions,
       data: []
     }

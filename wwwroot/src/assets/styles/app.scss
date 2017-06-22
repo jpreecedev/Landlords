@@ -137,3 +137,38 @@ p {
   position: fixed;
   width: 100%;
 }
+
+.thumbnail {
+  img {
+    max-width: 200px;
+    max-height: 150px;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+      opacity: 1;
+    transition: .5s ease;
+    backface-visibility: hidden;
+
+    &.placeholder {
+      cursor: pointer;
+    }
+  }
+
+  .overlay {
+    left: 50%;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    transition: .5s ease;
+  }
+
+  &:hover img:not(.placeholder) {
+    opacity: .3;
+  }
+
+  &:hover .overlay {
+    opacity: 1;
+  }
+}

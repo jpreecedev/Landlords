@@ -3,30 +3,24 @@
     <h1 class="display-2">Landlord List</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
 
-    <md-table-card>
-      <md-table>
-        <md-table-header>
-          <md-table-row>
-            <md-table-head>Landlord Name</md-table-head>
-            <md-table-head>Phone Number</md-table-head>
-            <md-table-head># of Properties</md-table-head>
-          </md-table-row>
-        </md-table-header>
-        <md-table-body>
-          <md-table-row v-for="entry in data" :key="entry">
-            <md-table-cell>
-              {{ entry.landlordName }}
-            </md-table-cell>
-            <md-table-cell>
-              {{ entry.mainPhoneNumber }} <span v-if="entry.secondaryPhoneNumber">or {{ entry.secondaryPhoneNumber }}</span>
-            </md-table-cell>
-            <md-table-cell>
-              {{ entry.properties }}
-            </md-table-cell>
-          </md-table-row>
-        </md-table-body>
-      </md-table>
-    </md-table-card>
+    <v-card>
+      <v-data-table :headers="headers" :items="data">
+        <template slot="items" scope="props">
+          <td>
+            {{ props.item.landlordName }}
+          </td>
+          <td>
+            {{ props.item.mainPhoneNumber }} <span v-if="props.item.secondaryPhoneNumber">or {{ props.item.secondaryPhoneNumber }}</span>
+          </td>
+          <td>
+            {{ props.item.properties }}
+          </td>
+        </template>
+        <template slot="pageText" scope="{ pageStart, pageStop }">
+          From {{ pageStart }} to {{ pageStop }}
+        </template>
+      </v-data-table>
+    </v-card>
   </div>
 </template>
 
@@ -35,6 +29,24 @@ export default {
   name: 'landlordlist',
   data () {
     return {
+      pagination: {},
+      headers: [
+        {
+          text: 'Landlord Name',
+          left: true,
+          sortable: false
+        },
+        {
+          text: 'Phone Number',
+          left: true,
+          sortable: false
+        },
+        {
+          text: '# of Properties',
+          left: true,
+          sortable: false
+        }
+      ],
       data: []
     }
   },
