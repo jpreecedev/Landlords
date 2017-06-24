@@ -64,15 +64,10 @@
               </div>
             </div>
           </v-card-text>
-          <v-card-row actions>
+          <v-card-row v-if="permissions.CL_Create" actions>
             <v-btn primary flat @click.native="createChecklistInstance(selectedChecklist, selectedProperty)">Create checklist</v-btn>
           </v-card-row>
         </v-card>
-      </div>
-    </div>
-
-    <div class="row mt-3" v-if="permissions.CL_Create">
-      <div class="col">
       </div>
     </div>
 

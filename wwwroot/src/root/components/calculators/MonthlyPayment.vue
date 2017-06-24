@@ -37,12 +37,12 @@
             </div>
           </div>
           <div class="row mt-4" v-if="!calculateMonthlyPayment">
-            <div class="col">
+            <div class="col-xs-12">
               <p class="md-warn">Please fix any validation errors to see your results</p>
             </div>
           </div>
           <div class="row mt-4" v-if="calculateMonthlyPayment">
-            <div class="col">
+            <div class="col-xs-12">
               <p><strong>Total monthly payment:</strong> &pound;{{ calculateMonthlyPayment.toFloat().formatWithSeparator() }}</p>
             </div>
           </div>
