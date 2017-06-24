@@ -1,6 +1,7 @@
 ﻿namespace Landlords.ViewModels
 {
     using System;
+    using Model.DataTypes;
     using Model.Entities;
 
     public class TenantAddressViewModel
@@ -35,7 +36,5 @@
         public string Postcode { get; set; }
 
         public string Country { get; set; }
-
-        public Tenant Tenant { get; set; }
     }
 }

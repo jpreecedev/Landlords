@@ -7,7 +7,7 @@
       </div>
       <div class="col-xs-12 col-md-6">
         <div class="subheading">What kind of tenancy agreement is/will be in place?</div>
-        <v-select v-if="viewdata && viewdata.tenancyTypes" v-bind:items="viewdata.tenancyTypes" v-model="selectedTenancyType" item-value="id" label="Select a tenancy type" dark single-line auto></v-select>
+        <v-select v-bind:items="tenancyTypes" v-model="selectedTenancyType" item-value="id" label="Select a tenancy type" dark single-line auto></v-select>
       </div>
     </div>
     <div class="row">
@@ -44,7 +44,10 @@
   export default {
     name: 'property',
     props: {
-      viewdata: Object
+      tenancyTypes: {
+        type: Array,
+        default: []
+      }
     },
     data () {
       return {

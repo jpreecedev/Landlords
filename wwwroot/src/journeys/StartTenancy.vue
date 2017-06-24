@@ -16,13 +16,13 @@
         <announcement></announcement>
       </v-stepper-content>
       <v-stepper-content step="2">
-        <property :viewdata="viewData"></property>
+        <property :tenancyTypes="viewData.tenancyTypes"></property>
       </v-stepper-content>
       <v-stepper-content step="3">
-        <tenants :viewdata="viewData"></tenants>
+        <tenants :countries="viewData.countries"></tenants>
       </v-stepper-content>
       <v-stepper-content step="4">
-        <payments :viewdata="viewData"></payments>
+        <payments :rentalFrequencies="viewData.rentalFrequencies"></payments>
       </v-stepper-content>
     </v-stepper>
 
@@ -42,7 +42,11 @@
       return {
         step: 0,
         permissions: this.$store.state.permissions,
-        viewData: {}
+        viewData: {
+          countries: [],
+          rentalFrequencies: [],
+          tenancyTypes: []
+        }
       }
     },
     methods: {

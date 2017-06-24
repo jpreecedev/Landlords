@@ -7,7 +7,7 @@
       </div>
       <div class="col-xs-12 col-md-6">
         <div class="subheading">How often will the rent be paid?</div>
-        <v-select v-if="viewdata && viewdata.rentalFrequencies" v-bind:items="viewdata.rentalFrequencies" v-model="selectedRentalFrequency" item-value="id" label="Select a rental frequency" dark single-line auto></v-select>
+        <v-select v-bind:items="rentalFrequencies" v-model="selectedRentalFrequency" item-value="id" label="Select a rental frequency" dark single-line auto></v-select>
       </div>
     </div>
     <div class="row mt-3">
@@ -23,7 +23,10 @@
   export default {
     name: 'payments',
     props: {
-      viewdata: Object
+      rentalFrequencies: {
+        type: Array,
+        default: []
+      }
     },
     data () {
       return {

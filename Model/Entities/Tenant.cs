@@ -37,6 +37,10 @@
 
         public string AdditionalInformation { get; set; }
 
+        public bool IsLeadTenant { get; set; }
+
+        public bool IsAdult { get; set; }
+
         public ICollection<TenantAddress> Addresses { get; set; }
 
         public ICollection<TenantContact> Contacts { get; set; }

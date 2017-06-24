@@ -10,15 +10,9 @@ let syncedData = {
     refreshToken: null
   },
   permissions: {},
+  newTenancy: {},
   user: {
     name: null
-  }
-}
-
-const notSyncedData = {
-  appnav: {
-    searchText: '',
-    searchTimestamp: null
   }
 }
 
@@ -28,4 +22,4 @@ if (localStorage.getItem(STORAGE_KEY)) {
 }
 
 // Merge data and export it.
-export const state = Object.assign(syncedData, notSyncedData)
+export const state = Object.assign({}, syncedData)
