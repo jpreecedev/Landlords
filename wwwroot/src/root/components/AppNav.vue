@@ -19,7 +19,7 @@
         Checklists
       </router-link>
       <router-link class="toolbar__item" v-if="permissions.TE_GetListById" to="/tenants/">
-        Tenants
+        Your Tenants
       </router-link>
       <router-link class="toolbar__item" v-if="!auth.isLoggedIn" to="/registration/">
         Log in or Register

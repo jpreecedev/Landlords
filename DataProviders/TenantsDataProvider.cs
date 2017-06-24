@@ -43,13 +43,28 @@
                 .ToListAsync();
         }
 
+        public async Task<ICollection<TenantViewModel>> GetTenantsByAgencyIdAsync(Guid agencyId)
+        {
+            //Untested
+
+            return await (from tenant in Context.Tenants.AsNoTracking()
+                join tenantAddress in Context.TenantAddresses on tenant.Id equals tenantAddress.TenantId into tenantAddressJoin
+                join tenantTenancies in Context.TenantTenancies on tenant.Id equals tenantTenancies.TenantId into tenantTenanciesJoin
+                from tt in tenantTenanciesJoin
+                join tenancies in Context.Tenancies on tt.TenancyId equals tenancies.Id
+                join propertyDetails in Context.PropertyDetails on tenancies.PropertyDetailsId equals propertyDetails.Id
+                join aup in Context.ApplicationUserPortfolios on propertyDetails.PortfolioId equals aup.PortfolioId
+                where aup.AgencyId == agencyId && !tenancies.IsDeleted && !propertyDetails.IsDeleted && !aup.IsDeleted && !tenant.IsDeleted && (tenant.FirstName != null || tenant.LastName != null)
+                select new TenantViewModel(tenant, tenantAddressJoin.Where(c => !c.IsDeleted).ToList())).ToListAsync();
+        }
+
         public async Task<TenantViewModel> NewAsync()
         {
             var entity = new Tenant
             {
                 Created = DateTime.Now,
             };
-            
+
             await Context.Tenants.AddAsync(entity);
 
             var addressEntity = new TenantAddress

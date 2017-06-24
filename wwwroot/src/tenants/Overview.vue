@@ -23,7 +23,6 @@
         </template>
       </v-data-table>
     </v-card>
-    <v-btn primary light v-if="permissions.TE_New" type="button" class="mt-4" @click.native="addTenant()">Add a tenant</v-btn>
   </div>
 </template>
 
@@ -58,13 +57,6 @@ export default {
     this.$http.get('/api/tenants').then(response => {
       this.data = response.data
     })
-  },
-  methods: {
-    addTenant: function () {
-      this.$http.post('/api/tenants/new').then(response => {
-        this.$router.push({ name: 'tenants-details', params: { tenantId: response.data.id } })
-      })
-    }
   }
 }
 </script>

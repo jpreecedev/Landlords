@@ -23,7 +23,15 @@
         [Permission(Permissions_TE.GetListById, Permissions_TE.GetListByRouteId, Permissions_TE.GetListByDescription)]
         public async Task<IActionResult> Get()
         {
-            return Ok(await _tenantsDataProvider.GetTenantsByPortfolioIdAsync(User.GetPortfolioId()));
+            var portfolioId = User.GetPortfolioId();
+            var agencyId = User.GetAgencyId();
+
+            if (agencyId != default(Guid))
+            {
+                return Ok(await _tenantsDataProvider.GetTenantsByAgencyIdAsync(agencyId));
+            }
+
+            return Ok(await _tenantsDataProvider.GetTenantsByPortfolioIdAsync(portfolioId));
         }
 
         [HttpGet("{tenantId}")]
