@@ -13,12 +13,32 @@
 
         public DateTime DateOfBirth { get; set; }
 
-        public ICollection<TenantAddress> Addresses { get; set; }
-
         public string MainContactNumber { get; set; }
 
         public string SecondaryContactNumber { get; set; }
 
         public string EmailAddress { get; set; }
+
+        public string Occupation { get; set; }
+
+        public string CompanyName { get; set; }
+
+        public string WorkContactNumber { get; set; }
+
+        public string WorkAddress { get; set; }
+
+        public string DrivingLicenseReference { get; set; }
+
+        public string PassportReference { get; set; }
+
+        public bool IsSmoker { get; set; }
+
+        public bool HasPets { get; set; }
+
+        public string AdditionalInformation { get; set; }
+
+        public ICollection<TenantAddress> Addresses { get; set; }
+
+        public ICollection<TenantContact> Contacts { get; set; }
     }
 }

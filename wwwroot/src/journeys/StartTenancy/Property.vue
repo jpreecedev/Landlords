@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-xs-12 col-md-6">
         <div class="subheading">Please tell us which property you are renting out</div>
-        <portfolio-properties ref="port" name="portfolio" @selected="portfolioPropertySelected" :properties="portfolioProperties" />
+        <portfolio-properties ref="port" name="portfolio" @selected="portfolioPropertySelected" :properties="portfolioProperties"></portfolio-properties>
       </div>
       <div class="col-xs-12 col-md-6">
         <div class="subheading">What kind of tenancy agreement is/will be in place?</div>
@@ -12,32 +12,24 @@
     </div>
     <div class="row">
       <div class="col-xs-12 col-md-6">
-        <v-dialog persistent v-model="startDateModal" lazy>
-          <v-text-field slot="activator" label="Tenancy start date" v-model="startDate" prepend-icon="date_range" readonly />
+        <v-menu lazy :close-on-content-click="false" transition="v-scale-transition" offset-y :nudge-left="40">
+          <v-text-field slot="activator" label="Tenancy start date" v-model="startDate" prepend-icon="date_range" readonly></v-text-field>
           <v-date-picker v-model="startDate" scrollable>
-            <template scope="{ save, cancel }">
-              <v-card-row actions>
-                <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
-                <v-btn flat primary @click.native="save()">Save</v-btn>
-              </v-card-row>
-            </template>
           </v-date-picker>
-        </v-dialog>
+        </v-menu>
       </div>
     </div>
     <div class="row">
       <div class="col-xs-12 col-md-6">
-        <v-dialog persistent v-model="endDateModal" lazy>
-          <v-text-field slot="activator" label="Tenancy end date" v-model="endDate" prepend-icon="date_range" readonly />
+        <v-menu lazy :close-on-content-click="false" transition="v-scale-transition" offset-y :nudge-left="40">
+          <v-text-field slot="activator" label="Tenancy end date" v-model="endDate" prepend-icon="date_range" readonly></v-text-field>
           <v-date-picker v-model="endDate" scrollable>
-            <template scope="{ save, cancel }">
-              <v-card-row actions>
-                <v-btn flat primary @click.native="cancel()">Cancel</v-btn>
-                <v-btn flat primary @click.native="save()">Save</v-btn>
-              </v-card-row>
-            </template>
           </v-date-picker>
-        </v-dialog>
+        </v-menu>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
         <v-btn flat :disabled="!startDate" @click.native="selectPeriod(3)">3 months</v-btn>
         <v-btn flat :disabled="!startDate" @click.native="selectPeriod(6)">6 months</v-btn>
         <v-btn flat :disabled="!startDate" @click.native="selectPeriod(12)">12 months</v-btn>
@@ -61,9 +53,7 @@
         portfolioProperties: [],
         selectedTenancyType: null,
         startDate: null,
-        startDateModal: false,
-        endDate: null,
-        endDateModal: false
+        endDate: null
       }
     },
     created () {

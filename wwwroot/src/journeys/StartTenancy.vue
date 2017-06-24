@@ -13,16 +13,16 @@
         <v-divider></v-divider>
       </v-stepper-header>
       <v-stepper-content step="1">
-        <announcement />
+        <announcement></announcement>
       </v-stepper-content>
       <v-stepper-content step="2">
-        <property :viewdata="viewData" />
+        <property :viewdata="viewData"></property>
       </v-stepper-content>
       <v-stepper-content step="3">
-        <tenants :viewdata="viewData" />
+        <tenants :viewdata="viewData"></tenants>
       </v-stepper-content>
       <v-stepper-content step="4">
-        <payments :viewdata="viewData" />
+        <payments :viewdata="viewData"></payments>
       </v-stepper-content>
     </v-stepper>
 

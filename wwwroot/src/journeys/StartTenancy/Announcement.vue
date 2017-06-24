@@ -9,7 +9,6 @@
       <li>The name of all the occupiers (tenants)</li>
       <li>And a few other bits and bobs</li>
     </ul>
-    <p>It will probably take 20 minutes to complete this bit, and we will help you best we can along the way</p>
   </div>
 </template>
 

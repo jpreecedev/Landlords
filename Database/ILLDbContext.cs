@@ -38,6 +38,8 @@
 
         DbSet<TenantTenancy> TenantTenancies { get; set; }
 
+        DbSet<TenantContact> TenantContacts { get; set; }
+
         DbSet<T> Set<T>() where T : class;
     }
 }

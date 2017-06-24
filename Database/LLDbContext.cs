@@ -11,9 +11,9 @@
     {
         public LLDbContext(DbContextOptions options) : base(options)
         {
-            
+
         }
-        
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -29,7 +29,7 @@
             modelBuilder.Entity<TenantTenancy>().Property(p => p.Id).ValueGeneratedOnAdd();
 
             modelBuilder.Entity<TenantTenancy>()
-                .HasKey(tt => new {tt.Id, tt.TenancyId, tt.TenantId});
+                .HasKey(tt => new { tt.Id, tt.TenancyId, tt.TenantId });
 
             modelBuilder.Entity<ApplicationUser>()
                 .HasOne(p => p.Agency)
@@ -38,14 +38,17 @@
                 .HasConstraintName("ForeignKey_ApplicationUser_Agency");
 
             modelBuilder.Entity<Checklist>()
-                .HasMany(c => (List<ChecklistItem>) c.ChecklistItems);
+                .HasMany(c => (List<ChecklistItem>)c.ChecklistItems);
 
             modelBuilder.Entity<ChecklistInstance>()
-                .HasMany(c => (List<ChecklistItemInstance>) c.ChecklistItems);
+                .HasMany(c => (List<ChecklistItemInstance>)c.ChecklistItems);
 
             modelBuilder.Entity<Tenant>()
-                .HasMany(c => (List<TenantAddress>) c.Addresses);
-            
+                .HasMany(c => (List<TenantAddress>)c.Addresses);
+
+            modelBuilder.Entity<Tenant>()
+                .HasMany(c => (List<TenantContact>) c.Contacts);
+
             base.OnModelCreating(modelBuilder);
         }
 
@@ -68,5 +71,6 @@
         public DbSet<TenantAddress> TenantAddresses { get; set; }
         public DbSet<Tenancy> Tenancies { get; set; }
         public DbSet<TenantTenancy> TenantTenancies { get; set; }
+        public DbSet<TenantContact> TenantContacts { get; set; }
     }
 }
