@@ -60,7 +60,7 @@
             </div>
             <div class="row" v-if="selectedChecklist && isPropertyMandatory && portfolioProperties && portfolioProperties.length">
               <div class="col-xs-12">
-                <portfolio-properties name="portfolio" @selected="portfolioPropertySelected" :disabled="!selectedChecklist" :properties="portfolioProperties" />
+                <v-select v-bind:items="portfolioProperties" v-model="selectedProperty" item-value="id" label="Select a property from your portfolio" dark single-line auto></v-select>
               </div>
             </div>
           </v-card-text>

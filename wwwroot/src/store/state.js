@@ -10,7 +10,13 @@ let syncedData = {
     refreshToken: null
   },
   permissions: {},
-  newTenancy: {},
+  newTenancy: {
+    step: 1,
+    tenancy: {
+      propertyDetails: {}
+    },
+    tenants: []
+  },
   user: {
     name: null
   }

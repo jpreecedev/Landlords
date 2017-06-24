@@ -3,27 +3,45 @@
     <div class="row">
       <div class="col-xs-12 col-md-6">
         <div class="subheading">Please tell us which property you are renting out</div>
-        <portfolio-properties ref="port" name="portfolio" @selected="portfolioPropertySelected" :properties="portfolioProperties"></portfolio-properties>
+        <v-select :items="portfolioProperties"
+                  :value="selectedProperty"
+                  @input="updateSelectedProperty"
+                  item-value="id"
+                  label="Select a property from your portfolio"
+                  dark single-line auto>
+        </v-select>
       </div>
       <div class="col-xs-12 col-md-6">
         <div class="subheading">What kind of tenancy agreement is/will be in place?</div>
-        <v-select v-bind:items="tenancyTypes" v-model="selectedTenancyType" item-value="id" label="Select a tenancy type" dark single-line auto></v-select>
+        <v-select :items="tenancyTypes"
+                  :value="selectedTenancyType"
+                  @input="updateSelectedTenancyType"
+                  item-value="id"
+                  label="Select a tenancy type"
+                  dark single-line auto>
+        </v-select>
       </div>
     </div>
     <div class="row">
       <div class="col-xs-12 col-md-6">
-        <v-menu lazy :close-on-content-click="false" transition="v-scale-transition" offset-y :nudge-left="40">
+        <v-menu lazy :nudge-left="100">
           <v-text-field slot="activator" label="Tenancy start date" v-model="startDate" prepend-icon="date_range" readonly></v-text-field>
-          <v-date-picker v-model="startDate" scrollable>
+          <v-date-picker v-model="startDate"
+                         :value="startDate"
+                         @input="updateSelectedStartDate"
+                         scrollable>
           </v-date-picker>
         </v-menu>
       </div>
     </div>
     <div class="row">
       <div class="col-xs-12 col-md-6">
-        <v-menu lazy :close-on-content-click="false" transition="v-scale-transition" offset-y :nudge-left="40">
+        <v-menu lazy :nudge-left="100">
           <v-text-field slot="activator" label="Tenancy end date" v-model="endDate" prepend-icon="date_range" readonly></v-text-field>
-          <v-date-picker v-model="endDate" scrollable>
+          <v-date-picker v-model="endDate"
+                         :value="endDate"
+                         @input="updateSelectedEndDate"
+                         scrollable>
           </v-date-picker>
         </v-menu>
       </div>
@@ -40,6 +58,7 @@
 
 <script>
   import moment from 'moment'
+  import { mapState } from 'vuex'
 
   export default {
     name: 'property',
@@ -52,11 +71,7 @@
     data () {
       return {
         permissions: this.$store.state.permissions,
-        selectedProperty: null,
-        portfolioProperties: [],
-        selectedTenancyType: null,
-        startDate: null,
-        endDate: null
+        portfolioProperties: []
       }
     },
     created () {
@@ -64,17 +79,31 @@
         this.$http.get(`/api/propertydetails/basicdetails`).then(response => {
           if (response.data) {
             this.portfolioProperties = response.data
-            this.$refs['port'].propertyModel = this.portfolioProperties[0].id
           }
         })
       }
     },
+    computed: mapState({
+      selectedProperty: state => state.newTenancy.tenancy.propertyDetails.id,
+      selectedTenancyType: state => state.newTenancy.tenancy.tenancyType,
+      startDate: state => state.newTenancy.tenancy.startDate,
+      endDate: state => state.newTenancy.tenancy.endDate
+    }),
     methods: {
-      portfolioPropertySelected: function (property) {
-        this.selectedProperty = property
-      },
       selectPeriod: function (period) {
-        this.endDate = moment(this.startDate).add(period, 'M').subtract(1, 'day').format('YYYY-MM-DD')
+        this.$store.commit('TENANCY_SELECTED_END_DATE', moment(this.startDate).add(period, 'M').subtract(1, 'day').format('YYYY-MM-DD'))
+      },
+      updateSelectedProperty (propertyId) {
+        this.$store.commit('TENANCY_SELECTED_PROPERTY', propertyId)
+      },
+      updateSelectedTenancyType (tenancyType) {
+        this.$store.commit('TENANCY_SELECTED_TENANCY_TYPE', tenancyType)
+      },
+      updateSelectedStartDate (startDate) {
+        this.$store.commit('TENANCY_SELECTED_START_DATE', startDate)
+      },
+      updateSelectedEndDate (endDate) {
+        this.$store.commit('TENANCY_SELECTED_END_DATE', endDate)
       }
     }
   }

@@ -35,6 +35,49 @@ export const CLEAR_ALL_DATA = (state) => {
     Vue.delete(state.permissions, key)
   }
 
+  // New tenancy journey
+  state.newTenancy = {
+    step: 1,
+    tenancy: {
+      propertyDetails: {}
+    },
+    tenants: []
+  }
+
   // User
   state.user.name = ''
+}
+
+export const TENANCY_NEW = (state) => {
+  state.newTenancy = {
+    step: 1,
+    tenancy: {
+      propertyDetails: {}
+    },
+    tenants: []
+  }
+}
+
+export const TENANCY_SELECTED_PROPERTY = (state, propertyId) => {
+  state.newTenancy.tenancy.propertyDetails.id = propertyId
+}
+
+export const TENANCY_SELECTED_TENANCY_TYPE = (state, tenancyType) => {
+  state.newTenancy.tenancy.tenancyType = tenancyType
+}
+
+export const TENANCY_SELECTED_START_DATE = (state, startDate) => {
+  state.newTenancy.tenancy.startDate = startDate
+}
+
+export const TENANCY_SELECTED_END_DATE = (state, endDate) => {
+  state.newTenancy.tenancy.endDate = endDate
+}
+
+export const TENANCY_NEXT_STEP = (state, newTenancy) => {
+  state.newTenancy.step = Number(newTenancy.step) + 1
+}
+
+export const TENANCY_PREVIOUS_STEP = (state, newTenancy) => {
+  state.newTenancy.step = Number(newTenancy.step) - 1
 }
