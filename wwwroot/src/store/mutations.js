@@ -94,6 +94,18 @@ export const TENANCY_SELECTED_END_DATE = (state, endDate) => {
   state.newTenancy.tenancy.endDate = endDate
 }
 
+export const TENANCY_UPDATE_RENTAL_AMOUNT = (state, rentalAmount) => {
+  state.newTenancy.tenancy.rentalAmount = Number.parseFloat(rentalAmount)
+}
+
+export const TENANCY_UPDATE_RENTAL_FREQUENCY = (state, rentalFrequency) => {
+  state.newTenancy.tenancy.rentalFrequency = rentalFrequency
+}
+
+export const TENANCY_UPDATE_RENTAL_PAYMENT_REFERENCE = (state, rentalPaymentReference) => {
+  state.newTenancy.tenancy.rentalPaymentReference = rentalPaymentReference
+}
+
 export const TENANCY_NEXT_STEP = (state, newTenancy) => {
   state.newTenancy.step = Number(newTenancy.step) + 1
 }

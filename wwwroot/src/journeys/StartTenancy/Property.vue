@@ -90,7 +90,7 @@
       endDate: state => state.newTenancy.tenancy.endDate
     }),
     methods: {
-      selectPeriod: function (period) {
+      selectPeriod (period) {
         this.$store.commit('TENANCY_SELECTED_END_DATE', moment(this.startDate).add(period, 'M').subtract(1, 'day').format('YYYY-MM-DD'))
       },
       updateSelectedProperty (propertyId) {

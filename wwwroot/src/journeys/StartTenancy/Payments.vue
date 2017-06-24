@@ -3,23 +3,42 @@
     <div class="row">
       <div class="col-xs-12 col-md-6">
         <div class="subheading">How much is the rent?</div>
-        <v-text-field v-model="rentalAmount" prefix="£" id="rentalAmount" name="rentalAmount" hint="Rental Amount"></v-text-field>
+        <v-text-field v-model="rentalAmount"
+                      :value="rentalAmount"
+                      @input="updateRentalAmount"
+                      prefix="£"
+                      label="Rental Amount"
+                      required>
+        </v-text-field>
       </div>
       <div class="col-xs-12 col-md-6">
         <div class="subheading">How often will the rent be paid?</div>
-        <v-select v-bind:items="rentalFrequencies" v-model="selectedRentalFrequency" item-value="id" label="Select a rental frequency" dark single-line auto></v-select>
+        <v-select :items="rentalFrequencies"
+                  :value="selectedRentalFrequency"
+                  @input="updateRentalFrequency"
+                  item-value="id"
+                  label="Select a rental frequency"
+                  dark single-line auto>
+         </v-select>
       </div>
     </div>
     <div class="row mt-3">
       <div class="col-xs-12 col-md-6">
         <div class="subheading">What reference should the tenant use when paying?</div>
-        <v-text-field v-model="paymentReference" id="paymentReference" name="paymentReference" hint="Rental Payment Reference"></v-text-field>
+        <v-text-field v-model="rentalPaymentReference"
+                      :value="rentalPaymentReference"
+                      @input="updateRentalPaymentReference"
+                      label="Rental Payment Reference"
+                      required>
+        </v-text-field>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+  import { mapState } from 'vuex'
+
   export default {
     name: 'payments',
     props: {
@@ -30,16 +49,24 @@
     },
     data () {
       return {
-        permissions: this.$store.state.permissions,
-        selectedRentalFrequency: null,
-        selectedRentalAmount: null,
-        paymentReference: null,
-        rentalAmount: null
+        permissions: this.$store.state.permissions
       }
     },
-    created () {
-    },
+    computed: mapState({
+      rentalAmount: state => state.newTenancy.tenancy.rentalAmount,
+      selectedRentalFrequency: state => state.newTenancy.tenancy.rentalFrequency,
+      rentalPaymentReference: state => state.newTenancy.tenancy.rentalPaymentReference
+    }),
     methods: {
+      updateRentalAmount (rentalAmount) {
+        this.$store.commit('TENANCY_UPDATE_RENTAL_AMOUNT', rentalAmount)
+      },
+      updateRentalFrequency (rentalFrequency) {
+        this.$store.commit('TENANCY_UPDATE_RENTAL_FREQUENCY', rentalFrequency)
+      },
+      updateRentalPaymentReference (rentalPaymentReference) {
+        this.$store.commit('TENANCY_UPDATE_RENTAL_PAYMENT_REFERENCE', rentalPaymentReference)
+      }
     }
   }
 
