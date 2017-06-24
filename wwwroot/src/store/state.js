@@ -3,6 +3,19 @@
 // and you'll see this key set below (if logged in):
 export const STORAGE_KEY = 'landlords'
 
+let newTenancy = {
+  step: 1,
+  tenancy: {
+    propertyDetails: {}
+  },
+  tenants: [{
+    dateOfBirth: '1970-01-01',
+    isLeadTenant: true,
+    isAdult: true,
+    address: {}
+  }]
+}
+
 let syncedData = {
   auth: {
     isLoggedIn: false,
@@ -10,13 +23,7 @@ let syncedData = {
     refreshToken: null
   },
   permissions: {},
-  newTenancy: {
-    step: 1,
-    tenancy: {
-      propertyDetails: {}
-    },
-    tenants: []
-  },
+  newTenancy: newTenancy,
   user: {
     name: null
   }

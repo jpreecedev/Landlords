@@ -11,70 +11,100 @@
           <div class="subheading">What is the {{ tenant.isAdult ? 'tenants' : 'childs' }} name?</div>
           <div class="row">
             <div class="col-xs-12 col-md-4">
-              <md-input-container :class="{ 'md-input-invalid': errorBag.has('firstName') }">
-                <label for="firstName">First name</label>
-                <md-input v-model="tenant.firstName" id="firstName" name="firstName" type="text" data-vv-name="firstName" v-validate="'required'" data-vv-validate-on="change" required></md-input>
-                <span v-if="errorBag.has('firstName')" class="md-error">Enter a valid first name</span>
-              </md-input-container>
+              <v-text-field v-model="tenant.firstName"
+                            :value="tenant.firstName"
+                            @input="updateField(index, tenant, 'firstName')"
+                            label="First name"
+                            required>
+              </v-text-field>
+              <!--<span v-if="errorBag.has('firstName')" class="md-error">Enter a valid first name</span>-->
             </div>
             <div class="col-xs-12 col-md-4">
-              <md-input-container :class="{ 'md-input-invalid': errorBag.has('middleName') }">
-                <label for="middleName">Middle name(s)</label>
-                <md-input v-model="tenant.middleName" id="middleName" name="middleName" type="text"></md-input>
-              </md-input-container>
+              <v-text-field v-model="tenant.middleName"
+                            :value="tenant.middleName"
+                            @input="updateField(index, tenant, 'middleName')"
+                            label="Middle name(s)"
+                            required>
+              </v-text-field>
             </div>
             <div class="col-xs-12 col-md-4">
-              <md-input-container :class="{ 'md-input-invalid': errorBag.has('lastName') }">
-                <label for="lastName">Last name</label>
-                <md-input v-model="tenant.lastName" id="lastName" name="lastName" type="text" data-vv-name="lastName" v-validate="'required'" data-vv-validate-on="change" required></md-input>
-                <span v-if="errorBag.has('lastName')" class="md-error">Enter a valid last name</span>
-              </md-input-container>
+              <v-text-field v-model="tenant.lastName"
+                            :value="tenant.lastName"
+                            @input="updateField(index, tenant, 'lastName')"
+                            label="Last name"
+                            required>
+              </v-text-field>
+              <!--<span v-if="errorBag.has('lastName')" class="md-error">Enter a valid last name</span>-->
             </div>
             <div class="col-xs-12 col-md-4">
-              <md-input-container :class="{ 'md-input-invalid': errorBag.has('dateOfBirth') }">
-                <label for="dateOfBirth">Date of Birth</label>
-                <md-input v-model="tenant.dateOfBirth" id="dateOfBirth" name="dateOfBirth" type="date"></md-input>
-                <span v-if="errorBag.has('dateOfBirth')" class="md-error">Enter a date of birth</span>
-              </md-input-container>
+              <v-menu lazy :nudge-left="100">
+                <v-text-field slot="activator"
+                              label="Date of birth"
+                              v-model="tenant.dateOfBirth"
+                              prepend-icon="date_range"
+                              readonly>
+                </v-text-field>
+                <v-date-picker v-model="tenant.dateOfBirth"
+                               :value="tenant.dateOfBirth"
+                               @input="updateField(index, tenant, 'dateOfBirth')"
+                               scrollable>
+                </v-date-picker>
+              </v-menu>
             </div>
           </div>
           <template v-if="tenant.isAdult">
             <div class="subheading mt-3">Now, tell us the tenants current address</div>
             <div class="row">
               <div class="col-xs-6">
-                <md-input-container :class="{ 'md-input-invalid' : errorBag.has('street') }">
-                  <label for="street">Street address</label>
-                  <md-textarea v-model="tenant.address.street" data-vv-name="street" v-validate="'required'" data-vv-validate-on="change"  id="street" name="street" required></md-textarea>
-                  <span v-if="errorBag.has('street')" class="md-error">Enter a valid street address</span>
-                </md-input-container>
+                <v-text-field v-model="tenant.address.street"
+                              :value="tenant.address.street"
+                              :multi-line="true"
+                              :rows="2"
+                              :auto-grow="true"
+                              @input="updateAddress(index, tenant, 'street')"
+                              label="Street address"
+                              required>
+                </v-text-field>
+                <!--<span v-if="errorBag.has('street')" class="md-error">Enter a valid street address</span>-->
               </div>
             </div>
             <div class="row">
               <div class="col-xs-4">
-                <md-input-container :class="{ 'md-input-invalid' : errorBag.has('townOrCity') }">
-                  <label for="townOrCity">Town or City</label>
-                  <md-input v-model="tenant.address.townOrCity" data-vv-name="townOrCity" v-validate="'required'" data-vv-validate-on="change"  id="townOrCity" name="townOrCity" required></md-input>
-                  <span v-if="errorBag.has('townOrCity')" class="md-error">Enter a valid town or city</span>
-                </md-input-container>
+                <v-text-field v-model="tenant.address.townOrCity"
+                              :value="tenant.address.townOrCity"
+                              @input="updateAddress(index, tenant, 'townOrCity')"
+                              label="Town or city"
+                              required>
+                </v-text-field>
+                <!--<span v-if="errorBag.has('townOrCity')" class="md-error">Enter a valid town or city</span>-->
               </div>
               <div class="col-xs-4">
-                <md-input-container :class="{ 'md-input-invalid' : errorBag.has('countyOrRegion') }">
-                  <label for="countyOrRegion">County or Region</label>
-                  <md-input v-model="tenant.address.countyOrRegion" data-vv-name="countyOrRegion" v-validate="'required'" data-vv-validate-on="change"  id="countyOrRegion" name="countyOrRegion" required></md-input>
-                  <span v-if="errorBag.has('countyOrRegion')" class="md-error">Enter a valid county or region</span>
-                </md-input-container>
+                <v-select :items="counties"
+                          v-model="tenant.address.countyOrRegion"
+                          @input="updateAddress(index, tenant, 'countyOrRegion')"
+                          label="Select a county or region"
+                          dark single-line auto>
+                </v-select>
+                <!--<span v-if="errorBag.has('countyOrRegion')" class="md-error">Enter a valid county or region</span>-->
               </div>
               <div class="col-xs-4">
-                <md-input-container :class="{ 'md-input-invalid' : errorBag.has('postcode') }">
-                  <label for="postcode">Postcode</label>
-                  <md-input v-model="tenant.address.postcode" data-vv-name="postcode" v-validate="'required'" data-vv-validate-on="change"  id="postcode" name="postcode" required></md-input>
-                  <span v-if="errorBag.has('postcode')" class="md-error">Enter a valid postal code</span>
-                </md-input-container>
+                <v-text-field v-model="tenant.address.postcode"
+                              :value="tenant.address.postcode"
+                              @input="updateAddress(index, tenant, 'postcode')"
+                              label="Postcode"
+                              required>
+                </v-text-field>
+                <!--<span v-if="errorBag.has('postcode')" class="md-error">Enter a valid postal code</span>-->
               </div>
             </div>
             <div class="row">
               <div class="col-xs-6">
-                <v-select v-bind:items="countries" v-model="tenant.address.country" item-value="id" label="Select a country" dark single-line auto></v-select>
+                <v-select :items="countries"
+                          v-model="tenant.address.country"
+                          @input="updateAddress(index, tenant, 'country')"
+                          label="Select a country"
+                          dark single-line auto>
+                </v-select>
               </div>
             </div>
           </template>
@@ -82,25 +112,32 @@
             <div class="subheading mt-3">And finally, their contact details</div>
             <div class="row">
               <div class="col-xs-6 col-md-4">
-                <md-input-container :class="{ 'md-input-invalid' : errorBag.has('mainContactNumber') }">
-                  <label for="mainContactNumber">Main contact number</label>
-                  <md-textarea v-model="tenant.mainContactNumber" data-vv-name="mainContactNumber" v-validate="'required'" data-vv-validate-on="change"  id="mainContactNumber" name="mainContactNumber" required></md-textarea>
-                  <span v-if="errorBag.has('mainContactNumber')" class="md-error">Enter a valid contact number</span>
-                </md-input-container>
+                <v-text-field v-model="tenant.mainContactNumber"
+                              :value="tenant.mainContactNumber"
+                              @input="updateField(index, tenant, 'mainContactNumber')"
+                              label="Main contact number"
+                              required>
+                </v-text-field>
+                <!--<span v-if="errorBag.has('mainContactNumber')" class="md-error">Enter a valid contact number</span>-->
               </div>
               <div class="col-xs-6 col-md-4">
-                <md-input-container :class="{ 'md-input-invalid' : errorBag.has('secondaryContactNumber') }">
-                  <label for="secondaryContactNumber">Another contact number</label>
-                  <md-textarea v-model="tenant.secondaryContactNumber" data-vv-name="secondaryContactNumber" v-validate="'required'" data-vv-validate-on="change" id="secondaryContactNumber" name="secondaryContactNumber" required></md-textarea>
-                  <span v-if="errorBag.has('secondaryContactNumber')" class="md-error">Enter a valid contact number</span>
-                </md-input-container>
+                <v-text-field v-model="tenant.secondaryContactNumber"
+                              :value="tenant.secondaryContactNumber"
+                              @input="updateField(index, tenant, 'secondaryContactNumber')"
+                              label="Another contact number"
+                              required>
+                </v-text-field>
+                <!--<span v-if="errorBag.has('secondaryContactNumber')" class="md-error">Enter a valid contact number</span>-->
               </div>
               <div class="col-xs-6 col-md-4">
-                <md-input-container :class="{ 'md-input-invalid': errorBag.has('emailAddress') }">
-                  <label for="emailAddress">Email Address</label>
-                  <md-input type="email" id="emailAddress" name="emailAddress" data-vv-name="emailAddress" v-validate="'required|email'" v-model="tenant.emailAddress" data-vv-validate-on="change" required></md-input>
-                  <span v-if="errorBag.has('emailAddress')" class="md-error">Enter a valid email address</span>
-                </md-input-container>
+                <v-text-field v-model="tenant.emailAddress"
+                              :value="tenant.emailAddress"
+                              @input="updateField(index, tenant, 'emailAddress')"
+                              label="Email Address"
+                              type="email"
+                              required>
+                </v-text-field>
+                <!--<span v-if="errorBag.has('emailAddress')" class="md-error">Enter a valid email address</span>-->
               </div>
             </div>
           </template>
@@ -125,9 +162,15 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex'
+
   export default {
     name: 'tenants',
     props: {
+      counties: {
+        type: Array,
+        default: []
+      },
       countries: {
         type: Array,
         default: []
@@ -135,53 +178,24 @@
     },
     data () {
       return {
-        tenants: [{
-          firstName: null,
-          middleName: null,
-          lastName: null,
-          isLeadTenant: true,
-          isAdult: true,
-          isChecked: true,
-          mainContactNumber: null,
-          secondaryContactNumber: null,
-          emailAddress: null,
-          address: {
-            street: null,
-            townOrCity: null,
-            countyOrRegion: null,
-            postcode: null,
-            country: null
-          }
-        }],
         permissions: this.$store.state.permissions
       }
     },
-    created () {
-    },
+    computed: mapState({
+      tenants: state => state.newTenancy.tenants
+    }),
     methods: {
-      addOccupier: function (isAdult) {
-        this.tenants.forEach(tenant => { tenant.isChecked = false })
-        this.tenants.push({
-          firstName: null,
-          middleName: null,
-          lastName: null,
-          isLeadTenant: false,
-          isAdult: isAdult,
-          isChecked: true,
-          mainContactNumber: null,
-          secondaryContactNumber: null,
-          emailAddress: null,
-          address: {
-            street: null,
-            townOrCity: null,
-            countyOrRegion: null,
-            postcode: null,
-            country: null
-          }
-        })
+      addOccupier (isAdult) {
+        this.$store.commit('TENANT_ADD_TENANT', { isLeadTenant: false, dateOfBirth: '1970-01-01', isAdult: isAdult, address: {} })
       },
-      deleteOccupier: function (index) {
-        this.tenants.splice(index, 1)
+      deleteOccupier (index) {
+        this.$store.commit('TENANT_REMOVE_TENANT', index)
+      },
+      updateField (index, tenant, field) {
+        this.$store.commit('TENANT_UPDATE_FIELD', Object.assign(tenant, {index, field: field}))
+      },
+      updateAddress (index, tenant) {
+        this.$store.commit('TENANT_UPDATE_ADDRESS', tenant)
       }
     }
   }

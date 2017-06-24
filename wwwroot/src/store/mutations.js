@@ -1,5 +1,18 @@
 import Vue from 'Vue'
 
+let newTenancy = {
+  step: 1,
+  tenancy: {
+    propertyDetails: {}
+  },
+  tenants: [{
+    dateOfBirth: '1970-01-01',
+    isLeadTenant: true,
+    isAdult: true,
+    address: {}
+  }]
+}
+
 export const UPDATE_AUTH = (state, auth) => {
   state.auth = auth
 }
@@ -36,26 +49,33 @@ export const CLEAR_ALL_DATA = (state) => {
   }
 
   // New tenancy journey
-  state.newTenancy = {
-    step: 1,
-    tenancy: {
-      propertyDetails: {}
-    },
-    tenants: []
-  }
+  state.newTenancy = newTenancy
 
   // User
   state.user.name = ''
 }
 
-export const TENANCY_NEW = (state) => {
-  state.newTenancy = {
-    step: 1,
-    tenancy: {
-      propertyDetails: {}
-    },
-    tenants: []
-  }
+export const TENANT_ADD_TENANT = (state, tenant) => {
+  state.newTenancy.tenants.push(tenant)
+}
+
+export const TENANT_REMOVE_TENANT = (state, index) => {
+  state.newTenancy.tenants.splice(index, 1)
+}
+
+export const TENANT_UPDATE_FIELD = (state, tenant) => {
+  state.newTenancy.tenants.map((item, index) => {
+    if (index !== tenant.index) {
+      return item
+    }
+
+    item[tenant.field] = tenant[tenant.field]
+    return item
+  })
+}
+
+export const TENANT_UPDATE_ADDRESS = (state, tenant) => {
+  state.newTenancy.tenants[tenant.index].address = tenant.address
 }
 
 export const TENANCY_SELECTED_PROPERTY = (state, propertyId) => {

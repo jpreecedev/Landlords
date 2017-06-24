@@ -19,7 +19,7 @@
         <property :tenancyTypes="viewData.tenancyTypes"></property>
       </v-stepper-content>
       <v-stepper-content step="3">
-        <tenants :countries="viewData.countries"></tenants>
+        <tenants :counties="viewData.counties" :countries="viewData.countries"></tenants>
       </v-stepper-content>
       <v-stepper-content step="4">
         <payments :rentalFrequencies="viewData.rentalFrequencies"></payments>
@@ -29,7 +29,6 @@
     <div class="row">
       <div class="col-xs-6">
         <v-btn flat dark @click.native="back()">Go back</v-btn>
-        <v-btn flat dark>Cancel</v-btn>
       </div>
       <div class="col-xs-6 text-right">
         <v-btn primary @click.native="next()" light>{{ newTenancy.step === 4 ? 'Finished' : 'Continue' }}</v-btn>
@@ -49,6 +48,7 @@
         permissions: this.$store.state.permissions,
         newTenancy: this.$store.state.newTenancy,
         viewData: {
+          counties: [],
           countries: [],
           rentalFrequencies: [],
           tenancyTypes: []
@@ -56,14 +56,14 @@
       }
     },
     methods: {
-      next: function () {
+      next () {
         if (this.newTenancy.step === 4) {
           alert('done')
         } else {
           this.$store.commit('TENANCY_NEXT_STEP', this.newTenancy)
         }
       },
-      back: function () {
+      back () {
         if (this.newTenancy.step !== 1) {
           this.$store.commit('TENANCY_PREVIOUS_STEP', this.newTenancy)
         }
@@ -85,11 +85,3 @@
     }
   }
 </script>
-
-<style lang="scss" scoped>
-
-  .md-tab {
-    padding: 32px 16px;
-  }
-
-</style>

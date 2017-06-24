@@ -144,7 +144,7 @@ export default {
         firstName: null,
         middleName: null,
         lastName: null,
-        dateOfBirth: null,
+        dateOfBirth: '1970-01-01',
         mainContactNumber: null,
         secondaryContactNumber: null,
         emailAddress: null,
