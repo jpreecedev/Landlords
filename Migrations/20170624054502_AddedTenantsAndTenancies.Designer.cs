@@ -8,8 +8,8 @@ using Landlords.Database;
 namespace Landlords.Migrations
 {
     [DbContext(typeof(LLDbContext))]
-    [Migration("20170613120104_AlterTenantEntities")]
-    partial class AlterTenantEntities
+    [Migration("20170624054502_AddedTenantsAndTenancies")]
+    partial class AddedTenantsAndTenancies
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -523,6 +523,36 @@ namespace Landlords.Migrations
                     b.ToTable("PropertyImages");
                 });
 
+            modelBuilder.Entity("Model.Entities.Tenancy", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Created");
+
+                    b.Property<DateTime?>("Deleted");
+
+                    b.Property<DateTime>("EndDate");
+
+                    b.Property<Guid>("PropertyDetailsId");
+
+                    b.Property<decimal>("RentalAmount");
+
+                    b.Property<string>("RentalFrequency");
+
+                    b.Property<string>("RentalPaymentReference");
+
+                    b.Property<DateTime>("StartDate");
+
+                    b.Property<string>("TenancyType");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PropertyDetailsId");
+
+                    b.ToTable("Tenancies");
+                });
+
             modelBuilder.Entity("Model.Entities.Tenant", b =>
                 {
                     b.Property<Guid>("Id")
@@ -544,13 +574,9 @@ namespace Landlords.Migrations
 
                     b.Property<string>("MiddleName");
 
-                    b.Property<Guid>("PortfolioId");
-
                     b.Property<string>("SecondaryContactNumber");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PortfolioId");
 
                     b.ToTable("Tenants");
                 });
@@ -581,6 +607,28 @@ namespace Landlords.Migrations
                     b.HasIndex("TenantId");
 
                     b.ToTable("TenantAddresses");
+                });
+
+            modelBuilder.Entity("Model.Entities.TenantTenancy", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("TenancyId");
+
+                    b.Property<Guid>("TenantId");
+
+                    b.Property<DateTime>("Created");
+
+                    b.Property<DateTime?>("Deleted");
+
+                    b.HasKey("Id", "TenancyId", "TenantId");
+
+                    b.HasIndex("TenancyId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("TenantTenancies");
                 });
 
             modelBuilder.Entity("Model.Entities.Transaction", b =>
@@ -766,18 +814,31 @@ namespace Landlords.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Model.Entities.Tenant", b =>
+            modelBuilder.Entity("Model.Entities.Tenancy", b =>
                 {
-                    b.HasOne("Model.Entities.Portfolio", "Portfolio")
+                    b.HasOne("Model.Entities.PropertyDetails", "PropertyDetails")
                         .WithMany()
-                        .HasForeignKey("PortfolioId")
+                        .HasForeignKey("PropertyDetailsId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Model.Entities.TenantAddress", b =>
                 {
                     b.HasOne("Model.Entities.Tenant", "Tenant")
-                        .WithMany("TenantAddresses")
+                        .WithMany("Addresses")
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Model.Entities.TenantTenancy", b =>
+                {
+                    b.HasOne("Model.Entities.Tenancy", "Tenancy")
+                        .WithMany()
+                        .HasForeignKey("TenancyId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Model.Entities.Tenant", "Tenant")
+                        .WithMany()
                         .HasForeignKey("TenantId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

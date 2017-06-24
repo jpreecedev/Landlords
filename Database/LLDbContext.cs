@@ -26,6 +26,11 @@
             modelBuilder.Entity<ApplicationUserPortfolio>()
                 .HasKey(aup => new { aup.Id, aup.UserId, aup.PortfolioId });
 
+            modelBuilder.Entity<TenantTenancy>().Property(p => p.Id).ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<TenantTenancy>()
+                .HasKey(tt => new {tt.Id, tt.TenancyId, tt.TenantId});
+
             modelBuilder.Entity<ApplicationUser>()
                 .HasOne(p => p.Agency)
                 .WithMany(b => b.Users)
@@ -61,5 +66,7 @@
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<Tenant> Tenants { get; set; }
         public DbSet<TenantAddress> TenantAddresses { get; set; }
+        public DbSet<Tenancy> Tenancies { get; set; }
+        public DbSet<TenantTenancy> TenantTenancies { get; set; }
     }
 }

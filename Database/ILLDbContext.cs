@@ -34,6 +34,10 @@
 
         DbSet<TenantAddress> TenantAddresses { get; set; }
 
+        DbSet<Tenancy> Tenancies { get; set; }
+
+        DbSet<TenantTenancy> TenantTenancies { get; set; }
+
         DbSet<T> Set<T>() where T : class;
     }
 }

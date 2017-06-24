@@ -27,7 +27,6 @@
             MainContactNumber = tenant.MainContactNumber;
             SecondaryContactNumber = tenant.SecondaryContactNumber;
             EmailAddress = tenant.EmailAddress;
-            PortfolioId = tenant.PortfolioId;
 
             if (tenantAddresses != null)
             {
@@ -52,8 +51,6 @@
         public string SecondaryContactNumber { get; set; }
 
         public string EmailAddress { get; set; }
-
-        public Guid PortfolioId { get; set; }
 
         public string[] DefaultCountries { get; } = Countries.GetDefaultCountries();
     }

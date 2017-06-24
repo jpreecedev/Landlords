@@ -7,10 +7,10 @@
 
     public interface ITenantsDataProvider
     {
-        Task<ICollection<TenantViewModel>> GetTenantsAsync(Guid portfolioId);
+        Task<ICollection<TenantViewModel>> GetTenantsByPortfolioIdAsync(Guid portfolioId);
         Task<ICollection<TenantViewModel>> GetTenantsForPropertyAsync(Guid portfolioId, Guid propertyDetailsId);
-        Task<TenantViewModel> NewAsync(Guid portfolioId);
-        Task<TenantViewModel> GetTenantByIdAsync(Guid portfolioId, Guid tenantId);
-        Task UpdateAsync(Guid portfolioId, TenantViewModel tenant);
+        Task<TenantViewModel> NewAsync();
+        Task<TenantViewModel> GetTenantByIdAsync(Guid tenantId);
+        Task UpdateAsync(TenantViewModel tenant);
     }
 }

@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using Validation;
 
     public class Tenant : BaseModel
     {
@@ -21,10 +20,5 @@
         public string SecondaryContactNumber { get; set; }
 
         public string EmailAddress { get; set; }
-
-        [ValidateGuid]
-        public Guid PortfolioId { get; set; }
-
-        public Portfolio Portfolio { get; set; }
     }
 }

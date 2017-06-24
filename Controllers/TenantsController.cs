@@ -23,21 +23,21 @@
         [Permission(Permissions_TE.GetListById, Permissions_TE.GetListByRouteId, Permissions_TE.GetListByDescription)]
         public async Task<IActionResult> Get()
         {
-            return Ok(await _tenantsDataProvider.GetTenantsAsync(User.GetPortfolioId()));
+            return Ok(await _tenantsDataProvider.GetTenantsByPortfolioIdAsync(User.GetPortfolioId()));
         }
 
         [HttpGet("{tenantId}")]
         [Permission(Permissions_TE.GetById, Permissions_TE.GetByRouteId, Permissions_TE.GetByDescription)]
         public async Task<IActionResult> Get(Guid tenantId)
         {
-            return Ok(await _tenantsDataProvider.GetTenantByIdAsync(User.GetPortfolioId(), tenantId));
+            return Ok(await _tenantsDataProvider.GetTenantByIdAsync(tenantId));
         }
 
         [HttpPost("new"), ValidateAntiForgeryToken]
         [Permission(Permissions_TE.NewId, Permissions_TE.NewRouteId, Permissions_TE.NewDescription)]
         public async Task<IActionResult> New()
         {
-            return Ok(await _tenantsDataProvider.NewAsync(User.GetPortfolioId()));
+            return Ok(await _tenantsDataProvider.NewAsync());
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -46,7 +46,7 @@
         {
             if (ModelState.IsValid)
             {
-                await _tenantsDataProvider.UpdateAsync(User.GetPortfolioId(), value);
+                await _tenantsDataProvider.UpdateAsync(value);
                 return Ok();
             }
 

@@ -130,7 +130,7 @@
 </template>
 
 <script>
-import { ErrorBag } from 'vee-validate'
+// import { ErrorBag } from 'vee-validate'
 import utils from 'utils'
 
 export default {
@@ -165,25 +165,25 @@ export default {
   },
   methods: {
     validateBeforeSubmit: function () {
-      this.$validator.validateAll().then(() => {
-        var bag = new ErrorBag()
-        this.$http.post(`/api/tenants/`, { ...this.tenant })
-          .then(() => {
-            this.$router.push({ name: 'tenants-overview' })
-          })
-          .catch(response => {
-            var validationResult = utils.getFormValidationErrors(response)
-            validationResult.errors.forEach(validationError => {
-              bag.add(validationError.key, validationError.messages[0], 'required')
-            })
-            if (validationResult.status) {
-              bag.add('GenericError', validationResult.status, 'generic')
-            }
-          })
-        this.$validator.errorBag = bag
-      }).catch(() => {
-        window.scrollTo(0, 0)
-      })
+      // this.$validator.validateAll().then(() => {
+      //   var bag = new ErrorBag()
+      this.$http.post(`/api/tenants/`, { ...this.tenant })
+        .then(() => {
+          this.$router.push({ name: 'tenants-overview' })
+        })
+        .catch(response => {
+          // var validationResult = utils.getFormValidationErrors(response)
+          // validationResult.errors.forEach(validationError => {
+          //   bag.add(validationError.key, validationError.messages[0], 'required')
+          // })
+          // if (validationResult.status) {
+          //   bag.add('GenericError', validationResult.status, 'generic')
+          // }
+        })
+      //   this.$validator.errorBag = bag
+      // }).catch(() => {
+      //   window.scrollTo(0, 0)
+      // })
     }
   }
 }
