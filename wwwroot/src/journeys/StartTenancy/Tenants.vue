@@ -144,7 +144,7 @@
                 <div class="col-xs-6 col-md-2">
                   <v-text-field v-model="address.monthsAtAddress"
                                 :value="address.monthsAtAddress"
-                                :rules="[$validation.rules.required, $validation.rules.min_value(address.monthsAtAddress, 1), $validation.rules.max_value(address.monthsAtAddress, 12)]"
+                                :rules="[$validation.rules.required, $validation.rules.min_value(address.monthsAtAddress, 0), $validation.rules.max_value(address.monthsAtAddress, 12)]"
                                 @input="updateAddress(index, addressIndex, address, 'monthsAtAddress')"
                                 label="Months"
                                 type="number"
@@ -256,7 +256,7 @@
         this.$store.commit('TENANT_ADD_ADDRESS', tenantIndex)
       },
       addOccupier (isAdult) {
-        this.$store.commit('TENANT_ADD_TENANT', { isLeadTenant: false, dateOfBirth: '2005-01-01', isAdult: isAdult, address: {} })
+        this.$store.commit('TENANT_ADD_TENANT', isAdult)
       },
       deleteOccupier (index) {
         this.$store.commit('TENANT_REMOVE_TENANT', index)

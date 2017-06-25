@@ -10,28 +10,33 @@ let defaultAddress = {
   monthsAtAddress: null
 }
 let defaultContact = {}
+let defaultTenant = {
+  title: null,
+  firstName: null,
+  lastName: null,
+  mainContactNumber: null,
+  secondaryContactNumber: null,
+  emailAddress: null,
+  dateOfBirth: '1970-01-01',
+  isLeadTenant: true,
+  isAdult: true,
+  addresses: [Object.assign({}, defaultAddress)],
+  contacts: [Object.assign({}, defaultContact)],
+  isSmoker: false,
+  hasPets: false
+}
 
 let newTenancy = {
   step: 1,
   tenancy: {
     startDate: moment().format('YYYY-MM-DD'),
-    endDate: moment().add(12, 'M').subtract(1, 'day').format('YYYY-MM-DD')
+    endDate: moment().add(12, 'M').subtract(1, 'day').format('YYYY-MM-DD'),
+    rentalAmount: null,
+    rentalFrequency: null,
+    rentalPaymentReference: null,
+    tenancyType: null
   },
-  tenants: [{
-    title: null,
-    firstName: null,
-    lastName: null,
-    mainContactNumber: null,
-    secondaryContactNumber: null,
-    emailAddress: null,
-    dateOfBirth: '1970-01-01',
-    isLeadTenant: true,
-    isAdult: true,
-    addresses: [defaultAddress],
-    contacts: [defaultContact],
-    isSmoker: false,
-    hasPets: false
-  }]
+  tenants: [Object.assign({}, defaultTenant)]
 }
 
 export const UPDATE_AUTH = (state, auth) => {
@@ -76,8 +81,8 @@ export const CLEAR_ALL_DATA = (state) => {
   state.user.name = ''
 }
 
-export const TENANT_ADD_TENANT = (state, tenant) => {
-  state.newTenancy.tenants.push(tenant)
+export const TENANT_ADD_TENANT = (state, isAdult) => {
+  state.newTenancy.tenants.push(Object.assign({}, defaultTenant, { isLeadTenant: false, isAdult: isAdult }))
 }
 
 export const TENANT_REMOVE_TENANT = (state, index) => {
@@ -93,6 +98,14 @@ export const TENANT_UPDATE_FIELD = (state, tenant) => {
     item[tenant.field] = tenant[tenant.field]
     return item
   })
+}
+
+export const TENANCY_UPDATE = (state, obj) => {
+  state.newTenancy.tenancy[obj.field] = obj[obj.field]
+}
+
+export const TENANCY_UPDATE_END_DATE = (state, endDate) => {
+  state.newTenancy.tenancy.endDate = endDate
 }
 
 export const TENANT_ADD_ADDRESS = (state, tenantIndex) => {
@@ -113,22 +126,6 @@ export const TENANT_UPDATE_ADDRESS = (state, obj) => {
 
 export const TENANT_UPDATE_CONTACT = (state, obj) => {
   state.newTenancy.tenants[obj.tenantIndex].contacts[obj.contactIndex][obj.field] = obj.contact[obj.field]
-}
-
-export const TENANCY_SELECTED_PROPERTY = (state, propertyId) => {
-  state.newTenancy.tenancy.propertyDetailsId = propertyId
-}
-
-export const TENANCY_SELECTED_TENANCY_TYPE = (state, tenancyType) => {
-  state.newTenancy.tenancy.tenancyType = tenancyType
-}
-
-export const TENANCY_SELECTED_START_DATE = (state, startDate) => {
-  state.newTenancy.tenancy.startDate = startDate
-}
-
-export const TENANCY_SELECTED_END_DATE = (state, endDate) => {
-  state.newTenancy.tenancy.endDate = endDate
 }
 
 export const TENANCY_UPDATE_RENTAL_AMOUNT = (state, rentalAmount) => {

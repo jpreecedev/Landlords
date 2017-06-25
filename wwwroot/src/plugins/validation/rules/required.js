@@ -4,7 +4,7 @@ const required = value => {
   }
 
   if (value === undefined || value === null) {
-    return 'Please enter a value'
+    return 'This field is required'
   }
 
   return String(value).trim().length ? true : 'Please enter a valid value into this field'

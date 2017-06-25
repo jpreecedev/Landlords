@@ -14,28 +14,33 @@ let defaultAddress = {
   monthsAtAddress: null
 }
 let defaultContact = {}
+let defaultTenant = {
+  title: null,
+  firstName: null,
+  lastName: null,
+  mainContactNumber: null,
+  secondaryContactNumber: null,
+  emailAddress: null,
+  dateOfBirth: '1970-01-01',
+  isLeadTenant: true,
+  isAdult: true,
+  addresses: [Object.assign({}, defaultAddress)],
+  contacts: [Object.assign({}, defaultContact)],
+  isSmoker: false,
+  hasPets: false
+}
 
 let newTenancy = {
   step: 1,
   tenancy: {
     startDate: moment().format('YYYY-MM-DD'),
-    endDate: moment().add(12, 'M').subtract(1, 'day').format('YYYY-MM-DD')
+    endDate: moment().add(12, 'M').subtract(1, 'day').format('YYYY-MM-DD'),
+    rentalAmount: null,
+    rentalFrequency: null,
+    rentalPaymentReference: null,
+    tenancyType: null
   },
-  tenants: [{
-    title: null,
-    firstName: null,
-    lastName: null,
-    mainContactNumber: null,
-    secondaryContactNumber: null,
-    emailAddress: null,
-    dateOfBirth: '1970-01-01',
-    isLeadTenant: true,
-    isAdult: true,
-    addresses: [defaultAddress],
-    contacts: [defaultContact],
-    isSmoker: false,
-    hasPets: false
-  }]
+  tenants: [Object.assign({}, defaultTenant)]
 }
 
 let syncedData = {
