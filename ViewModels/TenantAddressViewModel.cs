@@ -38,7 +38,7 @@
 
         public string CountyOrRegion { get; set; }
         
-        [Required, MinLength(2)]
+        [Required, MinLength(5), MaxLength(7)]
         public string Postcode { get; set; }
 
         [Required]

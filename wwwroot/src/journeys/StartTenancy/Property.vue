@@ -6,6 +6,7 @@
         <div class="subheading">Which property are you renting out?</div>
         <v-select :items="portfolioProperties"
                   :value="selectedProperty"
+                  :rules="[$validation.rules.required]"
                   @input="updateSelectedProperty"
                   item-value="id"
                   label="Select a property"
@@ -16,10 +17,11 @@
         <div class="subheading">What kind of tenancy agreement is/will be in place?</div>
         <v-select :items="tenancyTypes"
                   :value="selectedTenancyType"
+                  :rules="[$validation.rules.required]"
                   @input="updateSelectedTenancyType"
                   item-value="id"
                   label="Select a tenancy type"
-                  dark single-line auto>
+                  dark single-line auto required>
         </v-select>
       </div>
     </div>

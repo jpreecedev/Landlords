@@ -1,12 +1,29 @@
 import Vue from 'Vue'
+import moment from 'moment'
 
-let defaultAddress = {}
+let defaultAddress = {
+  street: null,
+  townOrCity: null,
+  postcode: null,
+  country: null,
+  yearsAtAddress: null,
+  monthsAtAddress: null
+}
 let defaultContact = {}
 
 let newTenancy = {
   step: 1,
-  tenancy: {},
+  tenancy: {
+    startDate: moment().format('YYYY-MM-DD'),
+    endDate: moment().add(12, 'M').subtract(1, 'day').format('YYYY-MM-DD')
+  },
   tenants: [{
+    title: null,
+    firstName: null,
+    lastName: null,
+    mainContactNumber: null,
+    secondaryContactNumber: null,
+    emailAddress: null,
     dateOfBirth: '1970-01-01',
     isLeadTenant: true,
     isAdult: true,

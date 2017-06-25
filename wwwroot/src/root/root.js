@@ -13,6 +13,7 @@ import Vuetify from 'vuetify'
 import CommonComponents from 'src/common'
 import Journeys from 'journeys'
 
+import 'src/plugins'
 import 'src/extensions'
 import 'src/filters'
 import 'v-autocomplete/dist/v-autocomplete.css'

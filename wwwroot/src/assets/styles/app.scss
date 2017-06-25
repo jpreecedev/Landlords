@@ -179,9 +179,11 @@ p {
   &-left {
     text-align: left;
   }
+
   &-center {
     text-align: center;
   }
+
   &-right {
     text-align: right;
   }
@@ -195,5 +197,24 @@ p {
 .stepper {
   &__content {
     padding: 1rem 0;
+  }
+}
+
+.input-group {
+
+  .input-group__messages {
+    display: none;
+  }
+
+  &--dirty,
+  &--error {
+
+    .input-group__messages {
+      display: block;
+
+      .input-group__error:not(:first-child) {
+        display: none;
+      }
+    }
   }
 }

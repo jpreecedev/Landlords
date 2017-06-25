@@ -10,15 +10,17 @@
         <div class="row">
           <div class="col-xs-12 col-md-4">
             <v-select :items="employmentTypes"
-                       v-model="tenant.employmentType"
-                       @input="updateField(index, tenant, 'employmentType')"
-                       label="Select an employment type"
-                       dark single-line auto required>
+                      :rules="[$validation.rules.required]"
+                      v-model="tenant.employmentType"
+                      @input="updateField(index, tenant, 'employmentType')"
+                      label="Select an employment type"
+                      dark single-line auto required>
             </v-select>
           </div>
           <div class="col-xs-12 col-md-4">
             <v-text-field v-model="tenant.occupation"
                           :value="tenant.occupation"
+                          :rules="[$validation.rules.required, $validation.rules.min_length(tenant.occupation, 2)]"
                           @input="updateField(index, tenant, 'occupation')"
                           label="Tenant occupation"
                           required>
@@ -28,36 +30,34 @@
           <div class="col-xs-12 col-md-4">
             <v-text-field v-model="tenant.companyName"
                           :value="tenant.companyName"
+                          :rules="[$validation.rules.required, $validation.rules.min_length(tenant.companyName, 2)]"
                           @input="updateField(index, tenant, 'companyName')"
-                          label="Employer name">
+                          label="Employer name"
+                          required>
             </v-text-field>
             <!--<span v-if="errorBag.has('title')" class="md-error">Select a valid title</span>-->
           </div>
         </div>
         <div class="row">
           <div class="col-xs-12 col-md-4">
-            <v-text-field v-model="tenant.companyName"
-                          :value="tenant.companyName"
-                          @input="updateField(index, tenant, 'companyName')"
-                          label="Employer name">
-            </v-text-field>
-          </div>
-          <div class="col-xs-12 col-md-4">
             <v-text-field v-model="tenant.workAddress"
                           :value="tenant.workAddress"
+                          :rules="[$validation.rules.required, $validation.rules.min_length(tenant.workAddress, 2)]"
                           :multi-line="true"
                           :rows="1"
                           :auto-grow="true"
                           @input="updateField(index, tenant, 'workAddress')"
-                          label="Work address">
+                          label="Work address"
+                          required>
             </v-text-field>
           </div>
           <div class="col-xs-12 col-md-4">
             <v-text-field v-model="tenant.workContactNumber"
                           :value="tenant.workContactNumber"
+                          :rules="[$validation.rules.required, $validation.rules.min_length(tenant.workContactNumber, 2)]"
                           @input="updateField(index, tenant, 'workContactNumber')"
                           label="Employer contact number"
-                          type="number">
+                          required>
             </v-text-field>
           </div>
         </div>
@@ -66,15 +66,19 @@
           <div class="col-xs-6">
             <v-text-field v-model="tenant.drivingLicenseReference"
                           :value="tenant.drivingLicenseReference"
+                          :rules="[$validation.rules.required, $validation.rules.min_length(tenant.drivingLicenseReference, 2)]"
                           @input="updateField(index, tenant, 'drivingLicenseReference')"
-                          label="Driving license number">
+                          label="Driving license number"
+                          required>
             </v-text-field>
           </div>
           <div class="col-xs-6">
             <v-text-field v-model="tenant.passportReference"
                           :value="tenant.passportReference"
+                          :rules="[$validation.rules.required, $validation.rules.min_length(tenant.passportReference, 2)]"
                           @input="updateField(index, tenant, 'passportReference')"
-                          label="Passport reference">
+                          label="Passport reference"
+                          required>
             </v-text-field>
           </div>
         </div>
@@ -90,16 +94,19 @@
                   <div class="col-xs-6">
                     <v-text-field v-model="contact.name"
                                   :value="contact.name"
+                                  :rules="[$validation.rules.required, $validation.rules.min_length(contact.name, 2)]"
                                   @input="updateContact(index, contactIndex, contact, 'name')"
-                                  label="Contact name">
+                                  label="Contact name"
+                                  required>
                     </v-text-field>
                   </div>
                   <div class="col-xs-6">
                     <v-select :items="contactTypes"
+                              :rules="[$validation.rules.required, $validation.rules.min_length(contact.relationship, 2)]"
                               v-model="contact.relationship"
                               @input="updateContact(index, contactIndex, contact, 'relationship')"
                               label="Select a relationship"
-                              dark single-line auto>
+                              dark single-line auto required>
                     </v-select>
                   </div>
                 </div>
@@ -107,9 +114,11 @@
                   <div class="col-xs-6">
                     <v-text-field v-model="contact.mainContactNumber"
                                   :value="contact.mainContactNumber"
+                                  :rules="[$validation.rules.required, $validation.rules.min_length(contact.mainContactNumber, 2)]"
                                   @input="updateContact(index, contactIndex, contact, 'mainContactNumber')"
                                   label="Main contact number"
-                                  type="number">
+                                  type="number"
+                                  required>
                     </v-text-field>
                   </div>
                   <div class="col-xs-6">

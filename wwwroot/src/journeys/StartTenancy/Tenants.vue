@@ -11,6 +11,7 @@
         <div class="row">
           <div class="col-xs-12 col-md-3">
             <v-select :items="titles"
+                      :rules="[$validation.rules.required, $validation.rules.min_length(tenant.title, 2)]"
                       v-model="tenant.title"
                       @input="updateField(index, tenant, 'title')"
                       label="Select a title"
@@ -20,6 +21,7 @@
           </div>
           <div class="col-xs-12 col-md-3">
             <v-text-field v-model="tenant.firstName"
+                          :rules="[$validation.rules.required, $validation.rules.min_length(tenant.firstName, 2)]"
                           :value="tenant.firstName"
                           @input="updateField(index, tenant, 'firstName')"
                           label="First name"
@@ -37,6 +39,7 @@
           <div class="col-xs-12 col-md-3">
             <v-text-field v-model="tenant.lastName"
                           :value="tenant.lastName"
+                          :rules="[$validation.rules.required, $validation.rules.min_length(tenant.lastName, 2)]"
                           @input="updateField(index, tenant, 'lastName')"
                           label="Last name"
                           required>
@@ -54,9 +57,9 @@
                             required readonly>
               </v-text-field>
               <v-date-picker v-model="tenant.dateOfBirth"
-                              :value="tenant.dateOfBirth"
-                              @input="updateField(index, tenant, 'dateOfBirth')"
-                              scrollable>
+                             :value="tenant.dateOfBirth"
+                             @input="updateField(index, tenant, 'dateOfBirth')"
+                             scrollable>
               </v-date-picker>
             </v-menu>
           </div>
@@ -75,6 +78,7 @@
                                 :multi-line="true"
                                 :rows="1"
                                 :auto-grow="true"
+                                :rules="[$validation.rules.required, $validation.rules.min_length(address.street, 2)]"
                                 @input="updateAddress(index, addressIndex, address, 'street')"
                                 label="Street address"
                                 required>
@@ -84,6 +88,7 @@
                 <div class="col-xs-6">
                   <v-text-field v-model="address.townOrCity"
                                 :value="address.townOrCity"
+                                :rules="[$validation.rules.required, $validation.rules.min_length(address.townOrCity, 2)]"
                                 @input="updateAddress(index, addressIndex, address, 'townOrCity')"
                                 label="Town or city"
                                 required>
@@ -104,6 +109,7 @@
                 <div class="col-xs-12 col-md-4">
                   <v-text-field v-model="address.postcode"
                                 :value="address.postcode"
+                                :rules="[$validation.rules.required, $validation.rules.min_length(address.postcode, 5), $validation.rules.max_length(address.postcode, 7)]"
                                 @input="updateAddress(index, addressIndex, address, 'postcode')"
                                 label="Postcode"
                                 required>
@@ -112,6 +118,7 @@
                 </div>
                 <div class="col-xs-12 col-md-4">
                   <v-select :items="countries"
+                            :rules="[$validation.rules.required]"
                             v-model="address.country"
                             @input="updateAddress(index, addressIndex, address, 'country')"
                             label="Select a country"
@@ -124,6 +131,7 @@
                 <div class="col-xs-6 col-md-2">
                   <v-text-field v-model="address.yearsAtAddress"
                                 :value="address.yearsAtAddress"
+                                :rules="[$validation.rules.required, $validation.rules.min_value(address.yearsAtAddress, 1), $validation.rules.max_value(address.yearsAtAddress, 100)]"
                                 @input="updateAddress(index, addressIndex, address, 'yearsAtAddress')"
                                 label="Years"
                                 type="number"
@@ -136,6 +144,7 @@
                 <div class="col-xs-6 col-md-2">
                   <v-text-field v-model="address.monthsAtAddress"
                                 :value="address.monthsAtAddress"
+                                :rules="[$validation.rules.required, $validation.rules.min_value(address.monthsAtAddress, 1), $validation.rules.max_value(address.monthsAtAddress, 12)]"
                                 @input="updateAddress(index, addressIndex, address, 'monthsAtAddress')"
                                 label="Months"
                                 type="number"
@@ -156,6 +165,7 @@
             <div class="col-xs-12 col-md-4">
               <v-text-field v-model="tenant.mainContactNumber"
                             :value="tenant.mainContactNumber"
+                            :rules="[$validation.rules.required, $validation.rules.min_length(tenant.mainContactNumber, 2)]"
                             @input="updateField(index, tenant, 'mainContactNumber')"
                             label="Main contact number"
                             required>
@@ -165,6 +175,7 @@
             <div class="col-xs-12 col-md-4">
               <v-text-field v-model="tenant.secondaryContactNumber"
                             :value="tenant.secondaryContactNumber"
+                            :rules="[$validation.rules.min_length(tenant.secondaryContactNumber, 2)]"
                             @input="updateField(index, tenant, 'secondaryContactNumber')"
                             label="Another contact number">
               </v-text-field>
@@ -173,6 +184,7 @@
             <div class="col-xs-12 col-md-4">
               <v-text-field v-model="tenant.emailAddress"
                             :value="tenant.emailAddress"
+                            :rules="[$validation.rules.required, $validation.rules.email]"
                             @input="updateField(index, tenant, 'emailAddress')"
                             label="Email Address"
                             type="email"

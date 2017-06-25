@@ -5,7 +5,14 @@ import moment from 'moment'
 // and you'll see this key set below (if logged in):
 export const STORAGE_KEY = 'landlords'
 
-let defaultAddress = {}
+let defaultAddress = {
+  street: null,
+  townOrCity: null,
+  postcode: null,
+  country: null,
+  yearsAtAddress: null,
+  monthsAtAddress: null
+}
 let defaultContact = {}
 
 let newTenancy = {
@@ -15,6 +22,12 @@ let newTenancy = {
     endDate: moment().add(12, 'M').subtract(1, 'day').format('YYYY-MM-DD')
   },
   tenants: [{
+    title: null,
+    firstName: null,
+    lastName: null,
+    mainContactNumber: null,
+    secondaryContactNumber: null,
+    emailAddress: null,
     dateOfBirth: '1970-01-01',
     isLeadTenant: true,
     isAdult: true,
