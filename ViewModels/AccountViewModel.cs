@@ -25,7 +25,7 @@
             OpeningBalance = account.OpeningBalance;
         }
 
-        [ValidateGuid]
+        [RequiredGuid]
         public Guid Id { get; set; }
 
         public string Name { get; set; }
@@ -38,9 +38,10 @@
 
         public string Type { get; set; }
 
-        [ValidateGuid]
+        [RequiredGuid]
         public Guid PortfolioId { get; set; }
 
+        [LLDate]
         public DateTime Opened { get; set; }
 
         public decimal OpeningBalance { get; set; }

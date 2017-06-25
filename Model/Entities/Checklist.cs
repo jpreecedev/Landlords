@@ -21,7 +21,7 @@
 
         public ApplicationUser User { get; set; }
 
-        [ValidateGuid]
+        [RequiredGuid]
         public Guid UserId { get; set; }
     }
 }

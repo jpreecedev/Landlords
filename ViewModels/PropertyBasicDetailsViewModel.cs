@@ -5,7 +5,7 @@
 
     public class PropertyBasicDetailsViewModel
     {
-        [ValidateGuid]
+        [RequiredGuid]
         public Guid Id { get; set; }
         
         public string PropertyReference { get; set; }

@@ -52,38 +52,41 @@
 
         public DateTime? ConstructionDate { get; set; }
 
-        [Required]
-        [MaxLength(255)]
+        [Required, MaxLength(255)]
         public string Furnishing { get; set; }
 
         [Required, Range(0, 20)]
         public int Bedrooms { get; set; }
 
+        [Display(Name = "Is available for letting")]
         [Required]
         public bool IsAvailableForLetting { get; set; }
 
         [MaxLength(255)]
         public string PaymentTerm { get; set; }
 
-        [Required(ErrorMessage = "Country is required")]
-        [MaxLength(255)]
+        [Display(Name = "Country")]
+        [Required, MaxLength(255)]
         public string PropertyCountry { get; set; }
 
+        [Display(Name = "Country or region")]
         [MaxLength(255)]
         public string PropertyCountyOrRegion { get; set; }
 
+        [Display(Name = "Postcode")]
         [MaxLength(255)]
         public string PropertyPostcode { get; set; }
 
-        [Required(ErrorMessage = "Street address is required")]
-        [MaxLength(255)]
+        [Display(Name = "Street address")]
+        [Required, MaxLength(255)]
         public string PropertyStreetAddress { get; set; }
 
+        [Display(Name = "Town or city")]
         [MaxLength(255)]
         public string PropertyTownOrCity { get; set; }
         
-        [Required(ErrorMessage = "Property type is required")]
-        [MaxLength(255)]
+        [Display(Name = "Property type")]
+        [Required, MaxLength(255)]
         public string PropertyType { get; set; }
 
         public DateTime? PurchaseDate { get; set; }
@@ -97,7 +100,7 @@
         public string MortgageProvider { get; set; }
 
         public DateTime? CurrentDealExpirationDate { get; set; }
-
+        
         [MaxLength(255)]
         public string Reference { get; set; }
 
@@ -121,12 +124,12 @@
 
         public ICollection<PropertyImageViewModel> PropertyImages { get; set; }
 
-        [ValidateGuid]
+        [RequiredGuid]
         public Guid Id { get; set; }
         
         public decimal? MonthlyPayment { get; set; }
 
-        [ValidateGuid]
+        [RequiredGuid]
         public Guid PortfolioId { get; set; }
     }
 }

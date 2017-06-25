@@ -15,11 +15,12 @@
 
         public string Type { get; set; }
 
+        [LLDate]
         public DateTime Opened { get; set; }
 
         public decimal OpeningBalance { get; set; }
 
-        [ValidateGuid]
+        [RequiredGuid]
         public Guid PortfolioId { get; set; }
 
         public Portfolio Portfolio { get; set; }

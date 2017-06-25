@@ -8,12 +8,12 @@
     {
         public ApplicationUser User { get; set; }
 
-        [ValidateGuid]
+        [RequiredGuid]
         public Guid UserId { get; set; }
         
         public Permission Permission { get; set; }
 
-        [ValidateGuid]
+        [RequiredGuid]
         public Guid PermissionId { get; set; }
     }
 }

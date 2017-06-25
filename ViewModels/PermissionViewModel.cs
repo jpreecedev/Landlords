@@ -7,7 +7,7 @@
 
     public class PermissionViewModel : IPermission
     {
-        [ValidateGuid]
+        [RequiredGuid]
         public Guid PermissionId { get; set; }
 
         [Required]

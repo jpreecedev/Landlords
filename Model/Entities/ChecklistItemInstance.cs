@@ -39,7 +39,7 @@
 
         public string Payload { get; set; }
 
-        [ValidateGuid]
+        [RequiredGuid]
         public Guid ChecklistInstanceId { get; set; }
     }
 }

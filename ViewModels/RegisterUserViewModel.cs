@@ -4,13 +4,16 @@
 
     public class RegisterUserViewModel
     {
-        [Required(ErrorMessage = "First name is required"), MinLength(2)]
+        [Display(Name = "First name")]
+        [Required, MinLength(2)]
         public string FirstName { get; set; }
 
-        [Required(ErrorMessage = "Last name is required"), MinLength(2)]
+        [Display(Name = "Last name")]
+        [Required, MinLength(2)]
         public string LastName { get; set; }
 
-        [Required(ErrorMessage = "Email address is required"), EmailAddress]
+        [Display(Name = "Email address")]
+        [Required, EmailAddress]
         public string EmailAddress { get; set; }
 
         [Required, MinLength(8)]

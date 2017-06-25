@@ -30,7 +30,19 @@ module.exports = {
           return
         }
 
-        var key = error.key.substring(0, 1).toLowerCase() + error.key.substring(1)
+        var key = error.key
+        error.key.split('[').forEach(item => {
+          var squareBracket = item.indexOf(']')
+          if (squareBracket === -1) {
+            key = key.substring(0, 1).toLowerCase() + error.key.substring(1)
+            if (key.indexOf('.') > -1) {
+              key = key.split('.').map(dotItem => dotItem.substring(0, 1).toLowerCase() + dotItem.substring(1)).join('.')
+            }
+          } else {
+            key = key.replace(item, item.substring(squareBracket + 3, 1).toLowerCase() + item.substring(squareBracket + 4))
+          }
+        })
+
         var messages = []
 
         error.value.forEach(validationMessage => {

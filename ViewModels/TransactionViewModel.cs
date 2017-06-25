@@ -30,11 +30,12 @@
             Balance = transaction.Balance;
         }
 
-        [ValidateGuid]
+        [RequiredGuid]
         public Guid AccountId { get; set; }
 
         public Account Account { get; set; }
 
+        [LLDate]
         public DateTime Date { get; set; }
 
         public string PaymentType { get; set; }

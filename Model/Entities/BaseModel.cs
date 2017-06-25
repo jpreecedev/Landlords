@@ -9,9 +9,10 @@
 
     public class BaseModel
     {
-        [ValidateGuid]
+        [RequiredGuid]
         public Guid Id { get; set; }
 
+        [LLDate]
         public DateTime Created { get; set; }
 
         public DateTime? Deleted { get; set; }

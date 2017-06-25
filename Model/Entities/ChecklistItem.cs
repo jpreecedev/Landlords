@@ -5,7 +5,7 @@
 
     public class ChecklistItem : BaseModel
     {
-        [ValidateGuid]
+        [RequiredGuid]
         public Guid ChecklistId { get; set; }
 
         public string DisplayText { get; set; }

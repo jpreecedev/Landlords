@@ -1,5 +1,6 @@
 ﻿namespace Model.Entities
 {
+    using Model.Validation;
     using System;
     using System.Collections.Generic;
 
@@ -13,6 +14,7 @@
 
         public string LastName { get; set; }
 
+        [LLDate]
         public DateTime DateOfBirth { get; set; }
 
         public string MainContactNumber { get; set; }

@@ -4,11 +4,11 @@
     using System.ComponentModel.DataAnnotations;
     using System.Globalization;
 
-    public class ValidateGuidAttribute : ValidationAttribute
+    public class RequiredGuidAttribute : ValidationAttribute
     {
         private const string DefaultErrorMessage = "'{0}' does not contain a valid guid";
 
-        public ValidateGuidAttribute() : base(DefaultErrorMessage)
+        public RequiredGuidAttribute() : base(DefaultErrorMessage)
         {
         }
 
@@ -19,10 +19,11 @@
             if (string.IsNullOrWhiteSpace(input))
                 return null;
 
-            Guid guid;
-            if (!Guid.TryParse(input, out guid))
+            if (!Guid.TryParse(input, out Guid guid) || guid == default(Guid))
+            {
                 return new ValidationResult(FormatErrorMessage(validationContext.DisplayName));
-
+            }
+            
             return ValidationResult.Success;
         }
     }

@@ -69,8 +69,10 @@
               alert('done')
             })
             .catch(response => {
-              this.saved = false
-              // Handle error
+              var validationResult = utils.getFormValidationErrors(response)
+              validationResult.errors.forEach(validationError => {
+                console.log('ERROR', validationError.key, validationError.messages[0], 'required')
+              })
               debugger
             })
         } else {

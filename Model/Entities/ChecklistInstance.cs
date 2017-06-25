@@ -27,7 +27,7 @@
 
         public Portfolio Portfolio { get; set; }
 
-        [ValidateGuid]
+        [RequiredGuid]
         public Guid PortfolioId { get; set; }
 
         public PropertyDetails PropertyDetails { get; set; }
@@ -38,7 +38,7 @@
 
         public string Description { get; set; }
         
-        [ValidateGuid]
+        [RequiredGuid]
         public Guid ChecklistId { get; set; }
         
         public Checklist Checklist { get; set; }

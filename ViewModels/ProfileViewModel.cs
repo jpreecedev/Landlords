@@ -27,15 +27,15 @@
             EmailConfirmed = applicationUser.EmailConfirmed;
         }
 
-        [ValidateGuid]
+        [RequiredGuid]
         public Guid UserId { get; set; }
        
-        [Required(ErrorMessage = "First name is required")]
-        [MinLength(2)]
+        [Display(Name = "first name")]
+        [Required, MinLength(2)]
         public string FirstName { get; set; }
 
-        [Required(ErrorMessage = "Last name is required")]
-        [MinLength(2)]
+        [Display(Name = "last name")]
+        [Required, MinLength(2)]
         public string LastName { get; set; }
 
         public DateTime? AvailableFrom { get; set; }

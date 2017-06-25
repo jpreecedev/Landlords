@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 class="title">Confirm the identify of each adult tenant</h2>
+    <h2 class="title">Confirm the identity of each adult tenant</h2>
     <v-expansion-panel>
       <v-expansion-panel-content v-for="(tenant, index) in tenants" :key="tenant">
         <div slot="header">

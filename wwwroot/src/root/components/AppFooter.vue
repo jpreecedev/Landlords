@@ -1,6 +1,5 @@
 <template>
-  <v-footer>
-    <v-btn flat warning dark @click.native="$store.commit('CLEAR_ALL_DATA')">Clear Store</v-btn>
+  <v-footer class="grey lighten-3 black--text">
     <v-spacer></v-spacer>
     <div>© {{ new Date().getFullYear() }}</div>
   </v-footer>

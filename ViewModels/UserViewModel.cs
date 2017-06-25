@@ -6,7 +6,7 @@
 
     public class UserViewModel
     {
-        [ValidateGuid]
+        [RequiredGuid]
         public Guid Id { get; set; }
 
         public string Name { get; set; }
