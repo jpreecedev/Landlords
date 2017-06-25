@@ -1,7 +1,6 @@
 ﻿namespace Landlords.ViewModels
 {
     using System;
-    using Model.DataTypes;
     using Model.Entities;
 
     public class TenantAddressViewModel
@@ -23,6 +22,8 @@
             CountyOrRegion = tenantAddress.CountyOrRegion;
             Postcode = tenantAddress.Postcode;
             Country = tenantAddress.Country;
+            YearsAtAddress = tenantAddress.YearsAtAddress;
+            MonthsAtAddress = tenantAddress.MonthsAtAddress;
         }
 
         public Guid Id { get; set; }
@@ -36,5 +37,9 @@
         public string Postcode { get; set; }
 
         public string Country { get; set; }
+
+        public int YearsAtAddress { get; set; }
+
+        public int MonthsAtAddress { get; set; }
     }
 }

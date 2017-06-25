@@ -5,6 +5,8 @@ import moment from 'moment'
 // and you'll see this key set below (if logged in):
 export const STORAGE_KEY = 'landlords'
 
+let defaultAddress = {}
+
 let newTenancy = {
   step: 1,
   tenancy: {
@@ -15,7 +17,8 @@ let newTenancy = {
     dateOfBirth: '1970-01-01',
     isLeadTenant: true,
     isAdult: true,
-    address: {}
+    addresses: [defaultAddress],
+    contacts: [{}]
   }]
 }
 

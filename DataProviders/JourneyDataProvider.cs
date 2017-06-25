@@ -86,7 +86,9 @@
                     Created = DateTime.Now,
                     Postcode = address.Postcode,
                     Street = address.Street,
-                    TownOrCity = address.TownOrCity
+                    TownOrCity = address.TownOrCity,
+                    YearsAtAddress = address.YearsAtAddress,
+                    MonthsAtAddress = address.MonthsAtAddress
                 };
 
                 result.Add(entity);

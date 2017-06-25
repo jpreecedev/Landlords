@@ -84,12 +84,14 @@
         })
       }
     },
-    computed: mapState({
-      selectedProperty: state => state.newTenancy.tenancy.propertyDetailsId,
-      selectedTenancyType: state => state.newTenancy.tenancy.tenancyType,
-      startDate: state => state.newTenancy.tenancy.startDate,
-      endDate: state => state.newTenancy.tenancy.endDate
-    }),
+    computed: {
+      ...mapState({
+        selectedProperty: state => state.newTenancy.tenancy.propertyDetailsId,
+        selectedTenancyType: state => state.newTenancy.tenancy.tenancyType,
+        startDate: state => state.newTenancy.tenancy.startDate,
+        endDate: state => state.newTenancy.tenancy.endDate
+      })
+    },
     methods: {
       selectPeriod (period) {
         this.$store.commit('TENANCY_SELECTED_END_DATE', moment(this.startDate).add(period, 'M').subtract(1, 'day').format('YYYY-MM-DD'))

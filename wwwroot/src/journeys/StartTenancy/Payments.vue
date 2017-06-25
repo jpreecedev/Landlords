@@ -50,11 +50,13 @@
         permissions: this.$store.state.permissions
       }
     },
-    computed: mapState({
-      rentalAmount: state => state.newTenancy.tenancy.rentalAmount,
-      selectedRentalFrequency: state => state.newTenancy.tenancy.rentalFrequency,
-      rentalPaymentReference: state => state.newTenancy.tenancy.rentalPaymentReference
-    }),
+    computed: {
+      ...mapState({
+        rentalAmount: state => state.newTenancy.tenancy.rentalAmount,
+        selectedRentalFrequency: state => state.newTenancy.tenancy.rentalFrequency,
+        rentalPaymentReference: state => state.newTenancy.tenancy.rentalPaymentReference
+      })
+    },
     methods: {
       updateRentalAmount (rentalAmount) {
         this.$store.commit('TENANCY_UPDATE_RENTAL_AMOUNT', rentalAmount)

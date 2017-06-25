@@ -19,5 +19,9 @@
 
         [ValidateGuid]
         public Guid TenantId { get; set; }
+
+        public int YearsAtAddress { get; set; }
+
+        public int MonthsAtAddress { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 import Vue from 'Vue'
 
+let defaultAddress = {}
 let newTenancy = {
   step: 1,
   tenancy: {},
@@ -7,7 +8,8 @@ let newTenancy = {
     dateOfBirth: '1970-01-01',
     isLeadTenant: true,
     isAdult: true,
-    address: {}
+    addresses: [defaultAddress],
+    contacts: [{}]
   }]
 }
 
@@ -72,8 +74,12 @@ export const TENANT_UPDATE_FIELD = (state, tenant) => {
   })
 }
 
-export const TENANT_UPDATE_ADDRESS = (state, tenant) => {
-  state.newTenancy.tenants[tenant.index].address = tenant.address
+export const TENANT_ADD_ADDRESS = (state, tenantIndex) => {
+  state.newTenancy.tenants[tenantIndex].addresses.push(defaultAddress)
+}
+
+export const TENANT_UPDATE_ADDRESS = (state, obj) => {
+  state.newTenancy.tenants[obj.tenantIndex].addresses[obj.addressIndex][obj.field] = obj.address[obj.field]
 }
 
 export const TENANCY_SELECTED_PROPERTY = (state, propertyId) => {
