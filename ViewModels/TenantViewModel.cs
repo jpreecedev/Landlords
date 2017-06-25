@@ -19,6 +19,7 @@
             }
 
             Id = tenant.Id;
+            Title = tenant.Title;
             FirstName = tenant.FirstName;
             MiddleName = tenant.MiddleName;
             LastName = tenant.LastName;
@@ -47,6 +48,8 @@
         }
 
         public Guid Id { get; set; }
+
+        public string Title { get; set; }
 
         public string FirstName { get; set; }
 

@@ -45,6 +45,7 @@
                     DateOfBirth = tenant.DateOfBirth,
                     DrivingLicenseReference = tenant.DrivingLicenseReference,
                     EmailAddress = tenant.EmailAddress,
+                    Title = tenant.Title,
                     FirstName = tenant.FirstName,
                     MiddleName = tenant.MiddleName,
                     LastName = tenant.LastName,

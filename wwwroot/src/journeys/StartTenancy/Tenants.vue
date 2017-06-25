@@ -9,7 +9,16 @@
         </div>
         <div class="subheading">What is the {{ tenant.isAdult ? 'tenants' : 'childs' }} name?</div>
         <div class="row">
-          <div class="col-xs-12 col-md-4">
+          <div class="col-xs-12 col-md-3">
+            <v-select :items="titles"
+                      v-model="tenant.title"
+                      @input="updateField(index, tenant, 'title')"
+                      label="Select a title"
+                      dark single-line auto>
+            </v-select>
+            <!--<span v-if="errorBag.has('title')" class="md-error">Select a valid title</span>-->
+          </div>
+          <div class="col-xs-12 col-md-3">
             <v-text-field v-model="tenant.firstName"
                           :value="tenant.firstName"
                           @input="updateField(index, tenant, 'firstName')"
@@ -18,14 +27,14 @@
             </v-text-field>
             <!--<span v-if="errorBag.has('firstName')" class="md-error">Enter a valid first name</span>-->
           </div>
-          <div class="col-xs-12 col-md-4">
+          <div class="col-xs-12 col-md-3">
             <v-text-field v-model="tenant.middleName"
                           :value="tenant.middleName"
                           @input="updateField(index, tenant, 'middleName')"
                           label="Middle name(s)">
             </v-text-field>
           </div>
-          <div class="col-xs-12 col-md-4">
+          <div class="col-xs-12 col-md-3">
             <v-text-field v-model="tenant.lastName"
                           :value="tenant.lastName"
                           @input="updateField(index, tenant, 'lastName')"
@@ -34,6 +43,8 @@
             </v-text-field>
             <!--<span v-if="errorBag.has('lastName')" class="md-error">Enter a valid last name</span>-->
           </div>
+        </div>
+        <div class="row">
           <div class="col-xs-12 col-md-4">
             <v-menu lazy :nudge-left="100">
               <v-text-field slot="activator"
@@ -196,6 +207,10 @@
   export default {
     name: 'tenants',
     props: {
+      titles: {
+        type: Array,
+        default: () => []
+      },
       counties: {
         type: Array,
         default: []

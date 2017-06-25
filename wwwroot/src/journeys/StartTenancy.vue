@@ -10,7 +10,9 @@
         <v-divider></v-divider>
         <v-stepper-step step="3" :complete="newTenancy.step > 3">Tenants</v-stepper-step>
         <v-divider></v-divider>
-        <v-stepper-step step="4" :complete="newTenancy.step > 4">Payment</v-stepper-step>
+        <v-stepper-step step="4" :complete="newTenancy.step > 4">Referencing</v-stepper-step>
+        <v-divider></v-divider>
+        <v-stepper-step step="5" :complete="newTenancy.step > 5">Payment</v-stepper-step>
         <v-divider></v-divider>
       </v-stepper-header>
       <v-stepper-content step="1">
@@ -20,9 +22,12 @@
         <property :tenancyTypes="viewData.tenancyTypes"></property>
       </v-stepper-content>
       <v-stepper-content step="3">
-        <tenants :counties="viewData.counties" :countries="viewData.countries"></tenants>
+        <tenants :titles="viewData.titles" :counties="viewData.counties" :countries="viewData.countries"></tenants>
       </v-stepper-content>
       <v-stepper-content step="4">
+        <referencing></referencing>
+      </v-stepper-content>
+      <v-stepper-content step="5">
         <payments :rentalFrequencies="viewData.rentalFrequencies"></payments>
       </v-stepper-content>
     </v-stepper>

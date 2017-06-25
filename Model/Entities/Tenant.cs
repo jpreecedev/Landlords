@@ -5,6 +5,8 @@
 
     public class Tenant : BaseModel
     {
+        public string Title { get; set; }
+
         public string FirstName { get; set; }
 
         public string MiddleName { get; set; }
