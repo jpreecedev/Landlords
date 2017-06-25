@@ -26,7 +26,7 @@
         <v-text-field v-model="rentalPaymentReference"
                       :value="rentalPaymentReference"
                       @input="updateRentalPaymentReference"
-                      label="What reference should the tenant use when paying?"
+                      label="Payment reference"
                       required>
         </v-text-field>
       </div>

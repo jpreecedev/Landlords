@@ -58,7 +58,7 @@
                 <v-text-field v-model="tenant.address.street"
                               :value="tenant.address.street"
                               :multi-line="true"
-                              :rows="2"
+                              :rows="1"
                               :auto-grow="true"
                               @input="updateAddress(index, tenant, 'street')"
                               label="Street address"
@@ -66,9 +66,7 @@
                 </v-text-field>
                 <!--<span v-if="errorBag.has('street')" class="md-error">Enter a valid street address</span>-->
               </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-4">
+              <div class="col-xs-6">
                 <v-text-field v-model="tenant.address.townOrCity"
                               :value="tenant.address.townOrCity"
                               @input="updateAddress(index, tenant, 'townOrCity')"
@@ -77,7 +75,9 @@
                 </v-text-field>
                 <!--<span v-if="errorBag.has('townOrCity')" class="md-error">Enter a valid town or city</span>-->
               </div>
-              <div class="col-xs-4">
+            </div>
+            <div class="row">
+              <div class="col-xs-12 col-md-4">
                 <v-select :items="counties"
                           v-model="tenant.address.countyOrRegion"
                           @input="updateAddress(index, tenant, 'countyOrRegion')"
@@ -86,7 +86,7 @@
                 </v-select>
                 <!--<span v-if="errorBag.has('countyOrRegion')" class="md-error">Enter a valid county or region</span>-->
               </div>
-              <div class="col-xs-4">
+              <div class="col-xs-12 col-md-4">
                 <v-text-field v-model="tenant.address.postcode"
                               :value="tenant.address.postcode"
                               @input="updateAddress(index, tenant, 'postcode')"
@@ -95,9 +95,7 @@
                 </v-text-field>
                 <!--<span v-if="errorBag.has('postcode')" class="md-error">Enter a valid postal code</span>-->
               </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-6">
+              <div class="col-xs-12 col-md-4">
                 <v-select :items="countries"
                           v-model="tenant.address.country"
                           @input="updateAddress(index, tenant, 'country')"
@@ -110,7 +108,7 @@
           <template v-if="tenant.isAdult">
             <div class="subheading mt-3">And finally, their contact details</div>
             <div class="row">
-              <div class="col-xs-6 col-md-4">
+              <div class="col-xs-12 col-md-4">
                 <v-text-field v-model="tenant.mainContactNumber"
                               :value="tenant.mainContactNumber"
                               @input="updateField(index, tenant, 'mainContactNumber')"
@@ -119,7 +117,7 @@
                 </v-text-field>
                 <!--<span v-if="errorBag.has('mainContactNumber')" class="md-error">Enter a valid contact number</span>-->
               </div>
-              <div class="col-xs-6 col-md-4">
+              <div class="col-xs-12 col-md-4">
                 <v-text-field v-model="tenant.secondaryContactNumber"
                               :value="tenant.secondaryContactNumber"
                               @input="updateField(index, tenant, 'secondaryContactNumber')"
@@ -127,7 +125,7 @@
                 </v-text-field>
                 <!--<span v-if="errorBag.has('secondaryContactNumber')" class="md-error">Enter a valid contact number</span>-->
               </div>
-              <div class="col-xs-6 col-md-4">
+              <div class="col-xs-12 col-md-4">
                 <v-text-field v-model="tenant.emailAddress"
                               :value="tenant.emailAddress"
                               @input="updateField(index, tenant, 'emailAddress')"

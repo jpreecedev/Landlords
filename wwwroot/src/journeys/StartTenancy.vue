@@ -3,6 +3,7 @@
     <h1 class="display-1">Start a new tenancy</h1>
     <v-stepper v-model="currentStep">
       <v-stepper-header>
+        <v-divider></v-divider>
         <v-stepper-step step="1" :complete="newTenancy.step > 1">Before we start</v-stepper-step>
         <v-divider></v-divider>
         <v-stepper-step step="2" :complete="newTenancy.step > 2">Property</v-stepper-step>

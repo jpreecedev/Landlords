@@ -187,3 +187,14 @@ p {
     text-align: right;
   }
 }
+
+.stepper,
+.stepper__header {
+  box-shadow: none;
+}
+
+.stepper {
+  &__content {
+    padding: 1rem 0;
+  }
+}

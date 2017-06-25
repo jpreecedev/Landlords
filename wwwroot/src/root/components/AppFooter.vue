@@ -1,5 +1,5 @@
 <template>
-  <v-footer :class="{ 'green': $route.path === '/', 'fixed-bottom': $route.path !== '/' }">
+  <v-footer>
     <v-btn flat warning dark @click.native="$store.commit('CLEAR_ALL_DATA')">Clear Store</v-btn>
     <v-spacer></v-spacer>
     <div>© {{ new Date().getFullYear() }}</div>
