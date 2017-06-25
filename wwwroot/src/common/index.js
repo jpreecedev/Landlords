@@ -1,5 +1,7 @@
-import ValidationGroup from './ValidationGroup'
+import PermissionsWarning from './PermissionsWarning'
+import ValidationSummary from './ValidationSummary'
 
 export default function install (Vue) {
-  Vue.component('validation-group', ValidationGroup)
+  Vue.component('permissions-warning', PermissionsWarning)
+  Vue.component('validation-summary', ValidationSummary)
 }

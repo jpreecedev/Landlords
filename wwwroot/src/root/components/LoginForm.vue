@@ -9,23 +9,33 @@
         </v-card-row>
         <v-card-text>
           <v-card-row>
-            <md-input-container :class="{ 'md-input-invalid': errorBag.has('emailAddress') }">
-              <label for="emailAddress">Email Address</label>
-              <md-input type="email" id="emailAddress" name="emailAddress" data-vv-name="emailAddress" v-validate="'required|email'" v-model="credentials.username" data-vv-validate-on="change" required />
-              <span v-if="errorBag.has('emailAddress')" class="md-error">Enter a valid email address</span>
-            </md-input-container>
+            <v-text-field v-model="credentials.username"
+                          :rules="[$validation.rules.required, $validation.rules.email]"
+                          :value="credentials.username"
+                          label="Email address"
+                          required>
+            </v-text-field>
           </v-card-row>
           <v-card-row>
-            <md-input-container :class="{ 'md-input-invalid': errorBag.has('password') }">
-              <label for="password">Password</label>
-              <md-input type="password" id="password" name="password" data-vv-name="password" v-model="credentials.password" v-validate="'required|min:8'" data-vv-validate-on="change" required />
-              <span v-if="errorBag.has('password')" class="md-error">Enter your password</span>
-            </md-input-container>
+            <v-text-field v-model="credentials.password"
+                          :rules="[$validation.rules.required, $validation.rules.min_length(credentials.password, 8)]"
+                          :append-icon="credentials.passwordPlain ? 'visibility' : 'visibility_off'"
+                          :append-icon-cb="() => (credentials.passwordPlain = !credentials.passwordPlain)"
+                          :type="!credentials.passwordPlain ? 'password' : 'text'"
+                          label="Password"
+                          min="8"
+                          required>
+            </v-text-field>
           </v-card-row>
         </v-card-text>
         <v-card-row actions>
-          <v-btn primary flat type="submit" :disabled="loggingIn">Log in</v-btn>
-          <v-btn flat type="reset" @click.native="reset()">Reset</v-btn>
+          <div class="col-xs-6">
+            <validation-summary :errors="errors"></validation-summary>
+          </div>
+          <div class="col-xs-6">
+            <v-btn primary flat type="submit" :disabled="loggingIn">Log in</v-btn>
+            <v-btn flat type="reset" @click.native="reset()">Reset</v-btn>
+          </div>
         </v-card-row>
       </v-card>
     </form>
@@ -33,9 +43,7 @@
 </template>
 
 <script>
-
 import utils from 'utils'
-import { ErrorBag } from 'vee-validate'
 
 export default {
   name: 'loginform',
@@ -43,43 +51,41 @@ export default {
     return {
       credentials: {
         username: '',
-        password: ''
+        password: '',
+        passwordPlain: false
       },
-      loggingIn: false
+      loggingIn: false,
+      errors: []
     }
   },
   methods: {
     validateBeforeSubmit: function () {
-      this.$validator.validateAll().then(() => {
-        this.loggingIn = true
-        var bag = new ErrorBag()
-        this.$auth.login(this.credentials, 'dashboard')
+      this.loggingIn = true
+      this.errors = []
+
+      this.$auth.login(this.credentials, 'dashboard')
         .then(response => {
           this.loggingIn = false
           if (!response.ok) {
             var validationResult = utils.getFormValidationErrors(response)
             validationResult.errors.forEach(validationError => {
-              bag.add(validationError.key, validationError.messages[0], 'required')
+              this.errors.push({
+                key: validationError.key,
+                message: validationError.messages[0]
+              })
             })
             if (validationResult.status) {
-              bag.add('GenericError', validationResult.status, 'generic')
+              this.errors.push({
+                key: 'GenericError',
+                message: validationResult.status
+              })
             }
           }
         })
-        this.$validator.errorBag = bag
-      })
     },
     reset: function () {
-      this.errors.clear()
+      this.errors = []
     }
   }
 }
 </script>
-
-<style lang="scss" scoped>
-
-  h3 {
-    text-align: center;
-  }
-
-</style>
