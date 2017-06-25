@@ -1,7 +1,6 @@
 ﻿namespace Landlords.ViewModels
 {
     using System;
-    using Model.DataTypes;
     using Model.Entities;
 
     public class TenancyViewModel
@@ -10,7 +9,7 @@
         {
         }
 
-        public TenancyViewModel(Tenancy tenancy, PropertyDetails propertyDetails)
+        public TenancyViewModel(Tenancy tenancy, Guid propertyDetailsId)
         {
             if (tenancy == null)
             {
@@ -18,7 +17,7 @@
             }
 
             Id = tenancy.Id;
-            PropertyDetails = new PropertyDetailsViewModel(propertyDetails);
+            PropertyDetailsId = propertyDetailsId;
             StartDate = tenancy.StartDate;
             EndDate = tenancy.EndDate;
             TenancyType = tenancy.TenancyType;
@@ -29,7 +28,7 @@
 
         public Guid Id { get; set; }
         
-        public PropertyDetailsViewModel PropertyDetails { get; set; }
+        public Guid PropertyDetailsId { get; set; }
 
         public DateTime StartDate { get; set; }
 

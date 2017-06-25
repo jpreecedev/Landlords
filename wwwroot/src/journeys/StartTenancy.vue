@@ -58,7 +58,15 @@
     methods: {
       next () {
         if (this.newTenancy.step === 4) {
-          alert('done')
+          this.$http.post('/api/journeys/starttenancy', { ...this.newTenancy })
+            .then(response => {
+              alert('done')
+            })
+            .catch(response => {
+              this.saved = false
+              // Handle error
+              debugger
+            })
         } else {
           this.$store.commit('TENANCY_NEXT_STEP', this.newTenancy)
         }

@@ -27,14 +27,14 @@
                 <v-card-row>
                   <md-input-container :class="{ 'md-input-invalid': errorBag.has('firstName') }">
                     <label for="firstName">First name</label>
-                    <md-input v-model="profile.firstName" id="firstName" name="firstName" type="text" data-vv-name="firstName" v-validate="'required'" data-vv-validate-on="change" required />
+                    <md-input v-model="profile.firstName" id="firstName" name="firstName" type="text" data-vv-name="firstName" v-validate="'required'" data-vv-validate-on="change" required></md-input>
                     <span v-if="errorBag.has('firstName')" class="md-error">Enter a valid first name</span>
                   </md-input-container>
                 </v-card-row>
                 <v-card-row>
                   <md-input-container :class="{ 'md-input-invalid': errorBag.has('lastName') }">
                     <label for="lastName">Last name</label>
-                    <md-input v-model="profile.lastName" id="lastName" name="lastName" type="text" data-vv-name="lastName" v-validate="'required'" data-vv-validate-on="change" required />
+                    <md-input v-model="profile.lastName" id="lastName" name="lastName" type="text" data-vv-name="lastName" v-validate="'required'" data-vv-validate-on="change" required></md-input>
                     <span v-if="errorBag.has('lastName')" class="md-error">Enter a valid last name</span>
                   </md-input-container>
                 </v-card-row>
@@ -79,13 +79,13 @@
                 <v-card-row>
                   <md-input-container>
                     <label for="phoneNumber">Main Phone Number</label>
-                    <md-input v-model="profile.phoneNumber" id="phoneNumber" name="phoneNumber" type="tel" required />
+                    <md-input v-model="profile.phoneNumber" id="phoneNumber" name="phoneNumber" type="tel" required></md-input>
                   </md-input-container>
                 </v-card-row>
                 <v-card-row>
                   <md-input-container>
                     <label for="secondaryPhoneNumber">Secondary Phone Number</label>
-                    <md-input v-model="profile.secondaryPhoneNumber" id="secondaryPhoneNumber" name="secondaryPhoneNumber" type="tel" required />
+                    <md-input v-model="profile.secondaryPhoneNumber" id="secondaryPhoneNumber" name="secondaryPhoneNumber" type="tel" required></md-input>
                   </md-input-container>
                 </v-card-row>
               </v-card-text>

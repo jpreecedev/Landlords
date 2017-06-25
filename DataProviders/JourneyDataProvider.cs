@@ -130,7 +130,7 @@
 
             return new Tenancy
             {
-                PropertyDetailsId = tenancy.PropertyDetails.Id,
+                PropertyDetailsId = tenancy.PropertyDetailsId,
                 Created = DateTime.Now,
                 StartDate = tenancy.StartDate,
                 EndDate = tenancy.EndDate,

@@ -2,9 +2,7 @@ import Vue from 'Vue'
 
 let newTenancy = {
   step: 1,
-  tenancy: {
-    propertyDetails: {}
-  },
+  tenancy: {},
   tenants: [{
     dateOfBirth: '1970-01-01',
     isLeadTenant: true,
@@ -79,7 +77,7 @@ export const TENANT_UPDATE_ADDRESS = (state, tenant) => {
 }
 
 export const TENANCY_SELECTED_PROPERTY = (state, propertyId) => {
-  state.newTenancy.tenancy.propertyDetails.id = propertyId
+  state.newTenancy.tenancy.propertyDetailsId = propertyId
 }
 
 export const TENANCY_SELECTED_TENANCY_TYPE = (state, tenancyType) => {

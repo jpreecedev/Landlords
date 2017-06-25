@@ -23,8 +23,7 @@
               <v-text-field v-model="tenant.middleName"
                             :value="tenant.middleName"
                             @input="updateField(index, tenant, 'middleName')"
-                            label="Middle name(s)"
-                            required>
+                            label="Middle name(s)">
               </v-text-field>
             </div>
             <div class="col-xs-12 col-md-4">
@@ -42,7 +41,7 @@
                               label="Date of birth"
                               v-model="tenant.dateOfBirth"
                               prepend-icon="date_range"
-                              readonly>
+                              required readonly>
                 </v-text-field>
                 <v-date-picker v-model="tenant.dateOfBirth"
                                :value="tenant.dateOfBirth"
@@ -103,7 +102,7 @@
                           v-model="tenant.address.country"
                           @input="updateAddress(index, tenant, 'country')"
                           label="Select a country"
-                          dark single-line auto>
+                          dark single-line auto required>
                 </v-select>
               </div>
             </div>
@@ -124,8 +123,7 @@
                 <v-text-field v-model="tenant.secondaryContactNumber"
                               :value="tenant.secondaryContactNumber"
                               @input="updateField(index, tenant, 'secondaryContactNumber')"
-                              label="Another contact number"
-                              required>
+                              label="Another contact number">
                 </v-text-field>
                 <!--<span v-if="errorBag.has('secondaryContactNumber')" class="md-error">Enter a valid contact number</span>-->
               </div>
@@ -186,7 +184,7 @@
     }),
     methods: {
       addOccupier (isAdult) {
-        this.$store.commit('TENANT_ADD_TENANT', { isLeadTenant: false, dateOfBirth: '1970-01-01', isAdult: isAdult, address: {} })
+        this.$store.commit('TENANT_ADD_TENANT', { isLeadTenant: false, dateOfBirth: '2005-01-01', isAdult: isAdult, address: {} })
       },
       deleteOccupier (index) {
         this.$store.commit('TENANT_REMOVE_TENANT', index)

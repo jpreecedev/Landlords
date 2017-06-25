@@ -1,14 +1,15 @@
 <template>
   <div>
+    <h2 class="title">Your agreement with the tenant</h2>
     <div class="row">
       <div class="col-xs-12 col-md-6">
-        <div class="subheading">Please tell us which property you are renting out</div>
+        <div class="subheading">Which property are you renting out?</div>
         <v-select :items="portfolioProperties"
                   :value="selectedProperty"
                   @input="updateSelectedProperty"
                   item-value="id"
-                  label="Select a property from your portfolio"
-                  dark single-line auto>
+                  label="Select a property"
+                  dark single-line auto required>
         </v-select>
       </div>
       <div class="col-xs-12 col-md-6">
@@ -84,7 +85,7 @@
       }
     },
     computed: mapState({
-      selectedProperty: state => state.newTenancy.tenancy.propertyDetails.id,
+      selectedProperty: state => state.newTenancy.tenancy.propertyDetailsId,
       selectedTenancyType: state => state.newTenancy.tenancy.tenancyType,
       startDate: state => state.newTenancy.tenancy.startDate,
       endDate: state => state.newTenancy.tenancy.endDate
