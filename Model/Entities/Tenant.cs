@@ -23,6 +23,8 @@
 
         public string Occupation { get; set; }
 
+        public string EmploymentType { get; set; }
+
         public string CompanyName { get; set; }
 
         public string WorkContactNumber { get; set; }

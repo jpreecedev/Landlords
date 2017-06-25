@@ -25,7 +25,7 @@
         <tenants :titles="viewData.titles" :counties="viewData.counties" :countries="viewData.countries"></tenants>
       </v-stepper-content>
       <v-stepper-content step="4">
-        <referencing></referencing>
+        <referencing :contactTypes="viewData.tenantContactTypes" :employmentTypes="viewData.employmentTypes"></referencing>
       </v-stepper-content>
       <v-stepper-content step="5">
         <payments :rentalFrequencies="viewData.rentalFrequencies"></payments>
@@ -37,7 +37,7 @@
         <v-btn flat dark @click.native="back()">Go back</v-btn>
       </div>
       <div class="col-xs-6 text-right">
-        <v-btn primary @click.native="next()" light>{{ newTenancy.step === 4 ? 'Finished' : 'Continue' }}</v-btn>
+        <v-btn primary @click.native="next()" light>{{ newTenancy.step === 5 ? 'Finished' : 'Continue' }}</v-btn>
       </div>
     </div>
 
@@ -63,7 +63,7 @@
     },
     methods: {
       next () {
-        if (this.newTenancy.step === 4) {
+        if (this.newTenancy.step === 5) {
           this.$http.post('/api/journeys/starttenancy', { ...this.newTenancy })
             .then(response => {
               alert('done')

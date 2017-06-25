@@ -18,5 +18,9 @@
         public string[] DefaultRentalFrequencies { get; } = RentalFrequencies.GetDefaultRentalFrequencies();
 
         public string[] DefaultTitles { get; } = Titles.GetDefaultTitles();
+
+        public string[] DefaultEmploymentTypes { get; } = EmploymentTypes.GetDefaultEmploymentTypes();
+
+        public string[] DefaultTenantContactTypes { get; } = TenantContactTypes.GetDefaultTenantContactTypes();
     }
 }

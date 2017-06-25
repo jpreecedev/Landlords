@@ -1,6 +1,8 @@
 import Vue from 'Vue'
 
 let defaultAddress = {}
+let defaultContact = {}
+
 let newTenancy = {
   step: 1,
   tenancy: {},
@@ -9,7 +11,9 @@ let newTenancy = {
     isLeadTenant: true,
     isAdult: true,
     addresses: [defaultAddress],
-    contacts: [{}]
+    contacts: [defaultContact],
+    isSmoker: false,
+    hasPets: false
   }]
 }
 
@@ -75,11 +79,23 @@ export const TENANT_UPDATE_FIELD = (state, tenant) => {
 }
 
 export const TENANT_ADD_ADDRESS = (state, tenantIndex) => {
-  state.newTenancy.tenants[tenantIndex].addresses.push(defaultAddress)
+  state.newTenancy.tenants[tenantIndex].addresses.push(Object.assign({}, defaultAddress))
+}
+
+export const TENANT_ADD_CONTACT = (state, tenantIndex) => {
+  state.newTenancy.tenants[tenantIndex].contacts.push(Object.assign({}, defaultContact))
+}
+
+export const TENANT_DELETE_CONTACT = (state, obj) => {
+  state.newTenancy.tenants[obj.tenantIndex].contacts.splice(obj.contactIndex, 1)
 }
 
 export const TENANT_UPDATE_ADDRESS = (state, obj) => {
   state.newTenancy.tenants[obj.tenantIndex].addresses[obj.addressIndex][obj.field] = obj.address[obj.field]
+}
+
+export const TENANT_UPDATE_CONTACT = (state, obj) => {
+  state.newTenancy.tenants[obj.tenantIndex].contacts[obj.contactIndex][obj.field] = obj.contact[obj.field]
 }
 
 export const TENANCY_SELECTED_PROPERTY = (state, propertyId) => {

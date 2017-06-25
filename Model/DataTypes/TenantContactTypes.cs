@@ -1,6 +1,6 @@
 ﻿namespace Model.DataTypes
 {
-    public static class TenantContactType
+    public static class TenantContactTypes
     {
         public const string Referee = "Referee";
         public const string EmergencyContact = "EmergencyContact";

@@ -6,6 +6,7 @@ import moment from 'moment'
 export const STORAGE_KEY = 'landlords'
 
 let defaultAddress = {}
+let defaultContact = {}
 
 let newTenancy = {
   step: 1,
@@ -18,7 +19,9 @@ let newTenancy = {
     isLeadTenant: true,
     isAdult: true,
     addresses: [defaultAddress],
-    contacts: [{}]
+    contacts: [defaultContact],
+    isSmoker: false,
+    hasPets: false
   }]
 }
 
