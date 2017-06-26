@@ -19,6 +19,10 @@
             {
                 return list.Count >= _minElements;
             }
+            if (list == null)
+            {
+                return true;
+            }
             return false;
         }
     }

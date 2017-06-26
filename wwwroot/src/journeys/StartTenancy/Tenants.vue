@@ -175,7 +175,6 @@
             <div class="col-xs-12 col-md-4">
               <v-text-field v-model="tenant.secondaryContactNumber"
                             :value="tenant.secondaryContactNumber"
-                            :rules="[$validation.rules.min_length(tenant.secondaryContactNumber, 2)]"
                             @input="updateField(index, tenant, 'secondaryContactNumber')"
                             label="Another contact number">
               </v-text-field>

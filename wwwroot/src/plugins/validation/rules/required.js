@@ -7,7 +7,7 @@ const required = value => {
     return 'This field is required'
   }
 
-  return String(value).trim().length ? true : 'Please enter a valid value into this field'
+  return String(value).trim().length ? true : 'This field is required'
 }
 
 export default required

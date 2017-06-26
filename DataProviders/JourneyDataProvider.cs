@@ -27,7 +27,7 @@
             await Context.AddAsync(tenancy);
 
             var tenantTenancy = CreateTenantTenancy(tenants, tenancy);
-            await Context.AddAsync(tenantTenancy);
+            await Context.AddRangeAsync(tenantTenancy);
 
             await Context.SaveChangesAsync();
         }
@@ -73,7 +73,7 @@
         {
             if (addresses == null)
             {
-                throw new ArgumentNullException(nameof(addresses));
+                return null;
             }
 
             var result = new List<TenantAddress>();
@@ -101,7 +101,7 @@
         {
             if (contacts == null)
             {
-                throw new ArgumentNullException(nameof(contacts));
+                return null;
             }
 
             var result = new List<TenantContact>();
@@ -144,14 +144,15 @@
             };
         }
 
-        private TenantTenancy CreateTenantTenancy(ICollection<Tenant> tenants, Tenancy tenancy)
+        private ICollection<TenantTenancy> CreateTenantTenancy(ICollection<Tenant> tenants, Tenancy tenancy)
         {
-            return new TenantTenancy
+            return tenants.Select(c => new TenantTenancy
             {
                 Created = DateTime.Now,
                 Tenancy = tenancy,
-                Tenant = tenants.Single(c => c.IsLeadTenant)
-            };
+                Tenant = c
+            })
+            .ToList();
         }
     }
 }

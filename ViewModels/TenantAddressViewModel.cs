@@ -3,6 +3,7 @@
     using System;
     using System.ComponentModel.DataAnnotations;
     using Model.Entities;
+    using Model.Validation;
 
     public class TenantAddressViewModel
     {
@@ -10,7 +11,7 @@
         {
         }
 
-        public TenantAddressViewModel(TenantAddress tenantAddress)
+        public TenantAddressViewModel(bool isChild, TenantAddress tenantAddress)
         {
             if (tenantAddress == null)
             {
@@ -25,9 +26,12 @@
             Country = tenantAddress.Country;
             YearsAtAddress = tenantAddress.YearsAtAddress;
             MonthsAtAddress = tenantAddress.MonthsAtAddress;
+            IsChild = isChild;
         }
 
         public Guid Id { get; set; }
+
+        public bool IsChild { get; private set; }
         
         [Required, MinLength(2)]
         public string Street { get; set; }
@@ -45,11 +49,11 @@
         public string Country { get; set; }
 
         [Display(Name = "Years at address")]
-        [Range(1, 100)]
+        [RangeIfTrue("IsChild", 1, 100)]
         public int YearsAtAddress { get; set; }
 
         [Display(Name = "Months at address")]
-        [Range(0, 12)]
+        [RangeIfTrue("IsChild", 0, 12)]
         public int MonthsAtAddress { get; set; }
     }
 }

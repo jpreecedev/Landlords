@@ -6,8 +6,8 @@ let defaultAddress = {
   townOrCity: null,
   postcode: null,
   country: null,
-  yearsAtAddress: null,
-  monthsAtAddress: null
+  yearsAtAddress: 0,
+  monthsAtAddress: 0
 }
 let defaultContact = {}
 let defaultTenant = {
@@ -82,7 +82,12 @@ export const CLEAR_ALL_DATA = (state) => {
 }
 
 export const TENANT_ADD_TENANT = (state, isAdult) => {
-  state.newTenancy.tenants.push(Object.assign({}, defaultTenant, { isLeadTenant: false, isAdult: isAdult }))
+  var item = Object.assign({}, defaultTenant, { isLeadTenant: false, isAdult: isAdult })
+  if (!isAdult) {
+    item.addresses = null
+    item.contacts = null
+  }
+  state.newTenancy.tenants.push(item)
 }
 
 export const TENANT_REMOVE_TENANT = (state, index) => {

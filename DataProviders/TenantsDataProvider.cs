@@ -25,7 +25,7 @@
                           join tt in Context.TenantTenancies.Include(x => x.Tenancy.PropertyDetails) on tenant.Id equals tt.TenantId
                           join tenantAddress in Context.TenantAddresses on tenant.Id equals tenantAddress.TenantId into tenantAddressJoin
                           join tenantContacts in Context.TenantContacts on tenant.Id equals tenantContacts.TenantId into tenantContactsJoin
-                          where tt.Tenancy.PropertyDetails.PortfolioId == portfolioId && !tenant.IsDeleted && (tenant.FirstName != null || tenant.LastName != null)
+                          where tt.Tenancy.PropertyDetails.PortfolioId == portfolioId && tenant.IsLeadTenant && !tenant.IsDeleted && (tenant.FirstName != null || tenant.LastName != null)
                           select new TenantViewModel(tenant, tenantAddressJoin.Where(c => !c.IsDeleted).ToList(), tenantContactsJoin.Where(c => !c.IsDeleted).ToList())
                 )
                 .ToListAsync();
@@ -39,7 +39,7 @@
                           join tt in Context.TenantTenancies.Include(x => x.Tenancy.PropertyDetails) on tenant.Id equals tt.TenantId
                           join tenantAddress in Context.TenantAddresses on tenant.Id equals tenantAddress.TenantId into tenantAddressJoin
                           join tenantContacts in Context.TenantContacts on tenant.Id equals tenantContacts.TenantId into tenantContactsJoin
-                          where tt.Tenancy.PropertyDetails.PortfolioId == portfolioId && tt.Tenancy.PropertyDetailsId == propertyDetailsId && !tenant.IsDeleted && (tenant.FirstName != null || tenant.LastName != null)
+                          where tt.Tenancy.PropertyDetails.PortfolioId == portfolioId && tt.Tenancy.PropertyDetailsId == propertyDetailsId && tenant.IsLeadTenant && !tenant.IsDeleted && (tenant.FirstName != null || tenant.LastName != null)
                           select new TenantViewModel(tenant, tenantAddressJoin.Where(c => !c.IsDeleted).ToList(), tenantContactsJoin.Where(c => !c.IsDeleted).ToList())
                 )
                 .ToListAsync();
@@ -57,7 +57,7 @@
                 join tenancies in Context.Tenancies on tt.TenancyId equals tenancies.Id
                 join propertyDetails in Context.PropertyDetails on tenancies.PropertyDetailsId equals propertyDetails.Id
                 join aup in Context.ApplicationUserPortfolios on propertyDetails.PortfolioId equals aup.PortfolioId
-                where aup.AgencyId == agencyId && !tenancies.IsDeleted && !propertyDetails.IsDeleted && !aup.IsDeleted && !tenant.IsDeleted && (tenant.FirstName != null || tenant.LastName != null)
+                where aup.AgencyId == agencyId && !tenancies.IsDeleted && !propertyDetails.IsDeleted && !aup.IsDeleted && tenant.IsLeadTenant && !tenant.IsDeleted && (tenant.FirstName != null || tenant.LastName != null)
                 select new TenantViewModel(tenant, tenantAddressJoin.Where(c => !c.IsDeleted).ToList(), tenantContactsJoin.Where(c => !c.IsDeleted).ToList())).ToListAsync();
         }
 
