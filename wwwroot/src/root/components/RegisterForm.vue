@@ -7,43 +7,49 @@
         </v-card-title>
         <v-card-text>
           <v-card-row>
-            <md-input-container :class="{ 'md-input-invalid': errorBag.has('firstName') }">
-              <label for="firstName">First name</label>
-              <md-input v-model="newUser.firstName" id="firstName" name="firstName" type="text" data-vv-name="firstName" v-validate="'required'" data-vv-validate-on="change" required />
-              <span v-if="errorBag.has('firstName')" class="md-error">Enter a valid first name</span>
-            </md-input-container>
+            <v-text-field v-model="newUser.firstName"
+                          :rules="[$validation.rules.required, $validation.rules.min_length(newUser.firstName, 2)]"
+                          label="First name"
+                          required>
+            </v-text-field>
           </v-card-row>
           <v-card-row>
-            <md-input-container :class="{ 'md-input-invalid': errorBag.has('lastName') }">
-              <label for="lastName">Last name</label>
-              <md-input v-model="newUser.lastName" id="lastName" name="lastName" type="text" data-vv-name="lastName" v-validate="'required'" data-vv-validate-on="change" required />
-              <span v-if="errorBag.has('lastName')" class="md-error">Enter a valid last name</span>
-            </md-input-container>
+            <v-text-field v-model="newUser.lastName"
+                          :rules="[$validation.rules.required, $validation.rules.min_length(newUser.lastName, 2)]"
+                          label="Last name"
+                          required>
+            </v-text-field>
           </v-card-row>
           <v-card-row>
-            <md-input-container :class="{ 'md-input-invalid': errorBag.has('emailAddress') }">
-              <label for="email">E-mail</label>
-              <md-input v-model="newUser.emailAddress" id="emailAddress" name="emailAddress" type="text" data-vv-name="emailAddress" v-validate="'required|email'" data-vv-validate-on="none" required />
-              <span v-if="errorBag.has('emailAddress')" class="md-error">Enter a valid email address</span>
-            </md-input-container>
+            <v-text-field v-model="newUser.emailAddress"
+                          :rules="[$validation.rules.required, $validation.rules.email]"
+                          label="Email address"
+                          required>
+            </v-text-field>
           </v-card-row>
           <v-card-row>
-            <md-input-container :class="{ 'md-input-invalid': errorBag.has('password') }">
-              <label for="password">Password</label>
-              <md-input v-model="newUser.password" id="password" name="password" type="password" data-vv-name="password" v-validate="'required|min:8|confirmed:repeatPassword'" data-vv-validate-on="change" required />
-              <span v-if="errorBag.has('password:min')" class="md-error">{{ errorBag.first('password:min') }}</span>
-              <span v-else-if="errorBag.has('password:required')" class="md-error">{{ errorBag.first('password:required') }}</span>
-            </md-input-container>
+            <v-text-field v-model="newUser.password"
+                          :rules="[$validation.rules.required, $validation.rules.min_length(newUser.password, 8)]"
+                          :append-icon="newUser.passwordPlain ? 'visibility' : 'visibility_off'"
+                          :append-icon-cb="() => (newUser.passwordPlain = !newUser.passwordPlain)"
+                          :type="!newUser.passwordPlain ? 'password' : 'text'"
+                          label="Password"
+                          min="8"
+                          required>
+            </v-text-field>
           </v-card-row>
           <v-card-row>
-            <md-input-container :class="{ 'md-input-invalid': errorBag.has('password') }">
-              <label for="repeatPassword">Repeat password </label>
-              <md-input id="repeatPassword" name="repeatPassword" type="password" data-vv-name="repeatPassword" v-validate="'required'" v-model="newUser.repeatPassword" data-vv-as="password confirmation" data-vv-validate-on="change" />
-              <span v-if="errorBag.has('password:confirmed')" class="md-error">{{ errorBag.first('password:confirmed') }}</span>
-            </md-input-container>
+            <v-text-field v-model="newUser.repeatPassword"
+                          :rules="[$validation.rules.required, $validation.rules.min_length(newUser.repeatPassword, 8)]"
+                          :append-icon="newUser.repeatPasswordPlain ? 'visibility' : 'visibility_off'"
+                          :append-icon-cb="() => (newUser.repeatPasswordPlain = !newUser.repeatPasswordPlain)"
+                          :type="!newUser.repeatPasswordPlain ? 'password' : 'text'"
+                          label="Repeat password"
+                          min="8"
+                          required>
+            </v-text-field>
           </v-card-row>
         </v-card-text>
-        <v-divider></v-divider>
         <v-card-row actions>
           <v-btn primary flat type="submit" :disabled="registering" id="register" name="register">Register</v-btn>
           <v-btn flat type="reset" @click.native="reset()">Reset</v-btn>
@@ -55,64 +61,59 @@
 
 <script>
   import utils from 'utils'
-  import { ErrorBag } from 'vee-validate'
+
+  let defaultUser = {
+    firstName: '',
+    lastName: '',
+    emailAddress: '',
+    password: '',
+    passwordPlain: '',
+    repeatPassword: '',
+    repeatPasswordPlain: ''
+  }
 
   export default {
     name: 'registerform',
     data () {
       return {
-        newUser: {
-          firstName: '',
-          lastName: '',
-          emailAddress: '',
-          password: '',
-          repeatPassword: ''
-        },
-        registering: false
+        newUser: Object.assign({}, defaultUser),
+        registering: false,
+        errors: []
       }
     },
     methods: {
       validateBeforeSubmit: function () {
-        this.$validator.validateAll().then(() => {
-          this.registering = true
-          var bag = new ErrorBag()
+        this.registering = true
+        this.errors = []
 
-          const registrationDetails = {
-            firstName: this.newUser.firstName,
-            lastName: this.newUser.lastName,
-            emailAddress: this.newUser.emailAddress,
-            password: this.newUser.password
-          }
+        const registrationDetails = {
+          firstName: this.newUser.firstName,
+          lastName: this.newUser.lastName,
+          emailAddress: this.newUser.emailAddress,
+          password: this.newUser.password
+        }
 
-          this.$http.post('/api/register', registrationDetails).then((response) => {
-            this.registering = false
-            if (!response.ok) {
-              var validationResult = utils.getFormValidationErrors(response)
-              validationResult.errors.forEach(validationError => {
-                bag.add(validationError.key, validationError.messages[0], 'required')
-              })
-              if (validationResult.status) {
-                bag.add('GenericError', validationResult.status, 'generic')
-              }
-            }
-          })
-          .catch(response => {
+        this.$http.post('/api/register', registrationDetails).then((response) => {
+          this.registering = false
+          if (!response.ok) {
             var validationResult = utils.getFormValidationErrors(response)
             validationResult.errors.forEach(validationError => {
-              bag.add(validationError.key, validationError.messages[0], 'required')
+              this.errors.push({
+                key: validationError.key,
+                message: validationError.messages[0]
+              })
             })
             if (validationResult.status) {
-              bag.add('GenericError', validationResult.status, 'generic')
+              this.errors.push({
+                key: 'GenericError',
+                message: validationResult.status
+              })
             }
-          })
-          this.$validator.errorBag = bag
-        })
-        .catch(() => {
-          window.scrollTo(0, 0)
+          }
         })
       },
-      reset: function () {
-        this.errors.clear()
+      reset () {
+        this.newUser = Object.assign({}, this.defaultUser)
       }
     }
   }
