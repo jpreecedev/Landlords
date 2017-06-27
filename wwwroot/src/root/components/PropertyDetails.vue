@@ -41,41 +41,47 @@
               </v-card-title>
               <v-card-text>
                 <v-card-row>
-                  <md-input-container :class="{ 'md-input-invalid' : errorBag.has('reference') }">
-                    <label for="reference">Property Reference</label>
-                    <md-input v-model="propertyDetails.reference" id="reference" name="reference" data-vv-name="reference" v-validate="'required'" data-vv-validate-on="change" required />
-                  </md-input-container>
+                  <v-text-field v-model="propertyDetails.reference"
+                                :rules="[$validation.rules.required, $validation.rules.min_length(propertyDetails.reference, 2), $validation.rules.max_length(propertyDetails.reference, 255)]"
+                                label="Property reference"
+                                required>
+                  </v-text-field>
                 </v-card-row>
                 <v-card-row>
-                  <md-input-container :class="{ 'md-input-invalid' : errorBag.has('propertyType') }">
-                    <label for="propertyType">Property Type</label>
-                    <md-select v-model="propertyDetails.propertyType" data-vv-name="propertyType" v-validate="'required'" data-vv-validate-on="change" id="propertyType" name="propertyType" required>
-                      <md-option disabled value="">Select a property type</md-option>
-                      <md-option v-for="propertyType in propertyTypes" v-bind:value="propertyType" :key="propertyType">{{ propertyType }}</md-option>
-                    </md-select>
-                    <span v-if="errorBag.has('propertyType')" class="md-error">Select a valid property type</span>
-                  </md-input-container>
+                  <v-select :items="propertyTypes"
+                            :rules="[$validation.rules.required]"
+                            v-model="propertyDetails.propertyType"
+                            label="Property type"
+                            dark single-line auto>
+                  </v-select>
                 </v-card-row>
                 <v-card-row>
-                  <md-input-container :class="{ 'md-input-invalid' : errorBag.has('bedrooms') }">
-                    <label for="bedrooms">Number of bedrooms</label>
-                    <md-input type="number" v-model="propertyDetails.bedrooms" id="bedrooms" name="bedrooms" />
-                  </md-input-container>
+                  <v-text-field v-model="propertyDetails.bedrooms"
+                                label="Number of bedrooms"
+                                type="number">
+                  </v-text-field>
                 </v-card-row>
                 <v-card-row>
-                  <md-input-container :class="{ 'md-input-invalid' : errorBag.has('furnishing') }">
-                    <label for="furnishing">Furnishing</label>
-                    <md-select v-model="propertyDetails.furnishing" data-vv-name="furnishing" v-validate="'required'" data-vv-validate-on="change" id="furnishing" name="furnishing" required>
-                      <md-option disabled value="">Select a furnishing type</md-option>
-                      <md-option v-for="furnishing in furnishings" v-bind:value="furnishing" :key="furnishing">{{ furnishing }}</md-option>
-                    </md-select>
-                    <span v-if="errorBag.has('furnishing')" class="md-error">Select a valid furnishing</span>
-                  </md-input-container>
+                  <v-select :items="furnishings"
+                            :rules="[$validation.rules.required]"
+                            v-model="propertyDetails.furnishing"
+                            label="Furnishings"
+                            dark single-line auto>
+                  </v-select>
                 </v-card-row>
                 <v-card-row>
                   <md-input-container>
-                    <label for="constructionDate">Construction Date</label>
-                    <md-input v-model="propertyDetails.constructionDate" id="constructionDate" name="constructionDate" type="date" />
+                    <v-menu lazy :nudge-left="100">
+                      <v-text-field slot="activator"
+                                    label="Construction date"
+                                    v-model="propertyDetails.constructionDate"
+                                    prepend-icon="date_range"
+                                    required readonly>
+                      </v-text-field>
+                      <v-date-picker v-model="propertyDetails.constructionDate"
+                                     scrollable>
+                      </v-date-picker>
+                    </v-menu>
                   </md-input-container>
                 </v-card-row>
               </v-card-text>
@@ -84,47 +90,48 @@
               </v-card-title>
               <v-card-text>
                 <v-card-row>
-                  <md-input-container :class="{ 'md-input-invalid' : errorBag.has('propertyStreetAddress') }">
-                    <label for="propertyStreetAddress">Street address</label>
-                    <md-textarea v-model="propertyDetails.propertyStreetAddress" data-vv-name="propertyStreetAddress" v-validate="'required'" data-vv-validate-on="change"  id="propertyStreetAddress" rows="3" name="propertyStreetAddress" required />
-                    <span v-if="errorBag.has('propertyStreetAddress')" class="md-error">Enter a valid street address</span>
-                  </md-input-container>
+                  <v-text-field v-model="propertyDetails.propertyStreetAddress"
+                                :multi-line="true"
+                                :rows="3"
+                                :auto-grow="true"
+                                :rules="[$validation.rules.required, $validation.rules.min_length(propertyDetails.propertyStreetAddress, 2), $validation.rules.max_length(propertyDetails.propertyStreetAddress, 255)]"
+                                label="Street address"
+                                required>
+                  </v-text-field>
                 </v-card-row>
                 <v-card-row>
-                  <md-input-container :class="{ 'md-input-invalid' : errorBag.has('propertyTownOrCity') }">
-                    <label for="propertyTownOrCity">Town or City</label>
-                    <md-input v-model="propertyDetails.propertyTownOrCity" data-vv-name="propertyTownOrCity" v-validate="'required'" data-vv-validate-on="change"  id="propertyTownOrCity" name="propertyTownOrCity" required />
-                    <span v-if="errorBag.has('propertyTownOrCity')" class="md-error">Enter a valid town or city</span>
-                  </md-input-container>
+                  <v-text-field v-model="propertyDetails.propertyTownOrCity"
+                                :rules="[$validation.rules.required, $validation.rules.min_length(propertyDetails.propertyTownOrCity, 2), $validation.rules.max_length(propertyDetails.propertyTownOrCity, 255)]"
+                                label="Town or city"
+                                required>
+                  </v-text-field>
                 </v-card-row>
                 <v-card-row>
-                  <md-input-container :class="{ 'md-input-invalid' : errorBag.has('propertyCountyOrRegion') }">
-                    <label for="propertyCountyOrRegion">County or Region</label>
-                    <md-input v-model="propertyDetails.propertyCountyOrRegion" data-vv-name="propertyCountyOrRegion" v-validate="'required'" data-vv-validate-on="change"  id="propertyCountyOrRegion" name="propertyCountyOrRegion" required />
-                    <span v-if="errorBag.has('propertyCountyOrRegion')" class="md-error">Enter a valid town or city</span>
-                  </md-input-container>
+                  <v-select :items="counties"
+                            v-model="propertyDetails.propertyCountyOrRegion"
+                            label="County or region"
+                            dark single-line auto required>
+                  </v-select>
                 </v-card-row>
                 <v-card-row>
-                  <md-input-container :class="{ 'md-input-invalid' : errorBag.has('propertyPostcode') }">
-                    <label for="propertyPostcode">Postcode</label>
-                    <md-input v-model="propertyDetails.propertyPostcode" data-vv-name="propertyPostcode" v-validate="'required'" data-vv-validate-on="change"  id="propertyPostcode" name="propertyPostcode" required />
-                    <span v-if="errorBag.has('propertyPostcode')" class="md-error">Enter a valid postal code</span>
-                  </md-input-container>
+                  <v-text-field v-model="propertyDetails.propertyPostcode"
+                                :rules="[$validation.rules.required, $validation.rules.min_length(propertyDetails.propertyPostcode, 5), $validation.rules.max_length(propertyDetails.propertyPostcode, 7)]"
+                                label="Postcode"
+                                required>
+                  </v-text-field>
                 </v-card-row>
                 <v-card-row>
-                  <md-input-container :class="{ 'md-input-invalid' : errorBag.has('propertyCountry') }">
-                    <label for="propertyCountry">Country</label>
-                    <md-select v-model="propertyDetails.propertyCountry" data-vv-name="propertyCountry" v-validate="'required'" data-vv-validate-on="change" id="propertyCountry" name="propertyCountry" required>
-                      <md-option disabled value="">Select a Country</md-option>
-                      <md-option v-for="propertyCountry in countries" v-bind:value="propertyCountry" :key="propertyCountry">{{ propertyCountry }}</md-option>
-                    </md-select>
-                    <span v-if="errorBag.has('propertyCountry')" class="md-error">Select a valid country</span>
-                  </md-input-container>
+                  <v-select :items="countries"
+                            :rules="[$validation.rules.required]"
+                            v-model="propertyDetails.propertyCountry"
+                            label="Country"
+                            dark single-line auto required>
+                  </v-select>
                 </v-card-row>
                 <v-card-row>
-                  <md-checkbox v-model="propertyDetails.isAvailableForLetting" id="isAvailableForLetting" name="isAvailableForLetting">
-                  This property is available for letting
-                  </md-checkbox>
+                <v-checkbox v-model="propertyDetails.isAvailableForLetting"
+                            label="This property is available for letting">
+                </v-checkbox>
                 </v-card-row>
               </v-card-text>
             </v-card>
@@ -137,54 +144,66 @@
               <v-card-text>
                 <v-card-row>
                   <div class="col-xs-12 col-md-6">
-                    <md-input-container>
-                      <label for="purchaseDate">Purchase Date</label>
-                      <md-input v-model="propertyDetails.purchaseDate" id="purchaseDate" name="purchaseDate" type="date" />
-                    </md-input-container>
+                    <v-menu lazy :nudge-left="100">
+                      <v-text-field slot="activator"
+                                    label="Purchase date"
+                                    v-model="propertyDetails.purchaseDate"
+                                    prepend-icon="date_range"
+                                    required readonly>
+                      </v-text-field>
+                      <v-date-picker v-model="propertyDetails.purchaseDate"
+                                    scrollable>
+                      </v-date-picker>
+                    </v-menu>
                   </div>
                   <div class="col-xs-12 col-md-6">
-                    <md-input-container>
-                      <label for="purchasePrice">Purchase Price</label>
-                      <md-input v-model="propertyDetails.purchasePrice" type="number" id="purchasePrice" name="purchasePrice"></md-input>
-                    </md-input-container>
+                    <v-text-field v-model="propertyDetails.purchasePrice"
+                                  label="Purchase price"
+                                  type="number">
+                    </v-text-field>
                   </div>
                 </v-card-row>
                 <v-card-row>
                   <div class="col-xs-12 col-md-6">
-                    <md-input-container>
-                      <label for="mortgageAmount">Mortgage Amount</label>
-                      <md-input v-model="propertyDetails.mortgageAmount" id="mortgageAmount" name="mortgageAmount" type="number" />
-                    </md-input-container>
+                    <v-text-field v-model="propertyDetails.mortgageAmount"
+                                  label="Mortgage amount"
+                                  type="number">
+                    </v-text-field>
                   </div>
                   <div class="col-xs-12 col-md-6">
-                    <md-input-container>
-                      <label for="interestRate">Interest Rate</label>
-                      <md-input v-model="propertyDetails.interestRate" id="interestRate" name="interestRate" type="number" />
-                    </md-input-container>
+                    <v-text-field v-model="propertyDetails.interestRate"
+                                  label="Interest rate"
+                                  type="number">
+                    </v-text-field>
                   </div>
                 </v-card-row>
                 <v-card-row>
                   <div class="col-xs-12 col-md-6">
-                    <md-input-container>
-                      <label for="monthlyPayment">Monthly Repayment</label>
-                      <md-input v-model="propertyDetails.monthlyPayment" id="monthlyPayment" name="monthlyPayment" type="number" />
-                    </md-input-container>
+                    <v-text-field v-model="propertyDetails.monthlyPayment"
+                                  label="Monthly repayment"
+                                  type="number">
+                    </v-text-field>
                   </div>
                   <div class="col-xs-12 col-md-6">
-                    <md-input-container>
-                      <label for="mortgageProvider">Mortgage Provider</label>
-                      <md-select v-model="propertyDetails.mortgageProvider" id="mortgageProvider" name="mortgageProvider">
-                        <md-option disabled value="">Select a mortgage provider</md-option>
-                        <md-option v-for="mortgageProvider in mortgageProviders" v-bind:value="mortgageProvider" :key="mortgageProvider">{{ mortgageProvider }}</md-option>
-                      </md-select>
-                    </md-input-container>
+                    <v-select :items="mortgageProviders"
+                              v-model="propertyDetails.mortgageProvider"
+                              label="Mortgage provider"
+                              dark single-line auto>
+                    </v-select>
                   </div>
                 </v-card-row>
                 <v-card-row>
-                  <md-input-container>
-                    <label for="currentDealExpirationDate">Current deal expiration date</label>
-                    <md-input v-model="propertyDetails.currentDealExpirationDate" id="currentDealExpirationDate" name="currentDealExpirationDate" type="date" />
-                  </md-input-container>
+                  <v-menu lazy :nudge-left="100">
+                    <v-text-field slot="activator"
+                                  label="Current deal expiration date"
+                                  v-model="propertyDetails.currentDealExpirationDate"
+                                  prepend-icon="date_range"
+                                  required readonly>
+                    </v-text-field>
+                    <v-date-picker v-model="propertyDetails.currentDealExpirationDate"
+                                  scrollable>
+                    </v-date-picker>
+                  </v-menu>
                 </v-card-row>
               </v-card-text>
               <v-card-title>
@@ -193,19 +212,17 @@
               <v-card-text>
                 <v-card-row class="row">
                   <div class="col-xs-12 col-md-6">
-                    <md-input-container>
-                      <label for="targetRent">Target Rent</label>
-                      <md-input v-model="propertyDetails.targetRent" id="targetRent" name="targetRent" type="number" />
-                    </md-input-container>
+                    <v-text-field v-model="propertyDetails.targetRent"
+                                  label="Target rent"
+                                  type="number">
+                    </v-text-field>
                   </div>
                   <div class="col-xs-12 col-md-6">
-                    <md-input-container>
-                      <label for="paymentTerm">Payment Term</label>
-                      <md-select v-model="propertyDetails.paymentTerm" id="paymentTerm" name="paymentTerm">
-                        <md-option disabled value="">Select a payment term</md-option>
-                        <md-option v-for="paymentTerm in paymentTerms" v-bind:value="paymentTerm" :key="paymentTerm">{{ paymentTerm }}</md-option>
-                      </md-select>
-                    </md-input-container>
+                    <v-select :items="paymentTerms"
+                              v-model="propertyDetails.paymentTerm"
+                              label="Payment term"
+                              dark single-line auto>
+                    </v-select>
                   </div>
                 </v-card-row>
               </v-card-text>
@@ -215,16 +232,23 @@
               <v-card-text>
                 <v-card-row class="row">
                   <div class="col-xs-12 col-md-6">
-                    <md-input-container>
-                      <label for="sellingDate">Selling Date</label>
-                      <md-input v-model="propertyDetails.sellingDate" id="sellingDate" name="sellingDate" type="date" />
-                    </md-input-container>
+                    <v-menu lazy :nudge-left="100">
+                      <v-text-field slot="activator"
+                                    label="Selling date"
+                                    v-model="propertyDetails.sellingDate"
+                                    prepend-icon="date_range"
+                                    required readonly>
+                      </v-text-field>
+                      <v-date-picker v-model="propertyDetails.sellingDate"
+                                    scrollable>
+                      </v-date-picker>
+                    </v-menu>
                   </div>
                   <div class="col-xs-12 col-md-6">
-                    <md-input-container>
-                      <label for="sellingPrice">Selling Price</label>
-                      <md-input v-model="propertyDetails.sellingPrice" id="sellingPrice" name="sellingPrice" type="number" />
-                    </md-input-container>
+                    <v-text-field v-model="propertyDetails.sellingPrice"
+                                  label="Selling price"
+                                  type="number">
+                    </v-text-field>
                   </div>
                 </v-card-row>
               </v-card-text>
@@ -233,7 +257,7 @@
         </div>
         <div class="row mt-3">
           <div class="col-xs-12">
-            <v-btn primary light v-if="permissions.PD_Update" type="submit">Save</v-btn>
+            <v-btn primary light v-if="permissions.PD_Update" type="submit" :disabled="isSaving">Save</v-btn>
             <v-btn flat v-if="permissions.PD_Update" type="reset">Reset</v-btn>
           </div>
         </div>
@@ -243,7 +267,6 @@
 </template>
 
 <script>
-import { ErrorBag } from 'vee-validate'
 import utils from 'utils'
 import FileUploadService from 'services/file-upload.service'
 
@@ -253,10 +276,13 @@ export default {
     return {
       permissions: this.$store.state.permissions,
       isUploading: false,
+      errors: [],
+      isSaving: false,
       progress: 0,
       propertyTypes: [],
       paymentTerms: [],
       furnishings: [],
+      counties: [],
       countries: [],
       mortgageProviders: [],
       propertyDetails: {
@@ -295,25 +321,29 @@ export default {
   },
   methods: {
     validateBeforeSubmit: function () {
-      this.$validator.validateAll().then(() => {
-        var bag = new ErrorBag()
-        this.$http.post(`/api/propertyDetails?entityId=${this.propertyDetails.id}`, { ...this.propertyDetails })
-          .then(() => {
-            this.$router.push('/manager/property-list')
-          })
-          .catch(response => {
-            var validationResult = utils.getFormValidationErrors(response)
-            validationResult.errors.forEach(validationError => {
-              bag.add(validationError.key, validationError.messages[0], 'required')
+      this.errors = []
+      this.isSaving = true
+
+      this.$http.post(`/api/propertyDetails?entityId=${this.propertyDetails.id}`, { ...this.propertyDetails })
+        .then(() => {
+          this.isSaving = false
+          this.$router.push('/manager/property-list')
+        })
+        .catch(response => {
+          var validationResult = utils.getFormValidationErrors(response)
+          validationResult.errors.forEach(validationError => {
+            this.errors.push({
+              key: validationError.key,
+              message: validationError.messages[0]
             })
-            if (validationResult.status) {
-              bag.add('GenericError', validationResult.status, 'generic')
-            }
           })
-        this.$validator.errorBag = bag
-      }).catch(() => {
-        window.scrollTo(0, 0)
-      })
+          if (validationResult.status) {
+            this.errors.push({
+              key: 'GenericError',
+              message: validationResult.status
+            })
+          }
+        })
     },
     filesChange: function (fieldName, fileList) {
       const formData = new FormData()
@@ -348,9 +378,6 @@ export default {
           })
       }
     }
-  },
-  watch: {
-    '$route' (to, from) {}
   }
 }
 </script>

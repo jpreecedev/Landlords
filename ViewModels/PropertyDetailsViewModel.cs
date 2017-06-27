@@ -74,15 +74,15 @@
         public string PropertyCountyOrRegion { get; set; }
 
         [Display(Name = "Postcode")]
-        [MaxLength(255)]
+        [Required, MinLength(5), MaxLength(7)]
         public string PropertyPostcode { get; set; }
 
         [Display(Name = "Street address")]
-        [Required, MaxLength(255)]
+        [Required, MinLength(2), MaxLength(255)]
         public string PropertyStreetAddress { get; set; }
 
         [Display(Name = "Town or city")]
-        [MaxLength(255)]
+        [Required, MinLength(2), MaxLength(255)]
         public string PropertyTownOrCity { get; set; }
         
         [Display(Name = "Property type")]
@@ -101,7 +101,7 @@
 
         public DateTime? CurrentDealExpirationDate { get; set; }
         
-        [MaxLength(255)]
+        [Required, MinLength(2), MaxLength(255)]
         public string Reference { get; set; }
 
         public DateTime? SellingDate { get; set; }
@@ -115,6 +115,8 @@
         public string[] DefaultPaymentTerms { get; } = PaymentTerms.GetDefaultPaymentTerms();
 
         public string[] DefaultFurnishings { get; } = PropertyFurnishing.GetDefaultFurnishings();
+
+        public string[] DefaultCounties { get; } = Counties.GetDefaultCounties();
 
         public string[] DefaultCountries { get; } = Countries.GetDefaultCountries();
 

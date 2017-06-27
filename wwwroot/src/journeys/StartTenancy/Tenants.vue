@@ -17,7 +17,6 @@
                       label="Select a title"
                       dark single-line auto>
             </v-select>
-            <!--<span v-if="errorBag.has('title')" class="md-error">Select a valid title</span>-->
           </div>
           <div class="col-xs-12 col-md-3">
             <v-text-field v-model="tenant.firstName"
@@ -27,7 +26,6 @@
                           label="First name"
                           required>
             </v-text-field>
-            <!--<span v-if="errorBag.has('firstName')" class="md-error">Enter a valid first name</span>-->
           </div>
           <div class="col-xs-12 col-md-3">
             <v-text-field v-model="tenant.middleName"
@@ -44,7 +42,6 @@
                           label="Last name"
                           required>
             </v-text-field>
-            <!--<span v-if="errorBag.has('lastName')" class="md-error">Enter a valid last name</span>-->
           </div>
         </div>
         <div class="row">
@@ -83,7 +80,6 @@
                                 label="Street address"
                                 required>
                   </v-text-field>
-                  <!--<span v-if="errorBag.has('street')" class="md-error">Enter a valid street address</span>-->
                 </div>
                 <div class="col-xs-6">
                   <v-text-field v-model="address.townOrCity"
@@ -93,7 +89,6 @@
                                 label="Town or city"
                                 required>
                   </v-text-field>
-                  <!--<span v-if="errorBag.has('townOrCity')" class="md-error">Enter a valid town or city</span>-->
                 </div>
               </div>
               <div class="row">
@@ -104,7 +99,6 @@
                             label="Select a county or region"
                             dark single-line auto>
                   </v-select>
-                  <!--<span v-if="errorBag.has('countyOrRegion')" class="md-error">Enter a valid county or region</span>-->
                 </div>
                 <div class="col-xs-12 col-md-4">
                   <v-text-field v-model="address.postcode"
@@ -114,7 +108,6 @@
                                 label="Postcode"
                                 required>
                   </v-text-field>
-                  <!--<span v-if="errorBag.has('postcode')" class="md-error">Enter a valid postal code</span>-->
                 </div>
                 <div class="col-xs-12 col-md-4">
                   <v-select :items="countries"
@@ -170,7 +163,6 @@
                             label="Main contact number"
                             required>
               </v-text-field>
-              <!--<span v-if="errorBag.has('mainContactNumber')" class="md-error">Enter a valid contact number</span>-->
             </div>
             <div class="col-xs-12 col-md-4">
               <v-text-field v-model="tenant.secondaryContactNumber"
@@ -178,7 +170,6 @@
                             @input="updateField(index, tenant, 'secondaryContactNumber')"
                             label="Another contact number">
               </v-text-field>
-              <!--<span v-if="errorBag.has('secondaryContactNumber')" class="md-error">Enter a valid contact number</span>-->
             </div>
             <div class="col-xs-12 col-md-4">
               <v-text-field v-model="tenant.emailAddress"
@@ -189,7 +180,6 @@
                             type="email"
                             required>
               </v-text-field>
-              <!--<span v-if="errorBag.has('emailAddress')" class="md-error">Enter a valid email address</span>-->
             </div>
           </div>
         </template>
