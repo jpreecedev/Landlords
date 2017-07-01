@@ -12,34 +12,40 @@
             <v-card-text>
               <v-card-row class="row">
                 <div class="col-xs-12">
-                  <md-input-container :class="{ 'md-input-invalid': errorBag.has('pricePaid') }">
-                    <label for="pricePaid" class="form-control-label">Price paid</label>
-                    <md-input type="number" step="1" class="form-control" min="10000" id="pricePaid" name="pricePaid" v-model="pricePaid" data-vv-name="pricePaid" v-validate="'required|min_value:10000'" data-vv-validate-on="change" required />
-                    <span v-if="errorBag.has('pricePaid:required')" class="md-error">Enter the amount paid</span>
-                    <span v-else-if="errorBag.has('pricePaid:min_value')" class="md-error">Enter at least &pound;10,000</span>
-                  </md-input-container>
+                  <v-text-field v-model="pricePaid"
+                                :rules="[$validation.rules.required, $validation.rules.min_value(pricePaid, 10000)]"
+                                label="Price paid"
+                                step="1"
+                                min="10000"
+                                type="number"
+                                required>
+                  </v-text-field>
                 </div>
               </v-card-row>
               <v-card-row class="row">
                 <div class="col-xs-12">
-                  <md-input-container :class="{ 'md-input-invalid': errorBag.has('annualInterestRate') }">
-                    <label for="annualInterestRate">Interest rate (annual)</label>
-                    <md-input type="number" step="1" min="0" max="20" id="annualInterestRate" name="annualInterestRate" v-model="annualInterestRate" data-vv-name="annualInterestRate" v-validate="'required|min_value:0.1|max_value:20'" data-vv-validate-on="change" required />
-                    <span v-if="errorBag.has('annualInterestRate:required')" class="md-error">Enter the interest rate</span>
-                    <span v-else-if="errorBag.has('annualInterestRate:min_value')" class="md-error">Enter at least 0.1%</span>
-                    <span v-else-if="errorBag.has('annualInterestRate:max_value')" class="md-error">Enter up to 20%</span>
-                  </md-input-container>
+                  <v-text-field v-model="annualInterestRate"
+                                :rules="[$validation.rules.required, $validation.rules.min_value(annualInterestRate, 0.1), $validation.rules.max_value(annualInterestRate, 20)]"
+                                label="Interest rate (annual)"
+                                step="0.1"
+                                min="0.1"
+                                max="20"
+                                type="number"
+                                required>
+                  </v-text-field>
                 </div>
               </v-card-row>
               <v-card-row class="row">
                 <div class="col-xs-12">
-                  <md-input-container :class="{ 'md-input-invalid': errorBag.has('mortgageLength') }">
-                    <label for="mortgageLength">Mortgage length</label>
-                    <md-input type="number" step="1" min="0" max="50" id="mortgageLength" name="mortgageLength" v-model="mortgageLength" data-vv-name="mortgageLength" v-validate="'required|min_value:1|max_value:50'" data-vv-validate-on="change" required />
-                    <span v-if="errorBag.has('mortgageLength:required')" class="md-error">Enter the mortgage length</span>
-                    <span v-else-if="errorBag.has('mortgageLength:min_value')" class="md-error">Enter at least 1 year</span>
-                    <span v-else-if="errorBag.has('mortgageLength:max_value')" class="md-error">Enter up to 50 years</span>
-                  </md-input-container>
+                  <v-text-field v-model="mortgageLength"
+                                :rules="[$validation.rules.required, $validation.rules.min_value(mortgageLength, 1), $validation.rules.max_value(mortgageLength, 50)]"
+                                label="Mortgage length"
+                                type="number"
+                                step="1"
+                                min="0"
+                                max="50"
+                                required>
+                  </v-text-field>
                 </div>
               </v-card-row>
             </v-card-text>
@@ -49,19 +55,30 @@
             <v-card-text>
               <v-card-row class="row">
                 <div class="col-xs-12">
-                  <md-input-container :class="{ 'md-input-invalid': errorBag.has('expectedRentalIncome') }">
-                    <label for="expectedRentalIncome">Expected rental income</label>
-                    <md-input type="number" step="100" min="0" max="1000000" id="expectedRentalIncome" name="expectedRentalIncome" v-model="expectedRentalIncome" data-vv-name="expectedRentalIncome" v-validate="'required|min_value:1|max_value:1000000'" data-vv-validate-on="change" required />
-                    <span v-if="errorBag.has('expectedRentalIncome:required')" class="md-error">Enter the rental income value</span>
-                    <span v-else-if="errorBag.has('expectedRentalIncome:min_value')" class="md-error">Enter at least &pound;1</span>
-                    <span v-else-if="errorBag.has('expectedRentalIncome:max_value')" class="md-error">Enter up to &pound;1,000,000</span>
-                  </md-input-container>
+                  <v-text-field v-model="expectedRentalIncome"
+                                :rules="[$validation.rules.required, $validation.rules.min_value(expectedRentalIncome, 0), $validation.rules.max_value(expectedRentalIncome, 1000000)]"
+                                label="Expected rental income"
+                                type="number"
+                                step="100"
+                                min="0"
+                                max="1000000"
+                                required>
+                  </v-text-field>
                 </div>
               </v-card-row>
               <v-card-row class="row">
-                <div class="col-xs-12">
-                  <md-radio name="inlineRadioOptions" id="Monthly" md-value="Monthly" v-model="rentalIncomeFrequency" checked>Monthly</md-radio>
-                  <md-radio name="inlineRadioOptions" id="Annual" md-value="Annual" v-model="rentalIncomeFrequency">Annual</md-radio>
+                <div class="col-xs-6">
+                  <v-radio value="Monthly"
+                           v-model="rentalIncomeFrequency"
+                           label="Monthly"
+                           checked>
+                  </v-radio>
+                </div>
+                <div class="col-xs-6">
+                  <v-radio value="Annual"
+                           v-model="rentalIncomeFrequency"
+                           label="Annual">
+                  </v-radio>
                 </div>
               </v-card-row>
             </v-card-text>
@@ -69,18 +86,26 @@
               Taxation
             </v-card-title>
             <v-card-text>
+              <p>Which tax band are you in?</p>
               <v-card-row class="row">
-                <div class="col-xs-12">
-                  <p>Which tax band are you in?</p>
-                  <label>
-                    <md-radio name="taxBandRadioGroup" id="basicRate" md-value="BasicRate" v-model="taxBand">Basic Rate (20%)</md-radio>
-                  </label>
-                  <label>
-                    <md-radio name="taxBandRadioGroup" id="higher" md-value="Higher" v-model="taxBand" checked>Higher (40%)</md-radio>
-                  </label>
-                  <label>
-                    <md-radio name="taxBandRadioGroup" id="top" md-value="Top" v-model="taxBand">Top (45%)</md-radio>
-                  </label>
+                <div class="col-xs-12 col-md-4">
+                  <v-radio value="Basic (20%)"
+                           v-model="taxBand"
+                           label="Basic (20%)">
+                  </v-radio>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                  <v-radio value="Higher (40%)"
+                           v-model="taxBand"
+                           label="Higher (40%)"
+                           checked>
+                  </v-radio>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                  <v-radio value="Top (40%)"
+                           v-model="taxBand"
+                           label="Top (45%)">
+                  </v-radio>
                 </div>
               </v-card-row>
             </v-card-text>
@@ -90,18 +115,20 @@
             <v-card-text>
               <v-card-row class="row">
                 <div class="col-xs-12">
-                  <md-input-container>
-                    <label for="contingency">Contingency</label>
-                    <md-input type="number" step="1" id="contingency" name="contingency" v-model="contingency" />
-                  </md-input-container>
+                  <v-text-field type="number"
+                                step="1"
+                                label="Contingency"
+                                v-model="contingency">
+                  </v-text-field>
                 </div>
               </v-card-row>
               <v-card-row class="row">
                 <div class="col-xs-12">
-                  <md-input-container>
-                    <label for="otherCosts">Other costs</label>
-                    <md-input type="number" step="1" id="otherCosts" name="otherCosts" v-model="otherCosts" />
-                  </md-input-container>
+                  <v-text-field type="number"
+                                step="1"
+                                label="Other costs"
+                                v-model="otherCosts">
+                  </v-text-field>
                 </div>
               </v-card-row>
             </v-card-text>
@@ -115,13 +142,14 @@
             <v-card-text>
               <v-card-row class="row">
                 <div class="col-xs-12 col-md-9">
-                  <md-input-container :class="{ 'md-input-invalid': errorBag.has('anticipatedAnnualIncrease') }">
-                    <label for="anticipatedAnnualIncrease">Expected increase in property value (per year)</label>
-                    <md-input type="number" step="1" min="0" max="100" id="anticipatedAnnualIncrease" name="anticipatedAnnualIncrease" v-model="anticipatedAnnualIncrease" data-vv-name="anticipatedAnnualIncrease" v-validate="'required|min_value:0.1|max_value:100'" data-vv-validate-on="change" required />
-                    <span v-if="errorBag.has('anticipatedAnnualIncrease:required')" class="md-error">Enter the growth rate</span>
-                    <span v-else-if="errorBag.has('anticipatedAnnualIncrease:min_value')" class="md-error">Enter at least 0.1%</span>
-                    <span v-else-if="errorBag.has('anticipatedAnnualIncrease:max_value')" class="md-error">Enter up to 100%</span>
-                  </md-input-container>
+                  <v-text-field type="number"
+                                step="1"
+                                min="0"
+                                max="100"
+                                label="Expected annual increase in value"
+                                suffix="%"
+                                v-model="anticipatedAnnualIncrease">
+                  </v-text-field>
                 </div>
               </v-card-row>
             </v-card-text>
@@ -131,19 +159,28 @@
             <v-card-text>
               <v-card-row class="row">
                 <div class="col-xs-12">
-                  <md-input-container>
-                    <label for="agencyFee">Agency fees</label>
-                    <md-input type="number" step="1" id="agencyFee" name="agencyFee" v-model="agencyFee" />
-                  </md-input-container>
+                  <v-text-field type="number"
+                                step="1"
+                                label="Agency fees"
+                                prefix="£"
+                                v-model="agencyFee">
+                  </v-text-field>
                 </div>
               </v-card-row>
               <v-card-row class="row">
-                <label class="form-check-label">
-                  <md-radio name="agencyFeesPeriodGroup" id="Monthly" md-value="Monthly" v-model="agencyFeeFrequency" checked>Monthly</md-radio>
-                </label>
-                <label class="form-check-label">
-                  <md-radio name="agencyFeesPeriodGroup" id="Annual" md-value="Annual" v-model="agencyFeeFrequency">Annual</md-radio>
-                </label>
+                <div class="col-xs-12 col-md-6">
+                  <v-radio value="Monthly"
+                           v-model="agencyFeeFrequency"
+                           label="Monthly"
+                           checked>
+                  </v-radio>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                  <v-radio value="Annual"
+                           v-model="agencyFeeFrequency"
+                           label="Annual">
+                  </v-radio>
+                </div>
               </v-card-row>
             </v-card-text>
             <v-card-title>
@@ -152,20 +189,27 @@
             <v-card-text>
               <v-card-row class="row">
                 <div class="col-xs-12">
-                  <md-input-container>
-                    <label for="maintenanceFees">Maintenance fees</label>
-                    <md-input type="number" step="1" id="maintenanceFees" name="maintenanceFees" v-model="maintenanceFees" />
-                  </md-input-container>
+                  <v-text-field type="number"
+                                step="1"
+                                label="Maintenance fees"
+                                prefix="£"
+                                v-model="maintenanceFees">
+                  </v-text-field>
                 </div>
               </v-card-row>
               <v-card-row class="row">
-                <div class="col-xs-12">
-                  <label class="form-check-label">
-                    <md-radio name="maintenanceFeesPeriodGroup" id="Monthly" md-value="Monthly" v-model="maintenanceFeeFrequency" checked>Monthly</md-radio>
-                  </label>
-                  <label class="form-check-label">
-                    <md-radio name="maintenanceFeesPeriodGroup" id="Annual" md-value="Annual" v-model="maintenanceFeeFrequency">Annual</md-radio>
-                  </label>
+                <div class="col-xs-12 col-md-6">
+                  <v-radio value="Monthly"
+                           v-model="maintenanceFeeFrequency"
+                           label="Monthly"
+                           checked>
+                  </v-radio>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                  <v-radio value="Annual"
+                           v-model="maintenanceFeeFrequency"
+                           label="Annual">
+                  </v-radio>
                 </div>
               </v-card-row>
             </v-card-text>
@@ -175,18 +219,22 @@
             <v-card-text>
               <v-card-row class="row">
                 <div class="col-xs-12">
-                  <md-input-container>
-                    <label for="buildingsInsurance">Buildings insurance (per year)</label>
-                    <md-input type="number" step="1" class="form-control" id="buildingsInsurance" name="buildingsInsurance" v-model="buildingsInsurance" />
-                  </md-input-container>
+                  <v-text-field type="number"
+                                step="1"
+                                label="Buildings insurance (per year)"
+                                prefix="£"
+                                v-model="buildingsInsurance">
+                  </v-text-field>
                 </div>
               </v-card-row>
               <v-card-row class="row">
                 <div class="col-xs-12">
-                  <md-input-container>
-                    <label for="contentsInsurance">Contents insurance (per year)</label>
-                    <md-input type="number" step="1" class="form-control" id="contentsInsurance" name="contentsInsurance" v-model="contentsInsurance" />
-                  </md-input-container>
+                  <v-text-field type="number"
+                                step="1"
+                                label="Contents insurance (per year)"
+                                prefix="£"
+                                v-model="contentsInsurance">
+                  </v-text-field>
                 </div>
               </v-card-row>
             </v-card-text>
