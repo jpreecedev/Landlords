@@ -65,5 +65,7 @@
         public Guid? PropertyDetailsId { get; set; }
         public string PropertyReference { get; set; }
         public string PropertyStreetAddress { get; set; }
+
+        public string Text => string.Format("{0}: {1}", Origin, Name);
     }
 }

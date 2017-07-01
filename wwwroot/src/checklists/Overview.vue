@@ -2,7 +2,7 @@
   <div>
     <h1 class="display-2">Overview</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
-    <permissions-warning :permission="permissions.CL_Overview" />
+    <permissions-warning :permission="permissions.CL_Overview"></permissions-warning>
     <div class="mt-5">
       <h2 class="display-1">Your checklists</h2>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium sint, odio, optio, expedita alias dolorum dicta iusto aliquam eos doloremque fuga iste fugiat quam sed eius corporis suscipit. Voluptatum, assumenda.</p>
@@ -50,17 +50,24 @@
           <v-card-text>
             <div class="row">
               <div class="col-xs-12">
-                <md-input-container>
-                  <label for="availableChecklists">Select a checklist template</label>
-                  <md-select v-model="selectedChecklist" name="availableChecklists" @change="selectedChecklistChanged($event)">
-                    <md-option v-for="checklist in overview.availableChecklists" :key="checklist.name" v-bind:value="checklist.id" v-bind:disabled="checklist.isPropertyMandatory && portfolioProperties.length < 1">{{ checklist.origin }}: {{ checklist.name }}</md-option>
-                  </md-select>
-                </md-input-container>
+                <v-select :items="overview.availableChecklists"
+                          v-bind:disabled="portfolioProperties.length < 1"
+                          v-model="selectedChecklist"
+                          item-value="id"
+                          @input="selectedChecklistChanged($event)"
+                          label="Select a checklist template"
+                          dark required>
+                </v-select>
               </div>
             </div>
             <div class="row" v-if="selectedChecklist && isPropertyMandatory && portfolioProperties && portfolioProperties.length">
               <div class="col-xs-12">
-                <v-select v-bind:items="portfolioProperties" v-model="selectedProperty" item-value="id" label="Select a property from your portfolio" dark></v-select>
+                <v-select v-bind:items="portfolioProperties"
+                          v-model="selectedProperty"
+                          item-value="id"
+                          label="Select a property from your portfolio"
+                          dark>
+                </v-select>
               </div>
             </div>
           </v-card-text>
@@ -111,7 +118,6 @@
     },
     methods: {
       createChecklistInstance: function (selectedChecklist, selectedProperty) {
-        debugger
         this.$http.post(`/api/checklists/?checklistId=${selectedChecklist}&propertyDetailsId=${selectedProperty}`).then(response => {
           this.$router.push({ name: 'editor', params: { checklistId: response.data.id } })
         })

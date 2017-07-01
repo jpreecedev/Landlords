@@ -70,19 +70,17 @@
                   </v-select>
                 </v-card-row>
                 <v-card-row>
-                  <md-input-container>
-                    <v-menu lazy :nudge-left="100">
-                      <v-text-field slot="activator"
-                                    label="Construction date"
-                                    v-model="propertyDetails.constructionDate"
-                                    prepend-icon="date_range"
-                                    required readonly>
-                      </v-text-field>
-                      <v-date-picker v-model="propertyDetails.constructionDate"
-                                     scrollable>
-                      </v-date-picker>
-                    </v-menu>
-                  </md-input-container>
+                  <v-menu lazy :nudge-left="100">
+                    <v-text-field slot="activator"
+                                  label="Construction date"
+                                  v-model="propertyDetails.constructionDate"
+                                  prepend-icon="date_range"
+                                  required readonly>
+                    </v-text-field>
+                    <v-date-picker v-model="propertyDetails.constructionDate"
+                                    scrollable>
+                    </v-date-picker>
+                  </v-menu>
                 </v-card-row>
               </v-card-text>
               <v-card-title>
