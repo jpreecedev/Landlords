@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 class="display-1">Dashboard</h1>
-    <starttenancy v-if="permissions.J_StartTenancy" />
+    <starttenancy v-if="permissions.J_StartTenancy"></starttenancy>
   </div>
 </template>
 

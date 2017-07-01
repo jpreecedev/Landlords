@@ -3,8 +3,8 @@
     <div class="row">
       <div class="col-xs-12 col-md-6">
         <md-input-container>
-          <label v-bind:for="checklistItem.key + 'actioned'">Actioned</label>
-          <md-input v-model="checklistItem.payload" @selected="save()" :id="checklistItem.key + 'actioned'" :name="checklistItem.key + 'actioned'" type="date" />
+          <label :for="checklistItem.key + 'actioned'">Actioned</label>
+          <md-input v-model="checklistItem.payload" @selected="save()" :id="checklistItem.key + 'actioned'" :name="checklistItem.key + 'actioned'" type="date"></md-input>
         </md-input-container>
       </div>
     </div>
@@ -40,7 +40,7 @@ export default {
   }
 }
 </script>
-  
+
 <style lang="scss" scoped>
-  
+
 </style>

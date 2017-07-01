@@ -2,13 +2,13 @@
   <div class="row">
     <div class="col-xs-12 col-md-6">
       <md-input-container>
-        <label v-bind:for="checklistItem.key + 'comments'">Comments</label>
-        <md-textarea v-model="checklistItem.payload.comments" @blur="save()" class="form-control" v-bind:id="checklistItem.key + 'comments'" v-bind:name="checklistItem.key + 'comments'" type="text"></md-textarea>                    
+        <label :for="checklistItem.key + 'comments'">Comments</label>
+        <md-textarea v-model="checklistItem.payload.comments" @blur="save()" class="form-control" :id="checklistItem.key + 'comments'" :name="checklistItem.key + 'comments'" type="text"></md-textarea>
       </md-input-container>
     </div>
     <div class="col-xs-12 col-md-6">
       <md-input-container>
-        <label v-bind:for="checklistItem.key + 'actioned'">Actioned</label>
+        <label :for="checklistItem.key + 'actioned'">Actioned</label>
         <md-input v-model="checklistItem.payload.actioned" @input="save()" :id="checklistItem.key + 'actioned'" :name="checklistItem.key + 'actioned'" type="date" />
       </md-input-container>
     </div>
@@ -52,7 +52,7 @@ export default {
   }
 }
 </script>
-  
+
 <style lang="scss" scoped>
-  
+
 </style>

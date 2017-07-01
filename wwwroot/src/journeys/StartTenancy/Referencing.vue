@@ -25,7 +25,6 @@
                           label="Tenant occupation"
                           required>
             </v-text-field>
-            <!--<span v-if="errorBag.has('title')" class="md-error">Select a valid title</span>-->
           </div>
           <div class="col-xs-12 col-md-4">
             <v-text-field v-model="tenant.companyName"
@@ -35,7 +34,6 @@
                           label="Employer name"
                           required>
             </v-text-field>
-            <!--<span v-if="errorBag.has('title')" class="md-error">Select a valid title</span>-->
           </div>
         </div>
         <div class="row">

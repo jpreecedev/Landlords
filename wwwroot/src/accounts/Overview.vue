@@ -6,7 +6,7 @@
       <v-data-table :headers="headers" :items="data.accounts">
         <template slot="items" scope="props">
           <td>
-            <account-display :account="props.item" />
+            <account-display :account="props.item"></account-display>
           </td>
           <td>{{ props.item.type }}</td>
           <td>{{ props.item.providerName }}</td>

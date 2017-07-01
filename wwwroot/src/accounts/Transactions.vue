@@ -43,7 +43,7 @@
           <v-card-text>
             <v-card-row>
               <md-input-container>
-                <md-file v-model="file" multiple placeholder="Browse for a bank statement on your computer" @selected="filesChange('files', $event)" name="files" />
+                <md-file v-model="file" multiple placeholder="Browse for a bank statement on your computer" @selected="filesChange('files', $event)" name="files"></md-file>
               </md-input-container>
               <md-progress v-if="progress" :md-progress="progress"></md-progress>
             </v-card-row>

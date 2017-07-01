@@ -12,7 +12,7 @@
         <div class="col-xs-12 col-md-4 mt-3" v-for="checklist in overview.checklists" :key="checklist">
           <v-card horizontal>
             <v-card-row>
-              <img src="../assets/images/checklist.png" class="card__row__image" v-bind:alt="checklist.name">
+              <img src="../assets/images/checklist.png" class="card__row__image" :alt="checklist.name">
             </v-card-row>
             <v-card-column>
               <v-card-row>
@@ -51,7 +51,7 @@
             <div class="row">
               <div class="col-xs-12">
                 <v-select :items="overview.availableChecklists"
-                          v-bind:disabled="portfolioProperties.length < 1"
+                          :disabled="portfolioProperties.length < 1"
                           v-model="selectedChecklist"
                           item-value="id"
                           @input="selectedChecklistChanged($event)"
@@ -62,7 +62,7 @@
             </div>
             <div class="row" v-if="selectedChecklist && isPropertyMandatory && portfolioProperties && portfolioProperties.length">
               <div class="col-xs-12">
-                <v-select v-bind:items="portfolioProperties"
+                <v-select :items="portfolioProperties"
                           v-model="selectedProperty"
                           item-value="id"
                           label="Select a property from your portfolio"

@@ -3,13 +3,13 @@
     <div class="row">
       <div class="col-xs-12 col-md-6">
         <md-input-container>
-          <label v-bind:for="checklistItem.key + 'comments'">Comments</label>
-          <md-textarea v-model="checklistItem.comments" v-bind:id="checklistItem.key + 'comments'" placeholder="Enter any comments here" v-bind:name="checklistItem.key + 'comments'"></md-textarea>                    
+          <label :for="checklistItem.key + 'comments'">Comments</label>
+          <md-textarea v-model="checklistItem.comments" :id="checklistItem.key + 'comments'" placeholder="Enter any comments here" :name="checklistItem.key + 'comments'"></md-textarea>
         </md-input-container>
       </div>
       <div class="col-xs-12 col-md-6">
         <md-input-container>
-          <label v-bind:for="checklistItem.key + 'actioned'">Actioned</label>
+          <label :for="checklistItem.key + 'actioned'">Actioned</label>
           <md-input v-model="checklistItem.actioned" id="checklistItem.key + 'actioned'" name="checklistItem.key + 'actioned'" type="date"></md-input>
         </md-input-container>
       </div>
@@ -17,7 +17,7 @@
     <div class="row">
       <div class="col-xs-12">
         <md-input-container>
-          <md-file v-model="file" placeholder="Browse for a file on your computer" />
+          <md-file v-model="file" placeholder="Browse for a file on your computer"></md-file>
         </md-input-container>
       </div>
     </div>
@@ -45,7 +45,7 @@ export default {
   }
 }
 </script>
-  
+
 <style lang="scss" scoped>
-  
+
 </style>

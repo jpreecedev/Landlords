@@ -8,7 +8,7 @@
         <template slot="items" scope="props">
           <td>
             <div class="thumbnail">
-              <img class="mt-2 mb-2" v-if="props.item.leadImage" v-bind:src="'/static/uploads/' + props.item.portfolioId + '/' + props.item.leadImage.fileName" v-bind:alt="props.item.leadImage.fileName">
+              <img class="mt-2 mb-2" v-if="props.item.leadImage" :src="'/static/uploads/' + props.item.portfolioId + '/' + props.item.leadImage.fileName" :alt="props.item.leadImage.fileName">
             </div>
           </td>
           <td>

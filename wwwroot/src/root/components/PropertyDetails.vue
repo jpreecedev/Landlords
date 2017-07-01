@@ -7,7 +7,7 @@
       <span v-else-if="errorBag.has('GenericError')">{{ errorBag.first('GenericError') }}</span>
     </v-alert>
     <form @submit.prevent="validateBeforeSubmit" role="form" enctype="multipart/form-data" novalidate>
-      <fieldset v-bind:disabled="!permissions.PD_Update">
+      <fieldset :disabled="!permissions.PD_Update">
         <div class="property-image-container" v-if="(permissions.PI_Upload) || (!permissions.PI_Upload && propertyDetails.propertyImages.length)">
           <div v-if="permissions.PI_Upload" class="property-image">
             <label>
@@ -17,9 +17,9 @@
               </div>
             </label>
           </div>
-          <div class="property-image" v-for="propertyImage in propertyDetails.propertyImages">
+          <div class="property-image" v-for="propertyImage in propertyDetails.propertyImages" :key="propertyImage">
             <div class="thumbnail">
-              <img v-if="propertyImage.fileName" v-bind:src="'/static/uploads/' + propertyDetails.portfolioId + '/' + propertyImage.fileName" v-bind:alt="propertyImage.fileName" v-bind:title="propertyImage.fileName">
+              <img v-if="propertyImage.fileName" :src="'/static/uploads/' + propertyDetails.portfolioId + '/' + propertyImage.fileName" :alt="propertyImage.fileName" :title="propertyImage.fileName">
               <div v-if="permissions.PI_Delete" class="overlay">
                 <v-btn warning type="button" @click.native="deleteImage(propertyImage)">Delete</v-btn>
               </div>
@@ -28,7 +28,7 @@
           <div class="row mt-4" v-if="isUploading">
             <div class="col-xs-12">
               <div class="progress">
-                <div class="progress-bar" role="progressbar" v-bind:aria-valuenow="progress" aria-valuemin="0" aria-valuemax="100" v-bind:style="{ width: progress + '%', height: '20px' }">{{ progress }}%</div>
+                <div class="progress-bar" role="progressbar" :aria-valuenow="progress" aria-valuemin="0" aria-valuemax="100" :style="{ width: progress + '%', height: '20px' }">{{ progress }}%</div>
               </div>
             </div>
           </div>

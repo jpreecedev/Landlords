@@ -16,7 +16,7 @@
       Your email address has been verified
     </v-alert>
     <form @submit.prevent="validateBeforeSubmit" role="form" novalidate>
-      <fieldset v-bind:disabled="!permissions.P_Update">
+      <fieldset :disabled="!permissions.P_Update">
         <div class="row">
           <div class="col-xs-12 col-md-6">
             <v-card>
@@ -72,7 +72,7 @@
                     <label for="availableTo">Available To</label>
                     <md-select v-model="availableTo" id="availableTo" name="availableTo">
                       <md-option disabled value="">Select a time</md-option>
-                      <md-option v-for="time in times" :key="time" v-bind:value="time.value">{{ time.display }}</md-option>
+                      <md-option v-for="time in times" :key="time" :value="time.value">{{ time.display }}</md-option>
                     </md-select>
                   </md-input-container>
                 </v-card-row>
