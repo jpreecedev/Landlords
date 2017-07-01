@@ -98,16 +98,16 @@
       this.$http.get(`/api/checklists/overview`).then(response => {
         this.overview = response.data
       })
-      .then(() => {
-        if (this.permissions.PD_GetBasic) {
-          return this.$http.get(`/api/propertydetails/basicdetails`).then(response => {
-            if (response.data) {
-              this.portfolioProperties = response.data
-              this.selectedProperty = this.portfolioProperties[0].id
-            }
-          })
-        }
-      })
+        .then(() => {
+          if (this.permissions.PD_GetBasic) {
+            return this.$http.get(`/api/propertydetails/basicdetails`).then(response => {
+              if (response.data) {
+                this.portfolioProperties = response.data
+                this.selectedProperty = this.portfolioProperties[0].id
+              }
+            })
+          }
+        })
     },
     methods: {
       createChecklistInstance: function (selectedChecklist, selectedProperty) {

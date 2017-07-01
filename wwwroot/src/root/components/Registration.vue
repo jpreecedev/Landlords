@@ -12,17 +12,16 @@
     </div>
     <div class="row mt-5">
       <div class="col-xs-12 col-md-5">
-        <loginform />
+        <loginform></loginform>
       </div>
       <div class="col-xs-12 col-md-offset-1 col-md-6">
-        <registerform />
+        <registerform></registerform>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-
   import LoginForm from './LoginForm.vue'
   import RegisterForm from './RegisterForm.vue'
 
@@ -39,5 +38,4 @@
       }
     }
   }
-
 </script>

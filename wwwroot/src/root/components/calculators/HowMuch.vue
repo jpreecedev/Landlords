@@ -45,7 +45,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'howMuch',
   data () {
@@ -65,5 +64,4 @@ export default {
     }
   }
 }
-
 </script>

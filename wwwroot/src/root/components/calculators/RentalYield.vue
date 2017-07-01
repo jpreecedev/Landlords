@@ -72,7 +72,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'rentalyield',
   data () {
@@ -95,5 +94,4 @@ export default {
     }
   }
 }
-
 </script>

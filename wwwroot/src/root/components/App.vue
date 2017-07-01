@@ -12,7 +12,6 @@
 </template>
 
 <script>
-
 import AppNav from './AppNav.vue'
 import AppFooter from './AppFooter.vue'
 import AppHeader from './Header.vue'
@@ -25,7 +24,6 @@ export default {
     }
   }
 }
-
 </script>
 
 <style lang="scss">

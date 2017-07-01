@@ -60,7 +60,6 @@
 </template>
 
 <script>
-
 import utils from 'utils'
 
 export default {
@@ -78,5 +77,4 @@ export default {
     }
   }
 }
-
 </script>

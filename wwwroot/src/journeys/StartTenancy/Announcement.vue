@@ -16,5 +16,4 @@
   export default {
     name: 'announcement'
   }
-
 </script>
