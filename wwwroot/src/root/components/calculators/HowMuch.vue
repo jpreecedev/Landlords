@@ -7,23 +7,23 @@
         <form role="form" novalidate>
           <div class="row">
             <div class="col-xs-12 col-md-6">
-              <md-input-container :class="{ 'md-input-invalid': errorBag.has('grossIncome') }">
-                <label for="grossIncome">Your annual gross income</label>
-                <md-input type="number" id="grossIncome" name="grossIncome" min="1000" step="1" v-model="grossIncome" data-vv-name="grossIncome" v-validate="'required|min_value:1000'" data-vv-validate-on="change" required />
-                <span v-if="errorBag.has('grossIncome:required')" class="md-error">Enter your annual gross income</span>
-                <span v-else-if="errorBag.has('grossIncome:min_value')" class="md-error">Enter at least &pound;1,000</span>
-              </md-input-container>
+              <v-text-field v-model="grossIncome"
+                            :rules="[$validation.rules.required, $validation.rules.min_value(grossIncome, 1000)]"
+                            label="Your annual gross income"
+                            type="number"
+                            min="1000"
+                            step="1"
+                            required>
+              </v-text-field>
             </div>
           </div>
           <div class="row">
             <div class="col-xs-12 col-md-6">
-              <md-input-container>
-                <label for="multiplier">Multiplier (use the default if unsure)</label>
-                <md-select v-model="multiplier" id="multiplier" name="multiplier">
-                  <md-option disabled>Select a multiplier</md-option>
-                  <md-option v-for="multiplier in multipliers" :key="multiplier" v-bind:value="multiplier">{{ multiplier }}</md-option>
-                </md-select>
-              </md-input-container>
+              <v-select :items="multipliers"
+                        v-model="multiplier"
+                        label="Multiplier (use the default if unsure)"
+                        dark>
+              </v-select>
             </div>
           </div>
           <div class="row mt-4" v-if="!calculateAmountCanBorrow">

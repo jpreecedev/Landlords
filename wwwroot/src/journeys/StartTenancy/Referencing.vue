@@ -14,7 +14,7 @@
                       v-model="tenant.employmentType"
                       @input="updateField(index, tenant, 'employmentType')"
                       label="Select an employment type"
-                      dark single-line auto required>
+                      dark required>
             </v-select>
           </div>
           <div class="col-xs-12 col-md-4">
@@ -106,7 +106,7 @@
                               v-model="contact.relationship"
                               @input="updateContact(index, contactIndex, contact, 'relationship')"
                               label="Select a relationship"
-                              dark single-line auto required>
+                              dark required>
                     </v-select>
                   </div>
                 </div>

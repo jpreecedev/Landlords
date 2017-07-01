@@ -52,7 +52,7 @@
                             :rules="[$validation.rules.required]"
                             v-model="propertyDetails.propertyType"
                             label="Property type"
-                            dark single-line auto>
+                            dark>
                   </v-select>
                 </v-card-row>
                 <v-card-row>
@@ -66,7 +66,7 @@
                             :rules="[$validation.rules.required]"
                             v-model="propertyDetails.furnishing"
                             label="Furnishings"
-                            dark single-line auto>
+                            dark>
                   </v-select>
                 </v-card-row>
                 <v-card-row>
@@ -110,7 +110,7 @@
                   <v-select :items="counties"
                             v-model="propertyDetails.propertyCountyOrRegion"
                             label="County or region"
-                            dark single-line auto required>
+                            dark required>
                   </v-select>
                 </v-card-row>
                 <v-card-row>
@@ -125,7 +125,7 @@
                             :rules="[$validation.rules.required]"
                             v-model="propertyDetails.propertyCountry"
                             label="Country"
-                            dark single-line auto required>
+                            dark required>
                   </v-select>
                 </v-card-row>
                 <v-card-row>
@@ -188,7 +188,7 @@
                     <v-select :items="mortgageProviders"
                               v-model="propertyDetails.mortgageProvider"
                               label="Mortgage provider"
-                              dark single-line auto>
+                              dark>
                     </v-select>
                   </div>
                 </v-card-row>
@@ -221,7 +221,7 @@
                     <v-select :items="paymentTerms"
                               v-model="propertyDetails.paymentTerm"
                               label="Payment term"
-                              dark single-line auto>
+                              dark>
                     </v-select>
                   </div>
                 </v-card-row>

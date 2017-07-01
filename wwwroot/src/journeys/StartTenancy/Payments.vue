@@ -23,7 +23,7 @@
                   @input="updateRentalFrequency"
                   item-value="id"
                   label="How often will the rent be paid?"
-                  dark single-line auto required>
+                  dark required>
          </v-select>
       </div>
     </div>

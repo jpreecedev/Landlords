@@ -15,7 +15,7 @@
                       v-model="tenant.title"
                       @input="updateField(index, tenant, 'title')"
                       label="Select a title"
-                      dark single-line auto>
+                      dark>
             </v-select>
           </div>
           <div class="col-xs-12 col-md-3">
@@ -97,7 +97,7 @@
                             v-model="address.countyOrRegion"
                             @input="updateAddress(index, addressIndex, address, 'countyOrRegion')"
                             label="Select a county or region"
-                            dark single-line auto>
+                            dark>
                   </v-select>
                 </div>
                 <div class="col-xs-12 col-md-4">
@@ -115,7 +115,7 @@
                             v-model="address.country"
                             @input="updateAddress(index, addressIndex, address, 'country')"
                             label="Select a country"
-                            dark single-line auto required>
+                            dark required>
                   </v-select>
                 </div>
               </div>
