@@ -2,10 +2,6 @@
   <div>
     <h1 class="display-2">Property Details</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
-    <v-alert error :value="errorBag.any()">
-      <span v-if="!errorBag.has('GenericError')">Please fix validation errors and try and submit the form again</span>
-      <span v-else-if="errorBag.has('GenericError')">{{ errorBag.first('GenericError') }}</span>
-    </v-alert>
     <form @submit.prevent="validateBeforeSubmit" role="form" enctype="multipart/form-data" novalidate>
       <fieldset :disabled="!permissions.PD_Update">
         <div class="property-image-container" v-if="(permissions.PI_Upload) || (!permissions.PI_Upload && propertyDetails.propertyImages.length)">

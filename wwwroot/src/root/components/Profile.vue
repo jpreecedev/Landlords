@@ -2,10 +2,6 @@
   <div>
     <h1 class="display-2">Profile</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
-    <v-alert error :value="errorBag.any()">
-      <span v-if="!errorBag.has('GenericError')">Please fix validation errors and try and submit the form again</span>
-      <span v-if="errorBag.has('GenericError')">{{ errorBag.first('GenericError') }}</span>
-    </v-alert>
     <v-alert success :value="saved">
       Your profile has been updated
     </v-alert>
@@ -25,18 +21,18 @@
               </v-card-title>
               <v-card-text>
                 <v-card-row>
-                  <md-input-container :class="{ 'md-input-invalid': errorBag.has('firstName') }">
-                    <label for="firstName">First name</label>
-                    <md-input v-model="profile.firstName" id="firstName" name="firstName" type="text" data-vv-name="firstName" v-validate="'required'" data-vv-validate-on="change" required></md-input>
-                    <span v-if="errorBag.has('firstName')" class="md-error">Enter a valid first name</span>
-                  </md-input-container>
+                  <v-text-field v-model="profile.firstName"
+                                :rules="[$validation.rules.required, $validation.rules.min_length(profile.firstName, 2)]"
+                                label="First name"
+                                required>
+                  </v-text-field>
                 </v-card-row>
                 <v-card-row>
-                  <md-input-container :class="{ 'md-input-invalid': errorBag.has('lastName') }">
-                    <label for="lastName">Last name</label>
-                    <md-input v-model="profile.lastName" id="lastName" name="lastName" type="text" data-vv-name="lastName" v-validate="'required'" data-vv-validate-on="change" required></md-input>
-                    <span v-if="errorBag.has('lastName')" class="md-error">Enter a valid last name</span>
-                  </md-input-container>
+                  <v-text-field v-model="profile.lastName"
+                                :rules="[$validation.rules.required, $validation.rules.min_length(profile.lastName, 2)]"
+                                label="Last name"
+                                required>
+                  </v-text-field>
                 </v-card-row>
                 <v-card-row>
                   <div>
@@ -47,7 +43,7 @@
                   </div>
                 </v-card-row>
                 <v-card-row actions>
-                  <v-btn warning flat light v-if="profile.emailConfirmed" @click.native="resendVerificationEmail()">Re-send verification email</v-btn>
+                  <v-btn warning flat light v-if="!profile.emailConfirmed" @click.native="resendVerificationEmail()">Re-send verification email</v-btn>
                 </v-card-row>
               </v-card-text>
             </v-card>
@@ -59,34 +55,34 @@
               </v-card-title>
               <v-card-text>
                 <v-card-row>
-                  <md-input-container>
-                    <label for="availableFrom">Available From</label>
-                    <md-select v-model="availableFrom" id="availableFrom" name="availableFrom">
-                      <md-option disabled value="">Select a time</md-option>
-                      <md-option v-for="time in times" :key="time" :value="time.value">{{ time.display }}</md-option>
-                    </md-select>
-                  </md-input-container>
+                  <v-select :items="times"
+                            :rules="[$validation.rules.required]"
+                            v-model="availableFrom"
+                            label="Available from"
+                            item-value="value"
+                            dark>
+                  </v-select>
                 </v-card-row>
                 <v-card-row>
-                  <md-input-container>
-                    <label for="availableTo">Available To</label>
-                    <md-select v-model="availableTo" id="availableTo" name="availableTo">
-                      <md-option disabled value="">Select a time</md-option>
-                      <md-option v-for="time in times" :key="time" :value="time.value">{{ time.display }}</md-option>
-                    </md-select>
-                  </md-input-container>
+                  <v-select :items="times"
+                            :rules="[$validation.rules.required]"
+                            v-model="availableTo"
+                            label="Available to"
+                            item-value="value"
+                            dark>
+                  </v-select>
                 </v-card-row>
                 <v-card-row>
-                  <md-input-container>
-                    <label for="phoneNumber">Main Phone Number</label>
-                    <md-input v-model="profile.phoneNumber" id="phoneNumber" name="phoneNumber" type="tel" required></md-input>
-                  </md-input-container>
+                  <v-text-field v-model="profile.phoneNumber"
+                                label="Main phone number"
+                                type="tel">
+                  </v-text-field>
                 </v-card-row>
                 <v-card-row>
-                  <md-input-container>
-                    <label for="secondaryPhoneNumber">Secondary Phone Number</label>
-                    <md-input v-model="profile.secondaryPhoneNumber" id="secondaryPhoneNumber" name="secondaryPhoneNumber" type="tel" required></md-input>
-                  </md-input-container>
+                  <v-text-field v-model="profile.secondaryPhoneNumber"
+                                label="Secondary phone number"
+                                type="tel">
+                  </v-text-field>
                 </v-card-row>
               </v-card-text>
             </v-card>
@@ -105,12 +101,12 @@
 
 <script>
   import utils from 'utils'
-  import { ErrorBag } from 'vee-validate'
 
   export default {
     name: 'profile',
     data () {
       return {
+        errors: [],
         permissions: this.$store.state.permissions,
         times: [],
         saved: false,
@@ -132,49 +128,49 @@
       }
     },
     created () {
+      this.times = utils.getTimesForSelectList()
       this.$http.get(`/api/profile`).then(response => {
         Object.assign(this.profile, response.data)
-
         var fields = [ { key: 'availableFrom', value: 28 }, { key: 'availableTo', value: 76 } ]
         fields.forEach(field => {
           if (!response.data[field.key]) {
-            this.profile[field.key] = this.times[field.value]
+            this[field.key] = this.profile[field.key] = this.times[field.value]
           } else {
             var time = this.times.find(function (item) {
               return item.value === response.data[field.key]
             })
             if (time) {
-              this.profile[field.key] = time.value
+              this[field.key] = this.profile[field.key] = time.value
             }
           }
         })
       })
-      this.times = utils.getTimesForSelectList()
     },
     methods: {
       validateBeforeSubmit: function () {
-        this.$validator.validateAll().then(() => {
-          this.profile.availableFrom = this.availableFrom
-          this.profile.availableTo = this.availableTo
-          var bag = new ErrorBag()
-          this.$http.post('/api/profile', { ...this.profile })
-            .then(response => {
-              this.saved = true
-            })
-            .catch(response => {
-              this.saved = false
-              var validationResult = utils.getFormValidationErrors(response)
-              validationResult.errors.forEach(validationError => {
-                bag.add(validationError.key, validationError.messages[0], 'required')
+        this.errors = []
+        this.profile.availableFrom = this.availableFrom
+        this.profile.availableTo = this.availableTo
+
+        this.$http.post('/api/profile', { ...this.profile })
+          .then(response => {
+            this.saved = true
+          })
+          .catch(response => {
+            var validationResult = utils.getFormValidationErrors(response)
+            validationResult.errors.forEach(validationError => {
+              this.errors.push({
+                key: validationError.key,
+                message: validationError.messages[0]
               })
-              if (validationResult.status) {
-                bag.add('GenericError', validationResult.status, 'generic')
-              }
             })
-          this.$validator.errorBag = bag
-        }).catch(() => {
-          window.scrollTo(0, 0)
-        })
+            if (validationResult.status) {
+              this.errors.push({
+                key: 'GenericError',
+                message: validationResult.status
+              })
+            }
+          })
       },
       resendVerificationEmail: function () {
         this.$http.post('/api/register/resendverification')

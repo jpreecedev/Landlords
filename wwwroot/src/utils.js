@@ -169,7 +169,7 @@ module.exports = {
       for (var j = 0; j < 60; j += 15) {
         result.push({
           value: `1970-01-01T${this.pad(i) + ':' + this.pad(j) + ':00'}`,
-          display: this.pad(i) + ':' + this.pad(j)
+          text: this.pad(i) + ':' + this.pad(j)
         })
       }
     }
