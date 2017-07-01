@@ -159,6 +159,7 @@
                   <div class="col-xs-12 col-md-6">
                     <v-text-field v-model="propertyDetails.purchasePrice"
                                   label="Purchase price"
+                                  prefix="£"
                                   type="number">
                     </v-text-field>
                   </div>
@@ -167,12 +168,14 @@
                   <div class="col-xs-12 col-md-6">
                     <v-text-field v-model="propertyDetails.mortgageAmount"
                                   label="Mortgage amount"
+                                  prefix="£"
                                   type="number">
                     </v-text-field>
                   </div>
                   <div class="col-xs-12 col-md-6">
                     <v-text-field v-model="propertyDetails.interestRate"
                                   label="Interest rate"
+                                  suffix="%"
                                   type="number">
                     </v-text-field>
                   </div>
@@ -181,6 +184,7 @@
                   <div class="col-xs-12 col-md-6">
                     <v-text-field v-model="propertyDetails.monthlyPayment"
                                   label="Monthly repayment"
+                                  prefix="£"
                                   type="number">
                     </v-text-field>
                   </div>
@@ -214,6 +218,7 @@
                   <div class="col-xs-12 col-md-6">
                     <v-text-field v-model="propertyDetails.targetRent"
                                   label="Target rent"
+                                  prefix="£"
                                   type="number">
                     </v-text-field>
                   </div>
@@ -247,6 +252,7 @@
                   <div class="col-xs-12 col-md-6">
                     <v-text-field v-model="propertyDetails.sellingPrice"
                                   label="Selling price"
+                                  prefix="£"
                                   type="number">
                     </v-text-field>
                   </div>

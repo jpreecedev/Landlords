@@ -18,6 +18,7 @@
                                 step="1"
                                 min="10000"
                                 type="number"
+                                prefix="£"
                                 required>
                   </v-text-field>
                 </div>
@@ -31,6 +32,7 @@
                                 min="0.1"
                                 max="20"
                                 type="number"
+                                suffix="%"
                                 required>
                   </v-text-field>
                 </div>
@@ -44,6 +46,7 @@
                                 step="1"
                                 min="0"
                                 max="50"
+                                suffix="years"
                                 required>
                   </v-text-field>
                 </div>
@@ -62,6 +65,7 @@
                                 step="100"
                                 min="0"
                                 max="1000000"
+                                prefix="£"
                                 required>
                   </v-text-field>
                 </div>
@@ -118,6 +122,7 @@
                   <v-text-field type="number"
                                 step="1"
                                 label="Contingency"
+                                prefix="£"
                                 v-model="contingency">
                   </v-text-field>
                 </div>
@@ -127,6 +132,7 @@
                   <v-text-field type="number"
                                 step="1"
                                 label="Other costs"
+                                prefix="£"
                                 v-model="otherCosts">
                   </v-text-field>
                 </div>

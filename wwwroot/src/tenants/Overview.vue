@@ -6,13 +6,12 @@
       <v-card-title>
         Tenants
         <v-spacer></v-spacer>
-        <v-text-field
-          append-icon="search"
-          label="Search"
-          single-line
-          hide-details
-          v-model="search"
-        ></v-text-field>
+        <v-text-field append-icon="search"
+                      label="Search"
+                      single-line
+                      hide-details
+                      v-model="search">
+        </v-text-field>
       </v-card-title>
       <v-data-table :headers="headers" :items="data">
         <template slot="items" scope="props">

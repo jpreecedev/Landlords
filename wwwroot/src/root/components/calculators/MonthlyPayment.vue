@@ -11,6 +11,7 @@
                             :rules="[$validation.rules.required, $validation.rules.min_value(mortgageAmount, 10000)]"
                             label="Total amount borrowed"
                             type="number"
+                            prefix="£"
                             required>
               </v-text-field>
             </div>
@@ -23,6 +24,7 @@
                             type="number"
                             min="0.1"
                             step="0.1"
+                            suffix="%"
                             required>
               </v-text-field>
             </div>
@@ -36,6 +38,7 @@
                             min="1"
                             step="1"
                             max="50"
+                            suffix="years"
                             required>
               </v-text-field>
             </div>

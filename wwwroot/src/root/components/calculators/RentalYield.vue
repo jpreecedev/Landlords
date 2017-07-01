@@ -11,6 +11,7 @@
                             v-model="rentalyield.purchasePrice"
                             :rules="[$validation.rules.required, $validation.rules.min_value(rentalyield.purchasePrice, 10000)]"
                             min="10000"
+                            prefix="£"
                             label="Total cost of property"
                             required>
               </v-text-field>
@@ -22,6 +23,7 @@
                               min="1"
                               step="1"
                               label="How much is the rent?"
+                              prefix="£"
                               v-model="rentalyield.rentalValue"
                               :rules="[$validation.rules.required, $validation.rules.min_value(rentalyield.rentalValue, 1)]"
                               required>

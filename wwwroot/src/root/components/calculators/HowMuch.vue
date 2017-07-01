@@ -13,6 +13,7 @@
                             type="number"
                             min="1000"
                             step="1"
+                            prefix="£"
                             required>
               </v-text-field>
             </div>
