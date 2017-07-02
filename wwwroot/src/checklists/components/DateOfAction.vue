@@ -10,6 +10,7 @@
                         required readonly>
           </v-text-field>
           <v-date-picker v-model="checklistItem.payload"
+                         @input="save()"
                          scrollable>
           </v-date-picker>
         </v-menu>

@@ -1,10 +1,13 @@
 <template>
   <div class="row">
     <div class="col-xs-12">
-      <md-input-container>
-        <label :for="checklistItem.key + 'comments'">Comments</label>
-        <md-textarea v-model="checklistItem.payload.comments" @blur.native="save()" :id="checklistItem.key + 'comments'" :name="checklistItem.key + 'comments'"></md-textarea>
-      </md-input-container>
+      <v-text-field v-model="checklistItem.payload.comments"
+                    :multi-line="true"
+                    :rows="1"
+                    :auto-grow="true"
+                    @blur="save()"
+                    label="Comments">
+      </v-text-field>
     </div>
   </div>
 </template>

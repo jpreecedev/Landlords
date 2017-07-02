@@ -9,6 +9,7 @@
                       required readonly>
         </v-text-field>
         <v-date-picker v-model="checklistItem.payload.actioned"
+                       @input="save()"
                        scrollable>
         </v-date-picker>
       </v-menu>
@@ -18,6 +19,7 @@
                     :multi-line="true"
                     :rows="1"
                     :auto-grow="true"
+                    @blur="save()"
                     label="Comments"
                     required>
       </v-text-field>
