@@ -1,16 +1,26 @@
 <template>
   <div class="row">
-    <div class="col-xs-12 col-md-6">
-      <md-input-container>
-        <label :for="checklistItem.key + 'comments'">Comments</label>
-        <md-textarea v-model="checklistItem.payload.comments" @blur="save()" class="form-control" :id="checklistItem.key + 'comments'" :name="checklistItem.key + 'comments'" type="text"></md-textarea>
-      </md-input-container>
+    <div class="col-xs-12">
+      <v-menu lazy :nudge-left="100">
+        <v-text-field slot="activator"
+                      label="Actioned"
+                      v-model="checklistItem.payload.actioned"
+                      prepend-icon="date_range"
+                      required readonly>
+        </v-text-field>
+        <v-date-picker v-model="checklistItem.payload.actioned"
+                       scrollable>
+        </v-date-picker>
+      </v-menu>
     </div>
-    <div class="col-xs-12 col-md-6">
-      <md-input-container>
-        <label :for="checklistItem.key + 'actioned'">Actioned</label>
-        <md-input v-model="checklistItem.payload.actioned" @input="save()" :id="checklistItem.key + 'actioned'" :name="checklistItem.key + 'actioned'" type="date" />
-      </md-input-container>
+    <div class="col-xs-12">
+      <v-text-field v-model="checklistItem.payload.comments"
+                    :multi-line="true"
+                    :rows="1"
+                    :auto-grow="true"
+                    label="Comments"
+                    required>
+      </v-text-field>
     </div>
   </div>
 </template>
