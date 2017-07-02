@@ -16,31 +16,36 @@
               </v-card-title>
               <v-card-text>
                 <v-card-row>
-                  <md-input-container :class="{ 'md-input-invalid': errorBag.has('firstName') }">
-                    <label for="firstName">First name</label>
-                    <md-input v-model="tenant.firstName" id="firstName" name="firstName" type="text" data-vv-name="firstName" v-validate="'required'" data-vv-validate-on="change" required></md-input>
-                    <span v-if="errorBag.has('firstName')" class="md-error">Enter a valid first name</span>
-                  </md-input-container>
+                  <v-text-field v-model="tenant.firstName"
+                                :rules="[$validation.rules.required, $validation.rules.min_length(tenant.firstName, 2)]"
+                                label="First name"
+                                required>
+                  </v-text-field>
                 </v-card-row>
                 <v-card-row>
-                  <md-input-container :class="{ 'md-input-invalid': errorBag.has('middleName') }">
-                    <label for="middleName">Middle name(s)</label>
-                    <md-input v-model="tenant.middleName" id="middleName" name="middleName" type="text"></md-input>
-                  </md-input-container>
+                  <v-text-field v-model="tenant.middle"
+                                label="Middle name(s)">
+                  </v-text-field>
                 </v-card-row>
                 <v-card-row>
-                  <md-input-container :class="{ 'md-input-invalid': errorBag.has('lastName') }">
-                    <label for="lastName">Last name</label>
-                    <md-input v-model="tenant.lastName" id="lastName" name="lastName" type="text" data-vv-name="lastName" v-validate="'required'" data-vv-validate-on="change" required></md-input>
-                    <span v-if="errorBag.has('lastName')" class="md-error">Enter a valid last name</span>
-                  </md-input-container>
+                  <v-text-field v-model="tenant.lastName"
+                                :rules="[$validation.rules.required, $validation.rules.min_length(tenant.lastName, 2)]"
+                                label="Last name"
+                                required>
+                  </v-text-field>
                 </v-card-row>
                 <v-card-row>
-                  <md-input-container :class="{ 'md-input-invalid': errorBag.has('dateOfBirth') }">
-                    <label for="dateOfBirth">Date of Birth</label>
-                    <md-input v-model="tenant.dateOfBirth" id="dateOfBirth" name="dateOfBirth" type="date"></md-input>
-                    <span v-if="errorBag.has('dateOfBirth')" class="md-error">Enter a date of birth</span>
-                  </md-input-container>
+                  <v-menu lazy :nudge-left="100">
+                    <v-text-field slot="activator"
+                                  label="Date of birth"
+                                  v-model="tenant.dateOfBirth"
+                                  prepend-icon="date_range"
+                                  required readonly>
+                    </v-text-field>
+                    <v-date-picker v-model="tenant.dateOfBirth"
+                                  scrollable>
+                    </v-date-picker>
+                  </v-menu>
                 </v-card-row>
               </v-card-text>
               <v-card-title>
@@ -48,24 +53,23 @@
               </v-card-title>
               <v-card-text>
                 <v-card-row>
-                  <md-input-container :class="{ 'md-input-invalid' : errorBag.has('mainContactNumber') }">
-                    <label for="mainContactNumber">Main contact number</label>
-                    <md-input v-model="tenant.mainContactNumber" data-vv-name="mainContactNumber" v-validate="'required'" data-vv-validate-on="change"  id="mainContactNumber" name="mainContactNumber" required></md-input>
-                    <span v-if="errorBag.has('mainContactNumber')" class="md-error">Enter a valid contact number</span>
-                  </md-input-container>
+                  <v-text-field v-model="tenant.mainContactNumber"
+                                :rules="[$validation.rules.required, $validation.rules.min_length(tenant.mainContactNumber, 2)]"
+                                label="Main contact number"
+                                required>
+                  </v-text-field>
                 </v-card-row>
                 <v-card-row>
-                  <md-input-container>
-                    <label for="secondaryContactNumber">Another contact number</label>
-                    <md-input v-model="tenant.secondaryContactNumber" id="secondaryContactNumber" name="secondaryContactNumber"></md-input>
-                  </md-input-container>
+                  <v-text-field v-model="tenant.secondaryContactNumber"
+                                label="Another contact number">
+                  </v-text-field>
                 </v-card-row>
                 <v-card-row>
-                  <md-input-container :class="{ 'md-input-invalid': errorBag.has('emailAddress') }">
-                    <label for="emailAddress">Email Address</label>
-                    <md-input type="email" id="emailAddress" name="emailAddress" data-vv-name="emailAddress" v-validate="'required|email'" v-model="tenant.emailAddress" data-vv-validate-on="change" required></md-input>
-                    <span v-if="errorBag.has('emailAddress')" class="md-error">Enter a valid email address</span>
-                  </md-input-container>
+                  <v-text-field v-model="tenant.emailAddress"
+                                label="Email Address"
+                                type="email"
+                                required>
+                  </v-text-field>
                 </v-card-row>
               </v-card-text>
             </v-card>
@@ -77,42 +81,39 @@
               </v-card-title>
               <v-card-text>
                 <v-card-row>
-                  <md-input-container :class="{ 'md-input-invalid' : errorBag.has('street') }">
-                    <label for="street">Street address</label>
-                    <md-textarea v-model="tenant.addresses[0].street" data-vv-name="street" v-validate="'required'" data-vv-validate-on="change"  id="street" name="street" required></md-textarea>
-                    <span v-if="errorBag.has('street')" class="md-error">Enter a valid street address</span>
-                  </md-input-container>
+                  <v-text-field v-model="tenant.addresses[0].street"
+                                :rules="[$validation.rules.required, $validation.rules.min_length(tenant.addresses[0].street, 2)]"
+                                label="Street address"
+                                required>
+                  </v-text-field>
                 </v-card-row>
                 <v-card-row>
-                  <md-input-container :class="{ 'md-input-invalid' : errorBag.has('townOrCity') }">
-                    <label for="townOrCity">Town or City</label>
-                    <md-input v-model="tenant.addresses[0].townOrCity" data-vv-name="townOrCity" v-validate="'required'" data-vv-validate-on="change"  id="townOrCity" name="townOrCity" required></md-input>
-                    <span v-if="errorBag.has('townOrCity')" class="md-error">Enter a valid town or city</span>
-                  </md-input-container>
+                  <v-text-field v-model="tenant.addresses[0].townOrCity"
+                                :rules="[$validation.rules.required, $validation.rules.min_length(tenant.addresses[0].townOrCity, 2)]"
+                                label="Town or city"
+                                required>
+                  </v-text-field>
                 </v-card-row>
                 <v-card-row>
-                  <md-input-container :class="{ 'md-input-invalid' : errorBag.has('countyOrRegion') }">
-                    <label for="countyOrRegion">County or Region</label>
-                    <md-input v-model="tenant.addresses[0].countyOrRegion" data-vv-name="countyOrRegion" v-validate="'required'" data-vv-validate-on="change"  id="countyOrRegion" name="countyOrRegion" required></md-input>
-                    <span v-if="errorBag.has('countyOrRegion')" class="md-error">Enter a valid county or region</span>
-                  </md-input-container>
+                  <v-text-field v-model="tenant.addresses[0].countyOrRegion"
+                                :rules="[$validation.rules.required, $validation.rules.min_length(tenant.addresses[0].countyOrRegion, 2)]"
+                                label="County or region"
+                                required>
+                  </v-text-field>
                 </v-card-row>
                 <v-card-row>
-                  <md-input-container :class="{ 'md-input-invalid' : errorBag.has('postcode') }">
-                    <label for="postcode">Postcode</label>
-                    <md-input v-model="tenant.addresses[0].postcode" data-vv-name="postcode" v-validate="'required'" data-vv-validate-on="change"  id="postcode" name="postcode" required></md-input>
-                    <span v-if="errorBag.has('postcode')" class="md-error">Enter a valid postal code</span>
-                  </md-input-container>
+                  <v-text-field v-model="tenant.addresses[0].postcode"
+                                :rules="[$validation.rules.required, $validation.rules.min_length(tenant.addresses[0].postcode, 5), $validation.rules.max_length(tenant.addresses[0].postcode, 7)]"
+                                label="Postcode"
+                                required>
+                  </v-text-field>
                 </v-card-row>
                 <v-card-row>
-                  <md-input-container :class="{ 'md-input-invalid' : errorBag.has('country') }">
-                    <label for="country">Country</label>
-                    <md-select v-model="tenant.addresses[0].country" data-vv-name="country" v-validate="'required'" data-vv-validate-on="change" id="country" name="country" required>
-                      <md-option disabled value="">Select a Country</md-option>
-                      <md-option v-for="country in countries" :value="country" :key="country">{{ country }}</md-option>
-                    </md-select>
-                    <span v-if="errorBag.has('country')" class="md-error">Select a valid country</span>
-                  </md-input-container>
+                  <p>
+                    Country
+                    <br>
+                    {{ tenant.addresses[0].country }}
+                  </p>
                 </v-card-row>
               </v-card-text>
             </v-card>
@@ -137,7 +138,6 @@ export default {
   data () {
     return {
       permissions: this.$store.state.permissions,
-      countries: [],
       tenant: {
         id: null,
         firstName: null,
