@@ -28,8 +28,8 @@
         Accounts
       </router-link>
 
-      <v-menu offset-y transition="v-slide-y-transition">
-        <v-list-tile slot="activator">
+      <v-menu class="calculators" transition="v-slide-y-transition" bottom :nudge-right="90" :nudge-top="-10">
+        <v-list-tile class="white--text" slot="activator">
           Calculators
         </v-list-tile>
         <v-list>
@@ -56,7 +56,7 @@
         </v-list>
       </v-menu>
 
-      <v-menu offset-y transition="v-slide-y-transition">
+      <v-menu transition="v-slide-y-transition" bottom :nudge-right="50">
         <v-btn light icon slot="activator">
           <v-icon>more_vert</v-icon>
         </v-btn>
@@ -96,5 +96,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+  .calculators, .calculators a {
+    height: 100%;
+  }
 </style>
