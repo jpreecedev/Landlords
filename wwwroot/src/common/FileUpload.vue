@@ -32,6 +32,10 @@
         type: String,
         default: 'choose_file'
       },
+      formKey: {
+        type: String,
+        default: 'files'
+      },
       required: {
         type: Boolean,
         default: false
@@ -63,7 +67,7 @@
         const forms = []
         for (const file of files) {
           const form = new FormData()
-          form.append('data', file, file.name)
+          form.append(this.formKey, file, file.name)
           forms.push(form)
         }
         return forms
@@ -92,6 +96,10 @@
   }
 </script>
 <style scoped>
+
+  div {
+    width: 100%;
+  }
 
   input[type=file] {
     position: absolute;

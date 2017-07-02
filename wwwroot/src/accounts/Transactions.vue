@@ -42,10 +42,16 @@
           </v-card-row>
           <v-card-text>
             <v-card-row>
-              <md-input-container>
-                <md-file v-model="file" multiple placeholder="Browse for a bank statement on your computer" @selected="filesChange('files', $event)" name="files"></md-file>
-              </md-input-container>
-              <md-progress v-if="progress" :md-progress="progress"></md-progress>
+              <file-upload v-model="files"
+                           @formData="filesChange"
+                           name="files"
+                           label="Browse for a bank statement on your computer">
+              </file-upload>
+            </v-card-row>
+            <v-card-row>
+              <v-progress-linear v-if="progress"
+                                 v-model="progress">
+              </v-progress-linear>
             </v-card-row>
           </v-card-text>
         </v-card>
@@ -91,7 +97,7 @@ export default {
       ],
       permissions: this.$store.state.permissions,
       accountId: this.$route.params.accountId,
-      file: null,
+      files: null,
       progress: 0,
       transactions: []
     }
@@ -102,15 +108,8 @@ export default {
     })
   },
   methods: {
-    filesChange: function (fieldName, fileList) {
-      const formData = new FormData()
-      if (!fileList.length) return
-
-      Array.from(Array(fileList.length).keys()).map(x => {
-        formData.append(fieldName, fileList[x], fileList[x].name)
-      })
-
-      FileUploadService.upload(formData, `/api/transactions/upload?entityId=${this.accountId}`, uploadProgress => { this.progress = Number.parseInt(uploadProgress) })
+    filesChange: function (formData) {
+      FileUploadService.upload(formData[0], `/api/transactions/upload?entityId=${this.accountId}`, uploadProgress => { this.progress = Number.parseInt(uploadProgress) })
         .then(transactions => {
           if (transactions) {
             this.transactions.push(...transactions)
