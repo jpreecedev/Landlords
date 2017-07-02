@@ -2,10 +2,17 @@
   <div class="card-block">
     <div class="row">
       <div class="col-xs-12 col-md-6">
-        <md-input-container>
-          <label :for="checklistItem.key + 'actioned'">Actioned</label>
-          <md-input v-model="checklistItem.payload" @selected="save()" :id="checklistItem.key + 'actioned'" :name="checklistItem.key + 'actioned'" type="date"></md-input>
-        </md-input-container>
+        <v-menu lazy :nudge-left="100">
+          <v-text-field slot="activator"
+                        label="Actioned"
+                        v-model="checklistItem.payload"
+                        prepend-icon="date_range"
+                        required readonly>
+          </v-text-field>
+          <v-date-picker v-model="checklistItem.payload"
+                         scrollable>
+          </v-date-picker>
+        </v-menu>
       </div>
     </div>
   </div>
