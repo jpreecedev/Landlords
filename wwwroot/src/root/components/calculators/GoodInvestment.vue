@@ -255,7 +255,7 @@
             </v-card-title>
             <v-card-text>
               <div v-if="!calculateScore">
-                <p class="md-warn">Please fix any validation errors to see your results</p>
+                <p class="red--text">Please fix any validation errors to see your results</p>
               </div>
               <v-card-row class="row" v-if="calculateScore">
                 <p>The score based on the information provided is: <strong>{{ calculateScore.scoreDisplay }}</strong>.</p>

@@ -52,7 +52,7 @@
           </div>
           <div class="row mt-4" v-if="!calculateRentalYield">
             <div class="col-xs-12">
-              <p class="md-warn">Please fix any validation errors to see your results</p>
+              <p class="red--text">Please fix any validation errors to see your results</p>
             </div>
           </div>
           <div class="row mt-4" v-if="calculateRentalYield">
