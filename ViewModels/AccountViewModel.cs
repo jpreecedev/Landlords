@@ -3,6 +3,7 @@
     using System;
     using Model.Validation;
     using Model.Entities;
+    using System.ComponentModel.DataAnnotations;
 
     public class AccountViewModel
     {
@@ -28,14 +29,19 @@
         [RequiredGuid]
         public Guid Id { get; set; }
 
+        [Required]
         public string Name { get; set; }
 
+        [Required]
         public string Number { get; set; }
 
+        [Required]
         public string SortCode { get; set; }
 
+        [Required]
         public string ProviderName { get; set; }
 
+        [Required]
         public string Type { get; set; }
 
         [RequiredGuid]

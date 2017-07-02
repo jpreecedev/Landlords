@@ -14,69 +14,77 @@
               <v-card-text>
                 <div class="row">
                   <div class="col-xs-12">
-                    <md-input-container :class="{ 'md-input-invalid': errorBag.has('opened') }">
-                      <label for="opened">Date Opened</label>
-                      <md-input v-model="account.opened" id="opened" name="opened" type="date" data-vv-name="opened" v-validate="'required'" data-vv-validate-on="change" required />
-                    </md-input-container>
+                    <v-menu lazy :nudge-left="100">
+                      <v-text-field slot="activator"
+                                    label="Date opened"
+                                    v-model="account.opened"
+                                    prepend-icon="date_range"
+                                    required readonly>
+                      </v-text-field>
+                      <v-date-picker v-model="account.opened"
+                                     scrollable>
+                      </v-date-picker>
+                    </v-menu>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-xs-12">
-                    <md-input-container :class="{ 'md-input-invalid': errorBag.has('name') }">
-                      <label for="name">Account Name</label>
-                      <md-input v-model="account.name" id="name" name="name" type="text" data-vv-name="name" v-validate="'required'" data-vv-validate-on="change" required />
-                      <span v-if="errorBag.has('name')" class="md-error">Enter a valid account name</span>
-                    </md-input-container>
+                    <v-text-field v-model="account.name"
+                                  :rules="[$validation.rules.required]"
+                                  label="Account name"
+                                  required>
+                    </v-text-field>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-xs-12">
-                    <md-input-container :class="{ 'md-input-invalid': errorBag.has('number') }">
-                      <label for="number">Account Number</label>
-                      <md-input v-model="account.number" id="number" name="number" type="text" data-vv-name="number" v-validate="'required'" data-vv-validate-on="change" required />
-                      <span v-if="errorBag.has('number')" class="md-error">Enter a valid account number</span>
-                    </md-input-container>
+                    <v-text-field v-model="account.number"
+                                  :rules="[$validation.rules.required]"
+                                  label="Account number"
+                                  required>
+                    </v-text-field>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-xs-12">
-                    <md-input-container :class="{ 'md-input-invalid': errorBag.has('sortCode') }">
-                      <label for="sortCode">Sort Code</label>
-                      <md-input v-model="account.sortCode" id="sortCode" name="sortCode" type="text" data-vv-name="sortCode" v-validate="'required'" data-vv-validate-on="change"  required />
-                      <span v-if="errorBag.has('sortCode')" class="md-error">Enter a valid sort code</span>
-                    </md-input-container>
+                    <v-text-field v-model="account.sortCode"
+                                  :rules="[$validation.rules.required]"
+                                  label="Sort code"
+                                  required>
+                    </v-text-field>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-xs-12">
-                    <md-input-container :class="{ 'md-input-invalid': errorBag.has('type') }">
-                      <label for="type">Account Type</label>
-                      <md-select v-model="account.type" v-validate="'required'" data-vv-validate-on="change" id="type" name="type" required>
-                        <md-option disabled value="">Select an account type</md-option>
-                        <md-option v-for="accountType in accountTypes" :key="accountType" :value="accountType">{{ accountType }}</md-option>
-                      </md-select>
-                      <span v-if="errorBag.has('type')" :title="errorBag.first('type')" class="md-error">Select a valid account type</span>
-                    </md-input-container>
+                    <v-select :items="accountTypes"
+                              :rules="[$validation.rules.required]"
+                              v-model="account.type"
+                              label="Account type"
+                              dark required>
+                    </v-select>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-xs-12">
-                    <md-input-container :class="{ 'md-input-invalid': errorBag.has('providerName') }">
-                      <label for="providerName">Provider Name</label>
-                      <md-select v-model="account.providerName" v-validate="'required'" data-vv-validate-on="change" id="providerName" name="providerName" required>
-                        <md-option disabled value="">Select a provider</md-option>
-                        <md-option v-for="accountProvider in accountProviders" :key="accountProvider" :value="accountProvider">{{ accountProvider }}</md-option>
-                      </md-select>
-                      <span v-if="errorBag.has('type')" :title="errorBag.first('type')" class="md-error">Select a valid provider</span>
-                    </md-input-container>
+                    <v-select :items="accountProviders"
+                              :rules="[$validation.rules.required]"
+                              v-model="account.providerName"
+                              label="Provider name"
+                              dark required>
+                    </v-select>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-xs-12">
-                    <md-input-container :class="{ 'md-input-invalid': errorBag.has('openingBalance') }">
-                      <label class="col-form-label" for="openingBalance">Opening Balance</label>
-                      <md-input type="number" v-model="account.openingBalance" data-vv-name="openingBalance" v-validate="'required'" id="openingBalance" name="openingBalance" data-vv-validate-on="change" />
-                    </md-input-container>
+                    <v-text-field v-model="account.openingBalance"
+                                  :rules="[$validation.rules.required, $validation.rules.min_value(account.openingBalance, 0)]"
+                                  label="Opening balance"
+                                  type="number"
+                                  min="0"
+                                  step="100"
+                                  prefix="£"
+                                  required>
+                    </v-text-field>
                   </div>
                 </div>
               </v-card-text>
