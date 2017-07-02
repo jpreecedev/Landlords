@@ -2,20 +2,39 @@
   <v-expansion-panel v-if="checklist && checklist.checklistItems && checklist.checklistItems.length">
     <v-expansion-panel-content v-for="(item, index) in checklist.checklistItems" :key="index">
       <div slot="header">
-        <v-checkbox v-if="permissions.CI_ToggleCompleted" v-model="item.isCompleted" class="accordion-checkbox" @change="newValue => { toggleCompleted(newValue, item); }" />
+        <v-checkbox v-if="permissions.CI_ToggleCompleted"
+                    v-model="item.isCompleted"
+                    class="accordion-checkbox"
+                    @change="newValue => { toggleCompleted(newValue, item); }">
+        </v-checkbox>
         <span v-if="!item.isCompleted">{{ item.displayText }}</span>
         <del class="text-muted" v-if="item.isCompleted">{{ item.displayText }}</del>
       </div>
       <v-card>
         <v-card-text>
-          <document-upload v-if="item.template === 'DocumentUpload'" :checklistId="checklist.id" :checklistItem="item" />
-          <comments-date-of-action v-else-if="item.template === 'CommentsAndDateOfAction'" :checklistId="checklist.id" :checklistItem="item" />
-          <comments-only v-else-if="item.template === 'CommentsOnly'" :checklistId="checklist.id" :checklistItem="item" />
-          <date-of-action v-else-if="item.template === 'DateOfAction'" :checklistId="checklist.id" :checklistItem="item" />
+          <document-upload v-if="item.template === 'DocumentUpload'"
+                           :checklistId="checklist.id"
+                           :checklistItem="item">
+          </document-upload>
+          <comments-date-of-action v-else-if="item.template === 'CommentsAndDateOfAction'"
+                                   :checklistId="checklist.id"
+                                   :checklistItem="item">
+          </comments-date-of-action>
+          <comments-only v-else-if="item.template === 'CommentsOnly'"
+                         :checklistId="checklist.id"
+                         :checklistItem="item">
+          </comments-only>
+          <date-of-action v-else-if="item.template === 'DateOfAction'"
+                          :checklistId="checklist.id"
+                          :checklistItem="item">
+          </date-of-action>
         </v-card-text>
       </v-card>
     </v-expansion-panel-content>
   </v-expansion-panel>
+  <div v-else>
+    Checklist is unavailable
+  </div>
 </template>
 
 <script>
@@ -26,7 +45,12 @@ import DateOfAction from './DateOfAction'
 
 export default {
   name: 'accordion',
-  components: { DocumentUpload, CommentsDateOfAction, CommentsOnly, DateOfAction },
+  components: {
+    DocumentUpload,
+    CommentsDateOfAction,
+    CommentsOnly,
+    DateOfAction
+  },
   props: {
     'checklist': {
       type: Object,

@@ -6,7 +6,7 @@
                       label="Actioned"
                       v-model="checklistItem.payload.actioned"
                       prepend-icon="date_range"
-                      required readonly>
+                      readonly>
         </v-text-field>
         <v-date-picker v-model="checklistItem.payload.actioned"
                        @input="save()"
@@ -20,8 +20,7 @@
                     :rows="1"
                     :auto-grow="true"
                     @blur="save()"
-                    label="Comments"
-                    required>
+                    label="Comments">
       </v-text-field>
     </div>
   </div>

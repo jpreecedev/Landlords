@@ -2,23 +2,35 @@
   <div>
     <div class="row">
       <div class="col-xs-12 col-md-6">
-        <md-input-container>
-          <label :for="checklistItem.key + 'comments'">Comments</label>
-          <md-textarea v-model="checklistItem.comments" :id="checklistItem.key + 'comments'" placeholder="Enter any comments here" :name="checklistItem.key + 'comments'"></md-textarea>
-        </md-input-container>
+        <v-text-field v-model="checklistItem.payload.comments"
+                      :multi-line="true"
+                      :rows="1"
+                      :auto-grow="true"
+                      @blur="save()"
+                      label="Comments">
+        </v-text-field>
       </div>
       <div class="col-xs-12 col-md-6">
-        <md-input-container>
-          <label :for="checklistItem.key + 'actioned'">Actioned</label>
-          <md-input v-model="checklistItem.actioned" id="checklistItem.key + 'actioned'" name="checklistItem.key + 'actioned'" type="date"></md-input>
-        </md-input-container>
+        <v-menu lazy :nudge-left="100">
+          <v-text-field slot="activator"
+                        label="Actioned"
+                        v-model="checklistItem.payload.actioned"
+                        prepend-icon="date_range"
+                        required readonly>
+          </v-text-field>
+          <v-date-picker v-model="checklistItem.payload.actioned"
+                         @input="save()"
+                         scrollable>
+          </v-date-picker>
+        </v-menu>
       </div>
     </div>
     <div class="row">
       <div class="col-xs-12">
-        <md-input-container>
-          <md-file v-model="file" placeholder="Browse for a file on your computer"></md-file>
-        </md-input-container>
+        <file-upload v-model="file"
+                     @formData="fileChosen"
+                     label="Browse for a file on your computer">
+        </file-upload>
       </div>
     </div>
   </div>
@@ -42,10 +54,27 @@ export default {
       file: null,
       permissions: this.$store.state.permissions
     }
+  },
+  created () {
+    if (!this.checklistItem.payload) {
+      this.checklistItem.payload = {
+        comments: null,
+        actioned: null
+      }
+    } else {
+      this.checklistItem.payload = JSON.parse(this.checklistItem.payload)
+    }
+  },
+  methods: {
+    fileChosen () {
+      // TODO
+      debugger
+    },
+    save: function () {
+      if (this.permissions.CI_ApplyTemplate) {
+        this.$http.post(`/api/checklistitem/template?checklistId=${this.checklistId}&checklistItemId=${this.checklistItem.id}`, this.checklistItem.payload)
+      }
+    }
   }
 }
 </script>
-
-<style lang="scss" scoped>
-
-</style>
