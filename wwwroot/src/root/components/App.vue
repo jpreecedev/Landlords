@@ -2,10 +2,8 @@
   <v-app>
     <app-nav></app-nav>
     <app-header v-if="$route.path === '/'"></app-header>
-    <main>
-      <v-container fluid>
-        <router-view></router-view>
-      </v-container>
+    <main :class="{ contained: $route.path !== '/' }">
+      <router-view></router-view>
     </main>
     <app-footer></app-footer>
   </v-app>
@@ -18,11 +16,7 @@ import AppHeader from './Header.vue'
 
 export default {
   name: 'app',
-  components: { AppNav, AppFooter, AppHeader },
-  data () {
-    return {
-    }
-  }
+  components: { AppNav, AppFooter, AppHeader }
 }
 </script>
 

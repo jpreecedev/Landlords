@@ -1,74 +1,107 @@
 <template>
   <div>
-    <!-- Marketing messaging and featurettes
-      ================================================== -->
-    <!-- Wrap the rest of the page in another container to center all the content. -->
-    <div class="container marketing">
-      <!-- Three columns of text below the carousel -->
+    <section class="bg-primary" id="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 text-center">
+                    <h2 class="section-heading">We've got what you need!</h2>
+                    <hr class="light">
+                    <p class="text-faded">Start Bootstrap has everything you need to get your new website up and running in no time! All of the templates and themes on Start Bootstrap are open source, free to download, and easy to use. No strings attached!</p>
+                    <a href="#services" class="page-scroll btn btn-default btn-xl sr-button">Get Started!</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services">
+      <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 class="section-heading">At Your Service</h2>
+                <hr class="primary">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-6 text-center">
+                <div class="service-box">
+                    <i class="fa fa-4x fa-diamond text-primary sr-icons"></i>
+                    <h3>Sturdy Templates</h3>
+                    <p class="text-muted">Our templates are updated regularly so they don't break.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 text-center">
+                <div class="service-box">
+                    <i class="fa fa-4x fa-paper-plane text-primary sr-icons"></i>
+                    <h3>Ready to Ship</h3>
+                    <p class="text-muted">You can use this theme as is, or you can make changes!</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 text-center">
+                <div class="service-box">
+                    <i class="fa fa-4x fa-newspaper-o text-primary sr-icons"></i>
+                    <h3>Up to Date</h3>
+                    <p class="text-muted">We update dependencies to keep things fresh.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 text-center">
+                <div class="service-box">
+                    <i class="fa fa-4x fa-heart text-primary sr-icons"></i>
+                    <h3>Made with Love</h3>
+                    <p class="text-muted">You have to make your websites with love these days!</p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="no-padding" id="portfolio">
+      <div class="row no-gutter">
+          <div class="col-lg-4 col-sm-6">
+            <img src="../../assets/images/landing-page/1.png" class="responsive" alt="">
+          </div>
+          <div class="col-lg-4 col-sm-6">
+            <img src="../../assets/images/landing-page/2.png" class="responsive" alt="">
+          </div>
+          <div class="col-lg-4 col-sm-6">
+            <img src="../../assets/images/landing-page/3.png" class="responsive" alt="">
+          </div>
+          <div class="col-lg-4 col-sm-6">
+            <img src="../../assets/images/landing-page/4.png" class="responsive" alt="">
+          </div>
+          <div class="col-lg-4 col-sm-6">
+            <img src="../../assets/images/landing-page/5.png" class="responsive" alt="">
+          </div>
+          <div class="col-lg-4 col-sm-6">
+            <img src="../../assets/images/landing-page/6.png" class="responsive" alt="">
+          </div>
+      </div>
+    </section>
+
+    <aside class="bg-dark">
+      <div class="text-center">
+        <div class="call-to-action">
+          <h2>Free Download at Start Bootstrap!</h2>
+          <a href="http://startbootstrap.com/template-overviews/creative/" class="btn btn-default btn-xl sr-button">Download Now!</a>
+        </div>
+      </div>
+    </aside>
+
+    <section id="contact">
       <div class="row">
-        <div class="col-lg-4">
-          <img class="rounded-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-          <h2 class="display-1">Heading</h2>
-          <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>
-          <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-        </div>
-        <!-- /.col-lg-4 -->
-        <div class="col-lg-4">
-          <img class="rounded-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-          <h2 class="display-1">Heading</h2>
-          <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.</p>
-          <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-        </div>
-        <!-- /.col-lg-4 -->
-        <div class="col-lg-4">
-          <img class="rounded-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-          <h2 class="display-1">Heading</h2>
-          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-        </div>
-        <!-- /.col-lg-4 -->
+          <div class="col-lg-8 col-lg-offset-2 text-center">
+              <h2 class="section-heading">Let's Get In Touch!</h2>
+              <hr class="primary">
+              <p>Ready to start your next project with us? That's great! Give us a call or send us an email and we will get back to you as soon as possible!</p>
+          </div>
+          <div class="col-lg-4 col-lg-offset-2 text-center">
+              <i class="fa fa-phone fa-3x sr-contact"></i>
+              <p>123-456-6789</p>
+          </div>
+          <div class="col-lg-4 text-center">
+              <i class="fa fa-envelope-o fa-3x sr-contact"></i>
+              <p><a href="mailto:your-email@your-domain.com">feedback@startbootstrap.com</a></p>
+          </div>
       </div>
-      <!-- /.row -->
-      <!-- START THE FEATURETTES -->
-      <hr class="featurette-divider">
-      <div class="row featurette">
-        <div class="col-md-7">
-          <h2 class="featurette-heading">First featurette heading. <span class="text-muted">It'll blow your mind.</span></h2>
-          <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-        </div>
-        <div class="col-md-5">
-          <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
-        </div>
-      </div>
-      <hr class="featurette-divider">
-      <div class="row featurette">
-        <div class="col-md-7 push-md-5">
-          <h2 class="featurette-heading">Oh yeah, it's that good. <span class="text-muted">See for yourself.</span></h2>
-          <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-        </div>
-        <div class="col-md-5 pull-md-7">
-          <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
-        </div>
-      </div>
-      <hr class="featurette-divider">
-      <div class="row featurette">
-        <div class="col-md-7">
-          <h2 class="featurette-heading">And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
-          <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-        </div>
-        <div class="col-md-5">
-          <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
-        </div>
-      </div>
-      <hr class="featurette-divider">
-    </div>
+    </section>
   </div>
 </template>
-
-<script>
-
-</script>
-
-<style lang="scss" scoped>
-
-</style>
