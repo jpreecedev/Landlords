@@ -17,14 +17,16 @@
         {
         }
 
-        public async Task<ICollection<TransactionViewModel>> GetTransactionsAsync(Guid portfolioId, Guid accountId)
+        public async Task<AccountTransactionsViewModel> GetTransactionsAsync(Guid portfolioId, Guid accountId)
         {
-            return await Context.Transactions.AsNoTracking()
+            var transactions = await Context.Transactions.AsNoTracking()
                 .Join(Context.Accounts, transaction => transaction.AccountId, account => account.Id, (transaction, account) => new { Transaction = transaction, Account = account })
                 .Where(c => c.Account.Id == accountId && c.Account.PortfolioId == portfolioId && !c.Account.IsDeleted && !c.Transaction.IsDeleted)
                 .Select(c => new TransactionViewModel(c.Transaction))
                 .OrderByDescending(c => c.Date)
                 .ToListAsync();
+
+            return new AccountTransactionsViewModel(transactions);
         }
 
         public async Task<ICollection<TransactionViewModel>> ProcessImportedTransactionsAsync(ICollection<TransactionViewModel> transactions)
@@ -41,7 +43,8 @@
                         c.In == transactionViewModel.In &&
                         c.Out == transactionViewModel.Out &&
                         c.PaymentType == transactionViewModel.PaymentType &&
-                        c.Reference == transactionViewModel.Reference)
+                        c.Reference == transactionViewModel.Reference &&
+                        c.Category == transactionViewModel.Category)
                     .FirstOrDefaultAsync();
 
                 if (existingEntity == null)
@@ -56,7 +59,8 @@
                         In = transactionViewModel.In,
                         Out = transactionViewModel.Out,
                         PaymentType = transactionViewModel.PaymentType,
-                        Reference = transactionViewModel.Reference
+                        Reference = transactionViewModel.Reference,
+                        Category = transactionViewModel.Category
                     });
                 }
             }
@@ -65,6 +69,19 @@
             await Context.SaveChangesAsync();
 
             return newTransactions.Select(c => new TransactionViewModel(c)).ToList();
+        }
+
+        public async Task UpdateTransactionCategoryAsync(Guid portfolioId, Guid accountId, Guid transactionId, string category)
+        {
+            var transactionEntity = await Context.Transactions
+                .Join(Context.Accounts, transaction => transaction.AccountId, account => account.Id, (transaction, account) => new {Transaction = transaction, Account = account})
+                .FirstOrDefaultAsync(c => c.Account.Id == accountId && c.Account.PortfolioId == portfolioId && c.Transaction.Id == transactionId && !c.Account.IsDeleted && !c.Transaction.IsDeleted);
+
+            if (transactionEntity != null)
+            {
+                transactionEntity.Transaction.Category = category;
+                await Context.SaveChangesAsync();
+            }
         }
     }
 }

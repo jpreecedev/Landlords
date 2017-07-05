@@ -7,7 +7,8 @@
 
     public interface ITransactionsDataProvider
     {
-        Task<ICollection<TransactionViewModel>> GetTransactionsAsync(Guid portfolioId, Guid accountId);
+        Task<AccountTransactionsViewModel> GetTransactionsAsync(Guid portfolioId, Guid accountId);
         Task<ICollection<TransactionViewModel>> ProcessImportedTransactionsAsync(ICollection<TransactionViewModel> transactions);
+        Task UpdateTransactionCategoryAsync(Guid portfolioId, Guid accountId, Guid transactionId, string category);
     }
 }

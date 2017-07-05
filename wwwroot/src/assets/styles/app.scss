@@ -21,6 +21,10 @@ main {
     padding-bottom: 6rem;
     position: relative;
     width: 1140px;
+
+    &.wide {
+      width: 90%;
+    }
   }
 }
 

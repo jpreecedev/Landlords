@@ -18,17 +18,22 @@
                 return;
             }
 
+            TransactionId = transaction.Id;
             AccountId = transaction.AccountId;
             Account = transaction.Account;
             Date = transaction.Date;
             PaymentType = transaction.PaymentType;
             Reference = transaction.Reference;
+            Category = transaction.Category;
             DestinationAccountNumber = transaction.DestinationAccountNumber;
             DestinationSortCode = transaction.DestinationSortCode;
             In = transaction.In;
             Out = transaction.Out;
             Balance = transaction.Balance;
         }
+
+        [RequiredGuid]
+        public Guid TransactionId { get; set; }
 
         [RequiredGuid]
         public Guid AccountId { get; set; }
@@ -41,6 +46,8 @@
         public string PaymentType { get; set; }
 
         public string Reference { get; set; }
+
+        public string Category { get; set; }
 
         public string DestinationAccountNumber { get; set; }
 

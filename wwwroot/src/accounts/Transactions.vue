@@ -6,7 +6,7 @@
     <p v-if="!transactions || !transactions.length">There are no transactions to display.</p>
 
     <v-card v-if="transactions && transactions.length">
-      <v-data-table :headers="headers" :items="transactions">
+      <v-data-table :headers="headers" :items="transactions" class="transactions" :pagination.sync="pagination">
         <template slot="items" scope="props">
           <td>
             {{ props.item.date | formatDate }}
@@ -14,15 +14,24 @@
           <td>
             {{ props.item.reference }}
           </td>
-          <td>
+          <td class="categories">
+            <v-select :items="transactionCategories"
+                      :hide-details="true"
+                      @input="selectedCategory(props.item)"
+                      v-model="props.item.category"
+                      label="Category"
+                      dark>
+            </v-select>
+          </td>
+          <td class="text-xs-right">
             <span v-if="props.item.in">{{ props.item.in | currency('£') }}</span>
             <span v-else>&nbsp;</span>
           </td>
-          <td>
+          <td class="text-xs-right">
             <span v-if="props.item.out">{{ props.item.out | currency('£') }}</span>
             <span v-else>&nbsp;</span>
           </td>
-          <td>
+          <td class="text-xs-right">
             <span>{{ props.item.balance | currency('£') }}</span>
           </td>
         </template>
@@ -62,17 +71,21 @@
 
 <script>
 import FileUploadService from 'services/file-upload.service'
+import utils from 'utils'
 
 export default {
   name: 'transactions',
   data () {
     return {
-      pagination: {},
+      pagination: {
+        sortBy: 'date',
+        descending: true
+      },
       headers: [
         {
           text: 'Date',
           left: true,
-          sortable: false
+          value: 'date'
         },
         {
           text: 'Reference',
@@ -80,19 +93,21 @@ export default {
           sortable: false
         },
         {
-          text: 'Money',
+          text: 'Category',
           left: true,
           sortable: false
         },
         {
-          text: 'Money',
-          left: true,
-          sortable: false
+          text: 'Money in',
+          value: 'in'
+        },
+        {
+          text: 'Money out',
+          value: 'out'
         },
         {
           text: 'Balance',
-          left: true,
-          sortable: false
+          value: 'balance'
         }
       ],
       permissions: this.$store.state.permissions,
@@ -104,7 +119,8 @@ export default {
   },
   created () {
     this.$http.get(`/api/transactions/?accountId=${this.accountId}`).then(response => {
-      this.transactions = response.data
+      this.transactions = response.data.transactions
+      Object.assign(this, utils.mapEntity(response.data, null, true))
     })
   },
   methods: {
@@ -127,6 +143,11 @@ export default {
       }
 
       this.size = pagination.size
+    },
+    selectedCategory (transaction) {
+      if (this.permissions.TR_UpdateCategory) {
+        this.$http.post(`/api/transactions/?accountId=${transaction.accountId}&transactionId=${transaction.transactionId}&category=${transaction.category}`)
+      }
     }
   }
 }
@@ -138,4 +159,11 @@ export default {
       width: 150px;
     }
   }
+
+  .transactions table {
+    .categories {
+      width: 250px;
+    }
+  }
+
 </style>

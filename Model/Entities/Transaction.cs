@@ -17,6 +17,8 @@
 
         public string Reference { get; set; }
 
+        public string Category { get; set; }
+
         public string DestinationAccountNumber { get; set; }
 
         public string DestinationSortCode { get; set; }

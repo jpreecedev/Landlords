@@ -30,6 +30,14 @@
         {
             return Ok(await _transactionsDataProvider.GetTransactionsAsync(User.GetPortfolioId(), accountId));
         }
+        
+        [HttpPost, ValidateAntiForgeryToken]
+        [Permission(Permissions_TR.UpdateCategoryId, Permissions_TR.UpdateCategoryRouteId, Permissions_TR.UpdateCategoryDescription)]
+        public async Task<IActionResult> Post(Guid accountId, Guid transactionId, string category)
+        {
+            await _transactionsDataProvider.UpdateTransactionCategoryAsync(User.GetPortfolioId(), accountId, transactionId, category);
+            return Ok();
+        }
 
         [HttpPost("upload"), ValidateAntiForgeryToken, MustOwnAccount]
         [Permission(Permissions_TR.UploadId, Permissions_TR.UploadRouteId, Permissions_TR.UploadDescription)]
