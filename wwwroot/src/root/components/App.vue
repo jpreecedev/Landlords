@@ -3,7 +3,9 @@
     <app-nav></app-nav>
     <app-header v-if="$route.path === '/'"></app-header>
     <main :class="{ contained: $route.path !== '/', wide: $route.path.indexOf('/accounts/transactions') > -1 }">
-      <router-view></router-view>
+      <transition name="fade">
+        <router-view></router-view>
+      </transition>
     </main>
     <app-footer></app-footer>
   </v-app>

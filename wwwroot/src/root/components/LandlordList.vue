@@ -4,7 +4,7 @@
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
 
     <v-card>
-      <v-data-table :headers="headers" :items="data">
+      <v-data-table :headers="headers" :items="data" :loading="loading">
         <template slot="items" scope="props">
           <td>
             {{ props.item.landlordName }}
@@ -29,6 +29,7 @@ export default {
   name: 'landlordlist',
   data () {
     return {
+      loading: false,
       pagination: {},
       headers: [
         {
@@ -51,7 +52,9 @@ export default {
     }
   },
   created () {
+    this.loading = true
     this.$http.get('/api/landlord').then(response => {
+      this.loading = false
       this.data = response.data
     })
   }

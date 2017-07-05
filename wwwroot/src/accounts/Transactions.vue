@@ -5,8 +5,8 @@
 
     <p v-if="!transactions || !transactions.length">There are no transactions to display.</p>
 
-    <v-card v-if="transactions && transactions.length">
-      <v-data-table :headers="headers" :items="transactions" class="transactions" :pagination.sync="pagination">
+    <v-card>
+      <v-data-table :headers="headers" :items="transactions" class="transactions" :pagination.sync="pagination" :loading="loading">
         <template slot="items" scope="props">
           <td>
             {{ props.item.date | formatDate }}
@@ -81,6 +81,7 @@ export default {
   name: 'transactions',
   data () {
     return {
+      loading: false,
       pagination: {
         sortBy: 'date',
         descending: true
@@ -122,7 +123,9 @@ export default {
     }
   },
   created () {
+    this.loading = true
     this.$http.get(`/api/transactions/?accountId=${this.accountId}`).then(response => {
+      this.loading = false
       this.transactions = response.data.transactions
       Object.assign(this, utils.mapEntity(response.data, null, true))
     })
@@ -166,7 +169,7 @@ export default {
 
   .transactions table {
     .categories {
-      width: 250px;
+      width: 325px;
     }
   }
 

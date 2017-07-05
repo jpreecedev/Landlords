@@ -3,7 +3,7 @@
     <h1 class="display-2">Bank accounts</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
     <v-card>
-      <v-data-table :headers="headers" :items="data.accounts">
+      <v-data-table :headers="headers" :items="data.accounts" :loading="loading">
         <template slot="items" scope="props">
           <td>
             <account-display :account="props.item"></account-display>
@@ -35,6 +35,7 @@ export default {
   components: { AccountDisplay },
   data () {
     return {
+      loading: false,
       pagination: {},
       headers: [
         {
@@ -62,7 +63,9 @@ export default {
     }
   },
   created () {
+    this.loading = true
     this.$http.get('/api/accounts').then(response => {
+      this.loading = false
       this.data = response.data
     })
   },

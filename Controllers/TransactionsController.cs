@@ -30,7 +30,7 @@
         {
             return Ok(await _transactionsDataProvider.GetTransactionsAsync(User.GetPortfolioId(), accountId));
         }
-        
+
         [HttpPost, ValidateAntiForgeryToken]
         [Permission(Permissions_TR.UpdateCategoryId, Permissions_TR.UpdateCategoryRouteId, Permissions_TR.UpdateCategoryDescription)]
         public async Task<IActionResult> Post(Guid accountId, Guid transactionId, string category)

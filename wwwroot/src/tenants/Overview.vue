@@ -5,15 +5,8 @@
     <v-card>
       <v-card-title>
         Tenants
-        <v-spacer></v-spacer>
-        <v-text-field append-icon="search"
-                      label="Search"
-                      single-line
-                      hide-details
-                      v-model="search">
-        </v-text-field>
       </v-card-title>
-      <v-data-table :headers="headers" :items="data">
+      <v-data-table :headers="headers" :items="data" :loading="loading">
         <template slot="items" scope="props">
           <td>
             <router-link v-if="permissions.TE_GetById" :to="'/tenants/details/' + props.item.id">
@@ -41,7 +34,7 @@ export default {
   name: 'tenants-overview',
   data () {
     return {
-      search: '',
+      loading: false,
       leadTenantOnly: true,
       pagination: {},
       headers: [
@@ -66,7 +59,9 @@ export default {
     }
   },
   created () {
+    this.loading = true
     this.$http.get('/api/tenants').then(response => {
+      this.loading = false
       this.data = response.data
     })
   }
