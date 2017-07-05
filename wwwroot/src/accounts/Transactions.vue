@@ -18,10 +18,14 @@
             <v-select :items="transactionCategories"
                       :hide-details="true"
                       @input="selectedCategory(props.item)"
+                      v-if="permissions.TR_UpdateCategory"
                       v-model="props.item.category"
                       label="Category"
                       dark>
             </v-select>
+            <span v-else>
+              {{ props.item.category }}
+            </span>
           </td>
           <td class="text-xs-right">
             <span v-if="props.item.in">{{ props.item.in | currency('£') }}</span>
