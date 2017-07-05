@@ -1,5 +1,5 @@
 <template>
-  <v-app light>
+  <v-app light :class="{ landingPage: $route.path === '/' }">
     <app-nav></app-nav>
     <app-header v-if="$route.path === '/'"></app-header>
     <main :class="{ contained: $route.path !== '/', wide: $route.path.indexOf('/accounts/transactions') > -1 }">
@@ -22,6 +22,10 @@ export default {
 </script>
 
 <style lang="scss">
+
+.application.landingPage {
+  height: 100%;
+}
 
 .fade-enter-active {
   transition: all .3s ease;
