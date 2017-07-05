@@ -3,7 +3,7 @@
     <h1 class="display-2">Your Tenants</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
     <v-card>
-      <v-card-title>
+      <v-card-title class="title">
         Tenants
       </v-card-title>
       <v-data-table :headers="headers" :items="data" :loading="loading">

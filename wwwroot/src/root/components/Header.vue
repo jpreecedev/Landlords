@@ -9,7 +9,7 @@
           <p>Let us help you manage your property portfolio</p>
         </li>
         <li>
-          <v-btn class="green" light @click.native="$router.push({name: 'registration'})">Go to registration &raquo;</v-btn>
+          <v-btn class="green" @click.native="$router.push({name: 'registration'})">Go to registration &raquo;</v-btn>
         </li>
       </ul>
     </div>

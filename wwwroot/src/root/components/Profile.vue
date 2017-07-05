@@ -16,81 +16,68 @@
         <div class="row">
           <div class="col-xs-12 col-md-6">
             <v-card>
-              <v-card-title class="primary white--text">
+              <v-card-title class="title primary">
                 Personal details
               </v-card-title>
               <v-card-text>
-                <v-card-row>
+                <div>
                   <v-text-field v-model="profile.firstName"
                                 :rules="[$validation.rules.required, $validation.rules.min_length(profile.firstName, 2)]"
                                 label="First name"
                                 required>
                   </v-text-field>
-                </v-card-row>
-                <v-card-row>
                   <v-text-field v-model="profile.lastName"
                                 :rules="[$validation.rules.required, $validation.rules.min_length(profile.lastName, 2)]"
                                 label="Last name"
                                 required>
                   </v-text-field>
-                </v-card-row>
-                <v-card-row>
                   <div>
                     <p>Email address
                       <br>
                       {{ profile.emailAddress }}
                     </p>
                   </div>
-                </v-card-row>
-                <v-card-row actions>
-                  <v-btn warning flat light v-if="!profile.emailConfirmed" @click.native="resendVerificationEmail()">Re-send verification email</v-btn>
-                </v-card-row>
+                </div>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn warning flat v-if="!profile.emailConfirmed" @click.native="resendVerificationEmail()">Re-send verification email</v-btn>
+                </v-card-actions>
               </v-card-text>
             </v-card>
           </div>
           <div class="col-xs-12 col-md-6">
             <v-card>
-              <v-card-title class="primary white--text">
+              <v-card-title class="title primary">
                 Contact details
               </v-card-title>
               <v-card-text>
-                <v-card-row>
-                  <v-select :items="times"
-                            :rules="[$validation.rules.required]"
-                            v-model="availableFrom"
-                            label="Available from"
-                            item-value="value"
-                            dark>
-                  </v-select>
-                </v-card-row>
-                <v-card-row>
-                  <v-select :items="times"
-                            :rules="[$validation.rules.required]"
-                            v-model="availableTo"
-                            label="Available to"
-                            item-value="value"
-                            dark>
-                  </v-select>
-                </v-card-row>
-                <v-card-row>
-                  <v-text-field v-model="profile.phoneNumber"
-                                label="Main phone number"
-                                type="tel">
-                  </v-text-field>
-                </v-card-row>
-                <v-card-row>
-                  <v-text-field v-model="profile.secondaryPhoneNumber"
-                                label="Secondary phone number"
-                                type="tel">
-                  </v-text-field>
-                </v-card-row>
+                <v-select :items="times"
+                          :rules="[$validation.rules.required]"
+                          v-model="availableFrom"
+                          label="Available from"
+                          item-value="value">
+                </v-select>
+                <v-select :items="times"
+                          :rules="[$validation.rules.required]"
+                          v-model="availableTo"
+                          label="Available to"
+                          item-value="value">
+                </v-select>
+                <v-text-field v-model="profile.phoneNumber"
+                              label="Main phone number"
+                              type="tel">
+                </v-text-field>
+                <v-text-field v-model="profile.secondaryPhoneNumber"
+                              label="Secondary phone number"
+                              type="tel">
+                </v-text-field>
               </v-card-text>
             </v-card>
           </div>
         </div>
         <div class="row mt-3">
           <div class="col-xs-12">
-            <v-btn primary light v-if="permissions.P_Update" type="submit">Save</v-btn>
+            <v-btn primary v-if="permissions.P_Update" type="submit">Save</v-btn>
             <v-btn flat v-if="permissions.P_Update" type="reset">Reset</v-btn>
           </div>
         </div>

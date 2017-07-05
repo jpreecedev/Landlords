@@ -22,7 +22,7 @@
       </v-data-table>
     </v-card>
 
-    <v-btn primary light v-if="permissions.AC_New" class="mt-4" @click.native="addAccount()">Add an account</v-btn>
+    <v-btn primary v-if="permissions.AC_New" class="mt-4" @click.native="addAccount()">Add an account</v-btn>
 
   </div>
 </template>

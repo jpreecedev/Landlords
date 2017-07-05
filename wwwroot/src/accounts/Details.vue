@@ -60,7 +60,7 @@
                               :rules="[$validation.rules.required]"
                               v-model="account.type"
                               label="Account type"
-                              dark required>
+                              required>
                     </v-select>
                   </div>
                 </div>
@@ -70,7 +70,7 @@
                               :rules="[$validation.rules.required]"
                               v-model="account.providerName"
                               label="Provider name"
-                              dark required>
+                              required>
                     </v-select>
                   </div>
                 </div>
@@ -93,8 +93,8 @@
         </div>
         <div class="row mt-3">
           <div class="col-xs-12">
-            <v-btn primary light v-if="permissions.AC_Update" type="submit">Save</v-btn>
-            <v-btn flat dark v-if="permissions.AC_Update" type="reset">Reset</v-btn>
+            <v-btn primary v-if="permissions.AC_Update" type="submit">Save</v-btn>
+            <v-btn flat v-if="permissions.AC_Update" type="reset">Reset</v-btn>
           </div>
         </div>
       </fieldset>

@@ -14,8 +14,7 @@
                       :rules="[$validation.rules.required, $validation.rules.min_length(tenant.title, 2)]"
                       v-model="tenant.title"
                       @input="updateField(index, tenant, 'title')"
-                      label="Select a title"
-                      dark>
+                      label="Select a title">
             </v-select>
           </div>
           <div class="col-xs-12 col-md-3">
@@ -96,8 +95,7 @@
                   <v-select :items="counties"
                             v-model="address.countyOrRegion"
                             @input="updateAddress(index, addressIndex, address, 'countyOrRegion')"
-                            label="Select a county or region"
-                            dark>
+                            label="Select a county or region">
                   </v-select>
                 </div>
                 <div class="col-xs-12 col-md-4">
@@ -115,7 +113,7 @@
                             v-model="address.country"
                             @input="updateAddress(index, addressIndex, address, 'country')"
                             label="Select a country"
-                            dark required>
+                            required>
                   </v-select>
                 </div>
               </div>
@@ -150,7 +148,7 @@
               </div>
             </v-expansion-panel-content>
           </v-expansion-panel>
-          <v-btn dark @click.native="addTenantAddress(index)">Add another address</v-btn>
+          <v-btn @click.native="addTenantAddress(index)">Add another address</v-btn>
         </template>
         <template v-if="tenant.isAdult">
           <div class="subheading mt-4">And finally, their contact details</div>
@@ -185,7 +183,7 @@
         </template>
         <div class="row" v-if="index !== 0">
           <div class="col-xs-12">
-            <v-btn primary error light @click.native="deleteOccupier(index)">
+            <v-btn primary error @click.native="deleteOccupier(index)">
               Delete
               &nbsp;<tenant-type :tenant="tenant"></tenant-type>
             </v-btn>
@@ -195,8 +193,8 @@
     </v-expansion-panel>
 
     <div class="expansion-panel__buttons">
-      <v-btn primary light @click.native="addOccupier(true)">Add adult tenant</v-btn>
-      <v-btn dark @click.native="addOccupier(false)">Add child</v-btn>
+      <v-btn primary @click.native="addOccupier(true)">Add adult tenant</v-btn>
+      <v-btn @click.native="addOccupier(false)">Add child</v-btn>
     </div>
 
   </div>

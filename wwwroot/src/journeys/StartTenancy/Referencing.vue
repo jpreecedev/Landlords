@@ -14,7 +14,7 @@
                       v-model="tenant.employmentType"
                       @input="updateField(index, tenant, 'employmentType')"
                       label="Select an employment type"
-                      dark required>
+                      required>
             </v-select>
           </div>
           <div class="col-xs-12 col-md-4">
@@ -104,7 +104,7 @@
                               v-model="contact.relationship"
                               @input="updateContact(index, contactIndex, contact, 'relationship')"
                               label="Select a relationship"
-                              dark required>
+                              required>
                     </v-select>
                   </div>
                 </div>
@@ -130,14 +130,14 @@
                 </div>
                 <div class="row" v-if="contactIndex !== 0">
                   <div class="col-xs-12">
-                    <v-btn primary error light @click.native="deleteTenantContact(index, contactIndex)">
+                    <v-btn primary error @click.native="deleteTenantContact(index, contactIndex)">
                       Delete Contact
                     </v-btn>
                   </div>
                 </div>
               </v-expansion-panel-content>
             </v-expansion-panel>
-            <v-btn dark @click.native="addTenantContact(index)">Add another contact</v-btn>
+            <v-btn @click.native="addTenantContact(index)">Add another contact</v-btn>
           </div>
         </div>
         <div class="subheading mt-3">Other</div>

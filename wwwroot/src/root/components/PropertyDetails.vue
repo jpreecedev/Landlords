@@ -32,111 +32,87 @@
         <div class="row mt-4">
           <div class="col-xs-12 col-md-6">
             <v-card>
-              <v-card-title class="primary white--text">
+              <v-card-title class="title primary">
                 Overview
               </v-card-title>
               <v-card-text>
-                <v-card-row>
-                  <v-text-field v-model="propertyDetails.reference"
-                                :rules="[$validation.rules.required, $validation.rules.min_length(propertyDetails.reference, 2), $validation.rules.max_length(propertyDetails.reference, 255)]"
-                                label="Property reference"
-                                required>
+                <v-text-field v-model="propertyDetails.reference"
+                              :rules="[$validation.rules.required, $validation.rules.min_length(propertyDetails.reference, 2), $validation.rules.max_length(propertyDetails.reference, 255)]"
+                              label="Property reference"
+                              required>
+                </v-text-field>
+                <v-select :items="propertyTypes"
+                          :rules="[$validation.rules.required]"
+                          v-model="propertyDetails.propertyType"
+                          label="Property type">
+                </v-select>
+                <v-text-field v-model="propertyDetails.bedrooms"
+                              label="Number of bedrooms"
+                              type="number">
+                </v-text-field>
+                <v-select :items="furnishings"
+                          :rules="[$validation.rules.required]"
+                          v-model="propertyDetails.furnishing"
+                          label="Furnishings">
+                </v-select>
+                <v-menu lazy :nudge-left="100">
+                  <v-text-field slot="activator"
+                                label="Construction date"
+                                v-model="propertyDetails.constructionDate"
+                                prepend-icon="date_range"
+                                required readonly>
                   </v-text-field>
-                </v-card-row>
-                <v-card-row>
-                  <v-select :items="propertyTypes"
-                            :rules="[$validation.rules.required]"
-                            v-model="propertyDetails.propertyType"
-                            label="Property type"
-                            dark>
-                  </v-select>
-                </v-card-row>
-                <v-card-row>
-                  <v-text-field v-model="propertyDetails.bedrooms"
-                                label="Number of bedrooms"
-                                type="number">
-                  </v-text-field>
-                </v-card-row>
-                <v-card-row>
-                  <v-select :items="furnishings"
-                            :rules="[$validation.rules.required]"
-                            v-model="propertyDetails.furnishing"
-                            label="Furnishings"
-                            dark>
-                  </v-select>
-                </v-card-row>
-                <v-card-row>
-                  <v-menu lazy :nudge-left="100">
-                    <v-text-field slot="activator"
-                                  label="Construction date"
-                                  v-model="propertyDetails.constructionDate"
-                                  prepend-icon="date_range"
-                                  required readonly>
-                    </v-text-field>
-                    <v-date-picker v-model="propertyDetails.constructionDate"
-                                    scrollable>
-                    </v-date-picker>
-                  </v-menu>
-                </v-card-row>
+                  <v-date-picker v-model="propertyDetails.constructionDate"
+                                  scrollable>
+                  </v-date-picker>
+                </v-menu>
               </v-card-text>
-              <v-card-title>
+              <v-card-title class="title">
                 Address
               </v-card-title>
               <v-card-text>
-                <v-card-row>
-                  <v-text-field v-model="propertyDetails.propertyStreetAddress"
-                                :multi-line="true"
-                                :rows="3"
-                                :auto-grow="true"
-                                :rules="[$validation.rules.required, $validation.rules.min_length(propertyDetails.propertyStreetAddress, 2), $validation.rules.max_length(propertyDetails.propertyStreetAddress, 255)]"
-                                label="Street address"
-                                required>
-                  </v-text-field>
-                </v-card-row>
-                <v-card-row>
-                  <v-text-field v-model="propertyDetails.propertyTownOrCity"
-                                :rules="[$validation.rules.required, $validation.rules.min_length(propertyDetails.propertyTownOrCity, 2), $validation.rules.max_length(propertyDetails.propertyTownOrCity, 255)]"
-                                label="Town or city"
-                                required>
-                  </v-text-field>
-                </v-card-row>
-                <v-card-row>
-                  <v-select :items="counties"
-                            v-model="propertyDetails.propertyCountyOrRegion"
-                            label="County or region"
-                            dark required>
-                  </v-select>
-                </v-card-row>
-                <v-card-row>
-                  <v-text-field v-model="propertyDetails.propertyPostcode"
-                                :rules="[$validation.rules.required, $validation.rules.min_length(propertyDetails.propertyPostcode, 5), $validation.rules.max_length(propertyDetails.propertyPostcode, 7)]"
-                                label="Postcode"
-                                required>
-                  </v-text-field>
-                </v-card-row>
-                <v-card-row>
-                  <v-select :items="countries"
-                            :rules="[$validation.rules.required]"
-                            v-model="propertyDetails.propertyCountry"
-                            label="Country"
-                            dark required>
-                  </v-select>
-                </v-card-row>
-                <v-card-row>
-                <v-checkbox v-model="propertyDetails.isAvailableForLetting"
-                            label="This property is available for letting">
-                </v-checkbox>
-                </v-card-row>
+                <v-text-field v-model="propertyDetails.propertyStreetAddress"
+                              :multi-line="true"
+                              :rows="3"
+                              :auto-grow="true"
+                              :rules="[$validation.rules.required, $validation.rules.min_length(propertyDetails.propertyStreetAddress, 2), $validation.rules.max_length(propertyDetails.propertyStreetAddress, 255)]"
+                              label="Street address"
+                              required>
+                </v-text-field>
+                <v-text-field v-model="propertyDetails.propertyTownOrCity"
+                              :rules="[$validation.rules.required, $validation.rules.min_length(propertyDetails.propertyTownOrCity, 2), $validation.rules.max_length(propertyDetails.propertyTownOrCity, 255)]"
+                              label="Town or city"
+                              required>
+                </v-text-field>
+                <v-select :items="counties"
+                          v-model="propertyDetails.propertyCountyOrRegion"
+                          label="County or region"
+                          required>
+                </v-select>
+                <v-text-field v-model="propertyDetails.propertyPostcode"
+                              :rules="[$validation.rules.required, $validation.rules.min_length(propertyDetails.propertyPostcode, 5), $validation.rules.max_length(propertyDetails.propertyPostcode, 7)]"
+                              label="Postcode"
+                              required>
+                </v-text-field>
+                <v-select :items="countries"
+                          :rules="[$validation.rules.required]"
+                          v-model="propertyDetails.propertyCountry"
+                          label="Country"
+                          required>
+                </v-select>
+              <v-checkbox v-model="propertyDetails.isAvailableForLetting"
+                          label="This property is available for letting">
+              </v-checkbox>
               </v-card-text>
             </v-card>
           </div>
           <div class="col-xs-12 col-md-6">
             <v-card>
-              <v-card-title class="primary white--text">
+              <v-card-title class="title primary">
                 Ownership
               </v-card-title>
               <v-card-text>
-                <v-card-row>
+                <div class="row">
                   <div class="col-xs-12 col-md-6">
                     <v-menu lazy :nudge-left="100">
                       <v-text-field slot="activator"
@@ -157,8 +133,8 @@
                                   type="number">
                     </v-text-field>
                   </div>
-                </v-card-row>
-                <v-card-row>
+                </div>
+                <div class="row">
                   <div class="col-xs-12 col-md-6">
                     <v-text-field v-model="propertyDetails.mortgageAmount"
                                   label="Mortgage amount"
@@ -173,8 +149,8 @@
                                   type="number">
                     </v-text-field>
                   </div>
-                </v-card-row>
-                <v-card-row>
+                </div>
+                <div class="row">
                   <div class="col-xs-12 col-md-6">
                     <v-text-field v-model="propertyDetails.monthlyPayment"
                                   label="Monthly repayment"
@@ -185,12 +161,11 @@
                   <div class="col-xs-12 col-md-6">
                     <v-select :items="mortgageProviders"
                               v-model="propertyDetails.mortgageProvider"
-                              label="Mortgage provider"
-                              dark>
+                              label="Mortgage provider">
                     </v-select>
                   </div>
-                </v-card-row>
-                <v-card-row>
+                </div>
+                <div>
                   <v-menu lazy :nudge-left="100">
                     <v-text-field slot="activator"
                                   label="Current deal expiration date"
@@ -202,13 +177,13 @@
                                   scrollable>
                     </v-date-picker>
                   </v-menu>
-                </v-card-row>
+                </div>
               </v-card-text>
-              <v-card-title>
+              <v-card-title class="title">
                 Projected Rent
               </v-card-title>
               <v-card-text>
-                <v-card-row class="row">
+                <div class="row">
                   <div class="col-xs-12 col-md-6">
                     <v-text-field v-model="propertyDetails.targetRent"
                                   label="Target rent"
@@ -219,17 +194,16 @@
                   <div class="col-xs-12 col-md-6">
                     <v-select :items="paymentTerms"
                               v-model="propertyDetails.paymentTerm"
-                              label="Payment term"
-                              dark>
+                              label="Payment term">
                     </v-select>
                   </div>
-                </v-card-row>
+                </div>
               </v-card-text>
-              <v-card-title>
+              <v-card-title class="title">
                 Selling Details
               </v-card-title>
               <v-card-text>
-                <v-card-row class="row">
+                <div class="row">
                   <div class="col-xs-12 col-md-6">
                     <v-menu lazy :nudge-left="100">
                       <v-text-field slot="activator"
@@ -250,14 +224,14 @@
                                   type="number">
                     </v-text-field>
                   </div>
-                </v-card-row>
+                </div>
               </v-card-text>
             </v-card>
           </div>
         </div>
         <div class="row mt-3">
           <div class="col-xs-12">
-            <v-btn primary light v-if="permissions.PD_Update" type="submit" :disabled="isSaving">Save</v-btn>
+            <v-btn primary v-if="permissions.PD_Update" type="submit" :disabled="isSaving">Save</v-btn>
             <v-btn flat v-if="permissions.PD_Update" type="reset">Reset</v-btn>
           </div>
         </div>

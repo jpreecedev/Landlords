@@ -1,76 +1,64 @@
 <template>
-  <v-toolbar class="fixed-top" :class="$route.path === '/' ? 'green' : ''" light>
+  <v-toolbar class="fixed-top primary" :class="$route.path === '/' ? 'green' : ''" dark>
     <v-toolbar-title class="hidden-sm-and-down">Landlords</v-toolbar-title>
-
+    <v-spacer></v-spacer>
     <v-toolbar-items>
-      <router-link class="toolbar__item" v-if="auth.isLoggedIn" to="/dashboard">
+      <v-btn flat v-if="auth.isLoggedIn" @click.native="$router.push('/dashboard')">
         Dashboard
-      </router-link>
-      <router-link class="toolbar__item" v-if="permissions.LL_List" to="/agency/landlord-list">
+      </v-btn>
+      <v-btn flat v-if="permissions.LL_List" @click.native="$router.push('/agency/landlord-list')">
         Landlord List
-      </router-link>
-      <router-link class="toolbar__item" v-if="permissions.PD_GetList" to="/manager/property-list">
+      </v-btn>
+      <v-btn flat v-if="permissions.PD_GetList" @click.native="$router.push('/manager/property-list')">
         Property List
-      </router-link>
-      <router-link class="toolbar__item" v-if="permissions.PE_List" to="/permissions">
+      </v-btn>
+      <v-btn flat v-if="permissions.PE_List" @click.native="$router.push('/permissions')">
         Permissions
-      </router-link>
-      <router-link class="toolbar__item" v-if="permissions.CL_Overview" to="/checklists/">
+      </v-btn>
+      <v-btn flat v-if="permissions.CL_Overview" @click.native="$router.push('/checklists/')">
         Checklists
-      </router-link>
-      <router-link class="toolbar__item" v-if="permissions.TE_GetListById" to="/tenants/">
+      </v-btn>
+      <v-btn flat v-if="permissions.TE_GetListById" @click.native="$router.push('/tenants/')">
         Your Tenants
-      </router-link>
-      <router-link class="toolbar__item" v-if="!auth.isLoggedIn" to="/registration/">
+      </v-btn>
+      <v-btn flat v-if="!auth.isLoggedIn" @click.native="$router.push('/registration/')">
         Log in or Register
-      </router-link>
-      <router-link class="toolbar__item" v-if="permissions.AC_Overview" to="/accounts/">
+      </v-btn>
+      <v-btn flat v-if="permissions.AC_Overview" @click.native="$router.push('/accounts/')">
         Accounts
-      </router-link>
+      </v-btn>
 
       <v-menu class="calculators" transition="v-slide-y-transition" bottom :nudge-right="90" :nudge-top="-10">
-        <v-list-tile class="white--text" slot="activator">
+        <v-btn flat class="primary" slot="activator">
           Calculators
-        </v-list-tile>
+        </v-btn>
         <v-list>
-          <v-list-item>
-            <v-list-tile @click.native="$router.push('/calculators/rental-yield')">
-              Rental Yield
-            </v-list-tile>
-          </v-list-item>
-          <v-list-item>
-            <v-list-tile @click.native="$router.push('/calculators/monthly-payment')">
-              Monthly Payment
-            </v-list-tile>
-          </v-list-item>
-          <v-list-item>
-            <v-list-tile @click.native="$router.push('/calculators/how-much-can-i-borrow')">
-              How much can I borrow?
-            </v-list-tile>
-          </v-list-item>
-          <v-list-item>
-            <v-list-tile @click.native="$router.push('/calculators/is-this-property-a-good-investment')">
-              Is this property a good investment?
-            </v-list-tile>
-          </v-list-item>
+          <v-list-tile @click.native="$router.push('/calculators/rental-yield')">
+            <v-list-tile-title>Rental Yield</v-list-tile-title>
+          </v-list-tile>
+          <v-list-tile @click.native="$router.push('/calculators/monthly-payment')">
+            <v-list-tile-title>Monthly Payment</v-list-tile-title>
+          </v-list-tile>
+          <v-list-tile @click.native="$router.push('/calculators/how-much-can-i-borrow')">
+            <v-list-tile-title>How much can I borrow?</v-list-tile-title>
+          </v-list-tile>
+          <v-list-tile @click.native="$router.push('/calculators/is-this-property-a-good-investment')">
+            <v-list-tile-title>Is this property a good investment?</v-list-tile-title>
+          </v-list-tile>
         </v-list>
       </v-menu>
 
-      <v-menu transition="v-slide-y-transition" bottom :nudge-right="50">
-        <v-btn light icon slot="activator">
+      <v-menu class="more"  transition="v-slide-y-transition" bottom :nudge-right="90" :nudge-top="-10">
+        <v-btn icon slot="activator">
           <v-icon>more_vert</v-icon>
         </v-btn>
         <v-list>
-          <v-list-item v-if="auth.isLoggedIn">
-            <v-list-tile @click.native="logout()">
-              Log out
-            </v-list-tile>
-          </v-list-item>
-          <v-list-item v-if="permissions.P_View">
-            <v-list-tile @click.native="$router.push('/profile')">
-              View profile
-            </v-list-tile>
-          </v-list-item>
+          <v-list-tile @click.native="logout()" v-if="auth.isLoggedIn">
+            <v-list-tile-title>Log out</v-list-tile-title>
+          </v-list-tile>
+          <v-list-tile @click.native="$router.push('/profile')" v-if="permissions.P_View">
+            <v-list-tile-title>View profile</v-list-tile-title>
+          </v-list-tile>
         </v-list>
       </v-menu>
     </v-toolbar-items>
@@ -95,8 +83,18 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   .calculators, .calculators a {
     height: 100%;
   }
+
+  .calculators > .menu__activator, .more > .menu__activator {
+    height: 100%;
+    display: flex;
+  }
+
+  .more > .menu__activator .btn__content {
+    padding: 0;
+  }
+
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app light>
     <app-nav></app-nav>
     <app-header v-if="$route.path === '/'"></app-header>
     <main :class="{ contained: $route.path !== '/', wide: $route.path.indexOf('/accounts/transactions') > -1 }">
@@ -7,7 +7,6 @@
         <router-view></router-view>
       </transition>
     </main>
-    <app-footer></app-footer>
   </v-app>
 </template>
 
@@ -23,10 +22,6 @@ export default {
 </script>
 
 <style lang="scss">
-
-.application {
-  height: 100%;
-}
 
 .fade-enter-active {
   transition: all .3s ease;

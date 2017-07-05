@@ -10,7 +10,7 @@
                   @input="updateField(tenancy, 'propertyDetailsId')"
                   item-value="id"
                   label="Select a property"
-                  dark required>
+                  required>
         </v-select>
       </div>
       <div class="col-xs-12 col-md-6">
@@ -21,7 +21,7 @@
                   @input="updateField(tenancy, 'tenancyType')"
                   item-value="id"
                   label="Select a tenancy type"
-                  dark required>
+                  required>
         </v-select>
       </div>
     </div>

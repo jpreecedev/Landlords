@@ -20,8 +20,7 @@
                       @input="selectedCategory(props.item)"
                       v-if="permissions.TR_UpdateCategory"
                       v-model="props.item.category"
-                      label="Category"
-                      dark>
+                      label="Category">
             </v-select>
             <span v-else>
               {{ props.item.category }}
@@ -48,24 +47,22 @@
     <div class="row mt-5">
       <div class="col-xs-12 col-md-6">
         <v-card>
-          <v-card-row>
-            <v-card-title>
-              Upload your statement
-            </v-card-title>
-          </v-card-row>
+          <v-card-title class="title">
+            Upload your statement
+          </v-card-title>
           <v-card-text>
-            <v-card-row>
+            <div>
               <file-upload v-model="files"
                            @formData="filesChange"
                            name="files"
                            label="Browse for a bank statement on your computer">
               </file-upload>
-            </v-card-row>
-            <v-card-row>
+            </div>
+            <div>
               <v-progress-linear v-if="progress"
                                  v-model="progress">
               </v-progress-linear>
-            </v-card-row>
+            </div>
           </v-card-text>
         </v-card>
       </div>

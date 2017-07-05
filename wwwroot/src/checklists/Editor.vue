@@ -8,12 +8,13 @@
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
     <div>
       <p class="text-muted">There are {{ outstandingActions }} outstanding actions.</p>
-      <accordion :checklist="checklist" v-on:toggleCompleted="toggleCompleted" v-on:move="move" />
+      <accordion :checklist="checklist" v-on:toggleCompleted="toggleCompleted" v-on:move="move">
+      </accordion>
     </div>
     <div class="row mt-5" v-if="permissions.CL_DeleteById">
       <div class="col-xs-12 col-md-3 col-md-offset-9 text-center">
         <p>Danger Zone!! Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-        <v-btn error light @click.native="deleteChecklist()">Delete Checklist</v-btn>
+        <v-btn error @click.native="deleteChecklist()">Delete Checklist</v-btn>
       </div>
     </div>
   </div>

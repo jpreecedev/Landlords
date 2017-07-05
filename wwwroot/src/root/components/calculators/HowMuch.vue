@@ -22,8 +22,7 @@
             <div class="col-xs-12 col-md-6">
               <v-select :items="multipliers"
                         v-model="multiplier"
-                        label="Multiplier (use the default if unsure)"
-                        dark>
+                        label="Multiplier (use the default if unsure)">
               </v-select>
             </div>
           </div>

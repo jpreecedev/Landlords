@@ -25,7 +25,7 @@
       </v-data-table>
     </v-card>
 
-    <v-btn primary light v-if="permissions.PD_New" type="button" class="mt-4" @click.native="addProperty()">Add a property</v-btn>
+    <v-btn primary v-if="permissions.PD_New" type="button" class="mt-4" @click.native="addProperty()">Add a property</v-btn>
 
   </div>
 </template>

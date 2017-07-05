@@ -6,11 +6,11 @@
       <div class="row">
         <div class="col-xs-12 col-md-6">
           <v-card>
-            <v-card-title class="primary white--text">
+            <v-card-title class="title primary">
               Basic details about your property
             </v-card-title>
             <v-card-text>
-              <v-card-row class="row">
+              <div class="row">
                 <div class="col-xs-12">
                   <v-text-field v-model="pricePaid"
                                 :rules="[$validation.rules.required, $validation.rules.min_value(pricePaid, 10000)]"
@@ -22,8 +22,8 @@
                                 required>
                   </v-text-field>
                 </div>
-              </v-card-row>
-              <v-card-row class="row">
+              </div>
+              <div class="row">
                 <div class="col-xs-12">
                   <v-text-field v-model="annualInterestRate"
                                 :rules="[$validation.rules.required, $validation.rules.min_value(annualInterestRate, 0.1), $validation.rules.max_value(annualInterestRate, 20)]"
@@ -36,8 +36,8 @@
                                 required>
                   </v-text-field>
                 </div>
-              </v-card-row>
-              <v-card-row class="row">
+              </div>
+              <div class="row">
                 <div class="col-xs-12">
                   <v-text-field v-model="mortgageLength"
                                 :rules="[$validation.rules.required, $validation.rules.min_value(mortgageLength, 1), $validation.rules.max_value(mortgageLength, 50)]"
@@ -50,13 +50,13 @@
                                 required>
                   </v-text-field>
                 </div>
-              </v-card-row>
+              </div>
             </v-card-text>
-            <v-card-title>
+            <v-card-title class="title">
               Income
             </v-card-title>
             <v-card-text>
-              <v-card-row class="row">
+              <div class="row">
                 <div class="col-xs-12">
                   <v-text-field v-model="expectedRentalIncome"
                                 :rules="[$validation.rules.required, $validation.rules.min_value(expectedRentalIncome, 0), $validation.rules.max_value(expectedRentalIncome, 1000000)]"
@@ -69,8 +69,8 @@
                                 required>
                   </v-text-field>
                 </div>
-              </v-card-row>
-              <v-card-row class="row">
+              </div>
+              <div class="row">
                 <div class="col-xs-6">
                   <v-radio value="Monthly"
                            v-model="rentalIncomeFrequency"
@@ -84,14 +84,14 @@
                            label="Annual">
                   </v-radio>
                 </div>
-              </v-card-row>
+              </div>
             </v-card-text>
-            <v-card-title>
+            <v-card-title class="title">
               Taxation
             </v-card-title>
             <v-card-text>
               <p>Which tax band are you in?</p>
-              <v-card-row class="row">
+              <div class="row">
                 <div class="col-xs-12 col-md-4">
                   <v-radio value="Basic (20%)"
                            v-model="taxBand"
@@ -111,13 +111,13 @@
                            label="Top (45%)">
                   </v-radio>
                 </div>
-              </v-card-row>
+              </div>
             </v-card-text>
-            <v-card-title>
+            <v-card-title class="title">
               Other
             </v-card-title>
             <v-card-text>
-              <v-card-row class="row">
+              <div class="row">
                 <div class="col-xs-12">
                   <v-text-field type="number"
                                 step="1"
@@ -126,8 +126,8 @@
                                 v-model="contingency">
                   </v-text-field>
                 </div>
-              </v-card-row>
-              <v-card-row class="row">
+              </div>
+              <div class="row">
                 <div class="col-xs-12">
                   <v-text-field type="number"
                                 step="1"
@@ -136,17 +136,17 @@
                                 v-model="otherCosts">
                   </v-text-field>
                 </div>
-              </v-card-row>
+              </div>
             </v-card-text>
           </v-card>
         </div>
         <div class="col-xs-12 col-md-6">
           <v-card>
-            <v-card-title class="primary white--text">
+            <v-card-title class="title primary">
               Year on year growth
             </v-card-title>
             <v-card-text>
-              <v-card-row class="row">
+              <div class="row">
                 <div class="col-xs-12 col-md-9">
                   <v-text-field type="number"
                                 step="1"
@@ -157,13 +157,13 @@
                                 v-model="anticipatedAnnualIncrease">
                   </v-text-field>
                 </div>
-              </v-card-row>
+              </div>
             </v-card-text>
-            <v-card-title>
+            <v-card-title class="title">
               Agency Fees
             </v-card-title>
             <v-card-text>
-              <v-card-row class="row">
+              <div class="row">
                 <div class="col-xs-12">
                   <v-text-field type="number"
                                 step="1"
@@ -172,8 +172,8 @@
                                 v-model="agencyFee">
                   </v-text-field>
                 </div>
-              </v-card-row>
-              <v-card-row class="row">
+              </div>
+              <div class="row">
                 <div class="col-xs-12 col-md-6">
                   <v-radio value="Monthly"
                            v-model="agencyFeeFrequency"
@@ -187,13 +187,13 @@
                            label="Annual">
                   </v-radio>
                 </div>
-              </v-card-row>
+              </div>
             </v-card-text>
-            <v-card-title>
+            <v-card-title class="title">
               Maintenance Fees
             </v-card-title>
             <v-card-text>
-              <v-card-row class="row">
+              <div class="row">
                 <div class="col-xs-12">
                   <v-text-field type="number"
                                 step="1"
@@ -202,8 +202,8 @@
                                 v-model="maintenanceFees">
                   </v-text-field>
                 </div>
-              </v-card-row>
-              <v-card-row class="row">
+              </div>
+              <div class="row">
                 <div class="col-xs-12 col-md-6">
                   <v-radio value="Monthly"
                            v-model="maintenanceFeeFrequency"
@@ -217,13 +217,13 @@
                            label="Annual">
                   </v-radio>
                 </div>
-              </v-card-row>
+              </div>
             </v-card-text>
-            <v-card-title>
+            <v-card-title class="title">
               Insurance
             </v-card-title>
             <v-card-text>
-              <v-card-row class="row">
+              <div class="row">
                 <div class="col-xs-12">
                   <v-text-field type="number"
                                 step="1"
@@ -232,8 +232,8 @@
                                 v-model="buildingsInsurance">
                   </v-text-field>
                 </div>
-              </v-card-row>
-              <v-card-row class="row">
+              </div>
+              <div class="row">
                 <div class="col-xs-12">
                   <v-text-field type="number"
                                 step="1"
@@ -242,7 +242,7 @@
                                 v-model="contentsInsurance">
                   </v-text-field>
                 </div>
-              </v-card-row>
+              </div>
             </v-card-text>
           </v-card>
         </div>
@@ -250,18 +250,18 @@
       <div class="row mt-3">
         <div class="col-xs-12">
           <v-card>
-            <v-card-title class="primary white--text">
+            <v-card-title class="title primary">
               Your results
             </v-card-title>
             <v-card-text>
               <div v-if="!calculateScore">
                 <p class="red--text">Please fix any validation errors to see your results</p>
               </div>
-              <v-card-row class="row" v-if="calculateScore">
+              <div>
                 <p>The score based on the information provided is: <strong>{{ calculateScore.scoreDisplay }}</strong>.</p>
                 <p>The property may make <strong>&pound;{{ calculateScore.profit.formatWithSeparator() }}</strong> profit per year, and in <strong>{{ mortgageLength }}</strong> years will be worth around <strong>&pound;{{ getPropertyFutureValue().formatWithSeparator() }}</strong>.  You will pay around <strong>&pound;{{ getTotalMortgageInterest().formatWithSeparator() }}</strong> in interest on the mortgage (assuming the rate doesn't change).</p>
                 <p>This means that over <strong>{{ mortgageLength }}</strong> years, you could pocket up to <strong>&pound;{{ getPocketAmount().formatWithSeparator()  }}</strong>.</p>
-              </v-card-row>
+              </div>
             </v-card-text>
             <v-card-text v-if="calculateScore">
               <p>This is calculated by taking the potential gross profit of <strong>&pound;{{ getGrossProfit().formatWithSeparator() }}</strong>, subtracting your tax free allowance of <strong>&pound;{{ taxFreeAllowance.formatWithSeparator() }}</strong>, and then subtracting capital gains tax of approximately <strong>&pound;{{ getCapitalGainsTax().formatWithSeparator() }}</strong>.</p>

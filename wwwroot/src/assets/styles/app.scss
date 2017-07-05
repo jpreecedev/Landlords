@@ -237,4 +237,10 @@ img {
   }
 }
 
+.card__title {
+  color: #fff;
 
+  &:not(.primary) {
+    color: #424242;
+  }
+}
