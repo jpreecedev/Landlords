@@ -3,13 +3,16 @@
     <div class="header-inner flex-center">
       <ul>
         <li>
-          <h1 class="display-2">Hello, landlords!</h1>
+          <v-icon class="white--text" style="font-size: 13rem;" x-large>home</v-icon>
         </li>
         <li>
-          <p>Let us help you manage your property portfolio</p>
+          <h1 class="display-3">Hello, landlords!</h1>
         </li>
         <li>
-          <v-btn class="green" @click.native="$router.push({name: 'registration'})">Go to registration &raquo;</v-btn>
+          <p class="headline">We can make managing your property portfolio a breeze!</p>
+        </li>
+        <li>
+          <v-btn primary class="green" @click.native="$router.push({name: 'registration'})">Go to registration &raquo;</v-btn>
         </li>
       </ul>
     </div>
@@ -40,6 +43,8 @@
         list-style: none;
         text-align: center;
         color: #fff;
+        background-color: rgba(0, 0, 0, .5);
+        padding: 20px;
 
         h1, p {
           color: #fff;
