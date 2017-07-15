@@ -13,6 +13,7 @@ import GoodInvestment from 'root/components/Calculators/GoodInvestment'
 import HowMuch from 'root/components/Calculators/HowMuch'
 import MonthlyPayment from 'root/components/Calculators/MonthlyPayment'
 import RentalYield from 'root/components/Calculators/RentalYield'
+import ROI from 'root/components/Calculators/ROI'
 
 import guardRoute from './route-guards'
 
@@ -92,6 +93,11 @@ export const RouteConfig = [
         path: 'is-this-property-a-good-investment',
         name: 'goodInvestment',
         component: GoodInvestment
+      },
+      {
+        path: 'return-on-investment',
+        name: 'roi',
+        component: ROI
       }]
   }
 ]

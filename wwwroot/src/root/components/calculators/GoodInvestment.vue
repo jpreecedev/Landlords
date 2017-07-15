@@ -59,12 +59,11 @@
               <div class="row">
                 <div class="col-xs-12">
                   <v-text-field v-model="expectedRentalIncome"
-                                :rules="[$validation.rules.required, $validation.rules.min_value(expectedRentalIncome, 0), $validation.rules.max_value(expectedRentalIncome, 1000000)]"
+                                :rules="[$validation.rules.required, $validation.rules.min_value(expectedRentalIncome, 0)]"
                                 label="Expected rental income"
                                 type="number"
                                 step="100"
                                 min="0"
-                                max="1000000"
                                 prefix="£"
                                 required>
                   </v-text-field>
@@ -299,26 +298,26 @@
       }
     },
     methods: {
-      getMonthlyPayment: function () {
+      getMonthlyPayment () {
         return utils.calculateMonthlyPayment(this.annualInterestRate.toFloat(), this.pricePaid.toFloat(), this.mortgageLength.toFloat()).toFloat()
       },
-      getMonthlyIncome: function () {
+      getMonthlyIncome () {
         return this.rentalIncomeFrequency === 'Monthly' ? this.expectedRentalIncome.toFloat() * 12 : this.expectedRentalIncome.toFloat()
       },
-      getAgencyFees: function () {
+      getAgencyFees () {
         return this.agencyFeeFrequency === 'Monthly' ? this.agencyFee.toFloat() * 12 : this.agencyFee.toFloat()
       },
-      getMaintenanceFees: function () {
+      getMaintenanceFees () {
         return this.maintenanceFeeFrequency === 'Monthly' ? this.maintenanceFees.toFloat() * 12 : this.maintenanceFees.toFloat()
       },
-      getPropertyFutureValue: function () {
+      getPropertyFutureValue () {
         var future = this.pricePaid.toFloat() * Math.pow((1 + this.anticipatedAnnualIncrease.toFloat() / 100), this.mortgageLength.toFloat())
         return Math.round(future * 100) / 100
       },
-      getInsuranceCosts: function () {
+      getInsuranceCosts () {
         return this.buildingsInsurance.toFloat() + this.contentsInsurance.toFloat()
       },
-      getTaxBand: function () {
+      getTaxBand () {
         switch (this.taxBand) {
           case 'BasicRate':
             return 0.8
@@ -330,7 +329,7 @@
             return false
         }
       },
-      getTaxBandForCapitalGains: function () {
+      getTaxBandForCapitalGains () {
         switch (this.taxBand) {
           case 'BasicRate':
             return 0.8
@@ -341,30 +340,30 @@
             return false
         }
       },
-      getTotalMortgageInterest: function () {
+      getTotalMortgageInterest () {
         return (this.getMonthlyPayment() * 12 * this.mortgageLength) - this.pricePaid
       },
-      getPocketAmount: function () {
+      getPocketAmount () {
         return (((this.getPropertyFutureValue() - this.pricePaid) + (this.calculateScore.profit * this.mortgageLength)) - this.taxFreeAllowance) * this.getTaxBandForCapitalGains()
       },
-      getGrossProfit: function () {
+      getGrossProfit () {
         return (this.getPropertyFutureValue() - this.pricePaid) + (this.calculateScore.profit * this.mortgageLength)
       },
-      getCapitalGainsTax: function () {
+      getCapitalGainsTax () {
         return this.getGrossProfit() * (1 - this.getTaxBandForCapitalGains())
       }
     },
     computed: {
-      annualYield: function () {
+      annualYield () {
         return (this.getMonthlyIncome() / this.pricePaid.toFloat() * 100).toFloat().toFixed(2)
       },
-      totalIncome: function () {
+      totalIncome () {
         return this.getMonthlyIncome() * this.getTaxBand()
       },
-      totalOutgoings: function () {
+      totalOutgoings () {
         return this.getMonthlyPayment() + this.getAgencyFees() + this.getMaintenanceFees() + this.getInsuranceCosts() + this.otherCosts.toFloat() + this.contingency.toFloat()
       },
-      calculateScore: function () {
+      calculateScore () {
         return utils.calculateScore({
           annualYield: this.annualYield,
           growth: this.anticipatedAnnualIncrease,
