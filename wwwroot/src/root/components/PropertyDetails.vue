@@ -294,7 +294,7 @@ export default {
     })
   },
   methods: {
-    validateBeforeSubmit: function () {
+    validateBeforeSubmit () {
       this.errors = []
       this.isSaving = true
 
@@ -304,7 +304,7 @@ export default {
           this.$router.push('/manager/property-list')
         })
         .catch(response => {
-          var validationResult = utils.getFormValidationErrors(response)
+          let validationResult = utils.getFormValidationErrors(response)
           validationResult.errors.forEach(validationError => {
             this.errors.push({
               key: validationError.key,
@@ -319,7 +319,7 @@ export default {
           }
         })
     },
-    filesChange: function (fieldName, fileList) {
+    filesChange (fieldName, fileList) {
       const formData = new FormData()
       if (!fileList.length) return
 
@@ -341,7 +341,7 @@ export default {
           this.isUploading = false
         })
     },
-    deleteImage: function (propertyImage) {
+    deleteImage (propertyImage) {
       if (confirm('Are you sure you want to delete this image?')) {
         this.$http.delete(`/api/propertyimage?entityId=${propertyImage.id}`)
           .then(() => {

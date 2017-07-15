@@ -54,7 +54,7 @@ export default {
     }
   },
   computed: {
-    calculateAmountCanBorrow: function () {
+    calculateAmountCanBorrow () {
       if (!this.grossIncome || !this.multiplier) {
         return false
       }

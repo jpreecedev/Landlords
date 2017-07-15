@@ -69,7 +69,7 @@
               alert('done')
             })
             .catch(response => {
-              var validationResult = utils.getFormValidationErrors(response)
+              let validationResult = utils.getFormValidationErrors(response)
               validationResult.errors.forEach(validationError => {
                 console.log('ERROR', validationError.key, validationError.messages[0], 'required')
               })

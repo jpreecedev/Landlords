@@ -118,20 +118,20 @@
         })
     },
     methods: {
-      createChecklistInstance: function (selectedChecklist, selectedProperty) {
+      createChecklistInstance (selectedChecklist, selectedProperty) {
         this.$http.post(`/api/checklists/?checklistId=${selectedChecklist}&propertyDetailsId=${selectedProperty}`).then(response => {
           this.$router.push({ name: 'editor', params: { checklistId: response.data.id } })
         })
       },
-      archive: function (selectedChecklist) {
+      archive (selectedChecklist) {
         this.$http.post(`/api/checklists/archive/?checklistId=${selectedChecklist.id}`).then(response => {
-          var index = this.overview.checklists.indexOf(selectedChecklist)
+          let index = this.overview.checklists.indexOf(selectedChecklist)
           if (index > -1) {
             this.overview.checklists.splice(index, 1)
           }
         })
       },
-      getArchived: function () {
+      getArchived () {
         this.$http.get(`/api/checklists/archived`).then(response => {
           if (response.data) {
             this.overview.checklists.push(...response.data)
@@ -139,8 +139,8 @@
           }
         })
       },
-      selectedChecklistChanged: function (checklistId) {
-        var checklist = this.overview.availableChecklists.find(item => item.id === checklistId)
+      selectedChecklistChanged (checklistId) {
+        let checklist = this.overview.availableChecklists.find(item => item.id === checklistId)
         if (checklist) {
           this.isPropertyMandatory = checklist.isPropertyMandatory
         }
@@ -148,7 +148,7 @@
           this.selectedProperty = null
         }
       },
-      portfolioPropertySelected: function (value) {
+      portfolioPropertySelected (value) {
         this.selectedProperty = value
       }
     }

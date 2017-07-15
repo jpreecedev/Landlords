@@ -128,7 +128,7 @@ export default {
     })
   },
   methods: {
-    filesChange: function (formData) {
+    filesChange (formData) {
       FileUploadService.upload(formData[0], `/api/transactions/upload?entityId=${this.accountId}`, uploadProgress => { this.progress = Number.parseInt(uploadProgress) })
         .then(transactions => {
           if (transactions) {
@@ -139,7 +139,7 @@ export default {
           this.progress = 0
         })
     },
-    onPagination: function (pagination) {
+    onPagination (pagination) {
       this.page = pagination.page
 
       if (this.size !== pagination.size) {

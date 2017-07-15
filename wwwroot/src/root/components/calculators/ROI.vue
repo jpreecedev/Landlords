@@ -211,17 +211,17 @@
     },
     computed: {
       score () {
-        var monthlyRent = this.lettableUnits.toFloat() * this.expectedRentalIncome.toFloat()
-        var annualIncome = monthlyRent * 12
+        let monthlyRent = this.lettableUnits.toFloat() * this.expectedRentalIncome.toFloat()
+        let annualIncome = monthlyRent * 12
 
-        var annualInterest = (this.pricePaid.toFloat() - this.deposit.toFloat()) * (this.mortgageInterestRate.toFloat() / 100)
-        var annualManagement = annualIncome * (this.managementCost.toFloat() / 100)
-        var annualRepairs = annualIncome * (this.repairsContingency.toFloat() / 100)
+        let annualInterest = (this.pricePaid.toFloat() - this.deposit.toFloat()) * (this.mortgageInterestRate.toFloat() / 100)
+        let annualManagement = annualIncome * (this.managementCost.toFloat() / 100)
+        let annualRepairs = annualIncome * (this.repairsContingency.toFloat() / 100)
 
-        var annualProfit = annualIncome - ((annualInterest + annualManagement) + annualRepairs + this.serviceCharge.toFloat() + this.insurance.toFloat())
-        var monthlyProfit = annualProfit / 12
-        var netYield = annualProfit / this.pricePaid.toFloat()
-        var roi = annualProfit / (this.deposit.toFloat() + this.fees.toFloat())
+        let annualProfit = annualIncome - ((annualInterest + annualManagement) + annualRepairs + this.serviceCharge.toFloat() + this.insurance.toFloat())
+        let monthlyProfit = annualProfit / 12
+        let netYield = annualProfit / this.pricePaid.toFloat()
+        let roi = annualProfit / (this.deposit.toFloat() + this.fees.toFloat())
 
         return {
           annualProfit,
@@ -231,7 +231,7 @@
         }
       },
       scoreInWords () {
-        var roi = this.score.roi * 100
+        let roi = this.score.roi * 100
         if (roi < 3) {
           return 'a poor'
         } else if (roi >= 3 && roi < 10) {

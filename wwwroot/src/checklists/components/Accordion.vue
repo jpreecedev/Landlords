@@ -63,11 +63,11 @@ export default {
     }
   },
   methods: {
-    toggleCompleted: function (newValue, item) {
+    toggleCompleted (newValue, item) {
       item.isCompleted = newValue === true
       this.$emit('toggleCompleted', item)
     },
-    move: function (direction, item) {
+    move (direction, item) {
       this.$emit('move', { direction, item })
     }
   }

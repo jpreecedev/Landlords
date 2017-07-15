@@ -135,7 +135,7 @@ export default {
     })
   },
   methods: {
-    validateBeforeSubmit: function () {
+    validateBeforeSubmit () {
       this.$http.post(`/api/tenants/`, { ...this.tenant })
         .then(() => {
           this.$router.push({ name: 'tenants-overview' })

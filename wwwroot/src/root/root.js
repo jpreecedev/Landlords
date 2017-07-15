@@ -33,7 +33,7 @@ Vue.use(Journeys)
 
 new Vue({
   el: '#app',
-  created: function () {
+  created () {
     window.Vue = this
   },
   router,

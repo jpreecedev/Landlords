@@ -2,7 +2,7 @@ export default {
 
   install (Vue) {
     Vue.http.interceptors.push((request, next) => {
-      var csrfCookie = this.getCookie('XSRF-TOKEN')
+      let csrfCookie = this.getCookie('XSRF-TOKEN')
       if (csrfCookie) {
         request.headers.set('X-XSRF-TOKEN', csrfCookie)
       }
@@ -10,8 +10,8 @@ export default {
     })
   },
   getCookie (name) {
-    var value = '; ' + document.cookie
-    var parts = value.split('; ' + name + '=')
+    let value = '; ' + document.cookie
+    let parts = value.split('; ' + name + '=')
     if (parts.length === 2) {
       return parts.pop().split(';').shift()
     }

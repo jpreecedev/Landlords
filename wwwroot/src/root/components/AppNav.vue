@@ -79,7 +79,7 @@ export default {
     }
   },
   methods: {
-    logout: function () {
+    logout () {
       this.$auth.logout(false)
     }
   }

@@ -118,12 +118,12 @@
       this.times = utils.getTimesForSelectList()
       this.$http.get(`/api/profile`).then(response => {
         Object.assign(this.profile, response.data)
-        var fields = [ { key: 'availableFrom', value: 28 }, { key: 'availableTo', value: 76 } ]
+        let fields = [ { key: 'availableFrom', value: 28 }, { key: 'availableTo', value: 76 } ]
         fields.forEach(field => {
           if (!response.data[field.key]) {
             this[field.key] = this.profile[field.key] = this.times[field.value]
           } else {
-            var time = this.times.find(function (item) {
+            let time = this.times.find(function (item) {
               return item.value === response.data[field.key]
             })
             if (time) {
@@ -134,7 +134,7 @@
       })
     },
     methods: {
-      validateBeforeSubmit: function () {
+      validateBeforeSubmit () {
         this.errors = []
         this.profile.availableFrom = this.availableFrom
         this.profile.availableTo = this.availableTo
@@ -144,7 +144,7 @@
             this.saved = true
           })
           .catch(response => {
-            var validationResult = utils.getFormValidationErrors(response)
+            let validationResult = utils.getFormValidationErrors(response)
             validationResult.errors.forEach(validationError => {
               this.errors.push({
                 key: validationError.key,
@@ -159,7 +159,7 @@
             }
           })
       },
-      resendVerificationEmail: function () {
+      resendVerificationEmail () {
         this.$http.post('/api/register/resendverification')
           .then(response => {
             this.resentVerification = true

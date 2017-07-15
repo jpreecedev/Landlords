@@ -73,7 +73,7 @@
       }
     },
     methods: {
-      validateBeforeSubmit: function () {
+      validateBeforeSubmit () {
         this.registering = true
         this.errors = []
 
@@ -87,7 +87,7 @@
         this.$http.post('/api/register', registrationDetails).then((response) => {
           this.registering = false
           if (!response.ok) {
-            var validationResult = utils.getFormValidationErrors(response)
+            let validationResult = utils.getFormValidationErrors(response)
             validationResult.errors.forEach(validationError => {
               this.errors.push({
                 key: validationError.key,

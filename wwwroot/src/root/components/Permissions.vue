@@ -79,11 +79,11 @@ export default {
     })
   },
   methods: {
-    getSelectedPermissions: function (collection) {
+    getSelectedPermissions (collection) {
       if (!collection) {
         return []
       }
-      var result = []
+      let result = []
       collection.forEach(permission => {
         this.allPermissions.forEach(allPermission => {
           allPermission.items.forEach(item => {
@@ -95,16 +95,16 @@ export default {
       })
       return result
     },
-    addPermission: function () {
-      var selectedPermissions = this.getSelectedPermissions(this.selectedPermissions)
+    addPermission () {
+      let selectedPermissions = this.getSelectedPermissions(this.selectedPermissions)
       if (selectedPermissions) {
         selectedPermissions.forEach(selectedPermission => {
-          var key = selectedPermission.routeId.substring(0, selectedPermission.routeId.indexOf('_'))
-          var group = this.selectedUser.permissions.find(x => {
+          let key = selectedPermission.routeId.substring(0, selectedPermission.routeId.indexOf('_'))
+          let group = this.selectedUser.permissions.find(x => {
             return x.key === key
           })
           if (group) {
-            var existingPermission = group.items.find(item => {
+            let existingPermission = group.items.find(item => {
               return item.permissionId === selectedPermission.permissionId
             })
             if (!existingPermission) {
@@ -120,19 +120,19 @@ export default {
         })
       }
     },
-    removePermission: function () {
-      var selectedPermissions = this.getSelectedPermissions(this.allocatedPermissions)
+    removePermission () {
+      let selectedPermissions = this.getSelectedPermissions(this.allocatedPermissions)
       if (selectedPermissions) {
         selectedPermissions.forEach(selectedPermission => {
           this.selectedUser.permissions.forEach(userPermission => {
             userPermission.items.forEach(item => {
               if (item.permissionId === selectedPermission.permissionId) {
-                var index = userPermission.items.indexOf(item)
+                let index = userPermission.items.indexOf(item)
                 userPermission.items.splice(index, 1)
               }
             })
             if (userPermission.items.length === 0) {
-              var index = this.selectedUser.permissions.indexOf(userPermission)
+              let index = this.selectedUser.permissions.indexOf(userPermission)
               this.selectedUser.permissions.splice(index, 1)
             }
           })
@@ -149,14 +149,14 @@ export default {
         return
       }
 
-      var searchText = text.toLowerCase()
+      let searchText = text.toLowerCase()
       this.filteredUsers = this.users.filter(item => {
         return item.name.toLowerCase().indexOf(searchText) > -1 || item.emailAddress.toLowerCase().indexOf(searchText) > -1
       })
     }
   },
   watch: {
-    selectedUser: function (user) {
+    selectedUser (user) {
       if (!user || user.permissions.length) {
         return
       }

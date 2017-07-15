@@ -39,12 +39,12 @@ export default {
     })
   },
   computed: {
-    outstandingActions: function () {
+    outstandingActions () {
       if (!this.checklist) {
         return 0
       }
 
-      var count = 0
+      let count = 0
       this.checklist.checklistItems.forEach(item => {
         if (!item.isCompleted) {
           count += 1
@@ -54,18 +54,18 @@ export default {
     }
   },
   methods: {
-    deleteChecklist: function () {
+    deleteChecklist () {
       this.$http.delete(`/api/checklists/${this.checklistId}`).then(response => {
         this.$router.push({ name: 'overview' })
       })
     },
-    toggleCompleted: function (item) {
+    toggleCompleted (item) {
       this.$http.post(`/api/checklistitem/completed?checklistId=${this.checklistId}&checklistItemId=${item.id}&completed=${item.isCompleted}`)
     },
-    move: function (data) {
+    move (data) {
       this.$http.post(`/api/checklistitem/move?checklistId=${this.checklistId}&checklistItemId=${data.item.id}&direction=${data.direction}`).then(() => {
-        var index = this.checklist.checklistItems.indexOf(data.item)
-        var poppedItem = this.checklist.checklistItems[index]
+        let index = this.checklist.checklistItems.indexOf(data.item)
+        let poppedItem = this.checklist.checklistItems[index]
         this.checklist.checklistItems.splice(index, 1)
 
         switch (data.direction) {
@@ -77,7 +77,7 @@ export default {
             break
         }
 
-        for (var i = 0; i < this.checklist.checklistItems.length; i++) {
+        for (let i = 0; i < this.checklist.checklistItems.length; i++) {
           this.checklist.checklistItems[i].order = i + 1
         }
       })

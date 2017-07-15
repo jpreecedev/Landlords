@@ -55,7 +55,7 @@ export default {
     }
   },
   methods: {
-    save: function () {
+    save () {
       if (this.permissions.CI_ApplyTemplate) {
         this.$http.post(`/api/checklistitem/template?checklistId=${this.checklistId}&checklistItemId=${this.checklistItem.id}`, this.checklistItem.payload)
       }

@@ -72,7 +72,7 @@ export default {
     }
   },
   computed: {
-    calculateMonthlyPayment: function () {
+    calculateMonthlyPayment () {
       return utils.calculateMonthlyPayment(this.annualInterestRate, this.mortgageAmount, this.mortgageLength)
     }
   }

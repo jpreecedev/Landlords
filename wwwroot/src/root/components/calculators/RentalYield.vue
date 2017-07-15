@@ -84,12 +84,12 @@ export default {
     }
   },
   computed: {
-    calculateRentalYield: function () {
+    calculateRentalYield () {
       if (!this.rentalyield.rentalValue || !this.rentalyield.purchasePrice) {
         return false
       }
 
-      var multiplier = this.rentalyield.frequency === 'Monthly' ? 12 : 1
+      let multiplier = this.rentalyield.frequency === 'Monthly' ? 12 : 1
       return Number.parseFloat(((this.rentalyield.rentalValue * multiplier) / this.rentalyield.purchasePrice) * 100).toFixed(2)
     }
   }

@@ -70,7 +70,7 @@ export default {
     })
   },
   methods: {
-    addAccount: function () {
+    addAccount () {
       this.$http.post('/api/accounts/new').then(response => {
         this.$router.push({ name: 'accounts-details', params: { accountId: response.data.id } })
       })

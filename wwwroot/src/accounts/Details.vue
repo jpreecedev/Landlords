@@ -128,7 +128,7 @@ export default {
     })
   },
   methods: {
-    validateBeforeSubmit: function () {
+    validateBeforeSubmit () {
       this.errors = []
 
       this.$http.post(`/api/accounts/`, { ...this.account })
@@ -138,7 +138,7 @@ export default {
         .catch(response => {
           this.loggingIn = false
           if (!response.ok) {
-            var validationResult = utils.getFormValidationErrors(response)
+            let validationResult = utils.getFormValidationErrors(response)
             validationResult.errors.forEach(validationError => {
               this.errors.push({
                 key: validationError.key,

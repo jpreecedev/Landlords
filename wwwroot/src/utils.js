@@ -5,7 +5,7 @@ module.exports = {
    *
    * @param {Response} response The Vue-resource Response that we will try to get errors from.
    */
-  getError: function (response) {
+  getError (response) {
     if (response.bodyText) {
       return response.bodyText
     }
@@ -17,11 +17,11 @@ module.exports = {
    *
    * @param {Response} response The Vue-resource Response that we will try to get errors from.
    */
-  getFormValidationErrors: function (response) {
+  getFormValidationErrors (response) {
     if (!response) {
       return []
     }
-    var result = { status, errors: [] }
+    let result = { status, errors: [] }
 
     if (response.data && response.data.errors) {
       response.data.errors.forEach(error => {
@@ -30,9 +30,9 @@ module.exports = {
           return
         }
 
-        var key = error.key
+        let key = error.key
         error.key.split('[').forEach(item => {
-          var squareBracket = item.indexOf(']')
+          let squareBracket = item.indexOf(']')
           if (squareBracket === -1) {
             key = key.substring(0, 1).toLowerCase() + error.key.substring(1)
             if (key.indexOf('.') > -1) {
@@ -43,7 +43,7 @@ module.exports = {
           }
         })
 
-        var messages = []
+        let messages = []
 
         error.value.forEach(validationMessage => {
           messages.push(validationMessage)
@@ -62,15 +62,15 @@ module.exports = {
   /**
    * Maps the entity data so it can be displayed on the client
    */
-  mapEntity: function (entityData, wrapperName, defaultsOnly) {
+  mapEntity (entityData, wrapperName, defaultsOnly) {
     if (!entityData) {
       return {}
     }
 
-    var defaults = {}
-    var props = {}
+    let defaults = {}
+    let props = {}
 
-    for (var key in entityData) {
+    for (let key in entityData) {
       if (key.substring(0, 7) === 'default') {
         defaults[key.substr(7, 1).toLowerCase() + key.substring(8)] = entityData[key]
       } else {
@@ -80,14 +80,14 @@ module.exports = {
 
     // TODO: Tidy up, spread operator not working
 
-    var returnValue = {}
-    for (var d in defaults) {
+    let returnValue = {}
+    for (let d in defaults) {
       returnValue[d] = defaults[d]
     }
 
     if (!defaultsOnly) {
       returnValue[wrapperName] = {}
-      for (var p in props) {
+      for (let p in props) {
         returnValue[wrapperName][p] = props[p]
       }
     }
@@ -95,14 +95,14 @@ module.exports = {
     return returnValue
   },
 
-  calculateMonthlyPayment: function (annualInterestRate, mortgageAmount, mortgageLength) {
+  calculateMonthlyPayment (annualInterestRate, mortgageAmount, mortgageLength) {
     if (!annualInterestRate || !mortgageAmount || !mortgageLength) {
       return 0
     }
 
-    var p = mortgageAmount
-    var n = mortgageLength * 12
-    var i = annualInterestRate / 100 / 12
+    let p = mortgageAmount
+    let n = mortgageLength * 12
+    let i = annualInterestRate / 100 / 12
 
     return parseFloat(p * i * (Math.pow(1 + i, n)) / (Math.pow(1 + i, n) - 1)).toFixed(2)
   },
@@ -136,14 +136,14 @@ module.exports = {
     return 'Poor'
   },
 
-  calculateScore: function (investmentData) {
-    var annualYieldScore = this.getPercentageScore(investmentData.annualYield)
-    var growthScore = this.getPercentageScore(investmentData.growth)
+  calculateScore (investmentData) {
+    let annualYieldScore = this.getPercentageScore(investmentData.annualYield)
+    let growthScore = this.getPercentageScore(investmentData.growth)
 
-    var percentageAnnualProfit = (100 / investmentData.outgoings) * investmentData.income
-    var actualScore = (percentageAnnualProfit + annualYieldScore + growthScore) / 3
+    let percentageAnnualProfit = (100 / investmentData.outgoings) * investmentData.income
+    let actualScore = (percentageAnnualProfit + annualYieldScore + growthScore) / 3
 
-    var scoreDisplay = this.getScoreDisplay(actualScore)
+    let scoreDisplay = this.getScoreDisplay(actualScore)
 
     return {
       profit: investmentData.income - investmentData.outgoings,
@@ -152,7 +152,7 @@ module.exports = {
     }
   },
 
-  pad: function (input) {
+  pad (input) {
     if (!input) {
       return '00'
     }
@@ -162,11 +162,11 @@ module.exports = {
     return input
   },
 
-  getTimesForSelectList: function () {
-    var result = []
+  getTimesForSelectList () {
+    let result = []
 
-    for (var i = 0; i < 24; i++) {
-      for (var j = 0; j < 60; j += 15) {
+    for (let i = 0; i < 24; i++) {
+      for (let j = 0; j < 60; j += 15) {
         result.push({
           value: `1970-01-01T${this.pad(i) + ':' + this.pad(j) + ':00'}`,
           text: this.pad(i) + ':' + this.pad(j)

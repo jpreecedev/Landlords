@@ -70,7 +70,7 @@ export const CLEAR_ALL_DATA = (state) => {
   state.auth.refreshToken = null
 
   // Permissions
-  for (var key in state.permissions) {
+  for (let key in state.permissions) {
     Vue.delete(state.permissions, key)
   }
 
@@ -82,7 +82,7 @@ export const CLEAR_ALL_DATA = (state) => {
 }
 
 export const TENANT_ADD_TENANT = (state, isAdult) => {
-  var item = Object.assign({}, defaultTenant, { isLeadTenant: false, isAdult: isAdult })
+  let item = Object.assign({}, defaultTenant, { isLeadTenant: false, isAdult: isAdult })
   if (!isAdult) {
     item.addresses = null
     item.contacts = null

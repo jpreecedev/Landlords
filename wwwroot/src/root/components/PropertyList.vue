@@ -64,7 +64,7 @@ export default {
     })
   },
   methods: {
-    addProperty: function () {
+    addProperty () {
       this.$http.post('/api/propertydetails/new').then(response => {
         this.$router.push(`/manager/property-details/${response.data.id}`)
       })

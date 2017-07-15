@@ -106,7 +106,7 @@ export default {
   logout (expired) {
     store.commit('CLEAR_ALL_DATA')
 
-    var query
+    let query
     if (expired) {
       query = { expired: true }
     } else {
@@ -175,7 +175,7 @@ export default {
   },
 
   _storePermissions (response) {
-    for (var key in store.state.permissions) {
+    for (let key in store.state.permissions) {
       Vue.delete(store.state.permissions, key)
     }
 

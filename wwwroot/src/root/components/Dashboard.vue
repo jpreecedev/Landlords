@@ -14,7 +14,7 @@ export default {
     }
   },
   methods: {
-    openDialog: function (dialog) {
+    openDialog (dialog) {
       this.$refs[dialog].openDialog()
     }
   }
