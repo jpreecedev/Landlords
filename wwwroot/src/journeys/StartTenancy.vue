@@ -34,7 +34,7 @@
 
     <div class="row">
       <div class="col-xs-6">
-        <v-btn flat @click.native="back()">Go back</v-btn>
+        <v-btn flat @click.native="back()" v-if="newTenancy.step !== 1">Go back</v-btn>
       </div>
       <div class="col-xs-6 text-right">
         <v-btn primary @click.native="next()">{{ newTenancy.step === 5 ? 'Finished' : 'Continue' }}</v-btn>
