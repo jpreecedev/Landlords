@@ -61,7 +61,7 @@
           </v-list-tile>
           <v-list-tile @click.native="$router.push('/watchlist')" v-if="permissions.SP_GetListById">
             <v-list-tile-title>
-              My watchlist
+              My shortlist
             </v-list-tile-title>
           </v-list-tile>
           <v-list-tile @click.native="$router.push('/profile')" v-if="permissions.P_View">

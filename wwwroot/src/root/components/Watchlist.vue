@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="display-2">My property watchlist</h1>
+    <h1 class="display-2">My property shortlist</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
     <v-card>
       <v-data-table :headers="headers" :items="data" :loading="loading">
