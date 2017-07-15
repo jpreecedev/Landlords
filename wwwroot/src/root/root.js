@@ -4,7 +4,6 @@ import store from 'store'
 import App from 'root/components/App'
 import AuthService from 'services/auth.service'
 import Interceptors from 'src/interceptors'
-import VeeValidate from 'vee-validate'
 import Autocomplete from 'v-autocomplete'
 import router from './routes'
 import Vuetify from 'vuetify'
@@ -25,10 +24,6 @@ Vue.config.productionTip = false
 Vue.use(VueResource)
 Vue.use(AuthService)
 Vue.use(Interceptors)
-
-Vue.use(VeeValidate, {
-  errorBagName: 'errorBag'
-})
 
 Vue.use(Autocomplete)
 Vue.use(Vuetify)

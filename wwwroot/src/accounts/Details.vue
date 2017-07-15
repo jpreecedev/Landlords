@@ -103,7 +103,6 @@
 </template>
 
 <script>
-import { ErrorBag } from 'vee-validate'
 import utils from 'utils'
 
 export default {
@@ -113,6 +112,7 @@ export default {
       permissions: this.$store.state.permissions,
       accountTypes: [],
       accountProviders: [],
+      errors: [],
       account: {
         id: null,
         name: '',
@@ -133,25 +133,30 @@ export default {
   },
   methods: {
     validateBeforeSubmit: function () {
-      this.$validator.validateAll().then(() => {
-        var bag = new ErrorBag()
-        this.$http.post(`/api/accounts/`, { ...this.account })
-          .then(() => {
-            this.$router.push({ name: 'accounts-overview' })
-          })
-          .catch(response => {
+      this.errors = []
+
+      this.$http.post(`/api/accounts/`, { ...this.account })
+        .then(() => {
+          this.$router.push({ name: 'accounts-overview' })
+        })
+        .catch(response => {
+          this.loggingIn = false
+          if (!response.ok) {
             var validationResult = utils.getFormValidationErrors(response)
             validationResult.errors.forEach(validationError => {
-              bag.add(validationError.key, validationError.messages[0], 'required')
+              this.errors.push({
+                key: validationError.key,
+                message: validationError.messages[0]
+              })
             })
             if (validationResult.status) {
-              bag.add('GenericError', validationResult.status, 'generic')
+              this.errors.push({
+                key: 'GenericError',
+                message: validationResult.status
+              })
             }
-          })
-        this.$validator.errorBag = bag
-      }).catch(() => {
-        window.scrollTo(0, 0)
-      })
+          }
+        })
     }
   }
 }
