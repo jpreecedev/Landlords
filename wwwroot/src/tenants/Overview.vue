@@ -7,6 +7,13 @@
         Tenants
       </v-card-title>
       <v-data-table :headers="headers" :items="data" :loading="loading">
+        <template slot="headers" scope="props">
+          <tr>
+            <th v-for="(header, index) in props.headers" :key="index" class="text-xs-left">
+              {{ header.text }}
+            </th>
+          </tr>
+        </template>
         <template slot="items" scope="props">
           <td>
             <router-link v-if="permissions.TE_GetById" :to="'/tenants/details/' + props.item.id">

@@ -4,6 +4,13 @@
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
     <v-card>
       <v-data-table :headers="headers" :items="data.accounts" :loading="loading">
+        <template slot="headers" scope="props">
+          <tr>
+            <th v-for="(header, index) in props.headers" :key="index" class="text-xs-left">
+              {{ header.text }}
+            </th>
+          </tr>
+        </template>
         <template slot="items" scope="props">
           <td>
             <account-display :account="props.item"></account-display>

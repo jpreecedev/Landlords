@@ -5,6 +5,13 @@
 
     <v-card>
       <v-data-table :headers="headers" :items="data" :loading="loading">
+        <template slot="headers" scope="props">
+          <tr>
+            <th v-for="(header, index) in props.headers" :key="index" class="text-xs-left">
+              {{ header.text }}
+            </th>
+          </tr>
+        </template>
         <template slot="items" scope="props">
           <td>
             <div class="thumbnail">
