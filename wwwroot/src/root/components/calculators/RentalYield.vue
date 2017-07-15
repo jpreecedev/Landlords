@@ -85,7 +85,7 @@ export default {
   },
   computed: {
     calculateRentalYield: function () {
-      if (!this.rentalyield.rentalValue || !this.rentalyield.purchasePrice || this.errorBag.errors.length !== 0) {
+      if (!this.rentalyield.rentalValue || !this.rentalyield.purchasePrice) {
         return false
       }
 

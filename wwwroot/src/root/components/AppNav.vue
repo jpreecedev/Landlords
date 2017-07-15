@@ -48,12 +48,12 @@
         </v-list>
       </v-menu>
 
-      <v-menu class="more"  transition="v-slide-y-transition" bottom :nudge-right="90" :nudge-top="-10">
+      <v-menu v-if="auth.isLoggedIn" class="more"  transition="v-slide-y-transition" bottom :nudge-right="90" :nudge-top="-10">
         <v-btn icon slot="activator">
           <v-icon>more_vert</v-icon>
         </v-btn>
         <v-list>
-          <v-list-tile @click.native="logout()" v-if="auth.isLoggedIn">
+          <v-list-tile @click.native="logout()">
             <v-list-tile-title>Log out</v-list-tile-title>
           </v-list-tile>
           <v-list-tile @click.native="$router.push('/profile')" v-if="permissions.P_View">

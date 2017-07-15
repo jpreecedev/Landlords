@@ -2,7 +2,7 @@
   <div>
     <h2 class="title">Confirm the identity of each adult tenant</h2>
     <v-expansion-panel>
-      <v-expansion-panel-content v-for="(tenant, index) in tenants" :key="tenant">
+      <v-expansion-panel-content v-for="(tenant, index) in tenants" :key="index">
         <div slot="header">
           <tenant-type :tenant="tenant"></tenant-type>
         </div>
@@ -84,7 +84,7 @@
         <div class="row">
           <div class="col-xs-12">
             <v-expansion-panel class="mt-3 mb-3 white">
-              <v-expansion-panel-content v-for="(contact, contactIndex) in tenant.contacts" :key="contact">
+              <v-expansion-panel-content v-for="(contact, contactIndex) in tenant.contacts" :key="contactIndex">
                 <div slot="header">
                   Contact {{ contactIndex + 1 }} <template v-if="contact.relationship">({{ contact.relationship }})</template>
                 </div>

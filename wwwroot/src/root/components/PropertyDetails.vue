@@ -13,7 +13,7 @@
               </div>
             </label>
           </div>
-          <div class="property-image" v-for="propertyImage in propertyDetails.propertyImages" :key="propertyImage">
+          <div class="property-image" v-for="(propertyImage, index) in propertyDetails.propertyImages" :key="index">
             <div class="thumbnail">
               <img v-if="propertyImage.fileName" :src="'/static/uploads/' + propertyDetails.portfolioId + '/' + propertyImage.fileName" :alt="propertyImage.fileName" :title="propertyImage.fileName">
               <div v-if="permissions.PI_Delete" class="overlay">

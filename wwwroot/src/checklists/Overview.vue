@@ -9,7 +9,7 @@
       <p v-if="!overview.checklists || !overview.checklists.length">You have not created any checklists yet.</p>
 
       <div class="row">
-        <div class="col-xs-12 col-md-4 mt-3" v-for="checklist in overview.checklists" :key="checklist">
+        <div class="col-xs-12 col-md-4 mt-3" v-for="(checklist, index) in overview.checklists" :key="index">
           <v-card>
             <div class="row">
               <div class="col-xs-4">

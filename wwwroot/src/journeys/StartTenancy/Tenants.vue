@@ -3,7 +3,7 @@
     <h2 class="title">Who are the tenants?</h2>
 
     <v-expansion-panel>
-      <v-expansion-panel-content v-for="(tenant, index) in tenants" :key="tenant">
+      <v-expansion-panel-content v-for="(tenant, index) in tenants" :key="index">
         <div slot="header">
           <tenant-type :tenant="tenant"></tenant-type>
         </div>
@@ -63,7 +63,7 @@
         <template v-if="tenant.isAdult">
           <div class="subheading">Now, tell us the tenants address history - we need 3 years total.</div>
           <v-expansion-panel class="mt-3 mb-3 white">
-            <v-expansion-panel-content v-for="(address, addressIndex) in tenant.addresses" :key="address">
+            <v-expansion-panel-content v-for="(address, addressIndex) in tenant.addresses" :key="addressIndex">
               <div slot="header">
                 Address {{ addressIndex + 1 }}
               </div>

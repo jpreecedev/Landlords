@@ -116,10 +116,11 @@ p {
 }
 
 .fixed-top {
-  position: fixed;
   left: 0;
-  width: 100%;
+  position: fixed;
   top: 0;
+  width: 100%;
+  z-index: 1;
 }
 
 .fixed-bottom {

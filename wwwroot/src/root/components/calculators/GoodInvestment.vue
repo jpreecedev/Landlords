@@ -365,9 +365,6 @@
         return this.getMonthlyPayment() + this.getAgencyFees() + this.getMaintenanceFees() + this.getInsuranceCosts() + this.otherCosts.toFloat() + this.contingency.toFloat()
       },
       calculateScore: function () {
-        if (this.errorBag.errors.length !== 0) {
-          return false
-        }
         return utils.calculateScore({
           annualYield: this.annualYield,
           growth: this.anticipatedAnnualIncrease,

@@ -2,10 +2,6 @@
   <div>
     <h1 class="display-2">Account details</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
-    <v-alert error :value="errorBag.any()">
-      <span v-show="!errorBag.has('GenericError')">Please fix validation errors and try and submit the form again</span>
-      <span v-show="errorBag.has('GenericError')">{{ errorBag.first('GenericError') }}</span>
-    </v-alert>
     <form @submit.prevent="validateBeforeSubmit" role="form" novalidate>
       <fieldset :disabled="!permissions.AC_Update">
         <div class="row">

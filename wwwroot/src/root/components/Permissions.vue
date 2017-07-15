@@ -2,10 +2,6 @@
   <div>
     <h1 class="display-2">Permissions</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
-    <v-alert error :value="errorBag.any()">
-      <span v-if="!errorBag.has('GenericError')">Please fix validation errors and try and submit the form again</span>
-      <span v-if="errorBag.has('GenericError')">{{ errorBag.first('GenericError') }}</span>
-    </v-alert>
     <v-alert success :value="saved">
       Permissions have been updated
     </v-alert>
@@ -22,8 +18,8 @@
             <label class="col-xs-12" for="permission">Available Permissions</label>
             <div class="col-xs-12">
               <select v-model="selectedPermissions" id="permission" name="permission" size="20" multiple>
-                <optgroup v-for="group in allPermissions" :label="group.key">
-                  <option v-for="permission in group.items" :value="permission.permissionId">{{ permission.description }}</option>
+                <optgroup v-for="(group, index) in allPermissions" :label="group.key" :key="index">
+                  <option v-for="(permission, permissionIndex) in group.items" :value="permission.permissionId" :key="permissionIndex">{{ permission.description }}</option>
                 </optgroup>
               </select>
             </div>
@@ -43,8 +39,8 @@
             <div class="col-xs-12">
               <select v-model="allocatedPermissions" id="userPermission" name="userPermission" size="20" multiple>
                 <template v-if="selectedUser && selectedUser.permissions">
-                  <optgroup v-for="group in selectedUser.permissions" :label="group.key">
-                    <option v-for="userPermission in group.items" :value="userPermission.permissionId">{{ userPermission.description }}</option>
+                  <optgroup v-for="(group, groupIndex) in selectedUser.permissions" :label="group.key" :key="groupIndex">
+                    <option v-for="(userPermission, userPermissionIndex) in group.items" :value="userPermission.permissionId" :key="userPermissionIndex">{{ userPermission.description }}</option>
                   </optgroup>
                 </template>
               </select>
