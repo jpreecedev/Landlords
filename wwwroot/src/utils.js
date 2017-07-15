@@ -175,5 +175,26 @@ module.exports = {
     }
 
     return result
+  },
+
+  getReturnOnInvestment (shortlistedProperty) {
+    let monthlyRent = shortlistedProperty.lettableUnits.toFloat() * shortlistedProperty.expectedRentalIncome.toFloat()
+    let annualIncome = monthlyRent * 12
+
+    let annualInterest = (shortlistedProperty.pricePaid.toFloat() - shortlistedProperty.deposit.toFloat()) * (shortlistedProperty.mortgageInterestRate.toFloat() / 100)
+    let annualManagement = annualIncome * (shortlistedProperty.managementCost.toFloat() / 100)
+    let annualRepairs = annualIncome * (shortlistedProperty.repairsContingency.toFloat() / 100)
+
+    let annualProfit = annualIncome - ((annualInterest + annualManagement) + annualRepairs + shortlistedProperty.serviceCharge.toFloat() + shortlistedProperty.insurance.toFloat())
+    let monthlyProfit = annualProfit / 12
+    let netYield = annualProfit / shortlistedProperty.pricePaid.toFloat()
+    let roi = annualProfit / (shortlistedProperty.deposit.toFloat() + shortlistedProperty.fees.toFloat())
+
+    return {
+      annualProfit,
+      monthlyProfit,
+      netYield,
+      roi
+    }
   }
 }

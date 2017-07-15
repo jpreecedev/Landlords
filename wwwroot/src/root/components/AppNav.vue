@@ -10,16 +10,16 @@
         Landlord List
       </v-btn>
       <v-btn flat v-if="permissions.PD_GetList" @click.native="$router.push('/manager/property-list')">
-        Property List
+        Your Properties
+      </v-btn>
+      <v-btn flat v-if="permissions.TE_GetListById" @click.native="$router.push('/tenants/')">
+        Your Tenants
       </v-btn>
       <v-btn flat v-if="permissions.PE_List" @click.native="$router.push('/permissions')">
         Permissions
       </v-btn>
       <v-btn flat v-if="permissions.CL_Overview" @click.native="$router.push('/checklists/')">
         Checklists
-      </v-btn>
-      <v-btn flat v-if="permissions.TE_GetListById" @click.native="$router.push('/tenants/')">
-        Your Tenants
       </v-btn>
       <v-btn flat v-if="!auth.isLoggedIn" @click.native="$router.push('/registration/')">
         Log in or Register
@@ -51,13 +51,18 @@
         </v-list>
       </v-menu>
 
-      <v-menu v-if="auth.isLoggedIn" class="more"  transition="v-slide-y-transition" bottom :nudge-right="90" :nudge-top="-10">
+      <v-menu v-if="auth.isLoggedIn" class="more"  transition="v-slide-y-transition" bottom :nudge-right="75" :nudge-top="-10">
         <v-btn icon slot="activator">
           <v-icon>more_vert</v-icon>
         </v-btn>
         <v-list>
           <v-list-tile @click.native="logout()">
             <v-list-tile-title>Log out</v-list-tile-title>
+          </v-list-tile>
+          <v-list-tile @click.native="$router.push('/watchlist')" v-if="permissions.SP_GetListById">
+            <v-list-tile-title>
+              My watchlist
+            </v-list-tile-title>
           </v-list-tile>
           <v-list-tile @click.native="$router.push('/profile')" v-if="permissions.P_View">
             <v-list-tile-title>View profile</v-list-tile-title>

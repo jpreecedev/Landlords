@@ -40,6 +40,8 @@
 
         DbSet<TenantContact> TenantContacts { get; set; }
 
+        DbSet<ShortlistedProperty> ShortlistedProperties { get; set; }
+
         DbSet<T> Set<T>() where T : class;
     }
 }

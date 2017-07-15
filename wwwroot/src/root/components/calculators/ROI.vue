@@ -2,7 +2,7 @@
   <div>
     <h1 class="display-2">Return on investment (ROI) calculator</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque consequatur quisquam vel officiis, asperiores velit, quaerat iusto sed, beatae cupiditate aperiam mollitia nesciunt. Aliquam, velit eos. Ad fuga numquam neque.</p>
-    <form role="form" novalidate>
+    <form @submit.prevent="validateBeforeSubmit" role="form" novalidate>
       <div class="row">
         <div class="col-xs-12 col-md-6">
           <v-card>
@@ -12,8 +12,26 @@
             <v-card-text>
               <div class="row">
                 <div class="col-xs-12">
-                  <v-text-field v-model="pricePaid"
-                                :rules="[$validation.rules.required, $validation.rules.min_value(pricePaid, 10000)]"
+                  <v-text-field v-model="shortlistedProperty.reference"
+                                :rules="[$validation.rules.required]"
+                                label="Reference"
+                                required>
+                  </v-text-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12">
+                  <v-text-field v-model="shortlistedProperty.address"
+                                :rules="[$validation.rules.required]"
+                                label="First line of address"
+                                required>
+                  </v-text-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12">
+                  <v-text-field v-model="shortlistedProperty.pricePaid"
+                                :rules="[$validation.rules.required, $validation.rules.min_value(shortlistedProperty.pricePaid, 10000)]"
                                 label="Purchase price"
                                 step="1"
                                 min="10000"
@@ -25,8 +43,8 @@
               </div>
               <div class="row">
                 <div class="col-xs-12">
-                  <v-text-field v-model="deposit"
-                                :rules="[$validation.rules.required, $validation.rules.min_value(deposit, 1000)]"
+                  <v-text-field v-model="shortlistedProperty.deposit"
+                                :rules="[$validation.rules.required, $validation.rules.min_value(shortlistedProperty.deposit, 1000)]"
                                 label="Deposit"
                                 step="1"
                                 min="1000"
@@ -38,7 +56,7 @@
               </div>
               <div class="row">
                 <div class="col-xs-12">
-                  <v-text-field v-model="fees"
+                  <v-text-field v-model="shortlistedProperty.fees"
                                 :rules="[$validation.rules.required]"
                                 label="Refurbishment, fees, furnishings and other costs"
                                 step="1"
@@ -55,20 +73,21 @@
             <v-card-text>
               <div class="row">
                 <div class="col-xs-12">
-                  <v-text-field v-model="lettableUnits"
-                                :rules="[$validation.rules.required, $validation.rules.min_value(lettableUnits, 1)]"
+                  <v-text-field v-model="shortlistedProperty.lettableUnits"
+                                :rules="[$validation.rules.required, $validation.rules.min_value(shortlistedProperty.lettableUnits, 1), $validation.rules.max_value(shortlistedProperty.lettableUnits, 1000)]"
                                 label="Lettable units"
                                 type="number"
                                 step="1"
                                 min="0"
+                                max="1000"
                                 required>
                   </v-text-field>
                 </div>
               </div>
               <div class="row">
                 <div class="col-xs-12">
-                  <v-text-field v-model="expectedRentalIncome"
-                                :rules="[$validation.rules.required, $validation.rules.min_value(expectedRentalIncome, 0)]"
+                  <v-text-field v-model="shortlistedProperty.expectedRentalIncome"
+                                :rules="[$validation.rules.required, $validation.rules.min_value(shortlistedProperty.expectedRentalIncome, 0)]"
                                 label="Rental income per unit"
                                 type="number"
                                 step="100"
@@ -86,8 +105,8 @@
             <v-card-text>
               <div class="row">
                 <div class="col-xs-12">
-                  <v-text-field v-model="mortgageInterestRate"
-                                :rules="[$validation.rules.required, $validation.rules.min_value(mortgageInterestRate, 0.1), $validation.rules.max_value(mortgageInterestRate, 20)]"
+                  <v-text-field v-model="shortlistedProperty.mortgageInterestRate"
+                                :rules="[$validation.rules.required, $validation.rules.min_value(shortlistedProperty.mortgageInterestRate, 0.1), $validation.rules.max_value(shortlistedProperty.mortgageInterestRate, 20)]"
                                 label="Mortgage interest rate"
                                 step="0.1"
                                 min="0.1"
@@ -100,8 +119,8 @@
               </div>
               <div class="row">
                 <div class="col-xs-12">
-                  <v-text-field v-model="managementCost"
-                                :rules="[$validation.rules.required, $validation.rules.min_value(managementCost, 0), $validation.rules.max_value(managementCost, 100)]"
+                  <v-text-field v-model="shortlistedProperty.managementCost"
+                                :rules="[$validation.rules.required, $validation.rules.min_value(shortlistedProperty.managementCost, 0), $validation.rules.max_value(shortlistedProperty.managementCost, 100)]"
                                 label="Management cost (Monthly)"
                                 step="1"
                                 min="0"
@@ -114,8 +133,8 @@
               </div>
               <div class="row">
                 <div class="col-xs-12">
-                  <v-text-field v-model="repairsContingency"
-                                :rules="[$validation.rules.required, $validation.rules.min_value(repairsContingency, 0), $validation.rules.max_value(repairsContingency, 100)]"
+                  <v-text-field v-model="shortlistedProperty.repairsContingency"
+                                :rules="[$validation.rules.required, $validation.rules.min_value(shortlistedProperty.repairsContingency, 0), $validation.rules.max_value(shortlistedProperty.repairsContingency, 100)]"
                                 label="Repairs contingency"
                                 step="1"
                                 min="0"
@@ -128,8 +147,8 @@
               </div>
               <div class="row">
                 <div class="col-xs-12">
-                  <v-text-field v-model="serviceCharge"
-                                :rules="[$validation.rules.required, $validation.rules.min_value(serviceCharge, 0)]"
+                  <v-text-field v-model="shortlistedProperty.serviceCharge"
+                                :rules="[$validation.rules.required, $validation.rules.min_value(shortlistedProperty.serviceCharge, 0)]"
                                 label="Service charge and ground rent (Annual)"
                                 type="number"
                                 step="100"
@@ -141,8 +160,8 @@
               </div>
               <div class="row">
                 <div class="col-xs-12">
-                  <v-text-field v-model="insurance"
-                                :rules="[$validation.rules.required, $validation.rules.min_value(insurance, 0)]"
+                  <v-text-field v-model="shortlistedProperty.insurance"
+                                :rules="[$validation.rules.required, $validation.rules.min_value(shortlistedProperty.insurance, 0)]"
                                 label="Insurance (Annual)"
                                 type="number"
                                 step="100"
@@ -178,14 +197,20 @@
                   Annual profit: <strong>&pound;{{score.annualProfit.formatWithSeparator()}}</strong>
                 </p>
                 <p>
-                  Net yield: <strong>{{score.netYield * 100}}%</strong>
+                  Net yield: <strong>{{(score.netYield * 100).toFixed(2)}}%</strong>
                 </p>
                 <p>
-                  Return on investment: <strong>{{score.roi * 100}}%</strong>
+                  Return on investment: <strong>{{(score.roi * 100).toFixed(2)}}%</strong>
                 </p>
               </div>
             </v-card-text>
           </v-card>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-xs-12">
+          <v-btn primary v-if="permissions.SP_Update" type="submit" :disabled="isSaving">{{ this.shortlistedProperty.shortlistedPropertyId === null ? 'Add to shortlist' : 'Save changes' }}</v-btn>
+          <v-btn primary v-if="permissions.SP_Delete && this.shortlistedProperty.shortlistedPropertyId" type="button" :disabled="isDeleting" @click.native="deleteShortlistedProperty()" class="error">Delete</v-btn>
         </div>
       </div>
     </form>
@@ -193,42 +218,84 @@
 </template>
 
 <script>
+  import utils from 'utils'
+
   export default {
     name: 'roi',
     data () {
       return {
-        pricePaid: 60000,
-        deposit: 15000,
-        fees: 15000,
-        lettableUnits: 1,
-        expectedRentalIncome: 500,
-        mortgageInterestRate: 5,
-        managementCost: 0,
-        repairsContingency: 10,
-        serviceCharge: 0,
-        insurance: 300
+        errors: [],
+        isSaving: false,
+        isDeleting: false,
+        permissions: this.$store.state.permissions,
+        shortlistedProperty: {
+          shortlistedPropertyId: null,
+          reference: '3 bedroom house',
+          address: '1 new property lane',
+          pricePaid: 60000,
+          deposit: 15000,
+          fees: 15000,
+          lettableUnits: 1,
+          expectedRentalIncome: 500,
+          mortgageInterestRate: 5,
+          managementCost: 0,
+          repairsContingency: 10,
+          serviceCharge: 0,
+          insurance: 300
+        }
+      }
+    },
+    methods: {
+      validateBeforeSubmit () {
+        this.errors = []
+        this.isSaving = true
+
+        this.$http.post(`/api/shortlistedproperties`, { ...this.shortlistedProperty })
+          .then(() => {
+            this.isSaving = false
+            this.$router.push({ name: 'watchlist' })
+          })
+          .catch(response => {
+            this.isSaving = false
+            let validationResult = utils.getFormValidationErrors(response)
+            validationResult.errors.forEach(validationError => {
+              this.errors.push({
+                key: validationError.key,
+                message: validationError.messages[0]
+              })
+            })
+            if (validationResult.status) {
+              this.errors.push({
+                key: 'GenericError',
+                message: validationResult.status
+              })
+            }
+          })
+      },
+      deleteShortlistedProperty () {
+        this.isDeleting = true
+        this.$http.delete(`/api/shortlistedproperties?shortlistedPropertyId=${this.shortlistedProperty.shortlistedPropertyId}`).then(() => {
+          this.$router.push({ name: 'watchlist' })
+          this.isDeleting = false
+        })
+      }
+    },
+    created () {
+      if (this.permissions.SP_GetById && this.$route.params.shortlistedPropertyId) {
+        this.$http.get(`/api/shortlistedproperties/${this.$route.params.shortlistedPropertyId}`).then(response => {
+          if (response.data) {
+            this.shortlistedProperty = response.data
+          }
+        })
       }
     },
     computed: {
       score () {
-        let monthlyRent = this.lettableUnits.toFloat() * this.expectedRentalIncome.toFloat()
-        let annualIncome = monthlyRent * 12
-
-        let annualInterest = (this.pricePaid.toFloat() - this.deposit.toFloat()) * (this.mortgageInterestRate.toFloat() / 100)
-        let annualManagement = annualIncome * (this.managementCost.toFloat() / 100)
-        let annualRepairs = annualIncome * (this.repairsContingency.toFloat() / 100)
-
-        let annualProfit = annualIncome - ((annualInterest + annualManagement) + annualRepairs + this.serviceCharge.toFloat() + this.insurance.toFloat())
-        let monthlyProfit = annualProfit / 12
-        let netYield = annualProfit / this.pricePaid.toFloat()
-        let roi = annualProfit / (this.deposit.toFloat() + this.fees.toFloat())
-
-        return {
-          annualProfit,
-          monthlyProfit,
-          netYield,
-          roi
+        if (!this.shortlistedProperty) {
+          return false
         }
+
+        return utils.getReturnOnInvestment(this.shortlistedProperty)
       },
       scoreInWords () {
         let roi = this.score.roi * 100

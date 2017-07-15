@@ -72,5 +72,6 @@
         public DbSet<Tenancy> Tenancies { get; set; }
         public DbSet<TenantTenancy> TenantTenancies { get; set; }
         public DbSet<TenantContact> TenantContacts { get; set; }
+        public DbSet<ShortlistedProperty> ShortlistedProperties { get; set; }
     }
 }

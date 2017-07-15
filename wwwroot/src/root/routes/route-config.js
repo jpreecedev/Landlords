@@ -8,6 +8,7 @@ import LandlordList from 'root/components/LandlordList'
 import Manager from 'root/components/Manager'
 import PropertyDetails from 'root/components/PropertyDetails'
 import PropertyList from 'root/components/PropertyList'
+import Watchlist from 'root/components/Watchlist'
 import Calculators from 'root/components/Calculators/Calculators'
 import GoodInvestment from 'root/components/Calculators/GoodInvestment'
 import HowMuch from 'root/components/Calculators/HowMuch'
@@ -43,6 +44,12 @@ export const RouteConfig = [
     path: '/profile',
     name: 'profile',
     component: Profile,
+    beforeEnter: guardRoute
+  },
+  {
+    path: '/watchlist',
+    name: 'watchlist',
+    component: Watchlist,
     beforeEnter: guardRoute
   },
   {
@@ -95,7 +102,7 @@ export const RouteConfig = [
         component: GoodInvestment
       },
       {
-        path: 'return-on-investment',
+        path: 'return-on-investment/:shortlistedPropertyId?',
         name: 'roi',
         component: ROI
       }]
