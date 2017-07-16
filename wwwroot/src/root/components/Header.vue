@@ -9,7 +9,7 @@
           <h1 class="display-3">Hello, landlords!</h1>
         </li>
         <li>
-          <p class="headline">We can make managing your property portfolio a breeze!</p>
+          <p class="headline">We will make managing your property portfolio a breeze!</p>
         </li>
         <li>
           <v-btn primary class="green" @click.native="$router.push({name: 'registration'})">Go to registration &raquo;</v-btn>

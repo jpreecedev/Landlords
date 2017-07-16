@@ -64,7 +64,7 @@ export default {
 <style lang="scss" scoped>
 
   .container {
-    margin-top: 2rem;
+    margin-top: 1rem;
   }
 
   .col-xs-12 {
