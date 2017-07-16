@@ -156,12 +156,14 @@
         <div class="row">
           <div class="col-xs-4">
             <v-checkbox v-model="tenant.isSmoker"
+                        color="primary"
                         @change="updateField(index, tenant, 'isSmoker')"
                         label="Does this tenant smoke?">
             </v-checkbox>
           </div>
           <div class="col-xs-4">
             <v-checkbox v-model="tenant.hasPets"
+                        color="primary"
                         @change="updateField(index, tenant, 'hasPets')"
                         label="Does this tenant have any pets?">
             </v-checkbox>

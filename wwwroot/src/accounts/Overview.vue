@@ -91,4 +91,8 @@ export default {
 
 <style lang="scss" scoped>
 
+  td a {
+    text-decoration: none;
+  }
+
 </style>

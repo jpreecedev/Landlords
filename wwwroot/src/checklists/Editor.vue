@@ -13,8 +13,8 @@
       </accordion>
     </div>
     <div class="row mt-5" v-if="permissions.CL_DeleteById">
-      <div class="col-xs-12 col-md-3 col-md-offset-9 text-center">
-        <p>Danger Zone!! Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+      <div class="col-xs-12 col-md-4 col-md-offset-8 text-center">
+        <p class="red--text">Danger Zone!! You can delete this checklist.<br/>Deleting is permanent and cannot be undone!</p>
         <v-btn error @click.native="deleteChecklist()">Delete Checklist</v-btn>
       </div>
     </div>

@@ -104,6 +104,7 @@
                           required>
                 </v-select>
               <v-checkbox v-model="propertyDetails.isAvailableForLetting"
+                          color="primary"
                           label="This property is available for letting">
               </v-checkbox>
               </v-card-text>

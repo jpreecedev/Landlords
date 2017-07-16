@@ -1,13 +1,13 @@
 <template>
   <v-toolbar class="primary" :class="$route.path === '/' ? 'green' : ''" dark fixed>
-    <v-toolbar-title class="hidden-sm-and-down">
+    <v-toolbar-title class="hidden-xs hidden-sm visible-md visible-lg">
       <router-link :to="auth.isLoggedIn ? '/dashboard' : '/'" tag="a" class="home">
         <v-icon class="white--text">home</v-icon>
         <span class="white--text">Landlords</span>
       </router-link>
     </v-toolbar-title>
     <v-spacer></v-spacer>
-    <v-toolbar-items>
+    <v-toolbar-items class="hidden-xs hidden-sm visible-md visible-lg">
       <v-btn flat v-if="auth.isLoggedIn" @click.native="$router.push('/dashboard')" :class="{'active': $route.path.startsWith('/dashboard')}">
         Dashboard
       </v-btn>

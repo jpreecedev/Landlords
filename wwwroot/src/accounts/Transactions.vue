@@ -10,6 +10,13 @@
 
     <v-card>
       <v-data-table :headers="headers" :items="transactions" class="transactions" :pagination.sync="pagination" :loading="loading">
+        <template slot="headers" scope="props">
+          <tr>
+            <th v-for="(header, index) in props.headers" :key="index" :class="{'text-xs-left': header.left, 'text-xs-right': !header.left}">
+              {{ header.text }}
+            </th>
+          </tr>
+        </template>
         <template slot="items" scope="props">
           <td>
             {{ props.item.date | formatDate }}
@@ -170,6 +177,10 @@ export default {
   .transactions table {
     .categories {
       width: 325px;
+
+      .input-group {
+        margin-top: 32px;
+      }
     }
   }
 

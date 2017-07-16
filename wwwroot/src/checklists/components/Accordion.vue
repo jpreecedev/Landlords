@@ -5,10 +5,11 @@
         <v-checkbox v-if="permissions.CI_ToggleCompleted"
                     v-model="item.isCompleted"
                     class="accordion-checkbox"
+                    color="primary"
                     @change="newValue => { toggleCompleted(newValue, item); }">
         </v-checkbox>
-        <span v-if="!item.isCompleted">{{ item.displayText }}</span>
-        <del class="text-muted" v-if="item.isCompleted">{{ item.displayText }}</del>
+        <span v-if="!item.isCompleted" class="display-text">{{ item.displayText }}</span>
+        <del v-else class="display-text text-muted">{{ item.displayText }}</del>
       </div>
       <v-card>
         <v-card-text>
@@ -91,8 +92,9 @@ export default {
     }
   }
 
-  del {
+  .display-text {
     display: inline-block;
+    margin-top: 5px;
   }
 
 </style>

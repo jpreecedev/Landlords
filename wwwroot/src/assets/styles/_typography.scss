@@ -1,0 +1,29 @@
+.display-1 {
+  font-size: 28px !important;
+  line-height: 32px !important;
+
+  @include tablet {
+    font-size: 34px !important;
+    line-height: 40px !important;
+  }
+}
+
+.display-2 {
+  font-size: 32px !important;
+  font-weight: 300 !important;
+  line-height: 42px !important;
+  margin-bottom: 20px;
+
+  @include tablet {
+    font-size: 45px !important;
+    line-height: 54px !important;
+  }
+}
+
+.subheading {
+  font-size: 14px !important;
+
+  @include tablet {
+    font-size: 16px !important;
+  }
+}

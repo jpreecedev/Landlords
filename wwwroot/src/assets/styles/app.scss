@@ -1,7 +1,8 @@
-@import 'fonts';
+@import 'mixins';
+@import 'typography';
 @import 'variables';
 @import 'forms';
-@import 'mixins';
+@import 'layout';
 @import '../../../node_modules/flexboxgrid/dist/flexboxgrid.min.css';
 html,
 body {
@@ -17,10 +18,13 @@ main {
     margin-left: auto;
     margin-right: auto;
     max-width: 100%;
-    padding-top: 8rem;
-    padding-bottom: 6rem;
     position: relative;
     width: 1140px;
+    padding: 6rem 1rem 6rem 1rem;
+
+    @include tablet {
+      padding: 8rem 1rem 6rem 1rem;
+    }
 
     &.wide {
       width: 90%;
@@ -85,8 +89,17 @@ p {
   margin-bottom: .5rem;
 }
 
+.expansion-panel__header {
+  background-color: #f2f2f2;
+}
+
 .expansion-panel__body {
+  background-color: #fff;
   padding: 1rem 2rem;
+
+  .card__text {
+    background-color: #fff;
+  }
 }
 
 .expansion-panel__buttons {
@@ -274,11 +287,5 @@ header {
   .headline {
     margin-bottom: 20px;
     font-weight: 700 !important;
-  }
-
-  .display-2 {
-    font-weight: 300 !important;
-    line-height: 54px !important;
-    margin-bottom: 40px;
   }
 }

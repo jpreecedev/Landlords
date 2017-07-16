@@ -56,14 +56,12 @@
                 <v-select :items="times"
                           :rules="[$validation.rules.required]"
                           v-model="availableFrom"
-                          label="Available from"
-                          item-value="value">
+                          label="Available from">
                 </v-select>
                 <v-select :items="times"
                           :rules="[$validation.rules.required]"
                           v-model="availableTo"
-                          label="Available to"
-                          item-value="value">
+                          label="Available to">
                 </v-select>
                 <v-text-field v-model="profile.phoneNumber"
                               label="Main phone number"

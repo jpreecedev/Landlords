@@ -41,15 +41,17 @@
                   <div class="row">
                     <div class="col-xs-6">
                       <v-radio value="Monthly"
-                              v-model="rentalyield.frequency"
-                              label="Monthly"
-                              checked>
+                               color="primary"
+                               v-model="rentalyield.frequency"
+                               label="Monthly"
+                               checked>
                       </v-radio>
                     </div>
                     <div class="col-xs-6">
                       <v-radio value="Annual"
-                              v-model="rentalyield.frequency"
-                              label="Annual">
+                               color="primary"
+                               v-model="rentalyield.frequency"
+                               label="Annual">
                       </v-radio>
                     </div>
                   </div>
