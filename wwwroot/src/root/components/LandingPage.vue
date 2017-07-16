@@ -77,6 +77,10 @@
       </div>
     </section>
 
+    <section id="pricing">
+      <pricing></pricing>
+    </section>
+
     <aside class="bg-dark">
       <div class="text-center">
         <div class="call-to-action">
