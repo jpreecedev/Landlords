@@ -1,7 +1,10 @@
 <template>
   <div>
-    <h1 class="display-2">My property shortlist</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
+    <header>
+      <h1 class="headline primary--text">Property shortlist</h1>
+      <p class="display-2 grey--text text--darken-1">Easily track properties you are considering purchasing and see the potential ROI of each</p>
+      <p class="subheading">Click on the property reference for more information.</p>
+    </header>
     <v-card>
       <v-data-table :headers="headers" :items="data" :loading="loading">
         <template slot="headers" scope="props">

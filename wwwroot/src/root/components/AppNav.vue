@@ -1,35 +1,40 @@
 <template>
-  <v-toolbar class="fixed-top primary" :class="$route.path === '/' ? 'green' : ''" dark>
-    <v-toolbar-title class="hidden-sm-and-down">Landlords</v-toolbar-title>
+  <v-toolbar class="primary" :class="$route.path === '/' ? 'green' : ''" dark fixed>
+    <v-toolbar-title class="hidden-sm-and-down">
+      <router-link :to="auth.isLoggedIn ? '/dashboard' : '/'" tag="a" class="home">
+        <v-icon class="white--text">home</v-icon>
+        <span class="white--text">Landlords</span>
+      </router-link>
+    </v-toolbar-title>
     <v-spacer></v-spacer>
     <v-toolbar-items>
-      <v-btn flat v-if="auth.isLoggedIn" @click.native="$router.push('/dashboard')">
+      <v-btn flat v-if="auth.isLoggedIn" @click.native="$router.push('/dashboard')" :class="{'active': $route.path.startsWith('/dashboard')}">
         Dashboard
       </v-btn>
-      <v-btn flat v-if="permissions.LL_List" @click.native="$router.push('/agency/landlord-list')">
+      <v-btn flat v-if="permissions.LL_List" @click.native="$router.push('/agency/landlord-list')" :class="{'active': $route.path.startsWith('/agency/landlord-list')}">
         Landlord List
       </v-btn>
-      <v-btn flat v-if="permissions.PD_GetList" @click.native="$router.push('/manager/property-list')">
-        Your Properties
+      <v-btn flat v-if="permissions.PD_GetList" @click.native="$router.push('/manager/property-list')" :class="{'active': $route.path.startsWith('/manager/property-list')}">
+        Properties
       </v-btn>
-      <v-btn flat v-if="permissions.TE_GetListById" @click.native="$router.push('/tenants/')">
-        Your Tenants
+      <v-btn flat v-if="permissions.TE_GetListById" @click.native="$router.push('/tenants/')" :class="{'active': $route.path.startsWith('/tenants')}">
+        Tenants
       </v-btn>
-      <v-btn flat v-if="permissions.PE_List" @click.native="$router.push('/permissions')">
+      <v-btn flat v-if="permissions.PE_List" @click.native="$router.push('/permissions')" :class="{'active': $route.path.startsWith('/permissions')}">
         Permissions
       </v-btn>
-      <v-btn flat v-if="permissions.CL_Overview" @click.native="$router.push('/checklists/')">
+      <v-btn flat v-if="permissions.CL_Overview" @click.native="$router.push('/checklists/')" :class="{'active': $route.path.startsWith('/checklists')}">
         Checklists
       </v-btn>
-      <v-btn flat v-if="!auth.isLoggedIn" @click.native="$router.push('/registration/')">
+      <v-btn flat v-if="!auth.isLoggedIn" @click.native="$router.push('/registration/')" :class="{'active': $route.path.startsWith('/registration')}">
         Log in or Register
       </v-btn>
-      <v-btn flat v-if="permissions.AC_Overview" @click.native="$router.push('/accounts/')">
+      <v-btn flat v-if="permissions.AC_Overview" @click.native="$router.push('/accounts/')" :class="{'active': $route.path.startsWith('/accounts')}">
         Accounts
       </v-btn>
 
       <v-menu class="calculators" transition="v-slide-y-transition" bottom :nudge-right="90" :nudge-top="-10">
-        <v-btn flat class="primary" slot="activator">
+        <v-btn flat class="primary" slot="activator" :class="{'active': $route.path.startsWith('/calculators')}">
           Calculators
         </v-btn>
         <v-list>
@@ -99,10 +104,25 @@ export default {
   .calculators > .menu__activator, .more > .menu__activator {
     height: 100%;
     display: flex;
+
+    button {
+      margin: 0;
+      height: 100%;
+    }
   }
 
   .more > .menu__activator .btn__content {
     padding: 0;
+  }
+
+  .home {
+    text-decoration: none;
+
+    i {
+      font-size: 2rem;
+      height: 32px;
+      padding-bottom: 4px;
+    }
   }
 
 </style>

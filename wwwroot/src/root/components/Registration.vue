@@ -6,10 +6,11 @@
     <v-alert success :value="loggedOut" class="mb-4">
       You have been logged out
     </v-alert>
-    <div>
-      <h1 class="display-2">Please sign in or register</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
-    </div>
+    <header>
+      <h1 class="headline primary--text">Please sign in or register</h1>
+      <p class="display-2 grey--text text--darken-1">We need to know who you are</p>
+      <p class="subheading">Please either sign in or register using the appropriate form below.</p>
+    </header>
     <div class="row mt-5">
       <div class="col-xs-12 col-md-5">
         <loginform></loginform>

@@ -1,7 +1,10 @@
 <template>
   <div>
-    <h1 class="display-2">Your Properties</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
+    <header>
+      <h1 class="headline primary--text">Your properties</h1>
+      <p class="display-2 grey--text text--darken-1">There are no notifications or upcoming events</p>
+      <p class="subheading">Click on the property reference for details.</p>
+    </header>
 
     <v-card>
       <v-data-table :headers="headers" :items="data" :loading="loading">

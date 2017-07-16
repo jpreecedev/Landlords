@@ -1,45 +1,41 @@
 <template>
   <div>
-    <h1 class="display-2">Overview</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
-    <permissions-warning :permission="permissions.CL_Overview"></permissions-warning>
-    <div class="mt-5">
-      <h2 class="display-1">Your checklists</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium sint, odio, optio, expedita alias dolorum dicta iusto aliquam eos doloremque fuga iste fugiat quam sed eius corporis suscipit. Voluptatum, assumenda.</p>
-      <p v-if="!overview.checklists || !overview.checklists.length">You have not created any checklists yet.</p>
-
-      <div class="row">
-        <div class="col-xs-12 col-md-4 mt-3" v-for="(checklist, index) in overview.checklists" :key="index">
-          <v-card>
-            <div class="row">
-              <div class="col-xs-4">
-                <img src="../assets/images/checklist.png" class="card__row__image" :alt="checklist.name">
-              </div>
-              <div class="col-xs-8">
-                <div>
-                  <v-card-text>
-                    <strong>{{ checklist.name }}</strong><br>
-                    <small class="description">
-                      <span v-if="!checklist.propertyReference && !checklist.propertyStreetAddress">General</span>
-                      <span v-if="checklist.propertyReference">{{ checklist.propertyReference }}</span>
-                      <span v-if="checklist.propertyStreetAddress"> ({{ checklist.propertyStreetAddress }})</span>
-                    </small>
-                  </v-card-text>
-                </div>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn primary flat v-if="permissions.CL_GetById" @click.native="$router.push({name: 'editor', params: {checklistId: checklist.id}})">View</v-btn>
-                  <v-btn flat v-if="permissions.CL_Archive && !checklist.isArchived" @click.native="archive(checklist)">Archive</v-btn>
-                </v-card-actions>
-              </div>
+    <header>
+      <h1 class="headline primary--text">Checklists</h1>
+      <p class="display-2 grey--text text--darken-1">Using checklists will help streamline your business and reduce mistakes</p>
+      <p class="subheading">Create a new checklist using the form below.</p>
+    </header>
+    <div class="row">
+      <div class="col-xs-12 col-md-4 mt-3" v-for="(checklist, index) in overview.checklists" :key="index">
+        <v-card>
+          <div class="row">
+            <div class="col-xs-4">
+              <img src="../assets/images/checklist.png" class="card__row__image" :alt="checklist.name">
             </div>
-          </v-card>
-        </div>
+            <div class="col-xs-8">
+              <div>
+                <v-card-text>
+                  <strong>{{ checklist.name }}</strong><br>
+                  <small class="description">
+                    <span v-if="!checklist.propertyReference && !checklist.propertyStreetAddress">General</span>
+                    <span v-if="checklist.propertyReference">{{ checklist.propertyReference }}</span>
+                    <span v-if="checklist.propertyStreetAddress"> ({{ checklist.propertyStreetAddress }})</span>
+                  </small>
+                </v-card-text>
+              </div>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn primary flat v-if="permissions.CL_GetById" @click.native="$router.push({name: 'editor', params: {checklistId: checklist.id}})">View</v-btn>
+                <v-btn flat v-if="permissions.CL_Archive && !checklist.isArchived" @click.native="archive(checklist)">Archive</v-btn>
+              </v-card-actions>
+            </div>
+          </div>
+        </v-card>
       </div>
     </div>
 
     <div class="mt-3" v-if="permissions.CL_Archived && !hasArchivedLists">
-      <v-btn primary @click.native="getArchived()">View Archived</v-btn>
+      <v-btn primary @click.native="getArchived()">Show Archived</v-btn>
     </div>
 
     <div class="row mt-5" v-if="permissions.CL_Create && overview.availableChecklists && overview.availableChecklists.length">

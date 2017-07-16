@@ -1,7 +1,10 @@
 <template>
   <div>
-    <h1 class="display-2">Property Details</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
+    <header>
+      <h1 class="headline primary--text">Property details</h1>
+      <p class="display-2 grey--text text--darken-1">Complete as much information as you can about this property so that we can personalise your experience</p>
+      <p class="subheading">You can upload pictures by clicking the camera.</p>
+    </header>
     <form @submit.prevent="validateBeforeSubmit" role="form" enctype="multipart/form-data" novalidate>
       <fieldset :disabled="!permissions.PD_Update">
         <div class="property-image-container" v-if="(permissions.PI_Upload) || (!permissions.PI_Upload && propertyDetails.propertyImages.length)">

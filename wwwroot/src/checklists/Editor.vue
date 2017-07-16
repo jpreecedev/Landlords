@@ -1,14 +1,15 @@
 <template>
-  <div>
-    <h1 class="display-2">New tenant</h1>
-    <h2 class="display-1" v-if="checklist">
-      <span v-if="checklist.propertyReference">{{checklist.propertyReference}}</span>
-      <span v-if="checklist.propertyStreetAddress">({{ checklist.propertyStreetAddress }})</span>
-    </h2>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
+  <div v-if="checklist">
+    <header>
+      <h1 class="headline primary--text">{{checklist.name}}</h1>
+      <p class="display-2 grey--text text--darken-1">
+        <span v-if="checklist.propertyReference">{{checklist.propertyReference}}</span>
+        <span v-if="checklist.propertyStreetAddress">({{ checklist.propertyStreetAddress }})</span>
+      </p>
+    </header>
     <div>
       <p class="text-muted">There are {{ outstandingActions }} outstanding actions.</p>
-      <accordion :checklist="checklist" v-on:toggleCompleted="toggleCompleted" v-on:move="move">
+      <accordion :checklist="checklist" v-on:toggleCompleted="toggleCompleted">
       </accordion>
     </div>
     <div class="row mt-5" v-if="permissions.CL_DeleteById">
@@ -61,26 +62,6 @@ export default {
     },
     toggleCompleted (item) {
       this.$http.post(`/api/checklistitem/completed?checklistId=${this.checklistId}&checklistItemId=${item.id}&completed=${item.isCompleted}`)
-    },
-    move (data) {
-      this.$http.post(`/api/checklistitem/move?checklistId=${this.checklistId}&checklistItemId=${data.item.id}&direction=${data.direction}`).then(() => {
-        let index = this.checklist.checklistItems.indexOf(data.item)
-        let poppedItem = this.checklist.checklistItems[index]
-        this.checklist.checklistItems.splice(index, 1)
-
-        switch (data.direction) {
-          case 'up':
-            this.checklist.checklistItems.splice(index - 1, 0, poppedItem)
-            break
-          case 'down':
-            this.checklist.checklistItems.splice(index + 1, 0, poppedItem)
-            break
-        }
-
-        for (let i = 0; i < this.checklist.checklistItems.length; i++) {
-          this.checklist.checklistItems[i].order = i + 1
-        }
-      })
     }
   }
 }

@@ -1,7 +1,9 @@
 <template>
   <div>
-    <h1 class="display-2">Profile</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
+    <header>
+      <h1 class="headline primary--text">Profile</h1>
+      <p class="display-2 grey--text text--darken-1">Complete your profile so that ourselves and your tenants can contact when it best suits you</p>
+    </header>
     <v-alert success :value="saved">
       Your profile has been updated
     </v-alert>

@@ -1,7 +1,10 @@
 <template>
   <div>
-    <h1 class="display-2">Bank accounts</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
+    <header>
+      <h1 class="headline primary--text">Bank accounts</h1>
+      <p class="display-2 grey--text text--darken-1">Manage your accounts online to identify your portfolio financial strengths and weaknesses</p>
+      <p class="subheading">Click on the account name to see transactions.</p>
+    </header>
     <v-card>
       <v-data-table :headers="headers" :items="data.accounts" :loading="loading">
         <template slot="headers" scope="props">

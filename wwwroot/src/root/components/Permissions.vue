@@ -1,7 +1,9 @@
 <template>
   <div>
-    <h1 class="display-2">Permissions</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
+    <header>
+      <h1 class="headline primary--text">Permissions</h1>
+      <p class="display-2 grey--text text--darken-1">Manage permissions for individual users and groups</p>
+    </header>
     <v-alert success :value="saved">
       Permissions have been updated
     </v-alert>
@@ -9,7 +11,14 @@
       <div class="row">
         <label class="col-xs-12" for="searchForUser">Search for user</label>
         <div class="col-xs-12 col-md-5">
-          <v-autocomplete :items="filteredUsers" placeholder="Enter name or email" v-model="selectedUser" :auto-select-one-item="false" :get-label="getLabel" :component-item='template' @change="change"></v-autocomplete>
+          <v-autocomplete :items="filteredUsers"
+                          :auto-select-one-item="false"
+                          :get-label="getLabel"
+                          :component-item='template'
+                          placeholder="Enter name or email"
+                          v-model="selectedUser"
+                          @change="change">
+          </v-autocomplete>
         </div>
       </div>
       <div class="row mt-4">
@@ -188,7 +197,7 @@ select {
 
 .v-autocomplete {
 	.v-autocomplete-input-group {
-		.v-autocomplete-input {
+		input {
       display: block;
       width: 100%;
       padding: 0.5rem 0.75rem;

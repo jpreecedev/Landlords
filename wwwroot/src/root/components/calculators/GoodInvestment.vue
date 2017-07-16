@@ -1,7 +1,10 @@
 <template>
   <div>
-    <h1 class="display-2">Is this property a good investment?</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
+    <header>
+      <h1 class="headline primary--text">Good investment</h1>
+      <p class="display-2 grey--text text--darken-1">All things considered, over the long term, will your property make a profit?</p>
+      <p class="subheading">Complete this form to see your personalised results.</p>
+    </header>
     <form role="form" novalidate>
       <div class="row">
         <div class="col-xs-12 col-md-6">
@@ -92,20 +95,20 @@
               <p>Which tax band are you in?</p>
               <div class="row">
                 <div class="col-xs-12 col-md-4">
-                  <v-radio value="Basic (20%)"
+                  <v-radio value="BasicRate"
                            v-model="taxBand"
                            label="Basic (20%)">
                   </v-radio>
                 </div>
                 <div class="col-xs-12 col-md-4">
-                  <v-radio value="Higher (40%)"
+                  <v-radio value="Higher"
                            v-model="taxBand"
                            label="Higher (40%)"
                            checked>
                   </v-radio>
                 </div>
                 <div class="col-xs-12 col-md-4">
-                  <v-radio value="Top (40%)"
+                  <v-radio value="Top"
                            v-model="taxBand"
                            label="Top (45%)">
                   </v-radio>
@@ -250,7 +253,7 @@
         <div class="col-xs-12">
           <v-card>
             <v-card-title class="title primary">
-              Your results
+              Results
             </v-card-title>
             <v-card-text>
               <div v-if="!calculateScore">

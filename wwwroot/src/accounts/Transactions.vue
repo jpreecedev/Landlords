@@ -1,7 +1,10 @@
 <template>
   <div>
-    <h1 class="display-2">Transactions</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
+    <header>
+      <h1 class="headline primary--text">Transactions</h1>
+      <p class="display-2 grey--text text--darken-1">Categorising each transaction will enable us to track the performance of your portfolio</p>
+      <p class="subheading">New transactions can be imported using the form at the bottom.</p>
+    </header>
 
     <p v-if="!transactions || !transactions.length">There are no transactions to display.</p>
 

@@ -1,7 +1,9 @@
 <template>
   <div>
-    <h1 class="display-2">Tenant details</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, quam minus alias. Veritatis error dolore ex dignissimos enim laudantium repellendus illo in nulla ratione! Saepe, minus asperiores consequuntur incidunt sint!</p>
+    <header>
+      <h1 class="headline primary--text">Tenant details</h1>
+      <p class="display-2 grey--text text--darken-1">Your tenants name, address, and contact information</p>
+    </header>
     <form @submit.prevent="validateBeforeSubmit" role="form" novalidate>
       <fieldset :disabled="!permissions.TE_Update">
         <div class="row">

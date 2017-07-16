@@ -1,7 +1,10 @@
 <template>
   <div>
-    <h1 class="display-2">Return on investment (ROI) calculator</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque consequatur quisquam vel officiis, asperiores velit, quaerat iusto sed, beatae cupiditate aperiam mollitia nesciunt. Aliquam, velit eos. Ad fuga numquam neque.</p>
+    <header>
+      <h1 class="headline primary--text">Return on investment (ROI) calculator</h1>
+      <p class="display-2 grey--text text--darken-1">Work out the potential Return on investment (ROI) so you can compare with other investment opportunities</p>
+      <p class="subheading">Complete this form to see your personalised results.</p>
+    </header>
     <form @submit.prevent="validateBeforeSubmit" role="form" novalidate>
       <div class="row">
         <div class="col-xs-12 col-md-6">
