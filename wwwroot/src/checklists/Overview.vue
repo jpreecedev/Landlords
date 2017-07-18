@@ -34,8 +34,10 @@
       </div>
     </div>
 
+    <loader :loading="isLoading"></loader>
+
     <div class="mt-3" v-if="permissions.CL_Archived && !hasArchivedLists">
-      <v-btn primary @click.native="getArchived()">Show Archived</v-btn>
+      <v-btn primary @click.native="getArchived()" :loading="isLoadingArchived">Show Archived</v-btn>
     </div>
 
     <div class="row mt-5" v-if="permissions.CL_Create && overview.availableChecklists && overview.availableChecklists.length">
@@ -86,6 +88,8 @@
     components: { PermissionsWarning },
     data () {
       return {
+        isLoading: false,
+        isLoadingArchived: false,
         permissions: this.$store.state.permissions,
         selectedChecklist: null,
         selectedProperty: null,
@@ -99,9 +103,12 @@
       }
     },
     created () {
-      this.$http.get(`/api/checklists/overview`).then(response => {
-        this.overview = response.data
-      })
+      this.isLoading = true
+      this.$http.get(`/api/checklists/overview`)
+        .then(response => {
+          this.isLoading = false
+          this.overview = response.data
+        })
         .then(() => {
           if (this.permissions.PD_GetBasic) {
             return this.$http.get(`/api/propertydetails/basicdetails`).then(response => {
@@ -111,6 +118,9 @@
               }
             })
           }
+        })
+        .catch(() => {
+          this.isLoading = false
         })
     },
     methods: {
@@ -128,12 +138,18 @@
         })
       },
       getArchived () {
-        this.$http.get(`/api/checklists/archived`).then(response => {
-          if (response.data) {
-            this.overview.checklists.push(...response.data)
-            this.hasArchivedLists = true
-          }
-        })
+        this.isLoadingArchived = true
+        this.$http.get(`/api/checklists/archived`)
+          .then(response => {
+            this.isLoadingArchived = false
+            if (response.data) {
+              this.overview.checklists.push(...response.data)
+              this.hasArchivedLists = true
+            }
+          })
+          .catch(() => {
+            this.isLoadingArchived = false
+          })
       },
       selectedChecklistChanged (checklistId) {
         let checklist = this.overview.availableChecklists.find(item => item.id === checklistId)

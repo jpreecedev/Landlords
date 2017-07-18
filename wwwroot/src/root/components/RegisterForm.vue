@@ -42,7 +42,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn primary flat type="submit" :disabled="registering" id="register" name="register">Register</v-btn>
+          <v-btn primary flat type="submit" :loading="registering" id="register" name="register">Register</v-btn>
           <v-btn flat type="reset" @click.native="reset()">Reset</v-btn>
         </v-card-actions>
       </v-card>
@@ -84,24 +84,28 @@
           password: this.newUser.password
         }
 
-        this.$http.post('/api/register', registrationDetails).then((response) => {
-          this.registering = false
-          if (!response.ok) {
-            let validationResult = utils.getFormValidationErrors(response)
-            validationResult.errors.forEach(validationError => {
-              this.errors.push({
-                key: validationError.key,
-                message: validationError.messages[0]
+        this.$http.post('/api/register', registrationDetails)
+          .then((response) => {
+            this.registering = false
+            if (!response.ok) {
+              let validationResult = utils.getFormValidationErrors(response)
+              validationResult.errors.forEach(validationError => {
+                this.errors.push({
+                  key: validationError.key,
+                  message: validationError.messages[0]
+                })
               })
-            })
-            if (validationResult.status) {
-              this.errors.push({
-                key: 'GenericError',
-                message: validationResult.status
-              })
+              if (validationResult.status) {
+                this.errors.push({
+                  key: 'GenericError',
+                  message: validationResult.status
+                })
+              }
             }
-          }
-        })
+          })
+          .catch(() => {
+            this.registering = false
+          })
       },
       reset () {
         this.newUser = Object.assign({}, this.defaultUser)

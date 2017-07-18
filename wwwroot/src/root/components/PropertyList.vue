@@ -35,7 +35,7 @@
       </v-data-table>
     </v-card>
 
-    <v-btn primary v-if="permissions.PD_New" type="button" class="mt-4" @click.native="addProperty()">Add a property</v-btn>
+    <v-btn primary v-if="permissions.PD_New" type="button" class="mt-4" @click.native="addProperty()" :loading="isAddingProperty">Add a property</v-btn>
 
   </div>
 </template>
@@ -46,6 +46,7 @@ export default {
   data () {
     return {
       loading: false,
+      isAddingProperty: false,
       pagination: {},
       headers: [
         {
@@ -75,9 +76,15 @@ export default {
   },
   methods: {
     addProperty () {
-      this.$http.post('/api/propertydetails/new').then(response => {
-        this.$router.push(`/manager/property-details/${response.data.id}`)
-      })
+      this.isAddingProperty = true
+      this.$http.post('/api/propertydetails/new')
+        .then(response => {
+          this.isAddingProperty = false
+          this.$router.push(`/manager/property-details/${response.data.id}`)
+        })
+        .catch(() => {
+          this.isAddingProperty = false
+        })
     }
   }
 }

@@ -212,7 +212,7 @@
       </div>
       <div class="row mt-3">
         <div class="col-xs-12">
-          <v-btn primary v-if="permissions.SP_Update" type="submit" :disabled="isSaving">{{ this.shortlistedProperty.shortlistedPropertyId === null ? 'Add to shortlist' : 'Save changes' }}</v-btn>
+          <v-btn primary v-if="permissions.SP_Update" type="submit" :loading="isSaving">{{ this.shortlistedProperty.shortlistedPropertyId === null ? 'Add to shortlist' : 'Save changes' }}</v-btn>
           <v-btn error flat v-if="permissions.SP_Delete && this.shortlistedProperty.shortlistedPropertyId" type="button" :disabled="isDeleting" @click.native="deleteShortlistedProperty()">Delete</v-btn>
         </div>
       </div>

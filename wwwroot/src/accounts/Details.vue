@@ -91,7 +91,7 @@
         </div>
         <div class="row mt-3">
           <div class="col-xs-12">
-            <v-btn primary v-if="permissions.AC_Update" type="submit">Save</v-btn>
+            <v-btn primary v-if="permissions.AC_Update" type="submit" :loading="isSaving">Save</v-btn>
             <v-btn flat v-if="permissions.AC_Update" type="reset">Reset</v-btn>
           </div>
         </div>
@@ -107,6 +107,7 @@ export default {
   name: 'accountDetails',
   data () {
     return {
+      isSaving: false,
       permissions: this.$store.state.permissions,
       accountTypes: [],
       accountProviders: [],
@@ -132,13 +133,15 @@ export default {
   methods: {
     validateBeforeSubmit () {
       this.errors = []
+      this.isSaving = true
 
       this.$http.post(`/api/accounts/`, { ...this.account })
         .then(() => {
+          this.isSaving = true
           this.$router.push({ name: 'accounts-overview' })
         })
         .catch(response => {
-          this.loggingIn = false
+          this.isSaving = false
           if (!response.ok) {
             let validationResult = utils.getFormValidationErrors(response)
             validationResult.errors.forEach(validationError => {

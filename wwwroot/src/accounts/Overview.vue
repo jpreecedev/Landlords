@@ -32,7 +32,11 @@
       </v-data-table>
     </v-card>
 
-    <v-btn primary v-if="permissions.AC_New" class="mt-4" @click.native="addAccount()">Add an account</v-btn>
+    <v-btn primary
+           v-if="permissions.AC_New"
+           class="mt-4"
+           @click.native="addAccount()"
+           :loading="isAddingAccount">Add an account</v-btn>
 
   </div>
 </template>
@@ -46,6 +50,7 @@ export default {
   data () {
     return {
       loading: false,
+      isAddingAccount: false,
       pagination: {},
       headers: [
         {
@@ -81,9 +86,15 @@ export default {
   },
   methods: {
     addAccount () {
-      this.$http.post('/api/accounts/new').then(response => {
-        this.$router.push({ name: 'accounts-details', params: { accountId: response.data.id } })
-      })
+      this.isAddingAccount = true
+      this.$http.post('/api/accounts/new')
+        .then(response => {
+          this.isAddingAccount = false
+          this.$router.push({ name: 'accounts-details', params: { accountId: response.data.id } })
+        })
+        .catch(() => {
+          this.isAddingAccount = false
+        })
     }
   }
 }

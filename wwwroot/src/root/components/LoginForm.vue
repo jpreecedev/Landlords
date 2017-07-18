@@ -23,13 +23,9 @@
           </v-text-field>
         </v-card-text>
         <v-card-actions>
-          <div class="col-xs-6">
-            <validation-summary :errors="errors"></validation-summary>
-          </div>
-          <div class="col-xs-6">
-            <v-btn primary flat type="submit" :disabled="loggingIn">Log in</v-btn>
-            <v-btn flat type="reset" @click.native="reset()">Reset</v-btn>
-          </div>
+          <v-spacer></v-spacer>
+          <v-btn primary flat type="submit" :loading="loggingIn">Log in</v-btn>
+          <v-btn flat type="reset" @click.native="reset()">Reset</v-btn>
         </v-card-actions>
       </v-card>
     </form>
@@ -75,6 +71,9 @@ export default {
               })
             }
           }
+        })
+        .catch(() => {
+          this.loggingIn = false
         })
     },
     reset () {
