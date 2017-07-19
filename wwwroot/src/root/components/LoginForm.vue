@@ -6,6 +6,13 @@
           Sign in
         </v-card-title>
         <v-card-text>
+          <div class="row">
+            <div class="col-xs-12">
+              <p v-if="errors.length > 0">
+                <span class="red--text">{{errors[0].message}}</span>
+              </p>
+            </div>
+          </div>
           <v-text-field v-model="credentials.username"
                         :rules="[$validation.rules.required, $validation.rules.email]"
                         :value="credentials.username"

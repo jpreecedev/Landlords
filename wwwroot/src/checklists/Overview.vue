@@ -5,6 +5,9 @@
       <p class="display-2 grey--text text--darken-1">Using checklists will help streamline your business and reduce mistakes</p>
       <p class="subheading">Create a new checklist using the form below.</p>
     </header>
+
+    <loader :loading="isLoading"></loader>
+
     <div class="row">
       <div class="col-xs-12 col-md-4 mt-3" v-for="(checklist, index) in overview.checklists" :key="index">
         <v-card>
@@ -33,8 +36,6 @@
         </v-card>
       </div>
     </div>
-
-    <loader :loading="isLoading"></loader>
 
     <div class="mt-3" v-if="permissions.CL_Archived && !hasArchivedLists">
       <v-btn primary @click.native="getArchived()" :loading="isLoadingArchived">Show Archived</v-btn>
