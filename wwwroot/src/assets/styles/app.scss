@@ -110,8 +110,14 @@ p {
   margin-bottom: 1rem;
 }
 
-.subheading~.input-group {
-  margin-top: .5rem;
+.select-label {
+  display: block;
+  width: 100%;
+  margin: 1rem 0;
+
+  &~.input-group {
+    margin-top: 2rem;
+  }
 }
 
 .dialog__container {
@@ -191,14 +197,16 @@ p {
   }
 }
 
-.stepper,
-.stepper__header {
-  box-shadow: none;
-}
-
 .stepper {
-  &__content {
-    padding: 1rem 0;
+  border: 1px solid #d5d5d5;
+
+  .stepper__content {
+    padding: 2rem;
+  }
+
+  .stepper__header {
+    background-color: #f2f2f2;
+    border-bottom: 1px solid #d5d5d5;
   }
 }
 

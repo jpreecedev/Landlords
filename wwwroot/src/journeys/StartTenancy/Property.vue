@@ -3,7 +3,7 @@
     <h2 class="title">Your agreement with the tenant</h2>
     <div class="row">
       <div class="col-xs-12 col-md-6">
-        <div class="subheading">Which property are you renting out?</div>
+        <label class="select-label">Which property are you renting out?</label>
         <v-select :items="portfolioProperties"
                   :rules="[$validation.rules.required]"
                   v-model="tenancy.propertyDetailsId"
@@ -14,7 +14,7 @@
         </v-select>
       </div>
       <div class="col-xs-12 col-md-6">
-        <div class="subheading">What kind of tenancy agreement is/will be in place?</div>
+        <label class="select-label">What kind of tenancy agreement is/will be in place?</label>
         <v-select :items="tenancyTypes"
                   :rules="[$validation.rules.required]"
                   v-model="tenancy.tenancyType"
