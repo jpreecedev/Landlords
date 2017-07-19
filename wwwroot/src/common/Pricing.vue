@@ -1,11 +1,11 @@
 <template>
 
-  <div class="container">
+  <div class="container pricing">
     <div class="row">
-       <div class="col-xs-12 col-md-6">
+       <div class="col-xs-12 col-md-4">
           <v-card>
             <v-card-title class="primary title green">
-              Free
+              I am a tenant
             </v-card-title>
             <v-card-text>
               <div class="pricing-value green">
@@ -14,11 +14,11 @@
               </div>
               <ul>
                 <li><v-icon class="green--text">done</v-icon> Always free, 100% guaranteed</li>
-                <li><v-icon class="green--text">done</v-icon> Property portfolio manager</li>
-                <li><v-icon class="green--text">done</v-icon> New tenancy wizards</li>
-                <li><v-icon class="green--text">done</v-icon> Checklists</li>
-                <li><v-icon class="green--text">done</v-icon> Bank/credit card manager</li>
-                <li><v-icon class="green--text">done</v-icon> Calculators</li>
+                <li><v-icon class="green--text">done</v-icon> Contact your landlord directly</li>
+                <li><v-icon class="green--text">done</v-icon> Manage your account online</li>
+                <li><v-icon class="green--text">done</v-icon> Request maintenance/repairs</li>
+                <li><v-icon class="green--text">done</v-icon> See when your rent is due</li>
+                <li><v-icon class="green--text">done</v-icon> Get reminders for important dates, like Gas safety check</li>
               </ul>
               <div class="sign-up">
                 <v-btn outline large class="green green--text">Sign up</v-btn>
@@ -26,26 +26,50 @@
             </v-card-text>
           </v-card>
        </div>
-       <div class="col-xs-12 col-md-6">
+       <div class="col-xs-12 col-md-4">
           <v-card>
             <v-card-title class="primary title deep-orange">
-              Pro
+              I am a landlord
             </v-card-title>
             <v-card-text>
               <div class="pricing-value deep-orange">
                 &pound;4.99
-                <span class="undertext">Per Month</span>
+                <span class="undertext">Per Month.<br/>Free trial.</span>
               </div>
               <ul>
-                <li><v-icon class="deep-orange--text">done</v-icon> Support and contribute to the development of this platform</li>
                 <li><v-icon class="deep-orange--text">done</v-icon> Property portfolio manager</li>
                 <li><v-icon class="deep-orange--text">done</v-icon> New tenancy wizards</li>
                 <li><v-icon class="deep-orange--text">done</v-icon> Checklists</li>
                 <li><v-icon class="deep-orange--text">done</v-icon> Bank/credit card manager</li>
-                <li><v-icon class="deep-orange--text">done</v-icon> Calculators</li>
+                <li><v-icon class="deep-orange--text">done</v-icon> Financial calculators</li>
+                <li><v-icon class="deep-orange--text">done</v-icon> Support and contribute to the development of this platform</li>
               </ul>
               <div class="sign-up">
                 <v-btn outline large class="deep-orange deep-orange--text">Sign up</v-btn>
+              </div>
+            </v-card-text>
+          </v-card>
+       </div>
+      <div class="col-xs-12 col-md-4">
+          <v-card>
+            <v-card-title class="primary title blue-grey">
+              I represent an agency
+            </v-card-title>
+            <v-card-text>
+              <div class="pricing-value blue-grey">
+                &pound;4.99
+                <span class="undertext">Per Month.<br/>Free trial.</span>
+              </div>
+              <ul>
+                <li><v-icon class="blue-grey--text">done</v-icon> Manage your landlords online</li>
+                <li><v-icon class="blue-grey--text">done</v-icon> New tenancy wizards</li>
+                <li><v-icon class="blue-grey--text">done</v-icon> Checklists</li>
+                <li><v-icon class="blue-grey--text">done</v-icon> Bank/credit card manager</li>
+                <li><v-icon class="blue-grey--text">done</v-icon> Calculators</li>
+                <li><v-icon class="blue-grey--text">done</v-icon> Support and contribute to the development of this platform</li>
+              </ul>
+              <div class="sign-up">
+                <v-btn outline large class="blue-grey blue-grey--text">Sign up</v-btn>
               </div>
             </v-card-text>
           </v-card>
@@ -65,6 +89,14 @@ export default {
 
   .container {
     margin-top: 1rem;
+
+    &.pricing {
+      .card__title {
+        display: block;
+        width: 100%;
+        text-align: center;
+      }
+    }
   }
 
   .col-xs-12 {
@@ -73,6 +105,11 @@ export default {
 
   .card {
     margin: 20px;
+    transition: transform 200ms linear;
+
+    &:hover {
+      transform: scale(1.01);
+    }
   }
 
   ul {
