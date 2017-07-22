@@ -1,7 +1,7 @@
 <template>
   <section>
     <h1 class="display-1">Start a new tenancy</h1>
-    <v-stepper v-model="currentStep">
+    <v-stepper v-if="newTenancy && newTenancy.step" v-model="newTenancy.step">
       <v-stepper-header>
         <v-divider></v-divider>
         <v-stepper-step step="1" :complete="newTenancy.step > 1">Before we start</v-stepper-step>
@@ -90,13 +90,6 @@
         this.$http.get(`/api/journeys/starttenancy`).then(response => {
           Object.assign(this.viewData, utils.mapEntity(response.data, null, true))
         })
-      }
-    },
-    computed: {
-      currentStep: {
-        get () {
-          return this.newTenancy.step
-        }
       }
     }
   }
