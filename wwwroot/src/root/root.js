@@ -9,6 +9,7 @@ import router from './routes'
 import Vuetify from 'vuetify'
 
 import CommonComponents from 'src/common'
+
 import Journeys from 'journeys'
 
 import 'src/plugins'

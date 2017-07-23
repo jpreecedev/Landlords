@@ -41,11 +41,11 @@
                   Overview
                 </v-card-title>
                 <v-card-text>
-                  <v-text-field v-model="propertyDetails.reference"
-                                :rules="[$validation.rules.required, $validation.rules.min_length(propertyDetails.reference, 2), $validation.rules.max_length(propertyDetails.reference, 255)]"
-                                label="Property reference"
-                                required>
-                  </v-text-field>
+                  <text-field v-model="propertyDetails.reference"
+                              :rules="[$validation.rules.required, $validation.rules.min_length(propertyDetails.reference, 2), $validation.rules.max_length(propertyDetails.reference, 255)]"
+                              label="Property reference"
+                              required>
+                  </text-field>
                   <v-select :items="propertyTypes"
                             :rules="[$validation.rules.required]"
                             v-model="propertyDetails.propertyType"
@@ -238,7 +238,7 @@
           <div class="row mt-3">
             <div class="col-xs-12">
               <v-btn primary v-if="permissions.PD_Update" type="submit" :loading="isSaving">Save</v-btn>
-              <v-btn flat v-if="permissions.PD_Update" type="reset">Reset</v-btn>
+              <v-btn flat v-if="permissions.PD_Update" @click="reset()">Reset</v-btn>
             </div>
           </div>
         </fieldset>
@@ -298,10 +298,14 @@ export default {
   },
   created () {
     this.isLoading = true
-    this.$http.get(`/api/propertydetails/${this.$route.params.propertyId ? this.$route.params.propertyId : 'viewdata'}`).then(response => {
-      this.isLoading = false
-      Object.assign(this, utils.mapEntity(response.data, 'propertyDetails', !this.$route.params.propertyId))
-    })
+    this.$http.get(`/api/propertydetails/${this.$route.params.propertyId ? this.$route.params.propertyId : 'viewdata'}`)
+      .then(response => {
+        this.isLoading = false
+        Object.assign(this, utils.mapEntity(response.data, 'propertyDetails', !this.$route.params.propertyId))
+      })
+      .finally(() => {
+        this.$validation.commit(this.$children)
+      })
   },
   methods: {
     validateBeforeSubmit () {
@@ -363,6 +367,9 @@ export default {
           })
       }
     }
+  },
+  reset () {
+    this.$validation.reset(this.$children)
   }
 }
 </script>

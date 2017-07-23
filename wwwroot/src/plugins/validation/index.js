@@ -56,5 +56,12 @@ Vue.prototype.$validation = {
         $element.reset()
       }
     })
+  },
+  commit ($elements) {
+    $elements.forEach($element => {
+      if ($element.commit) {
+        $element.commit()
+      }
+    })
   }
 }

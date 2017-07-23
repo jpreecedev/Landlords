@@ -78,6 +78,9 @@
       },
       reset () {
         this.$refs.textField.lazyValue = this.$refs.textField.inputValue = this.initialValue
+      },
+      commit () {
+        this.initialValue = this.$refs.textField.lazyValue = this.$refs.textField.inputValue
       }
     },
     watch: {
