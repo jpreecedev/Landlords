@@ -4,25 +4,25 @@
     <div class="row">
       <div class="col-xs-12 col-md-6">
         <label class="select-label">Which property are you renting out?</label>
-        <v-select :items="portfolioProperties"
-                  :rules="[$validation.rules.required]"
-                  v-model="tenancy.propertyDetailsId"
-                  @input="updateField(tenancy, 'propertyDetailsId')"
-                  item-value="id"
-                  label="Select a property"
-                  required>
-        </v-select>
+        <select-list :items="portfolioProperties"
+                     :rules="[$validation.rules.required]"
+                     v-model="tenancy.propertyDetailsId"
+                     @input="updateField(tenancy, 'propertyDetailsId')"
+                     item-value="id"
+                     label="Select a property"
+                     required>
+        </select-list>
       </div>
       <div class="col-xs-12 col-md-6">
         <label class="select-label">What kind of tenancy agreement is/will be in place?</label>
-        <v-select :items="tenancyTypes"
-                  :rules="[$validation.rules.required]"
-                  v-model="tenancy.tenancyType"
-                  @input="updateField(tenancy, 'tenancyType')"
-                  item-value="id"
-                  label="Select a tenancy type"
-                  required>
-        </v-select>
+        <select-list :items="tenancyTypes"
+                     :rules="[$validation.rules.required]"
+                     v-model="tenancy.tenancyType"
+                     @input="updateField(tenancy, 'tenancyType')"
+                     item-value="id"
+                     label="Select a tenancy type"
+                     required>
+        </select-list>
       </div>
     </div>
     <div class="row">

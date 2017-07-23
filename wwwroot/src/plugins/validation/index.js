@@ -8,6 +8,25 @@ import minLength from './rules/min_length'
 import minValue from './rules/min_value'
 import required from './rules/required'
 
+function filter (arr, testCallback) {
+  var matches = []
+  if (!Array.isArray(arr)) {
+    return matches
+  }
+
+  arr.forEach($element => {
+    if (testCallback($element)) {
+      matches.push($element)
+    } else {
+      let childResults = filter($element.$children, testCallback)
+      if (childResults.length) {
+        matches.push(...childResults)
+      }
+    }
+  })
+  return matches
+}
+
 Vue.prototype.$validation = {
   rules: {
     alpha,
@@ -20,28 +39,15 @@ Vue.prototype.$validation = {
   },
   validate ($elements) {
     return new Promise((resolve, reject) => {
-      $elements.forEach($element => {
-        if ($element.validate) {
-          $element.validate(true)
-        }
+      let success = true
+      let results = filter($elements, $element => {
+        return typeof $element.commit === 'function' && typeof $element.validate === 'function'
       })
 
-      let success = $elements.every($element => {
-        if (!$element._computedWatchers) {
-          return true
-        }
-
-        let ownProperties = Object.getOwnPropertyNames($element._computedWatchers)
-        let hasIsValid = ownProperties.some(item => {
-          return item === 'isValid'
-        })
-
-        if (hasIsValid) {
-          return $element.isValid
-        }
-
-        return true
-      })
+      if (results) {
+        results.forEach($element => $element.validate(true))
+        success = results.every($element => $element.isValid)
+      }
 
       if (success) {
         resolve()
@@ -51,17 +57,19 @@ Vue.prototype.$validation = {
     })
   },
   reset ($elements) {
-    $elements.forEach($element => {
-      if ($element.reset) {
-        $element.reset()
-      }
+    let results = filter($elements, $element => {
+      return typeof $element.reset === 'function'
     })
+    if (results) {
+      results.forEach($element => $element.reset())
+    }
   },
   commit ($elements) {
-    $elements.forEach($element => {
-      if ($element.commit) {
-        $element.commit()
-      }
+    let results = filter($elements, $element => {
+      return typeof $element.commit === 'function'
     })
+    if (results) {
+      results.forEach($element => $element.commit())
+    }
   }
 }

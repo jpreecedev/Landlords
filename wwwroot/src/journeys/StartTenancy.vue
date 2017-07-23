@@ -15,19 +15,19 @@
         <v-stepper-step step="5" :complete="newTenancy.step > 5">Payment</v-stepper-step>
         <v-divider></v-divider>
       </v-stepper-header>
-      <v-stepper-content step="1">
+      <v-stepper-content ref="content1" step="1">
         <announcement></announcement>
       </v-stepper-content>
-      <v-stepper-content step="2">
+      <v-stepper-content ref="content2" step="2">
         <property :tenancyTypes="viewData.tenancyTypes"></property>
       </v-stepper-content>
-      <v-stepper-content step="3">
+      <v-stepper-content ref="content3" step="3">
         <tenants :titles="viewData.titles" :counties="viewData.counties" :countries="viewData.countries"></tenants>
       </v-stepper-content>
-      <v-stepper-content step="4">
+      <v-stepper-content ref="content4" step="4">
         <referencing :contactTypes="viewData.tenantContactTypes" :employmentTypes="viewData.employmentTypes"></referencing>
       </v-stepper-content>
-      <v-stepper-content step="5">
+      <v-stepper-content ref="content5" step="5">
         <payments :rentalFrequencies="viewData.rentalFrequencies"></payments>
       </v-stepper-content>
     </v-stepper>
@@ -63,21 +63,24 @@
     },
     methods: {
       next () {
-        if (this.newTenancy.step === 5) {
-          this.$http.post('/api/journeys/starttenancy', { ...this.newTenancy })
-            .then(response => {
-              alert('done')
-            })
-            .catch(response => {
-              let validationResult = utils.getFormValidationErrors(response)
-              validationResult.errors.forEach(validationError => {
-                console.log('ERROR', validationError.key, validationError.messages[0], 'required')
-              })
-              debugger
-            })
-        } else {
-          this.$store.commit('TENANCY_NEXT_STEP', this.newTenancy)
-        }
+        this.$validation.validate(this.$refs['content' + this.newTenancy.step].$children)
+          .then(() => {
+            if (this.newTenancy.step === 5) {
+              this.$http.post('/api/journeys/starttenancy', { ...this.newTenancy })
+                .then(response => {
+                  alert('done')
+                })
+                .catch(response => {
+                  let validationResult = utils.getFormValidationErrors(response)
+                  validationResult.errors.forEach(validationError => {
+                    console.log('ERROR', validationError.key, validationError.messages[0], 'required')
+                  })
+                  debugger
+                })
+            } else {
+              this.$store.commit('TENANCY_NEXT_STEP', this.newTenancy)
+            }
+          })
       },
       back () {
         if (this.newTenancy.step !== 1) {
