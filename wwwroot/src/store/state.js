@@ -38,7 +38,8 @@ let newTenancy = {
     rentalAmount: null,
     rentalFrequency: null,
     rentalPaymentReference: null,
-    tenancyType: null
+    tenancyType: null,
+    propertyDetailsId: null
   },
   tenants: [Object.assign({}, defaultTenant)]
 }
