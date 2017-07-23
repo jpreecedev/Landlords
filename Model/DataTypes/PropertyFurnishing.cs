@@ -1,19 +1,23 @@
-﻿namespace Model.DataTypes
+﻿using System.Linq;
+
+namespace Model.DataTypes
 {
     public static class PropertyFurnishing
     {
         public const string Fully = "Fully";
         public const string Part = "Part";
         public const string None = "None";
-        
-        public static string[] GetDefaultFurnishings()
+
+        public static LLDataType[] GetDefaultFurnishings()
         {
             return new[]
-            {
-                Fully,
-                Part,
-                None
-            };
+                {
+                    Fully,
+                    Part,
+                    None
+                }
+                .Select(c => new LLDataType(c))
+                .ToArray();
         }
     }
 }

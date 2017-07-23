@@ -1,4 +1,6 @@
-﻿namespace Model.DataTypes
+﻿using System.Linq;
+
+namespace Model.DataTypes
 {
     public static class Titles
     {
@@ -9,17 +11,19 @@
         public const string Ms = "Ms";
         public const string Other = "Other";
 
-        public static string[] GetDefaultTitles()
+        public static LLDataType[] GetDefaultTitles()
         {
             return new[]
-            {
-                Mr,
-                Master,
-                Mrs,
-                Miss,
-                Ms,
-                Other
-            };
+                {
+                    Mr,
+                    Master,
+                    Mrs,
+                    Miss,
+                    Ms,
+                    Other
+                }
+                .Select(c => new LLDataType(c))
+                .ToArray();
         }
     }
 }

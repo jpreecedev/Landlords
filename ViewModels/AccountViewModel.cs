@@ -4,6 +4,7 @@
     using Model.Validation;
     using Model.Entities;
     using System.ComponentModel.DataAnnotations;
+    using Model.DataTypes;
 
     public class AccountViewModel
     {
@@ -52,8 +53,8 @@
 
         public decimal OpeningBalance { get; set; }
         
-        public string[] DefaultAccountTypes { get; } = Model.DataTypes.AccountTypes.GetDefaultAccountTypes();
+        public LLDataType[] DefaultAccountTypes { get; } = AccountTypes.GetDefaultAccountTypes();
 
-        public string[] DefaultAccountProviders { get; } = Model.DataTypes.AccountProviders.GetDefaultAccountProviders();
+        public LLDataType[] DefaultAccountProviders { get; } = AccountProviders.GetDefaultAccountProviders();
     }
 }

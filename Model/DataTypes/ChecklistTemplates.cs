@@ -1,5 +1,7 @@
 ﻿namespace Model.DataTypes
 {
+    using System.Linq;
+
     public static class ChecklistTemplates
     {
         public const string CommentsOnly = "CommentsOnly";
@@ -7,15 +9,17 @@
         public const string CommentsAndDateOfAction = "CommentsAndDateOfAction";
         public const string DocumentUpload = "DocumentUpload";
 
-        public static string[] GetDefaultChecklistTemplates()
+        public static LLDataType[] GetDefaultChecklistTemplates()
         {
             return new[]
-            {
-                CommentsOnly,
-                DateOfAction,
-                CommentsAndDateOfAction,
-                DocumentUpload
-            };
+                {
+                    CommentsOnly,
+                    DateOfAction,
+                    CommentsAndDateOfAction,
+                    DocumentUpload
+                }
+                .Select(c => new LLDataType(c))
+                .ToArray();
         }
     }
 }

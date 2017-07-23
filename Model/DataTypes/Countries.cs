@@ -1,15 +1,19 @@
 ﻿namespace Model.DataTypes
 {
+    using System.Linq;
+
     public static class Countries
     {
         public const string UnitedKingdom = "United Kingdom";
 
-        public static string[] GetDefaultCountries()
+        public static LLDataType[] GetDefaultCountries()
         {
             return new[]
-            {
-                UnitedKingdom
-            };
+                {
+                    UnitedKingdom
+                }
+                .Select(c => new LLDataType(c))
+                .ToArray();
         }
     }
 }

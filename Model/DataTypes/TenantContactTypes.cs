@@ -1,4 +1,6 @@
-﻿namespace Model.DataTypes
+﻿using System.Linq;
+
+namespace Model.DataTypes
 {
     public static class TenantContactTypes
     {
@@ -7,15 +9,17 @@
         public const string NextOfKin = "NextOfKin";
         public const string Family = "Family";
 
-        public static string[] GetDefaultTenantContactTypes()
+        public static LLDataType[] GetDefaultTenantContactTypes()
         {
             return new[]
-            {
-                Referee,
-                EmergencyContact,
-                NextOfKin,
-                Family
-            };
+                {
+                    Referee,
+                    EmergencyContact,
+                    NextOfKin,
+                    Family
+                }
+                .Select(c => new LLDataType(c))
+                .ToArray();
         }
     }
 }

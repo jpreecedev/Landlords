@@ -1,5 +1,7 @@
 ﻿namespace Model.DataTypes
 {
+    using System.Linq;
+
     public static class TenancyTypes
     {
         public const string Agricultural = "Agricultural";
@@ -9,17 +11,19 @@
         public const string License = "License";
         public const string Regulated = "Regulated";
 
-        public static string[] GetDefaultTenancyTypes()
+        public static LLDataType[] GetDefaultTenancyTypes()
         {
             return new[]
-            {
-                Agricultural,
-                Assured,
-                AST,
-                CommonLaw,
-                License,
-                Regulated
-            };
+                {
+                    Agricultural,
+                    Assured,
+                    AST,
+                    CommonLaw,
+                    License,
+                    Regulated
+                }
+                .Select(c => new LLDataType(c))
+                .ToArray();
         }
     }
 }

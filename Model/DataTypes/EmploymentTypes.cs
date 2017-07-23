@@ -1,4 +1,6 @@
-﻿namespace Model.DataTypes
+﻿using System.Linq;
+
+namespace Model.DataTypes
 {
     public static class EmploymentTypes
     {
@@ -8,16 +10,18 @@
         public const string Homemaker = "Homemaker";
         public const string Unemployed = "Unemployed";
 
-        public static string[] GetDefaultEmploymentTypes()
+        public static LLDataType[] GetDefaultEmploymentTypes()
         {
             return new[]
-            {
-                Employed,
-                SelfEmployed,
-                Retired,
-                Homemaker,
-                Unemployed
-            };
+                {
+                    Employed,
+                    SelfEmployed,
+                    Retired,
+                    Homemaker,
+                    Unemployed
+                }
+                .Select(c => new LLDataType(c))
+                .ToArray();
         }
     }
 }

@@ -1,15 +1,19 @@
 ﻿namespace Model.DataTypes
 {
+    using System.Linq;
+
     public static class MortgageProviders
     {
         public const string Halifax = "Halifax";
 
-        public static string[] GetDefaultMortgageProviders()
+        public static LLDataType[] GetDefaultMortgageProviders()
         {
             return new[]
-            {
-                Halifax
-            };
+                {
+                    Halifax
+                }
+                .Select(c => new LLDataType(c))
+                .ToArray();
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Model.DataTypes
+﻿using System.Linq;
+
+namespace Model.DataTypes
 {
     public static class PaymentTerms
     {
@@ -9,17 +11,19 @@
         public const string SixMonthly = "Six Monthly";
         public const string Annually = "Annually";
 
-        public static string[] GetDefaultPaymentTerms()
+        public static LLDataType[] GetDefaultPaymentTerms()
         {
-            return new string[]
-            {
-                Weekly,
-                TwoWeekly,
-                FourWeekly,
-                Monthly,
-                SixMonthly,
-                Annually
-            };
+            return new[]
+                {
+                    Weekly,
+                    TwoWeekly,
+                    FourWeekly,
+                    Monthly,
+                    SixMonthly,
+                    Annually
+                }
+                .Select(c => new LLDataType(c))
+                .ToArray();
         }
     }
 }

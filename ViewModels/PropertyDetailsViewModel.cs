@@ -110,17 +110,17 @@
 
         public decimal? TargetRent { get; set; }
 
-        public string[] DefaultPropertyTypes { get; } = Model.DataTypes.PropertyType.GetDefaultPropertyTypes();
+        public LLDataType[] DefaultPropertyTypes { get; } = Model.DataTypes.PropertyType.GetDefaultPropertyTypes();
 
-        public string[] DefaultPaymentTerms { get; } = PaymentTerms.GetDefaultPaymentTerms();
+        public LLDataType[] DefaultPaymentTerms { get; } = PaymentTerms.GetDefaultPaymentTerms();
 
-        public string[] DefaultFurnishings { get; } = PropertyFurnishing.GetDefaultFurnishings();
+        public LLDataType[] DefaultFurnishings { get; } = PropertyFurnishing.GetDefaultFurnishings();
 
-        public string[] DefaultCounties { get; } = Counties.GetDefaultCounties();
+        public LLDataType[] DefaultCounties { get; } = Counties.GetDefaultCounties();
 
-        public string[] DefaultCountries { get; } = Countries.GetDefaultCountries();
+        public LLDataType[] DefaultCountries { get; } = Countries.GetDefaultCountries();
 
-        public string[] DefaultMortgageProviders { get; } = MortgageProviders.GetDefaultMortgageProviders();
+        public LLDataType[] DefaultMortgageProviders { get; } = MortgageProviders.GetDefaultMortgageProviders();
 
         public PropertyImageViewModel LeadImage { get; set; }
 

@@ -1,5 +1,7 @@
 ﻿namespace Model.DataTypes
 {
+    using System.Linq;
+
     public static class TransactionCategories
     {
         public const string MortgagePayment = "Mortgage payment";
@@ -10,18 +12,20 @@
         public const string CorporationTax = "Corporation tax";
         public const string RenovationCost = "Renovation cost";
 
-        public static string[] GetDefaultTransactionCategories()
+        public static LLDataType[] GetDefaultTransactionCategories()
         {
             return new[]
-            {
-                MortgagePayment,
-                RentalPayment,
-                GasSafetyInspection,
-                Misc,
-                VAT,
-                CorporationTax,
-                RenovationCost
-            };
+                {
+                    MortgagePayment,
+                    RentalPayment,
+                    GasSafetyInspection,
+                    Misc,
+                    VAT,
+                    CorporationTax,
+                    RenovationCost
+                }
+                .Select(c => new LLDataType(c))
+                .ToArray();
         }
     }
 }

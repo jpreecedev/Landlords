@@ -1,5 +1,7 @@
 ﻿namespace Model.DataTypes
 {
+    using System.Linq;
+
     public static class RentalFrequencies
     {
         public const string Weekly = "Weekly";
@@ -10,18 +12,20 @@
         public const string SixMonthly = "Six Monthly";
         public const string Annually = "Annually";
 
-        public static string[] GetDefaultRentalFrequencies()
+        public static LLDataType[] GetDefaultRentalFrequencies()
         {
             return new[]
-            {
-                Weekly,
-                TwoWeekly,
-                FourWeekly,
-                Monthly,
-                ThreeMonthly,
-                SixMonthly,
-                Annually
-            };
+                {
+                    Weekly,
+                    TwoWeekly,
+                    FourWeekly,
+                    Monthly,
+                    ThreeMonthly,
+                    SixMonthly,
+                    Annually
+                }
+                .Select(c => new LLDataType(c))
+                .ToArray();
         }
     }
 }

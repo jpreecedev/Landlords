@@ -17,6 +17,6 @@
 
         public ICollection<TransactionViewModel> Transactions { get; set; }
 
-        public string[] DefaultTransactionCategories { get; } = TransactionCategories.GetDefaultTransactionCategories();
+        public LLDataType[] DefaultTransactionCategories { get; } = TransactionCategories.GetDefaultTransactionCategories();
     }
 }

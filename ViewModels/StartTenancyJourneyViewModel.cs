@@ -1,9 +1,9 @@
 ﻿namespace Landlords.ViewModels
 {
+    using Model.DataTypes;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
-    using Model.DataTypes;
 
     public class StartTenancyJourneyViewModel : IValidatableObject
     {
@@ -13,19 +13,19 @@
         [Required(ErrorMessage = "There must be a tenancy")]
         public TenancyViewModel Tenancy { get; set; }
 
-        public string[] DefaultCounties { get; } = Counties.GetDefaultCounties();
+        public LLDataType[] DefaultCounties { get; } = Counties.GetDefaultCounties();
 
-        public string[] DefaultCountries { get; } = Countries.GetDefaultCountries();
+        public LLDataType[] DefaultCountries { get; } = Countries.GetDefaultCountries();
 
-        public string[] DefaultTenancyTypes { get; } = TenancyTypes.GetDefaultTenancyTypes();
+        public LLDataType[] DefaultTenancyTypes { get; } = TenancyTypes.GetDefaultTenancyTypes();
 
-        public string[] DefaultRentalFrequencies { get; } = RentalFrequencies.GetDefaultRentalFrequencies();
+        public LLDataType[] DefaultRentalFrequencies { get; } = RentalFrequencies.GetDefaultRentalFrequencies();
 
-        public string[] DefaultTitles { get; } = Titles.GetDefaultTitles();
+        public LLDataType[] DefaultTitles { get; } = Titles.GetDefaultTitles();
 
-        public string[] DefaultEmploymentTypes { get; } = EmploymentTypes.GetDefaultEmploymentTypes();
+        public LLDataType[] DefaultEmploymentTypes { get; } = EmploymentTypes.GetDefaultEmploymentTypes();
 
-        public string[] DefaultTenantContactTypes { get; } = TenantContactTypes.GetDefaultTenantContactTypes();
+        public LLDataType[] DefaultTenantContactTypes { get; } = TenantContactTypes.GetDefaultTenantContactTypes();
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
