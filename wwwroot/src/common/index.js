@@ -5,6 +5,7 @@ import Pricing from './Pricing'
 import Loader from './Loader'
 import TextField from './TextField'
 import SelectField from './SelectField'
+import DatePicker from './DatePicker'
 
 export default function install (Vue) {
   Vue.component('permissions-warning', PermissionsWarning)
@@ -14,4 +15,5 @@ export default function install (Vue) {
   Vue.component('loader', Loader)
   Vue.component('text-field', TextField)
   Vue.component('select-list', SelectField)
+  Vue.component('date-picker', DatePicker)
 }

@@ -27,19 +27,11 @@
     </div>
     <div class="row">
       <div class="col-xs-12 col-md-6">
-        <v-menu lazy :nudge-left="100">
-          <v-text-field slot="activator"
-                        label="Tenancy start date"
-                        v-model="tenancy.startDate"
-                        prepend-icon="date_range"
-                        required readonly>
-          </v-text-field>
-          <v-date-picker v-model="tenancy.startDate"
-                         :value="tenancy.startDate"
-                         @input="updateField(tenancy, 'startDate')"
-                         scrollable>
-          </v-date-picker>
-        </v-menu>
+        <date-picker v-model="tenancy.startDate"
+                     label="Tenancy start date"
+                     @input="updateField(tenancy, 'startDate')"
+                     :rules="[$validation.rules.required]">
+        </date-picker>
       </div>
     </div>
     <div class="row">
