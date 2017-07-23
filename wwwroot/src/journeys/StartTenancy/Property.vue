@@ -81,11 +81,12 @@
     },
     created () {
       if (this.permissions.PD_GetBasic) {
-        this.$http.get(`/api/propertydetails/basicdetails`).then(response => {
-          if (response.data) {
-            this.portfolioProperties = response.data
-          }
-        })
+        this.$http.get(`/api/propertydetails/basicdetails`)
+          .then(response => {
+            if (response.data) {
+              this.portfolioProperties = response.data
+            }
+          })
       }
     },
     computed: {

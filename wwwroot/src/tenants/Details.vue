@@ -138,20 +138,22 @@ export default {
   },
   created () {
     this.isLoading = true
-    this.$http.get(`/api/tenants/${this.$route.params.tenantId}`).then(response => {
-      this.isLoading = false
-      Object.assign(this, utils.mapEntity(response.data, 'tenant', false))
-    })
+    this.$http.get(`/api/tenants/${this.$route.params.tenantId}`)
+      .then(response => {
+        Object.assign(this, utils.mapEntity(response.data, 'tenant', false))
+      })
+      .finally(() => {
+        this.isLoading = false
+      })
   },
   methods: {
     validateBeforeSubmit () {
       this.isSaving = true
       this.$http.post(`/api/tenants/`, { ...this.tenant })
         .then(() => {
-          this.isSaving = false
           this.$router.push({ name: 'tenants-overview' })
         })
-        .catch(() => {
+        .finally(() => {
           this.isSaving = false
         })
     }

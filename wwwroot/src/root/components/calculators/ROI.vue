@@ -277,19 +277,23 @@
       },
       deleteShortlistedProperty () {
         this.isDeleting = true
-        this.$http.delete(`/api/shortlistedproperties?shortlistedPropertyId=${this.shortlistedProperty.shortlistedPropertyId}`).then(() => {
-          this.$router.push({ name: 'watchlist' })
-          this.isDeleting = false
-        })
+        this.$http.delete(`/api/shortlistedproperties?shortlistedPropertyId=${this.shortlistedProperty.shortlistedPropertyId}`)
+          .then(() => {
+            this.$router.push({ name: 'watchlist' })
+          })
+          .finally(() => {
+            this.isDeleting = false
+          })
       }
     },
     created () {
       if (this.permissions.SP_GetById && this.$route.params.shortlistedPropertyId) {
-        this.$http.get(`/api/shortlistedproperties/${this.$route.params.shortlistedPropertyId}`).then(response => {
-          if (response.data) {
-            this.shortlistedProperty = response.data
-          }
-        })
+        this.$http.get(`/api/shortlistedproperties/${this.$route.params.shortlistedPropertyId}`)
+          .then(response => {
+            if (response.data) {
+              this.shortlistedProperty = response.data
+            }
+          })
       }
     },
     computed: {

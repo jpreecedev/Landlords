@@ -41,10 +41,13 @@ export default {
   },
   created () {
     this.isLoading = true
-    this.$http.get(`/api/checklists/${this.checklistId}`).then(response => {
-      this.isLoading = false
-      this.checklist = response.data
-    })
+    this.$http.get(`/api/checklists/${this.checklistId}`)
+      .then(response => {
+        this.checklist = response.data
+      })
+      .finally(() => {
+        this.isLoading = false
+      })
   },
   computed: {
     outstandingActions () {

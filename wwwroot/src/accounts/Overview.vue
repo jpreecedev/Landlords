@@ -6,7 +6,7 @@
       <p class="subheading">Click on the account name to see transactions.</p>
     </header>
     <v-card>
-      <v-data-table :headers="headers" :items="data.accounts" :loading="loading">
+      <v-data-table :headers="headers" :items="data.accounts" :loading="isLoading">
         <template slot="headers" scope="props">
           <tr>
             <th v-for="(header, index) in props.headers" :key="index" class="text-xs-left">
@@ -49,7 +49,7 @@ export default {
   components: { AccountDisplay },
   data () {
     return {
-      loading: false,
+      isLoading: false,
       isAddingAccount: false,
       pagination: {},
       headers: [
@@ -78,11 +78,14 @@ export default {
     }
   },
   created () {
-    this.loading = true
-    this.$http.get('/api/accounts').then(response => {
-      this.loading = false
-      this.data = response.data
-    })
+    this.isLoading = true
+    this.$http.get('/api/accounts')
+      .then(response => {
+        this.data = response.data
+      })
+      .finally(() => {
+        this.isLoading = false
+      })
   },
   methods: {
     addAccount () {

@@ -9,7 +9,7 @@
       <v-card-title class="title">
         Tenants
       </v-card-title>
-      <v-data-table :headers="headers" :items="data" :loading="loading">
+      <v-data-table :headers="headers" :items="data" :loading="isLoading">
         <template slot="headers" scope="props">
           <tr>
             <th v-for="(header, index) in props.headers" :key="index" class="text-xs-left">
@@ -44,7 +44,7 @@ export default {
   name: 'tenants-overview',
   data () {
     return {
-      loading: false,
+      isLoading: false,
       leadTenantOnly: true,
       pagination: {},
       headers: [
@@ -69,11 +69,14 @@ export default {
     }
   },
   created () {
-    this.loading = true
-    this.$http.get('/api/tenants').then(response => {
-      this.loading = false
-      this.data = response.data
-    })
+    this.isLoading = true
+    this.$http.get('/api/tenants')
+      .then(response => {
+        this.data = response.data
+      })
+      .finally(() => {
+        this.isLoading = false
+      })
   }
 }
 </script>

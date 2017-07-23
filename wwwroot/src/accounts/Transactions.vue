@@ -9,7 +9,7 @@
     <p v-if="!transactions || !transactions.length">There are no transactions to display.</p>
 
     <v-card>
-      <v-data-table :headers="headers" :items="transactions" class="transactions" :pagination.sync="pagination" :loading="loading">
+      <v-data-table :headers="headers" :items="transactions" class="transactions" :pagination.sync="pagination" :loading="isLoading">
         <template slot="headers" scope="props">
           <tr>
             <th v-for="(header, index) in props.headers" :key="index" :class="{'text-xs-left': header.left, 'text-xs-right': !header.left}">
@@ -88,7 +88,7 @@ export default {
   name: 'transactions',
   data () {
     return {
-      loading: false,
+      isLoading: false,
       pagination: {
         sortBy: 'date',
         descending: true
@@ -130,12 +130,15 @@ export default {
     }
   },
   created () {
-    this.loading = true
-    this.$http.get(`/api/transactions/?accountId=${this.accountId}`).then(response => {
-      this.loading = false
-      this.transactions = response.data.transactions
-      Object.assign(this, utils.mapEntity(response.data, null, true))
-    })
+    this.isLoading = true
+    this.$http.get(`/api/transactions/?accountId=${this.accountId}`)
+      .then(response => {
+        this.transactions = response.data.transactions
+        Object.assign(this, utils.mapEntity(response.data, null, true))
+      })
+      .finally(() => {
+        this.isLoading = false
+      })
   },
   methods: {
     filesChange (formData) {

@@ -107,7 +107,6 @@
       this.isLoading = true
       this.$http.get(`/api/checklists/overview`)
         .then(response => {
-          this.isLoading = false
           this.overview = response.data
         })
         .then(() => {
@@ -120,7 +119,7 @@
             })
           }
         })
-        .catch(() => {
+        .finally(() => {
           this.isLoading = false
         })
     },

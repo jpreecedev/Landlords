@@ -300,10 +300,10 @@ export default {
     this.isLoading = true
     this.$http.get(`/api/propertydetails/${this.$route.params.propertyId ? this.$route.params.propertyId : 'viewdata'}`)
       .then(response => {
-        this.isLoading = false
         Object.assign(this, utils.mapEntity(response.data, 'propertyDetails', !this.$route.params.propertyId))
       })
       .finally(() => {
+        this.isLoading = false
         this.$validation.commit(this.$children)
       })
   },

@@ -124,7 +124,6 @@
       this.isLoading = true
       this.$http.get(`/api/profile`)
         .then(response => {
-          this.isLoading = false
           Object.assign(this.profile, response.data)
           let fields = [ { key: 'availableFrom', value: 28 }, { key: 'availableTo', value: 76 } ]
           fields.forEach(field => {
@@ -140,7 +139,7 @@
             }
           })
         })
-        .catch(() => {
+        .finally(() => {
           this.isLoading = false
         })
     },
@@ -153,11 +152,9 @@
 
         this.$http.post('/api/profile', { ...this.profile })
           .then(response => {
-            this.isSaving = false
             this.saved = true
           })
           .catch(response => {
-            this.isSaving = false
             let validationResult = utils.getFormValidationErrors(response)
             validationResult.errors.forEach(validationError => {
               this.errors.push({
@@ -172,14 +169,14 @@
               })
             }
           })
+          .finally(() => {
+            this.isSaving = false
+          })
       },
       resendVerificationEmail () {
         this.$http.post('/api/register/resendverification')
           .then(response => {
             this.resentVerification = true
-          })
-          .catch(response => {
-            debugger
           })
       }
     }

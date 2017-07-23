@@ -69,20 +69,22 @@ export default {
   },
   created () {
     this.loading = true
-    this.$http.get('/api/propertydetails').then(response => {
-      this.loading = false
-      this.data = response.data
-    })
+    this.$http.get('/api/propertydetails')
+      .then(response => {
+        this.data = response.data
+      })
+      .finally(() => {
+        this.loading = false
+      })
   },
   methods: {
     addProperty () {
       this.isAddingProperty = true
       this.$http.post('/api/propertydetails/new')
         .then(response => {
-          this.isAddingProperty = false
           this.$router.push(`/manager/property-details/${response.data.id}`)
         })
-        .catch(() => {
+        .finally(() => {
           this.isAddingProperty = false
         })
     }

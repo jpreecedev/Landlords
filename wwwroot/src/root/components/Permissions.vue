@@ -80,12 +80,14 @@ export default {
     }
   },
   created () {
-    this.$http.get(`/api/permissions/all`).then(response => {
-      this.allPermissions = response.data
-    })
-    this.$http.get('/api/permissions/users').then(response => {
-      this.users = this.filteredUsers = response.data
-    })
+    this.$http.get(`/api/permissions/all`)
+      .then(response => {
+        this.allPermissions = response.data
+      })
+    this.$http.get('/api/permissions/users')
+      .then(response => {
+        this.users = this.filteredUsers = response.data
+      })
   },
   methods: {
     getSelectedPermissions (collection) {

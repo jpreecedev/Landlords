@@ -96,9 +96,10 @@
     },
     created () {
       if (this.permissions.J_StartTenancy) {
-        this.$http.get(`/api/journeys/starttenancy`).then(response => {
-          Object.assign(this.viewData, utils.mapEntity(response.data, null, true))
-        })
+        this.$http.get(`/api/journeys/starttenancy`)
+          .then(response => {
+            Object.assign(this.viewData, utils.mapEntity(response.data, null, true))
+          })
       }
     }
   }

@@ -63,10 +63,9 @@ export default {
     this.loading = true
     this.$http.get('/api/shortlistedproperties')
       .then(response => {
-        this.loading = false
         this.data = response.data
       })
-      .catch(() => {
+      .finally(() => {
         this.loading = false
       })
   },
