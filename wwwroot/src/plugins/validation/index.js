@@ -49,5 +49,12 @@ Vue.prototype.$validation = {
         reject(new Error('Form is invalid'))
       }
     })
+  },
+  reset ($elements) {
+    $elements.forEach($element => {
+      if ($element.reset) {
+        $element.reset()
+      }
+    })
   }
 }

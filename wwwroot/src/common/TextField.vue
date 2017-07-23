@@ -3,8 +3,12 @@
                 @input="updateText"
                 :value="value"
                 :label="label"
+                :append-icon="type === 'password' ? (togglePassword ? 'visibility' : 'visibility_off') : null"
+                :append-icon-cb="() => (togglePassword = !togglePassword)"
+                :type="togglePassword ? 'text' : type"
                 :required="required"
-                :error-messages="errorMessages">
+                :error-messages="errorMessages"
+                :min="min">
   </v-text-field>
 </template>
 
@@ -30,13 +34,24 @@
         type: Array,
         default: [],
         required: false
+      },
+      type: {
+        type: String,
+        default: 'text',
+        required: false
+      },
+      min: {
+        type: String,
+        default: null,
+        required: false
       }
     },
     data () {
       return {
         errorMessages: [],
         initialValue: null,
-        isDirty: false
+        isDirty: false,
+        togglePassword: false
       }
     },
     mounted () {
@@ -60,6 +75,9 @@
             }
           })
         }
+      },
+      reset () {
+        this.$refs.textField.lazyValue = this.$refs.textField.inputValue = this.initialValue
       }
     },
     watch: {

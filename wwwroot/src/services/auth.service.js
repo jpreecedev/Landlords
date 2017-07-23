@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import router from 'root/routes'
 import store from 'store'
+import utils from '../utils'
 
 /**
  * @var{string} LOGIN_URL The endpoint for logging in. This endpoint should be proxied by Webpack dev server
@@ -29,12 +30,12 @@ const AUTH_BASIC_HEADERS = {
 }
 
 /**
-* Auth Plugin
-*
-* (see https://vuejs.org/v2/guide/plugins.html for more info on Vue.js plugins)
-*
-* Handles login and token authentication using OAuth2.
-*/
+ * Auth Plugin
+ *
+ * (see https://vuejs.org/v2/guide/plugins.html for more info on Vue.js plugins)
+ *
+ * Handles login and token authentication using OAuth2.
+ */
 export default {
   /**
    * Install the Auth class.
@@ -52,7 +53,7 @@ export default {
       const hasAuthHeader = request.headers.has('Authorization')
 
       if (token && !hasAuthHeader) {
-        this.setAuthHeader(request)
+        this._setAuthHeader(request)
       }
 
       next((response) => {
@@ -70,28 +71,29 @@ export default {
    * Login
    *
    * @param {Object.<string>} creds The username and password for logging in.
-   * @param {string|null} redirect The name of the Route to redirect to.
    * @return {Promise}
    */
-  login (creds, redirect) {
+  login (creds) {
     const body = 'username=' + creds.username + '&password=' + creds.password
 
-    return Vue.http.post(LOGIN_URL, body, AUTH_BASIC_HEADERS)
-      .then((response) => {
-        this._storeToken(response)
+    return new Promise((resolve, reject) => {
+      Vue.http.post(LOGIN_URL, body, AUTH_BASIC_HEADERS)
+        .then(postResponse => {
+          this._storeToken(postResponse)
 
-        return Vue.http.get(PERMISSIONS_URL).then((response) => {
-          this._storePermissions(response)
-          if (redirect) {
-            router.push({ name: redirect })
-          }
-
-          return response
+          Vue.http.get(PERMISSIONS_URL)
+            .then(response => {
+              this._storePermissions(response)
+              resolve(response)
+            })
+            .catch(response => {
+              reject(this._parseValidationMessages(response))
+            })
         })
-      })
-      .catch((errorResponse) => {
-        return errorResponse
-      })
+        .catch(postResponse => {
+          reject(this._parseValidationMessages(postResponse))
+        })
+    })
   },
 
   /**
@@ -108,12 +110,19 @@ export default {
 
     let query
     if (expired) {
-      query = { expired: true }
+      query = {
+        expired: true
+      }
     } else {
-      query = { loggedOut: true }
+      query = {
+        loggedOut: true
+      }
     }
 
-    router.push({ name: 'registration', query })
+    router.push({
+      name: 'registration',
+      query
+    })
   },
 
   /**
@@ -122,7 +131,7 @@ export default {
    * @param {Request} request The Vue-Resource Request instance to set the header on.
    * @return {void}
    */
-  setAuthHeader (request) {
+  _setAuthHeader (request) {
     request.headers.set('Authorization', 'Bearer ' + store.state.auth.accessToken)
     // The demo Oauth2 server we are using requires this param, but normally you only set the header.
     /* eslint-disable camelcase */
@@ -197,5 +206,26 @@ export default {
     const error = response.statusText
 
     return (status === 401 && error === 'Unauthorized')
+  },
+
+  _parseValidationMessages (response) {
+    let errors = []
+    let validationResult = utils.getFormValidationErrors(response)
+
+    validationResult.errors.forEach(validationError => {
+      errors.push({
+        key: validationError.key,
+        message: validationError.messages[0]
+      })
+    })
+
+    if (validationResult.status) {
+      errors.push({
+        key: 'GenericError',
+        message: validationResult.status
+      })
+    }
+
+    return errors
   }
 }

@@ -20,9 +20,7 @@
           </text-field>
           <text-field v-model="credentials.password"
                       :rules="[$validation.rules.required, $validation.rules.min_length(credentials.password, 8)]"
-                      :append-icon="credentials.passwordPlain ? 'visibility' : 'visibility_off'"
-                      :append-icon-cb="() => (credentials.passwordPlain = !credentials.passwordPlain)"
-                      :type="!credentials.passwordPlain ? 'password' : 'text'"
+                      type="password"
                       label="Password"
                       min="8"
                       required>
@@ -39,8 +37,6 @@
 </template>
 
 <script>
-import utils from 'utils'
-
 export default {
   name: 'loginform',
   data () {
@@ -61,32 +57,18 @@ export default {
           this.loggingIn = true
           this.errors = []
 
-          this.$auth.login(this.credentials, 'dashboard')
-            .then(response => {
-              this.loggingIn = false
-              if (!response.ok) {
-                let validationResult = utils.getFormValidationErrors(response)
-                validationResult.errors.forEach(validationError => {
-                  this.errors.push({
-                    key: validationError.key,
-                    message: validationError.messages[0]
-                  })
-                })
-                if (validationResult.status) {
-                  this.errors.push({
-                    key: 'GenericError',
-                    message: validationResult.status
-                  })
-                }
-              }
+          this.$auth.login(this.credentials)
+            .then(() => {
+              this.$router.push({name: 'dashboard'})
             })
-            .catch(() => {
+            .catch(errors => {
+              this.errors = errors
               this.loggingIn = false
             })
         })
     },
     reset () {
-      this.errors = []
+      this.$validation.reset(this.$children)
     }
   }
 }
