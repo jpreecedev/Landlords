@@ -17,5 +17,37 @@ Vue.prototype.$validation = {
     min_length: minLength,
     min_value: minValue,
     required
+  },
+  validate ($elements) {
+    return new Promise((resolve, reject) => {
+      $elements.forEach($element => {
+        if ($element.validate) {
+          $element.validate(true)
+        }
+      })
+
+      let success = $elements.every($element => {
+        if (!$element._computedWatchers) {
+          return true
+        }
+
+        let ownProperties = Object.getOwnPropertyNames($element._computedWatchers)
+        let hasIsValid = ownProperties.some(item => {
+          return item === 'isValid'
+        })
+
+        if (hasIsValid) {
+          return $element.isValid
+        }
+
+        return true
+      })
+
+      if (success) {
+        resolve()
+      } else {
+        reject(new Error('Form is invalid'))
+      }
+    })
   }
 }
