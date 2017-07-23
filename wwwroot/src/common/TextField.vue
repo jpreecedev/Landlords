@@ -8,7 +8,9 @@
                 :type="togglePassword ? 'text' : type"
                 :required="required"
                 :error-messages="errorMessages"
-                :min="min">
+                :min="min"
+                :max="max"
+                :step="step">
   </v-text-field>
 </template>
 
@@ -19,6 +21,16 @@
     name: 'text-field',
     props: {
       min: {
+        type: String,
+        default: null,
+        required: false
+      },
+      max: {
+        type: String,
+        default: null,
+        required: false
+      },
+      step: {
         type: String,
         default: null,
         required: false

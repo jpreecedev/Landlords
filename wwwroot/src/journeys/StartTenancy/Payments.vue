@@ -49,7 +49,7 @@
     props: {
       rentalFrequencies: {
         type: Array,
-        default: []
+        default: () => []
       }
     },
     data () {

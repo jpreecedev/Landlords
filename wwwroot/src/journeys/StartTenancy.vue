@@ -1,6 +1,9 @@
 <template>
   <section>
     <h1 class="display-1">Start a new tenancy</h1>
+    <notification ref="notification"
+                  context="error">
+    </notification>
     <v-stepper v-if="newTenancy && newTenancy.step" v-model="newTenancy.step">
       <v-stepper-header>
         <v-divider></v-divider>
@@ -80,6 +83,9 @@
             } else {
               this.$store.commit('TENANCY_NEXT_STEP', this.newTenancy)
             }
+          })
+          .catch(() => {
+            this.$refs.notification.show('Please fix the form validation issues before continuing.  Errors are highlighted in red.')
           })
       },
       back () {

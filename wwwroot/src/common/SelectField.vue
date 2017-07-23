@@ -18,7 +18,7 @@
     props: {
       items: {
         type: Array,
-        default: [],
+        default: () => [],
         required: true
       },
       itemValue: {

@@ -1,7 +1,7 @@
 export default {
   props: {
     value: {
-      type: String,
+      type: String | Number,
       default: null
     },
     label: {
@@ -16,7 +16,7 @@ export default {
     },
     rules: {
       type: Array,
-      default: [],
+      default: () => [],
       required: false
     },
     type: {

@@ -70,7 +70,7 @@
     props: {
       tenancyTypes: {
         type: Array,
-        default: []
+        default: () => []
       }
     },
     data () {

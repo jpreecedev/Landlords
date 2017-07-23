@@ -10,54 +10,45 @@
         <div class="subheading">What is the {{ tenant.isAdult ? 'tenants' : 'childs' }} name?</div>
         <div class="row">
           <div class="col-xs-12 col-md-3">
-            <v-select :items="titles"
-                      :rules="[$validation.rules.required, $validation.rules.min_length(tenant.title, 2)]"
-                      v-model="tenant.title"
-                      @input="updateField(index, tenant, 'title')"
-                      label="Select a title">
-            </v-select>
+            <select-list :items="titles"
+                         :rules="[$validation.rules.required, $validation.rules.min_length(tenant.title, 2)]"
+                         v-model="tenant.title"
+                         @input="updateField(index, tenant, 'title')"
+                         label="Select a title">
+            </select-list>
           </div>
           <div class="col-xs-12 col-md-3">
-            <v-text-field v-model="tenant.firstName"
-                          :rules="[$validation.rules.required, $validation.rules.min_length(tenant.firstName, 2)]"
-                          :value="tenant.firstName"
-                          @input="updateField(index, tenant, 'firstName')"
-                          label="First name"
-                          required>
-            </v-text-field>
+            <text-field v-model="tenant.firstName"
+                        :rules="[$validation.rules.required, $validation.rules.min_length(tenant.firstName, 2)]"
+                        :value="tenant.firstName"
+                        @input="updateField(index, tenant, 'firstName')"
+                        label="First name"
+                        required>
+            </text-field>
           </div>
           <div class="col-xs-12 col-md-3">
-            <v-text-field v-model="tenant.middleName"
-                          :value="tenant.middleName"
-                          @input="updateField(index, tenant, 'middleName')"
-                          label="Middle name(s)">
-            </v-text-field>
+            <text-field v-model="tenant.middleName"
+                        :value="tenant.middleName"
+                        @input="updateField(index, tenant, 'middleName')"
+                        label="Middle name(s)">
+            </text-field>
           </div>
           <div class="col-xs-12 col-md-3">
-            <v-text-field v-model="tenant.lastName"
-                          :value="tenant.lastName"
-                          :rules="[$validation.rules.required, $validation.rules.min_length(tenant.lastName, 2)]"
-                          @input="updateField(index, tenant, 'lastName')"
-                          label="Last name"
-                          required>
-            </v-text-field>
+            <text-field v-model="tenant.lastName"
+                        :value="tenant.lastName"
+                        :rules="[$validation.rules.required, $validation.rules.min_length(tenant.lastName, 2)]"
+                        @input="updateField(index, tenant, 'lastName')"
+                        label="Last name"
+                        required>
+            </text-field>
           </div>
         </div>
         <div class="row">
           <div class="col-xs-12 col-md-4">
-            <v-menu lazy :nudge-left="100">
-              <v-text-field slot="activator"
-                            label="Date of birth"
-                            v-model="tenant.dateOfBirth"
-                            prepend-icon="date_range"
-                            required readonly>
-              </v-text-field>
-              <v-date-picker v-model="tenant.dateOfBirth"
-                             :value="tenant.dateOfBirth"
-                             @input="updateField(index, tenant, 'dateOfBirth')"
-                             scrollable>
-              </v-date-picker>
-            </v-menu>
+            <date-picker v-model="tenant.dateOfBirth"
+                         label="Date of birth"
+                         :rules="[$validation.rules.required]">
+            </date-picker>
           </div>
         </div>
         <template v-if="tenant.isAdult">
@@ -69,81 +60,81 @@
               </div>
               <div class="row">
                 <div class="col-xs-6">
-                  <v-text-field v-model="address.street"
-                                :value="address.street"
-                                :multi-line="true"
-                                :rows="1"
-                                :auto-grow="true"
-                                :rules="[$validation.rules.required, $validation.rules.min_length(address.street, 2)]"
-                                @input="updateAddress(index, addressIndex, address, 'street')"
-                                label="Street address"
-                                required>
-                  </v-text-field>
+                  <text-field v-model="address.street"
+                              :value="address.street"
+                              :multi-line="true"
+                              :rows="1"
+                              :auto-grow="true"
+                              :rules="[$validation.rules.required, $validation.rules.min_length(address.street, 2)]"
+                              @input="updateAddress(index, addressIndex, address, 'street')"
+                              label="Street address"
+                              required>
+                  </text-field>
                 </div>
                 <div class="col-xs-6">
-                  <v-text-field v-model="address.townOrCity"
-                                :value="address.townOrCity"
-                                :rules="[$validation.rules.required, $validation.rules.min_length(address.townOrCity, 2)]"
-                                @input="updateAddress(index, addressIndex, address, 'townOrCity')"
-                                label="Town or city"
-                                required>
-                  </v-text-field>
+                  <text-field v-model="address.townOrCity"
+                              :value="address.townOrCity"
+                              :rules="[$validation.rules.required, $validation.rules.min_length(address.townOrCity, 2)]"
+                              @input="updateAddress(index, addressIndex, address, 'townOrCity')"
+                              label="Town or city"
+                              required>
+                  </text-field>
                 </div>
               </div>
               <div class="row">
                 <div class="col-xs-12 col-md-4">
-                  <v-select :items="counties"
-                            v-model="address.countyOrRegion"
-                            @input="updateAddress(index, addressIndex, address, 'countyOrRegion')"
-                            label="Select a county or region">
-                  </v-select>
+                  <select-list :items="counties"
+                               v-model="address.countyOrRegion"
+                               @input="updateAddress(index, addressIndex, address, 'countyOrRegion')"
+                               label="Select a county or region">
+                  </select-list>
                 </div>
                 <div class="col-xs-12 col-md-4">
-                  <v-text-field v-model="address.postcode"
-                                :value="address.postcode"
-                                :rules="[$validation.rules.required, $validation.rules.min_length(address.postcode, 5), $validation.rules.max_length(address.postcode, 7)]"
-                                @input="updateAddress(index, addressIndex, address, 'postcode')"
-                                label="Postcode"
-                                required>
-                  </v-text-field>
+                  <text-field v-model="address.postcode"
+                              :value="address.postcode"
+                              :rules="[$validation.rules.required, $validation.rules.min_length(address.postcode, 5), $validation.rules.max_length(address.postcode, 7)]"
+                              @input="updateAddress(index, addressIndex, address, 'postcode')"
+                              label="Postcode"
+                              required>
+                  </text-field>
                 </div>
                 <div class="col-xs-12 col-md-4">
-                  <v-select :items="countries"
-                            :rules="[$validation.rules.required]"
-                            v-model="address.country"
-                            @input="updateAddress(index, addressIndex, address, 'country')"
-                            label="Select a country"
-                            required>
-                  </v-select>
+                  <select-list :items="countries"
+                               :rules="[$validation.rules.required]"
+                               v-model="address.country"
+                               @input="updateAddress(index, addressIndex, address, 'country')"
+                               label="Select a country"
+                               required>
+                  </select-list>
                 </div>
               </div>
               <div class="subheading">How long has the tenant lived at this address?</div>
               <div class="row">
                 <div class="col-xs-6 col-md-2">
-                  <v-text-field v-model="address.yearsAtAddress"
-                                :value="address.yearsAtAddress"
-                                :rules="[$validation.rules.required, $validation.rules.min_value(address.yearsAtAddress, 1), $validation.rules.max_value(address.yearsAtAddress, 100)]"
-                                @input="updateAddress(index, addressIndex, address, 'yearsAtAddress')"
-                                label="Years"
-                                type="number"
-                                min="0"
-                                max="100"
-                                step="1"
-                                required>
-                  </v-text-field>
+                  <text-field v-model="address.yearsAtAddress"
+                              :value="address.yearsAtAddress"
+                              :rules="[$validation.rules.required, $validation.rules.min_value(address.yearsAtAddress, 1), $validation.rules.max_value(address.yearsAtAddress, 100)]"
+                              @input="updateAddress(index, addressIndex, address, 'yearsAtAddress')"
+                              label="Years"
+                              type="number"
+                              min="0"
+                              max="100"
+                              step="1"
+                              required>
+                  </text-field>
                 </div>
                 <div class="col-xs-6 col-md-2">
-                  <v-text-field v-model="address.monthsAtAddress"
-                                :value="address.monthsAtAddress"
-                                :rules="[$validation.rules.required, $validation.rules.min_value(address.monthsAtAddress, 0), $validation.rules.max_value(address.monthsAtAddress, 12)]"
-                                @input="updateAddress(index, addressIndex, address, 'monthsAtAddress')"
-                                label="Months"
-                                type="number"
-                                min="0"
-                                max="12"
-                                step="1"
-                                required>
-                  </v-text-field>
+                  <text-field v-model="address.monthsAtAddress"
+                              :value="address.monthsAtAddress"
+                              :rules="[$validation.rules.required, $validation.rules.min_value(address.monthsAtAddress, 0), $validation.rules.max_value(address.monthsAtAddress, 12)]"
+                              @input="updateAddress(index, addressIndex, address, 'monthsAtAddress')"
+                              label="Months"
+                              type="number"
+                              min="0"
+                              max="12"
+                              step="1"
+                              required>
+                  </text-field>
                 </div>
               </div>
             </v-expansion-panel-content>
@@ -154,30 +145,30 @@
           <div class="subheading mt-4">And finally, their contact details</div>
           <div class="row">
             <div class="col-xs-12 col-md-4">
-              <v-text-field v-model="tenant.mainContactNumber"
-                            :value="tenant.mainContactNumber"
-                            :rules="[$validation.rules.required, $validation.rules.min_length(tenant.mainContactNumber, 2)]"
-                            @input="updateField(index, tenant, 'mainContactNumber')"
-                            label="Main contact number"
-                            required>
-              </v-text-field>
+              <text-field v-model="tenant.mainContactNumber"
+                          :value="tenant.mainContactNumber"
+                          :rules="[$validation.rules.required, $validation.rules.min_length(tenant.mainContactNumber, 2)]"
+                          @input="updateField(index, tenant, 'mainContactNumber')"
+                          label="Main contact number"
+                          required>
+              </text-field>
             </div>
             <div class="col-xs-12 col-md-4">
-              <v-text-field v-model="tenant.secondaryContactNumber"
-                            :value="tenant.secondaryContactNumber"
-                            @input="updateField(index, tenant, 'secondaryContactNumber')"
-                            label="Another contact number">
-              </v-text-field>
+              <text-field v-model="tenant.secondaryContactNumber"
+                          :value="tenant.secondaryContactNumber"
+                          @input="updateField(index, tenant, 'secondaryContactNumber')"
+                          label="Another contact number">
+              </text-field>
             </div>
             <div class="col-xs-12 col-md-4">
-              <v-text-field v-model="tenant.emailAddress"
-                            :value="tenant.emailAddress"
-                            :rules="[$validation.rules.required, $validation.rules.email]"
-                            @input="updateField(index, tenant, 'emailAddress')"
-                            label="Email Address"
-                            type="email"
-                            required>
-              </v-text-field>
+              <text-field v-model="tenant.emailAddress"
+                          :value="tenant.emailAddress"
+                          :rules="[$validation.rules.required, $validation.rules.email]"
+                          @input="updateField(index, tenant, 'emailAddress')"
+                          label="Email Address"
+                          type="email"
+                          required>
+              </text-field>
             </div>
           </div>
         </template>
@@ -212,11 +203,11 @@
       },
       counties: {
         type: Array,
-        default: []
+        default: () => []
       },
       countries: {
         type: Array,
-        default: []
+        default: () => []
       }
     },
     data () {
