@@ -301,10 +301,10 @@ export default {
     this.$http.get(`/api/propertydetails/${this.$route.params.propertyId ? this.$route.params.propertyId : 'viewdata'}`)
       .then(response => {
         Object.assign(this, utils.mapEntity(response.data, 'propertyDetails', !this.$route.params.propertyId))
+        this.$validation.commit(this.$children)
       })
       .finally(() => {
         this.isLoading = false
-        this.$validation.commit(this.$children)
       })
   },
   methods: {
@@ -366,10 +366,10 @@ export default {
             alert('Unable to delete image at this time')
           })
       }
+    },
+    reset () {
+      this.$validation.reset(this.$children)
     }
-  },
-  reset () {
-    this.$validation.reset(this.$children)
   }
 }
 </script>

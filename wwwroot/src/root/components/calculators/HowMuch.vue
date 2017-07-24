@@ -12,15 +12,15 @@
             <form role="form" novalidate>
               <div class="row">
                 <div class="col-xs-12 col-md-6">
-                  <v-text-field v-model="grossIncome"
-                                :rules="[$validation.rules.required, $validation.rules.min_value(grossIncome, 1000)]"
-                                label="Your annual gross income"
-                                type="number"
-                                min="1000"
-                                step="1"
-                                prefix="£"
-                                required>
-                  </v-text-field>
+                  <text-field v-model="grossIncome"
+                              :rules="[$validation.rules.required, $validation.rules.min_value(grossIncome, 1000)]"
+                              label="Your annual gross income"
+                              type="number"
+                              min="1000"
+                              step="1"
+                              prefix="£"
+                              required>
+                  </text-field>
                 </div>
               </div>
               <div class="row">

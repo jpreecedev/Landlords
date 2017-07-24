@@ -12,40 +12,40 @@
             <form role="form" novalidate>
               <div class="row">
                 <div class="col-xs-12">
-                  <v-text-field v-model="mortgageAmount"
-                                :rules="[$validation.rules.required, $validation.rules.min_value(mortgageAmount, 10000)]"
-                                label="Total amount borrowed"
-                                type="number"
-                                prefix="£"
-                                required>
-                  </v-text-field>
+                  <text-field v-model="mortgageAmount"
+                              :rules="[$validation.rules.required, $validation.rules.min_value(mortgageAmount, 10000)]"
+                              label="Total amount borrowed"
+                              type="number"
+                              prefix="£"
+                              required>
+                  </text-field>
                 </div>
               </div>
               <div class="row">
                 <div class="col-xs-12 col-md-6">
-                  <v-text-field v-model="annualInterestRate"
-                                :rules="[$validation.rules.required, $validation.rules.min_value(annualInterestRate, 0.1)]"
-                                label="Interest rate % (Annual)"
-                                type="number"
-                                min="0.1"
-                                step="0.1"
-                                suffix="%"
-                                required>
-                  </v-text-field>
+                  <text-field v-model="annualInterestRate"
+                              :rules="[$validation.rules.required, $validation.rules.min_value(annualInterestRate, 0.1)]"
+                              label="Interest rate % (Annual)"
+                              type="number"
+                              min="0.1"
+                              step="0.1"
+                              suffix="%"
+                              required>
+                  </text-field>
                 </div>
               </div>
               <div class="row">
                 <div class="col-xs-12 col-md-6">
-                  <v-text-field v-model="mortgageLength"
-                                :rules="[$validation.rules.required, $validation.rules.min_value(mortgageLength, 1), $validation.rules.max_value(mortgageLength, 50)]"
-                                label="Mortgage length"
-                                type="number"
-                                min="1"
-                                step="1"
-                                max="50"
-                                suffix="years"
-                                required>
-                  </v-text-field>
+                  <text-field v-model="mortgageLength"
+                              :rules="[$validation.rules.required, $validation.rules.min_value(mortgageLength, 1), $validation.rules.max_value(mortgageLength, 50)]"
+                              label="Mortgage length"
+                              type="number"
+                              min="1"
+                              step="1"
+                              max="50"
+                              suffix="years"
+                              required>
+                  </text-field>
                 </div>
               </div>
               <div class="row" v-if="!calculateMonthlyPayment">

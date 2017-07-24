@@ -1,6 +1,7 @@
 <template>
   <v-text-field ref="field"
                 @input="updateField"
+                @blur="$emit('blur')"
                 :value="value"
                 :label="label"
                 :append-icon="type === 'password' ? (togglePassword ? 'visibility' : 'visibility_off') : null"
@@ -10,7 +11,12 @@
                 :error-messages="errorMessages"
                 :min="min"
                 :max="max"
-                :step="step">
+                :step="step"
+                :prefix="prefix"
+                :suffix="suffix"
+                :multi-line="multiline"
+                :rows="rows"
+                :auto-grow="autogrow">
   </v-text-field>
 </template>
 
@@ -33,6 +39,31 @@
       step: {
         type: String,
         default: null,
+        required: false
+      },
+      prefix: {
+        type: String,
+        default: null,
+        required: false
+      },
+      suffix: {
+        type: String,
+        default: null,
+        required: false
+      },
+      multiline: {
+        type: Boolean,
+        default: false,
+        required: false
+      },
+      rows: {
+        type: Number,
+        default: 1,
+        required: false
+      },
+      autogrow: {
+        type: Boolean,
+        default: false,
         required: false
       }
     },

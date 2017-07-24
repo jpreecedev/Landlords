@@ -1,27 +1,19 @@
 <template>
   <div class="row">
     <div class="col-xs-12">
-      <v-menu lazy :nudge-left="100">
-        <v-text-field slot="activator"
-                      label="Actioned"
-                      v-model="checklistItem.payload.actioned"
-                      prepend-icon="date_range"
-                      readonly>
-        </v-text-field>
-        <v-date-picker v-model="checklistItem.payload.actioned"
-                       @input="save()"
-                       scrollable>
-        </v-date-picker>
-      </v-menu>
+      <date-picker v-model="checklistItem.payload.actioned"
+                   @input="save()"
+                   label="Actioned">
+      </date-picker>
     </div>
     <div class="col-xs-12">
-      <v-text-field v-model="checklistItem.payload.comments"
-                    :multi-line="true"
-                    :rows="1"
-                    :auto-grow="true"
-                    @blur="save()"
-                    label="Comments">
-      </v-text-field>
+      <text-field v-model="checklistItem.payload.comments"
+                  :multiline="true"
+                  :rows="1"
+                  :autogrow="true"
+                  @blur="save()"
+                  label="Comments">
+      </text-field>
     </div>
   </div>
 </template>

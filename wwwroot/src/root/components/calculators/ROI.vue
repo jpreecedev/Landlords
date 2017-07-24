@@ -15,58 +15,58 @@
             <v-card-text>
               <div class="row">
                 <div class="col-xs-12">
-                  <v-text-field v-model="shortlistedProperty.reference"
-                                :rules="[$validation.rules.required]"
-                                label="Reference"
-                                required>
-                  </v-text-field>
+                  <text-field v-model="shortlistedProperty.reference"
+                              :rules="[$validation.rules.required]"
+                              label="Reference"
+                              required>
+                  </text-field>
                 </div>
               </div>
               <div class="row">
                 <div class="col-xs-12">
-                  <v-text-field v-model="shortlistedProperty.address"
-                                :rules="[$validation.rules.required]"
-                                label="First line of address"
-                                required>
-                  </v-text-field>
+                  <text-field v-model="shortlistedProperty.address"
+                              :rules="[$validation.rules.required]"
+                              label="First line of address"
+                              required>
+                  </text-field>
                 </div>
               </div>
               <div class="row">
                 <div class="col-xs-12">
-                  <v-text-field v-model="shortlistedProperty.pricePaid"
-                                :rules="[$validation.rules.required, $validation.rules.min_value(shortlistedProperty.pricePaid, 10000)]"
-                                label="Purchase price"
-                                step="1"
-                                min="10000"
-                                type="number"
-                                prefix="£"
-                                required>
-                  </v-text-field>
+                  <text-field v-model="shortlistedProperty.pricePaid"
+                              :rules="[$validation.rules.required, $validation.rules.min_value(shortlistedProperty.pricePaid, 10000)]"
+                              label="Purchase price"
+                              step="1"
+                              min="10000"
+                              type="number"
+                              prefix="£"
+                              required>
+                  </text-field>
                 </div>
               </div>
               <div class="row">
                 <div class="col-xs-12">
-                  <v-text-field v-model="shortlistedProperty.deposit"
-                                :rules="[$validation.rules.required, $validation.rules.min_value(shortlistedProperty.deposit, 1000)]"
-                                label="Deposit"
-                                step="1"
-                                min="1000"
-                                type="number"
-                                prefix="£"
-                                required>
-                  </v-text-field>
+                  <text-field v-model="shortlistedProperty.deposit"
+                              :rules="[$validation.rules.required, $validation.rules.min_value(shortlistedProperty.deposit, 1000)]"
+                              label="Deposit"
+                              step="1"
+                              min="1000"
+                              type="number"
+                              prefix="£"
+                              required>
+                  </text-field>
                 </div>
               </div>
               <div class="row">
                 <div class="col-xs-12">
-                  <v-text-field v-model="shortlistedProperty.fees"
-                                :rules="[$validation.rules.required]"
-                                label="Refurbishment, fees, furnishings and other costs"
-                                step="1"
-                                type="number"
-                                prefix="£"
-                                required>
-                  </v-text-field>
+                  <text-field v-model="shortlistedProperty.fees"
+                              :rules="[$validation.rules.required]"
+                              label="Refurbishment, fees, furnishings and other costs"
+                              step="1"
+                              type="number"
+                              prefix="£"
+                              required>
+                  </text-field>
                 </div>
               </div>
             </v-card-text>
@@ -76,29 +76,29 @@
             <v-card-text>
               <div class="row">
                 <div class="col-xs-12">
-                  <v-text-field v-model="shortlistedProperty.lettableUnits"
-                                :rules="[$validation.rules.required, $validation.rules.min_value(shortlistedProperty.lettableUnits, 1), $validation.rules.max_value(shortlistedProperty.lettableUnits, 1000)]"
-                                label="Lettable units"
-                                type="number"
-                                step="1"
-                                min="0"
-                                max="1000"
-                                required>
-                  </v-text-field>
+                  <text-field v-model="shortlistedProperty.lettableUnits"
+                              :rules="[$validation.rules.required, $validation.rules.min_value(shortlistedProperty.lettableUnits, 1), $validation.rules.max_value(shortlistedProperty.lettableUnits, 1000)]"
+                              label="Lettable units"
+                              type="number"
+                              step="1"
+                              min="0"
+                              max="1000"
+                              required>
+                  </text-field>
                 </div>
               </div>
               <div class="row">
                 <div class="col-xs-12">
-                  <v-text-field v-model="shortlistedProperty.expectedRentalIncome"
-                                :rules="[$validation.rules.required, $validation.rules.min_value(shortlistedProperty.expectedRentalIncome, 0)]"
-                                label="Rental income per unit"
-                                type="number"
-                                step="100"
-                                min="0"
-                                max="1000000"
-                                prefix="£"
-                                required>
-                  </v-text-field>
+                  <text-field v-model="shortlistedProperty.expectedRentalIncome"
+                              :rules="[$validation.rules.required, $validation.rules.min_value(shortlistedProperty.expectedRentalIncome, 0)]"
+                              label="Rental income per unit"
+                              type="number"
+                              step="100"
+                              min="0"
+                              max="1000000"
+                              prefix="£"
+                              required>
+                  </text-field>
                 </div>
               </div>
             </v-card-text>
@@ -108,70 +108,70 @@
             <v-card-text>
               <div class="row">
                 <div class="col-xs-12">
-                  <v-text-field v-model="shortlistedProperty.mortgageInterestRate"
-                                :rules="[$validation.rules.required, $validation.rules.min_value(shortlistedProperty.mortgageInterestRate, 0.1), $validation.rules.max_value(shortlistedProperty.mortgageInterestRate, 20)]"
-                                label="Mortgage interest rate"
-                                step="0.1"
-                                min="0.1"
-                                max="20"
-                                type="number"
-                                suffix="%"
-                                required>
-                  </v-text-field>
+                  <text-field v-model="shortlistedProperty.mortgageInterestRate"
+                              :rules="[$validation.rules.required, $validation.rules.min_value(shortlistedProperty.mortgageInterestRate, 0.1), $validation.rules.max_value(shortlistedProperty.mortgageInterestRate, 20)]"
+                              label="Mortgage interest rate"
+                              step="0.1"
+                              min="0.1"
+                              max="20"
+                              type="number"
+                              suffix="%"
+                              required>
+                  </text-field>
                 </div>
               </div>
               <div class="row">
                 <div class="col-xs-12">
-                  <v-text-field v-model="shortlistedProperty.managementCost"
-                                :rules="[$validation.rules.required, $validation.rules.min_value(shortlistedProperty.managementCost, 0), $validation.rules.max_value(shortlistedProperty.managementCost, 100)]"
-                                label="Management cost (Monthly)"
-                                step="1"
-                                min="0"
-                                max="100"
-                                type="number"
-                                suffix="%"
-                                required>
-                  </v-text-field>
+                  <text-field v-model="shortlistedProperty.managementCost"
+                              :rules="[$validation.rules.required, $validation.rules.min_value(shortlistedProperty.managementCost, 0), $validation.rules.max_value(shortlistedProperty.managementCost, 100)]"
+                              label="Management cost (Monthly)"
+                              step="1"
+                              min="0"
+                              max="100"
+                              type="number"
+                              suffix="%"
+                              required>
+                  </text-field>
                 </div>
               </div>
               <div class="row">
                 <div class="col-xs-12">
-                  <v-text-field v-model="shortlistedProperty.repairsContingency"
-                                :rules="[$validation.rules.required, $validation.rules.min_value(shortlistedProperty.repairsContingency, 0), $validation.rules.max_value(shortlistedProperty.repairsContingency, 100)]"
-                                label="Repairs contingency"
-                                step="1"
-                                min="0"
-                                max="100"
-                                type="number"
-                                suffix="%"
-                                required>
-                  </v-text-field>
+                  <text-field v-model="shortlistedProperty.repairsContingency"
+                              :rules="[$validation.rules.required, $validation.rules.min_value(shortlistedProperty.repairsContingency, 0), $validation.rules.max_value(shortlistedProperty.repairsContingency, 100)]"
+                              label="Repairs contingency"
+                              step="1"
+                              min="0"
+                              max="100"
+                              type="number"
+                              suffix="%"
+                              required>
+                  </text-field>
                 </div>
               </div>
               <div class="row">
                 <div class="col-xs-12">
-                  <v-text-field v-model="shortlistedProperty.serviceCharge"
-                                :rules="[$validation.rules.required, $validation.rules.min_value(shortlistedProperty.serviceCharge, 0)]"
-                                label="Service charge and ground rent (Annual)"
-                                type="number"
-                                step="100"
-                                min="0"
-                                prefix="£"
-                                required>
-                  </v-text-field>
+                  <text-field v-model="shortlistedProperty.serviceCharge"
+                              :rules="[$validation.rules.required, $validation.rules.min_value(shortlistedProperty.serviceCharge, 0)]"
+                              label="Service charge and ground rent (Annual)"
+                              type="number"
+                              step="100"
+                              min="0"
+                              prefix="£"
+                              required>
+                  </text-field>
                 </div>
               </div>
               <div class="row">
                 <div class="col-xs-12">
-                  <v-text-field v-model="shortlistedProperty.insurance"
-                                :rules="[$validation.rules.required, $validation.rules.min_value(shortlistedProperty.insurance, 0)]"
-                                label="Insurance (Annual)"
-                                type="number"
-                                step="100"
-                                min="0"
-                                prefix="£"
-                                required>
-                  </v-text-field>
+                  <text-field v-model="shortlistedProperty.insurance"
+                              :rules="[$validation.rules.required, $validation.rules.min_value(shortlistedProperty.insurance, 0)]"
+                              label="Insurance (Annual)"
+                              type="number"
+                              step="100"
+                              min="0"
+                              prefix="£"
+                              required>
+                  </text-field>
                 </div>
               </div>
             </v-card-text>

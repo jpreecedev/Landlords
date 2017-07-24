@@ -1,5 +1,8 @@
 <template>
   <div>
+    <notification ref="notification"
+                  context="error">
+    </notification>
     <loader :loading="isLoading"></loader>
     <div v-if="!isLoading">
       <header>
@@ -25,16 +28,16 @@
                 </v-card-title>
                 <v-card-text>
                   <div>
-                    <v-text-field v-model="profile.firstName"
-                                  :rules="[$validation.rules.required, $validation.rules.min_length(profile.firstName, 2)]"
-                                  label="First name"
-                                  required>
-                    </v-text-field>
-                    <v-text-field v-model="profile.lastName"
-                                  :rules="[$validation.rules.required, $validation.rules.min_length(profile.lastName, 2)]"
-                                  label="Last name"
-                                  required>
-                    </v-text-field>
+                    <text-field v-model="profile.firstName"
+                                :rules="[$validation.rules.required, $validation.rules.min_length(profile.firstName, 2)]"
+                                label="First name"
+                                required>
+                    </text-field>
+                    <text-field v-model="profile.lastName"
+                                :rules="[$validation.rules.required, $validation.rules.min_length(profile.lastName, 2)]"
+                                label="Last name"
+                                required>
+                    </text-field>
                     <div>
                       <p>Email address
                         <br>
@@ -55,24 +58,24 @@
                   Contact details
                 </v-card-title>
                 <v-card-text>
-                  <v-select :items="times"
-                            :rules="[$validation.rules.required]"
-                            v-model="availableFrom"
-                            label="Available from">
-                  </v-select>
-                  <v-select :items="times"
-                            :rules="[$validation.rules.required]"
-                            v-model="availableTo"
-                            label="Available to">
-                  </v-select>
-                  <v-text-field v-model="profile.phoneNumber"
-                                label="Main phone number"
-                                type="tel">
-                  </v-text-field>
-                  <v-text-field v-model="profile.secondaryPhoneNumber"
-                                label="Secondary phone number"
-                                type="tel">
-                  </v-text-field>
+                  <select-list :items="times"
+                               :rules="[$validation.rules.required]"
+                               v-model="availableFrom"
+                               label="Available from">
+                  </select-list>
+                  <select-list :items="times"
+                               :rules="[$validation.rules.required]"
+                               v-model="availableTo"
+                               label="Available to">
+                  </select-list>
+                  <text-field v-model="profile.phoneNumber"
+                              label="Main phone number"
+                              type="tel">
+                  </text-field>
+                  <text-field v-model="profile.secondaryPhoneNumber"
+                              label="Secondary phone number"
+                              type="tel">
+                  </text-field>
                 </v-card-text>
               </v-card>
             </div>
@@ -80,7 +83,7 @@
           <div class="row mt-3">
             <div class="col-xs-12">
               <v-btn primary v-if="permissions.P_Update" type="submit" :loading="isSaving">Save</v-btn>
-              <v-btn flat v-if="permissions.P_Update" type="reset">Reset</v-btn>
+              <v-btn flat v-if="permissions.P_Update" @click="reset()">Reset</v-btn>
             </div>
           </div>
         </fieldset>
@@ -98,7 +101,6 @@
       return {
         isLoading: false,
         isSaving: false,
-        errors: [],
         permissions: this.$store.state.permissions,
         times: [],
         saved: false,
@@ -141,36 +143,33 @@
         })
         .finally(() => {
           this.isLoading = false
+          this.$validation.commit(this.$children)
         })
     },
     methods: {
       validateBeforeSubmit () {
-        this.isSaving = true
-        this.errors = []
         this.profile.availableFrom = this.availableFrom
         this.profile.availableTo = this.availableTo
 
-        this.$http.post('/api/profile', { ...this.profile })
-          .then(response => {
-            this.saved = true
-          })
-          .catch(response => {
-            let validationResult = utils.getFormValidationErrors(response)
-            validationResult.errors.forEach(validationError => {
-              this.errors.push({
-                key: validationError.key,
-                message: validationError.messages[0]
+        this.$validation.validate(this.$children)
+          .then(() => {
+            this.isSaving = true
+            this.$http.post('/api/profile', { ...this.profile })
+              .then(response => {
+                this.saved = true
               })
-            })
-            if (validationResult.status) {
-              this.errors.push({
-                key: 'GenericError',
-                message: validationResult.status
+              .catch(response => {
+                let validationResult = utils.getFormValidationErrors(response)
+                validationResult.errors.forEach(validationError => {
+                  console.log('ERROR', validationError.key, validationError.messages[0], 'required')
+                })
               })
-            }
+              .finally(() => {
+                this.isSaving = false
+              })
           })
-          .finally(() => {
-            this.isSaving = false
+          .catch(() => {
+            this.$refs.notification.show('Please fix the form validation issues before continuing.  Errors are highlighted in red.')
           })
       },
       resendVerificationEmail () {
@@ -178,6 +177,9 @@
           .then(response => {
             this.resentVerification = true
           })
+      },
+      reset () {
+        this.$validation.reset(this.$children)
       }
     }
   }

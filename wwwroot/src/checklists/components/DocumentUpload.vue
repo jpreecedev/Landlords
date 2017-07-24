@@ -11,18 +11,10 @@
         </v-text-field>
       </div>
       <div class="col-xs-12 col-md-6">
-        <v-menu lazy :nudge-left="100">
-          <v-text-field slot="activator"
-                        label="Actioned"
-                        v-model="checklistItem.payload.actioned"
-                        prepend-icon="date_range"
-                        required readonly>
-          </v-text-field>
-          <v-date-picker v-model="checklistItem.payload.actioned"
-                         @input="save()"
-                         scrollable>
-          </v-date-picker>
-        </v-menu>
+        <date-picker v-model="checklistItem.payload.actioned"
+                    @input="save()"
+                    label="Actioned">
+        </date-picker>
       </div>
     </div>
     <div class="row">

@@ -12,27 +12,27 @@
             <form role="form" novalidate>
               <div class="row">
                 <div class="col-xs-12">
-                  <v-text-field type="number"
-                                v-model="rentalyield.purchasePrice"
-                                :rules="[$validation.rules.required, $validation.rules.min_value(rentalyield.purchasePrice, 10000)]"
-                                min="10000"
-                                prefix="£"
-                                label="Total cost of property"
-                                required>
-                  </v-text-field>
+                  <text-field type="number"
+                              v-model="rentalyield.purchasePrice"
+                              :rules="[$validation.rules.required, $validation.rules.min_value(rentalyield.purchasePrice, 10000)]"
+                              min="10000"
+                              prefix="£"
+                              label="Total cost of property"
+                              required>
+                  </text-field>
                 </div>
               </div>
               <div class="row">
                 <div class="col-xs-12">
-                    <v-text-field type="number"
-                                  min="1"
-                                  step="1"
-                                  label="How much is the rent?"
-                                  prefix="£"
-                                  v-model="rentalyield.rentalValue"
-                                  :rules="[$validation.rules.required, $validation.rules.min_value(rentalyield.rentalValue, 1)]"
-                                  required>
-                    </v-text-field>
+                    <text-field type="number"
+                                min="1"
+                                step="1"
+                                label="How much is the rent?"
+                                prefix="£"
+                                v-model="rentalyield.rentalValue"
+                                :rules="[$validation.rules.required, $validation.rules.min_value(rentalyield.rentalValue, 1)]"
+                                required>
+                    </text-field>
                 </div>
               </div>
               <div class="row">

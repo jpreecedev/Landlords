@@ -2,18 +2,10 @@
   <div class="card-block">
     <div class="row">
       <div class="col-xs-12 col-md-6">
-        <v-menu lazy :nudge-left="100">
-          <v-text-field slot="activator"
-                        label="Actioned"
-                        v-model="checklistItem.payload"
-                        prepend-icon="date_range"
-                        required readonly>
-          </v-text-field>
-          <v-date-picker v-model="checklistItem.payload"
-                         @input="save()"
-                         scrollable>
-          </v-date-picker>
-        </v-menu>
+        <date-picker v-model="checklistItem.payload"
+                     @input="save()"
+                     label="Actioned">
+        </date-picker>
       </div>
     </div>
   </div>

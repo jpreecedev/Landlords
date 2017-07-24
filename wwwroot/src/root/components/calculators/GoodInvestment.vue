@@ -15,43 +15,43 @@
             <v-card-text>
               <div class="row">
                 <div class="col-xs-12">
-                  <v-text-field v-model="pricePaid"
-                                :rules="[$validation.rules.required, $validation.rules.min_value(pricePaid, 10000)]"
-                                label="Price paid"
-                                step="1"
-                                min="10000"
-                                type="number"
-                                prefix="£"
-                                required>
-                  </v-text-field>
+                  <text-field v-model="pricePaid"
+                              :rules="[$validation.rules.required, $validation.rules.min_value(pricePaid, 10000)]"
+                              label="Price paid"
+                              step="1"
+                              min="10000"
+                              type="number"
+                              prefix="£"
+                              required>
+                  </text-field>
                 </div>
               </div>
               <div class="row">
                 <div class="col-xs-12">
-                  <v-text-field v-model="annualInterestRate"
-                                :rules="[$validation.rules.required, $validation.rules.min_value(annualInterestRate, 0.1), $validation.rules.max_value(annualInterestRate, 20)]"
-                                label="Interest rate (annual)"
-                                step="0.1"
-                                min="0.1"
-                                max="20"
-                                type="number"
-                                suffix="%"
-                                required>
-                  </v-text-field>
+                  <text-field v-model="annualInterestRate"
+                              :rules="[$validation.rules.required, $validation.rules.min_value(annualInterestRate, 0.1), $validation.rules.max_value(annualInterestRate, 20)]"
+                              label="Interest rate (annual)"
+                              step="0.1"
+                              min="0.1"
+                              max="20"
+                              type="number"
+                              suffix="%"
+                              required>
+                  </text-field>
                 </div>
               </div>
               <div class="row">
                 <div class="col-xs-12">
-                  <v-text-field v-model="mortgageLength"
-                                :rules="[$validation.rules.required, $validation.rules.min_value(mortgageLength, 1), $validation.rules.max_value(mortgageLength, 50)]"
-                                label="Mortgage length"
-                                type="number"
-                                step="1"
-                                min="0"
-                                max="50"
-                                suffix="years"
-                                required>
-                  </v-text-field>
+                  <text-field v-model="mortgageLength"
+                              :rules="[$validation.rules.required, $validation.rules.min_value(mortgageLength, 1), $validation.rules.max_value(mortgageLength, 50)]"
+                              label="Mortgage length"
+                              type="number"
+                              step="1"
+                              min="0"
+                              max="50"
+                              suffix="years"
+                              required>
+                  </text-field>
                 </div>
               </div>
             </v-card-text>
@@ -61,15 +61,15 @@
             <v-card-text>
               <div class="row">
                 <div class="col-xs-12">
-                  <v-text-field v-model="expectedRentalIncome"
-                                :rules="[$validation.rules.required, $validation.rules.min_value(expectedRentalIncome, 0)]"
-                                label="Expected rental income"
-                                type="number"
-                                step="100"
-                                min="0"
-                                prefix="£"
-                                required>
-                  </v-text-field>
+                  <text-field v-model="expectedRentalIncome"
+                              :rules="[$validation.rules.required, $validation.rules.min_value(expectedRentalIncome, 0)]"
+                              label="Expected rental income"
+                              type="number"
+                              step="100"
+                              min="0"
+                              prefix="£"
+                              required>
+                  </text-field>
                 </div>
               </div>
               <div class="row">
@@ -126,22 +126,23 @@
             <v-card-text>
               <div class="row">
                 <div class="col-xs-12">
-                  <v-text-field type="number"
-                                step="1"
-                                label="Contingency"
-                                prefix="£"
-                                v-model="contingency">
-                  </v-text-field>
+                  <text-field type="number"
+                              step="1"
+                              label="Contingency"
+                              prefix="£"
+                              v-model="contingency">
+                  </text-field>
                 </div>
               </div>
               <div class="row">
                 <div class="col-xs-12">
-                  <v-text-field type="number"
-                                step="1"
-                                label="Other costs"
-                                prefix="£"
-                                v-model="otherCosts">
-                  </v-text-field>
+                  <text-field type="number"
+                              step="1"
+                              min="0"
+                              label="Other costs"
+                              prefix="£"
+                              v-model="otherCosts">
+                  </text-field>
                 </div>
               </div>
             </v-card-text>
@@ -155,14 +156,14 @@
             <v-card-text>
               <div class="row">
                 <div class="col-xs-12 col-md-9">
-                  <v-text-field type="number"
-                                step="1"
-                                min="0"
-                                max="100"
-                                label="Expected annual increase in value"
-                                suffix="%"
-                                v-model="anticipatedAnnualIncrease">
-                  </v-text-field>
+                  <text-field type="number"
+                              step="1"
+                              min="0"
+                              max="100"
+                              label="Expected annual increase in value"
+                              suffix="%"
+                              v-model="anticipatedAnnualIncrease">
+                  </text-field>
                 </div>
               </div>
             </v-card-text>
@@ -172,12 +173,13 @@
             <v-card-text>
               <div class="row">
                 <div class="col-xs-12">
-                  <v-text-field type="number"
-                                step="1"
-                                label="Agency fees"
-                                prefix="£"
-                                v-model="agencyFee">
-                  </v-text-field>
+                  <text-field type="number"
+                              step="1"
+                              min="0"
+                              label="Agency fees"
+                              prefix="£"
+                              v-model="agencyFee">
+                  </text-field>
                 </div>
               </div>
               <div class="row">
@@ -204,12 +206,13 @@
             <v-card-text>
               <div class="row">
                 <div class="col-xs-12">
-                  <v-text-field type="number"
-                                step="1"
-                                label="Maintenance fees"
-                                prefix="£"
-                                v-model="maintenanceFees">
-                  </v-text-field>
+                  <text-field type="number"
+                              step="1"
+                              min="0"
+                              label="Maintenance fees"
+                              prefix="£"
+                              v-model="maintenanceFees">
+                  </text-field>
                 </div>
               </div>
               <div class="row">
@@ -236,22 +239,24 @@
             <v-card-text>
               <div class="row">
                 <div class="col-xs-12">
-                  <v-text-field type="number"
-                                step="1"
-                                label="Buildings insurance (per year)"
-                                prefix="£"
-                                v-model="buildingsInsurance">
-                  </v-text-field>
+                  <text-field type="number"
+                              step="1"
+                              min="0"
+                              label="Buildings insurance (per year)"
+                              prefix="£"
+                              v-model="buildingsInsurance">
+                  </text-field>
                 </div>
               </div>
               <div class="row">
                 <div class="col-xs-12">
-                  <v-text-field type="number"
-                                step="1"
-                                label="Contents insurance (per year)"
-                                prefix="£"
-                                v-model="contentsInsurance">
-                  </v-text-field>
+                  <text-field type="number"
+                              step="1"
+                              min="0"
+                              label="Contents insurance (per year)"
+                              prefix="£"
+                              v-model="contentsInsurance">
+                  </text-field>
                 </div>
               </div>
             </v-card-text>

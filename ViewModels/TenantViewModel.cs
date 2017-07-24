@@ -39,6 +39,8 @@
             IsSmoker = tenant.IsSmoker;
             HasPets = tenant.HasPets;
             AdditionalInformation = tenant.AdditionalInformation;
+            IsAdult = tenant.IsAdult;
+            IsLeadTenant = tenant.IsLeadTenant;
 
             if (tenantAddresses != null)
             {
