@@ -62,9 +62,9 @@
                 <div class="col-xs-6">
                   <text-field v-model="address.street"
                               :value="address.street"
-                              :multi-line="true"
+                              :multiline="true"
                               :rows="1"
-                              :auto-grow="true"
+                              :autogrow="true"
                               :rules="[$validation.rules.required, $validation.rules.min_length(address.street, 2)]"
                               @input="updateAddress(index, addressIndex, address, 'street')"
                               label="Street address"
@@ -84,6 +84,7 @@
               <div class="row">
                 <div class="col-xs-12 col-md-4">
                   <select-list :items="counties"
+                               :rules="[$validation.rules.required]"
                                v-model="address.countyOrRegion"
                                @input="updateAddress(index, addressIndex, address, 'countyOrRegion')"
                                label="Select a county or region">
@@ -126,12 +127,12 @@
                 <div class="col-xs-6 col-md-2">
                   <text-field v-model="address.monthsAtAddress"
                               :value="address.monthsAtAddress"
-                              :rules="[$validation.rules.required, $validation.rules.min_value(address.monthsAtAddress, 0), $validation.rules.max_value(address.monthsAtAddress, 12)]"
+                              :rules="[$validation.rules.required, $validation.rules.min_value(address.monthsAtAddress, 0), $validation.rules.max_value(address.monthsAtAddress, 11)]"
                               @input="updateAddress(index, addressIndex, address, 'monthsAtAddress')"
                               label="Months"
                               type="number"
                               min="0"
-                              max="12"
+                              max="11"
                               step="1"
                               required>
                   </text-field>

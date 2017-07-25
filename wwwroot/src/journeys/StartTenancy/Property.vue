@@ -19,7 +19,6 @@
                      :rules="[$validation.rules.required]"
                      v-model="tenancy.tenancyType"
                      @input="updateField(tenancy, 'tenancyType')"
-                     item-value="id"
                      label="Select a tenancy type"
                      required>
         </select-list>

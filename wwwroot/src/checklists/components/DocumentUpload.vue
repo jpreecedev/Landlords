@@ -2,13 +2,13 @@
   <div>
     <div class="row">
       <div class="col-xs-12 col-md-6">
-        <v-text-field v-model="checklistItem.payload.comments"
-                      :multi-line="true"
-                      :rows="1"
-                      :auto-grow="true"
-                      @blur="save()"
-                      label="Comments">
-        </v-text-field>
+        <text-field v-model="checklistItem.payload.comments"
+                    :multiline="true"
+                    :rows="1"
+                    :autogrow="true"
+                    @blur="save()"
+                    label="Comments">
+        </text-field>
       </div>
       <div class="col-xs-12 col-md-6">
         <date-picker v-model="checklistItem.payload.actioned"

@@ -7,7 +7,7 @@
         public const string Agricultural = "Agricultural";
         public const string Assured = "Assured";
         public const string AST = "AST";
-        public const string CommonLaw = "CommonLaw";
+        public const string CommonLaw = "Common Law";
         public const string License = "License";
         public const string Regulated = "Regulated";
 

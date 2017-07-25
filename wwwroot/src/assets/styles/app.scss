@@ -95,7 +95,11 @@ p {
 
 .expansion-panel__body {
   background-color: #fff;
-  padding: 1rem 2rem;
+  padding: 1rem;
+
+  @include tablet {
+    padding: 1rem 2rem;
+  }
 
   .card__text {
     background-color: #fff;
@@ -201,7 +205,10 @@ p {
   border: 1px solid #d5d5d5;
 
   .stepper__content {
-    padding: 2rem;
+    padding: 2rem 1rem;
+    @include tablet {
+      padding: 2rem;
+    }
   }
 
   .stepper__header {

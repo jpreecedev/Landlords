@@ -15,7 +15,7 @@
             }
 
             Value = key;
-            Text = key.SplitByCapitals();
+            Text = key;
         }
 
         public string Value { get; set; }

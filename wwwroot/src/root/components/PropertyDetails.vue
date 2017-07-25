@@ -1,5 +1,8 @@
 <template>
   <div>
+    <notification ref="notification"
+                  context="error">
+    </notification>
     <loader :loading="isLoading"></loader>
     <div v-if="!isLoading">
       <header>
@@ -51,54 +54,47 @@
                             v-model="propertyDetails.propertyType"
                             label="Property type">
                   </v-select>
-                  <v-text-field v-model="propertyDetails.bedrooms"
-                                label="Number of bedrooms"
-                                type="number">
-                  </v-text-field>
+                  <text-field v-model="propertyDetails.bedrooms"
+                              label="Number of bedrooms"
+                              type="number">
+                  </text-field>
                   <v-select :items="furnishings"
                             :rules="[$validation.rules.required]"
                             v-model="propertyDetails.furnishing"
                             label="Furnishings">
                   </v-select>
-                  <v-menu lazy :nudge-left="100">
-                    <v-text-field slot="activator"
-                                  label="Construction date"
-                                  v-model="propertyDetails.constructionDate"
-                                  prepend-icon="date_range"
-                                  required readonly>
-                    </v-text-field>
-                    <v-date-picker v-model="propertyDetails.constructionDate"
-                                    scrollable>
-                    </v-date-picker>
-                  </v-menu>
+                  <date-picker v-model="propertyDetails.constructionDate"
+                                label="Construction date"
+                                :rules="[$validation.rules.required]">
+                  </date-picker>
                 </v-card-text>
                 <v-card-title class="title">
                   Address
                 </v-card-title>
                 <v-card-text>
-                  <v-text-field v-model="propertyDetails.propertyStreetAddress"
-                                :multi-line="true"
-                                :rows="3"
-                                :auto-grow="true"
-                                :rules="[$validation.rules.required, $validation.rules.min_length(propertyDetails.propertyStreetAddress, 2), $validation.rules.max_length(propertyDetails.propertyStreetAddress, 255)]"
-                                label="Street address"
-                                required>
-                  </v-text-field>
-                  <v-text-field v-model="propertyDetails.propertyTownOrCity"
-                                :rules="[$validation.rules.required, $validation.rules.min_length(propertyDetails.propertyTownOrCity, 2), $validation.rules.max_length(propertyDetails.propertyTownOrCity, 255)]"
-                                label="Town or city"
-                                required>
-                  </v-text-field>
+                  <text-field v-model="propertyDetails.propertyStreetAddress"
+                              :multiline="true"
+                              :rows="3"
+                              :autogrow="true"
+                              :rules="[$validation.rules.required, $validation.rules.min_length(propertyDetails.propertyStreetAddress, 2), $validation.rules.max_length(propertyDetails.propertyStreetAddress, 255)]"
+                              label="Street address"
+                              required>
+                  </text-field>
+                  <text-field v-model="propertyDetails.propertyTownOrCity"
+                              :rules="[$validation.rules.required, $validation.rules.min_length(propertyDetails.propertyTownOrCity, 2), $validation.rules.max_length(propertyDetails.propertyTownOrCity, 255)]"
+                              label="Town or city"
+                              required>
+                  </text-field>
                   <v-select :items="counties"
                             v-model="propertyDetails.propertyCountyOrRegion"
                             label="County or region"
                             required>
                   </v-select>
-                  <v-text-field v-model="propertyDetails.propertyPostcode"
-                                :rules="[$validation.rules.required, $validation.rules.min_length(propertyDetails.propertyPostcode, 5), $validation.rules.max_length(propertyDetails.propertyPostcode, 7)]"
-                                label="Postcode"
-                                required>
-                  </v-text-field>
+                  <text-field v-model="propertyDetails.propertyPostcode"
+                              :rules="[$validation.rules.required, $validation.rules.min_length(propertyDetails.propertyPostcode, 5), $validation.rules.max_length(propertyDetails.propertyPostcode, 7)]"
+                              label="Postcode"
+                              required>
+                  </text-field>
                   <v-select :items="countries"
                             :rules="[$validation.rules.required]"
                             v-model="propertyDetails.propertyCountry"
@@ -120,49 +116,42 @@
                 <v-card-text>
                   <div class="row">
                     <div class="col-xs-12 col-md-6">
-                      <v-menu lazy :nudge-left="100">
-                        <v-text-field slot="activator"
-                                      label="Purchase date"
-                                      v-model="propertyDetails.purchaseDate"
-                                      prepend-icon="date_range"
-                                      required readonly>
-                        </v-text-field>
-                        <v-date-picker v-model="propertyDetails.purchaseDate"
-                                      scrollable>
-                        </v-date-picker>
-                      </v-menu>
+                      <date-picker v-model="propertyDetails.purchaseDate"
+                                  label="Purchase date"
+                                  :rules="[$validation.rules.required]">
+                      </date-picker>
                     </div>
                     <div class="col-xs-12 col-md-6">
-                      <v-text-field v-model="propertyDetails.purchasePrice"
-                                    label="Purchase price"
-                                    prefix="£"
-                                    type="number">
-                      </v-text-field>
+                      <text-field v-model="propertyDetails.purchasePrice"
+                                  label="Purchase price"
+                                  prefix="£"
+                                  type="number">
+                      </text-field>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-xs-12 col-md-6">
-                      <v-text-field v-model="propertyDetails.mortgageAmount"
-                                    label="Mortgage amount"
-                                    prefix="£"
-                                    type="number">
-                      </v-text-field>
+                      <text-field v-model="propertyDetails.mortgageAmount"
+                                  label="Mortgage amount"
+                                  prefix="£"
+                                  type="number">
+                      </text-field>
                     </div>
                     <div class="col-xs-12 col-md-6">
-                      <v-text-field v-model="propertyDetails.interestRate"
-                                    label="Interest rate"
-                                    suffix="%"
-                                    type="number">
-                      </v-text-field>
+                      <text-field v-model="propertyDetails.interestRate"
+                                  label="Interest rate"
+                                  suffix="%"
+                                  type="number">
+                      </text-field>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-xs-12 col-md-6">
-                      <v-text-field v-model="propertyDetails.monthlyPayment"
-                                    label="Monthly repayment"
-                                    prefix="£"
-                                    type="number">
-                      </v-text-field>
+                      <text-field v-model="propertyDetails.monthlyPayment"
+                                  label="Monthly repayment"
+                                  prefix="£"
+                                  type="number">
+                      </text-field>
                     </div>
                     <div class="col-xs-12 col-md-6">
                       <v-select :items="mortgageProviders"
@@ -172,17 +161,9 @@
                     </div>
                   </div>
                   <div>
-                    <v-menu lazy :nudge-left="100">
-                      <v-text-field slot="activator"
-                                    label="Current deal expiration date"
-                                    v-model="propertyDetails.currentDealExpirationDate"
-                                    prepend-icon="date_range"
-                                    required readonly>
-                      </v-text-field>
-                      <v-date-picker v-model="propertyDetails.currentDealExpirationDate"
-                                    scrollable>
-                      </v-date-picker>
-                    </v-menu>
+                    <date-picker v-model="propertyDetails.currentDealExpirationDate"
+                                 label="Current deal expiration date">
+                    </date-picker>
                   </div>
                 </v-card-text>
                 <v-card-title class="title">
@@ -191,11 +172,11 @@
                 <v-card-text>
                   <div class="row">
                     <div class="col-xs-12 col-md-6">
-                      <v-text-field v-model="propertyDetails.targetRent"
-                                    label="Target rent"
-                                    prefix="£"
-                                    type="number">
-                      </v-text-field>
+                      <text-field v-model="propertyDetails.targetRent"
+                                  label="Target rent"
+                                  prefix="£"
+                                  type="number">
+                      </text-field>
                     </div>
                     <div class="col-xs-12 col-md-6">
                       <v-select :items="paymentTerms"
@@ -211,24 +192,16 @@
                 <v-card-text>
                   <div class="row">
                     <div class="col-xs-12 col-md-6">
-                      <v-menu lazy :nudge-left="100">
-                        <v-text-field slot="activator"
-                                      label="Selling date"
-                                      v-model="propertyDetails.sellingDate"
-                                      prepend-icon="date_range"
-                                      required readonly>
-                        </v-text-field>
-                        <v-date-picker v-model="propertyDetails.sellingDate"
-                                      scrollable>
-                        </v-date-picker>
-                      </v-menu>
+                      <date-picker v-model="propertyDetails.sellingDate"
+                                  label="Selling date">
+                      </date-picker>
                     </div>
                     <div class="col-xs-12 col-md-6">
-                      <v-text-field v-model="propertyDetails.sellingPrice"
-                                    label="Selling price"
-                                    prefix="£"
-                                    type="number">
-                      </v-text-field>
+                      <text-field v-model="propertyDetails.sellingPrice"
+                                  label="Selling price"
+                                  prefix="£"
+                                  type="number">
+                      </text-field>
                     </div>
                   </div>
                 </v-card-text>
@@ -257,7 +230,6 @@ export default {
     return {
       permissions: this.$store.state.permissions,
       isUploading: false,
-      errors: [],
       isLoading: false,
       isSaving: false,
       progress: 0,
@@ -309,29 +281,26 @@ export default {
   },
   methods: {
     validateBeforeSubmit () {
-      this.errors = []
-      this.isSaving = true
-
-      this.$http.post(`/api/propertyDetails?entityId=${this.propertyDetails.id}`, { ...this.propertyDetails })
+      this.$validation.validate(this.$children)
         .then(() => {
-          this.isSaving = false
-          this.$router.push('/manager/property-list')
+          this.isSaving = true
+          this.$http.post(`/api/propertyDetails?entityId=${this.propertyDetails.id}`, { ...this.propertyDetails })
+            .then(() => {
+              this.isSaving = false
+              this.$router.push('/manager/property-list')
+            })
+            .catch(response => {
+              let validationResult = utils.getFormValidationErrors(response)
+              validationResult.errors.forEach(validationError => {
+                console.log('ERROR', validationError.key, validationError.messages[0], 'required')
+              })
+            })
+            .finally(() => {
+              this.isSaving = false
+            })
         })
-        .catch(response => {
-          this.isSaving = false
-          let validationResult = utils.getFormValidationErrors(response)
-          validationResult.errors.forEach(validationError => {
-            this.errors.push({
-              key: validationError.key,
-              message: validationError.messages[0]
-            })
-          })
-          if (validationResult.status) {
-            this.errors.push({
-              key: 'GenericError',
-              message: validationResult.status
-            })
-          }
+        .catch(() => {
+          this.$refs.notification.show('Please fix the form validation issues before continuing.  Errors are highlighted in red.')
         })
     },
     filesChange (fieldName, fileList) {

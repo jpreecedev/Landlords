@@ -7,7 +7,7 @@
         public const string Santander = "Santander";
         public const string Halifax = "Halifax";
         public const string Nationwide = "Nationwide";
-        public const string LloydsBank = "LloydsBank";
+        public const string LloydsBank = "Lloyds Bank";
 
         public static LLDataType[] GetDefaultAccountProviders()
         {

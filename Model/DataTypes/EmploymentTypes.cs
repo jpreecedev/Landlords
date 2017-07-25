@@ -5,7 +5,7 @@ namespace Model.DataTypes
     public static class EmploymentTypes
     {
         public const string Employed = "Employed";
-        public const string SelfEmployed = "SelfEmployed";
+        public const string SelfEmployed = "Self Employed";
         public const string Retired = "Retired";
         public const string Homemaker = "Homemaker";
         public const string Unemployed = "Unemployed";

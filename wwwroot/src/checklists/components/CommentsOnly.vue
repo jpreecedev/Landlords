@@ -2,9 +2,9 @@
   <div class="row">
     <div class="col-xs-12">
       <text-field v-model="checklistItem.payload.comments"
-                  :multi-line="true"
+                  :multiline="true"
                   :rows="1"
-                  :auto-grow="true"
+                  :autogrow="true"
                   @blur="save()"
                   label="Comments">
       </text-field>

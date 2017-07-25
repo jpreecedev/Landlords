@@ -5,11 +5,17 @@ let defaultAddress = {
   street: null,
   townOrCity: null,
   postcode: null,
+  countyOrRegion: null,
   country: null,
   yearsAtAddress: 0,
   monthsAtAddress: 0
 }
-let defaultContact = {}
+let defaultContact = {
+  name: null,
+  relationship: null,
+  mainContactNumber: null,
+  secondaryContactNumber: null
+}
 let defaultTenant = {
   title: null,
   firstName: null,
@@ -23,7 +29,15 @@ let defaultTenant = {
   addresses: [Object.assign({}, defaultAddress)],
   contacts: [Object.assign({}, defaultContact)],
   isSmoker: false,
-  hasPets: false
+  hasPets: false,
+  employmentType: null,
+  occupation: null,
+  companyName: null,
+  workAddress: null,
+  workContactNumber: null,
+  drivingLicenseReference: null,
+  passportReference: null,
+  additionalInformation: null
 }
 
 let newTenancy = {
@@ -31,7 +45,7 @@ let newTenancy = {
   tenancy: {
     startDate: moment().format('YYYY-MM-DD'),
     endDate: moment().add(12, 'M').subtract(1, 'day').format('YYYY-MM-DD'),
-    rentalAmount: null,
+    rentalAmount: 0,
     rentalFrequency: null,
     rentalPaymentReference: null,
     tenancyType: null,
