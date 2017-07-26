@@ -35,7 +35,7 @@
       </v-data-table>
     </v-card>
 
-    <v-btn primary v-if="permissions.PD_New" type="button" class="mt-4" @click="addProperty()" :loading="isAddingProperty">Add a property</v-btn>
+    <v-btn primary v-if="permissions.PD_New" type="button" class="mt-4 no-left-margin" @click="addProperty()" :loading="isAddingProperty">Add a property</v-btn>
 
   </div>
 </template>

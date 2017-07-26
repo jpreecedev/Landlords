@@ -4,7 +4,7 @@
     <div v-if="!isLoading">
       <header>
         <h1 class="headline primary--text">Property details</h1>
-        <p class="display-2 grey--text text--darken-1">Complete as much information as you can about this property so that we can personalise your experience</p>
+        <p class="display-2 grey--text text--darken-1">Complete as much information as you can about this property so that we can personalise your dashboard</p>
         <p class="subheading">You can upload pictures by clicking the camera.</p>
       </header>
       <form @submit.prevent="validateBeforeSubmit" role="form" enctype="multipart/form-data" novalidate>
@@ -207,7 +207,7 @@
           </div>
           <div class="row mt-3">
             <div class="col-xs-12">
-              <v-btn primary v-if="permissions.PD_Update" type="submit" :loading="isSaving">Save</v-btn>
+              <v-btn primary class="no-left-margin" v-if="permissions.PD_Update" type="submit" :loading="isSaving">Save</v-btn>
               <v-btn flat v-if="permissions.PD_Update" @click="reset()">Reset</v-btn>
             </div>
           </div>

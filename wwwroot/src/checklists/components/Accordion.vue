@@ -94,7 +94,7 @@ export default {
 
   .display-text {
     display: inline-block;
-    margin-top: 5px;
+    margin-top: 1.625rem;
   }
 
 </style>

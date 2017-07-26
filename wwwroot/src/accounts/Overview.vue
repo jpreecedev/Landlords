@@ -34,7 +34,7 @@
 
     <v-btn primary
            v-if="permissions.AC_New"
-           class="mt-4"
+           class="mt-4 no-left-margin"
            @click="addAccount()"
            :loading="isAddingAccount">Add an account</v-btn>
 
