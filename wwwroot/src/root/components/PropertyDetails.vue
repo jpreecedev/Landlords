@@ -16,15 +16,15 @@
             <div v-if="permissions.PI_Upload" class="property-image">
               <label>
                 <input type="file" accept="image/x-png,image/gif,image/jpeg" multiple @change="filesChange($event.target.name, $event.target.files)" name="files">
-                <div class="thumbnail">
+                <div class="property-image-thumbnail">
                   <img class="placeholder" src="../../assets/images/placeholder.png" alt="Add more images...">
                 </div>
               </label>
             </div>
             <div class="property-image" v-for="(propertyImage, index) in propertyDetails.propertyImages" :key="index">
-              <div class="thumbnail">
+              <div class="property-image-thumbnail">
                 <img v-if="propertyImage.fileName" :src="'/static/uploads/' + propertyDetails.portfolioId + '/' + propertyImage.fileName" :alt="propertyImage.fileName">
-                <div v-if="permissions.PI_Delete" class="overlay">
+                <div v-if="permissions.PI_Delete" class="property-image-overlay">
                   <v-btn warning type="button" @click="deleteImage(propertyImage)">Delete</v-btn>
                 </div>
               </div>
@@ -325,7 +325,6 @@ export default {
         })
     },
     deleteImage (propertyImage) {
-      debugger
       if (confirm('Are you sure you want to delete this image?')) {
         this.$http.delete(`/api/propertyimage?entityId=${propertyImage.id}`)
           .then(() => {
