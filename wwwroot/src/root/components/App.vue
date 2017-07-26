@@ -2,6 +2,7 @@
   <v-app light :class="{ landingPage: $route.path === '/' }">
     <app-nav></app-nav>
     <app-header v-if="$route.path === '/'"></app-header>
+    <notification ref="notification"></notification>
     <main :class="{ contained: $route.path !== '/', wide: $route.path.indexOf('/accounts/transactions') > -1 }">
       <transition name="fade">
         <router-view></router-view>
@@ -17,7 +18,12 @@ import AppHeader from './Header.vue'
 
 export default {
   name: 'app',
-  components: { AppNav, AppFooter, AppHeader }
+  components: { AppNav, AppFooter, AppHeader },
+  created () {
+    this.$bus.$on('SHOW_NOTIFICATION', data => {
+      this.$refs.notification.show(data.message, data.context, data.timeout)
+    })
+  }
 }
 </script>
 

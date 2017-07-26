@@ -1,8 +1,5 @@
 <template>
   <div>
-    <notification ref="notification"
-                  context="error">
-    </notification>
     <loader :loading="isLoading"></loader>
     <div v-if="!isLoading">
       <header>
@@ -169,7 +166,10 @@
               })
           })
           .catch(() => {
-            this.$refs.notification.show('Please fix the form validation issues before continuing.  Errors are highlighted in red.')
+            this.$bus.$emit('SHOW_NOTIFICATION', {
+              message: 'Please fix the form validation issues before continuing.  Errors are highlighted in red.',
+              context: 'error'
+            })
           })
       },
       resendVerificationEmail () {

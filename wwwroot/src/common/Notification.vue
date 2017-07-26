@@ -20,23 +20,19 @@
 <script>
   export default {
     name: 'name',
-    props: {
-      context: {
-        type: String,
-        default: 'primary',
-        required: false
-      }
-    },
     data () {
       return {
+        context: 'error',
         timeout: 15000,
         snackbar: false,
         text: null
       }
     },
     methods: {
-      show (text) {
+      show (text, context = 'error', timeout = 5000) {
         this.text = text
+        this.context = context
+        this.timeout = timeout
         this.snackbar = true
       }
     }

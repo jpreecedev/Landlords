@@ -1,8 +1,6 @@
 <template>
   <section>
     <h1 class="display-1">Start a new tenancy</h1>
-    <notification ref="notification"
-                  context="error">
     </notification>
     <v-stepper v-if="newTenancy && newTenancy.step" v-model="newTenancy.step">
       <v-stepper-header>
@@ -94,7 +92,10 @@
             }
           })
           .catch(() => {
-            this.$refs.notification.show('Please fix the form validation issues before continuing.  Errors are highlighted in red.')
+            this.$bus.$emit('SHOW_NOTIFICATION', {
+              message: 'Please fix the form validation issues before continuing.  Errors are highlighted in red.',
+              context: 'error'
+            })
           })
       },
       back () {

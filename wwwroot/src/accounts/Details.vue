@@ -1,8 +1,5 @@
 <template>
   <div>
-    <notification ref="notification"
-                  context="error">
-    </notification>
     <header>
       <h1 class="headline primary--text">Account details</h1>
       <p class="display-2 grey--text text--darken-1">Your bank account or other financial account details</p>
@@ -147,7 +144,10 @@ export default {
             })
         })
         .catch(() => {
-          this.$refs.notification.show('Please fix the form validation issues before continuing.  Errors are highlighted in red.')
+          this.$bus.$emit('SHOW_NOTIFICATION', {
+            message: 'Please fix the form validation issues before continuing.  Errors are highlighted in red.',
+            context: 'error'
+          })
         })
     },
     reset () {
