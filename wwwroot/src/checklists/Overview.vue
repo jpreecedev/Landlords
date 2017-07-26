@@ -30,8 +30,8 @@
               </div>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn primary flat v-if="permissions.CL_GetById" @click.native="$router.push({name: 'editor', params: {checklistId: checklist.id}})">View</v-btn>
-                <v-btn flat v-if="permissions.CL_Archive && !checklist.isArchived" @click.native="archive(checklist)">Archive</v-btn>
+                <v-btn primary flat v-if="permissions.CL_GetById" @click="$router.push({name: 'editor', params: {checklistId: checklist.id}})">View</v-btn>
+                <v-btn flat v-if="permissions.CL_Archive && !checklist.isArchived" @click="archive(checklist)">Archive</v-btn>
               </v-card-actions>
             </div>
           </div>
@@ -40,7 +40,7 @@
     </div>
 
     <div class="mt-3" v-if="permissions.CL_Archived && !hasArchivedLists">
-      <v-btn primary @click.native="getArchived()" :loading="isLoadingArchived" class="no-left-margin">Show Archived</v-btn>
+      <v-btn primary @click="getArchived()" :loading="isLoadingArchived" class="no-left-margin">Show Archived</v-btn>
     </div>
 
     <div class="row mt-5" v-if="permissions.CL_Create && overview.availableChecklists && overview.availableChecklists.length">
@@ -73,7 +73,7 @@
           </v-card-text>
           <v-card-actions v-if="permissions.CL_Create">
             <v-spacer></v-spacer>
-            <v-btn primary flat @click.native="createChecklistInstance(selectedChecklist, selectedProperty)">Create checklist</v-btn>
+            <v-btn primary flat @click="createChecklistInstance(selectedChecklist, selectedProperty)">Create checklist</v-btn>
           </v-card-actions>
         </v-card>
       </div>

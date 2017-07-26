@@ -130,14 +130,14 @@
                 </div>
                 <div class="row" v-if="contactIndex !== 0">
                   <div class="col-xs-12">
-                    <v-btn primary error @click.native="deleteTenantContact(index, contactIndex)">
+                    <v-btn primary error @click="deleteTenantContact(index, contactIndex)">
                       Delete Contact
                     </v-btn>
                   </div>
                 </div>
               </v-expansion-panel-content>
             </v-expansion-panel>
-            <v-btn @click.native="addTenantContact(index)">Add another contact</v-btn>
+            <v-btn @click="addTenantContact(index)">Add another contact</v-btn>
           </div>
         </div>
         <div class="subheading mt-3">Other</div>

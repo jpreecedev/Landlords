@@ -23,9 +23,9 @@
             </div>
             <div class="property-image" v-for="(propertyImage, index) in propertyDetails.propertyImages" :key="index">
               <div class="thumbnail">
-                <img v-if="propertyImage.fileName" :src="'/static/uploads/' + propertyDetails.portfolioId + '/' + propertyImage.fileName" :alt="propertyImage.fileName" :title="propertyImage.fileName">
+                <img v-if="propertyImage.fileName" :src="'/static/uploads/' + propertyDetails.portfolioId + '/' + propertyImage.fileName" :alt="propertyImage.fileName">
                 <div v-if="permissions.PI_Delete" class="overlay">
-                  <v-btn warning type="button" @click.native="deleteImage(propertyImage)">Delete</v-btn>
+                  <v-btn warning type="button" @click="deleteImage(propertyImage)">Delete</v-btn>
                 </div>
               </div>
             </div>
@@ -325,6 +325,7 @@ export default {
         })
     },
     deleteImage (propertyImage) {
+      debugger
       if (confirm('Are you sure you want to delete this image?')) {
         this.$http.delete(`/api/propertyimage?entityId=${propertyImage.id}`)
           .then(() => {

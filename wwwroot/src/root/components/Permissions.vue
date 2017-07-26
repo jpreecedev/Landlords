@@ -37,8 +37,8 @@
         <div class="col-xs">
           <div class="h-100 d-flex align-items-center justify-content-center">
             <div>
-              <v-btn outline @click.native="removePermission" :disabled="!selectedUser || !allocatedPermissions.length" type="button" class="d-block mb-3 w-100">&#10007;</v-btn>
-              <v-btn outline @click.native="addPermission" :disabled="!selectedUser || !selectedPermissions.length" type="button" class="d-block w-100">&rarr;</v-btn>
+              <v-btn outline @click="removePermission" :disabled="!selectedUser || !allocatedPermissions.length" type="button" class="d-block mb-3 w-100">&#10007;</v-btn>
+              <v-btn outline @click="addPermission" :disabled="!selectedUser || !selectedPermissions.length" type="button" class="d-block w-100">&rarr;</v-btn>
             </div>
           </div>
         </div>

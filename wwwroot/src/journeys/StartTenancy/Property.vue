@@ -44,9 +44,9 @@
     </div>
     <div class="row">
       <div class="col-xs-12">
-        <v-btn :disabled="!tenancy.startDate" @click.native="selectPeriod(3)">3 months</v-btn>
-        <v-btn :disabled="!tenancy.startDate" @click.native="selectPeriod(6)">6 months</v-btn>
-        <v-btn :disabled="!tenancy.startDate" @click.native="selectPeriod(12)">12 months</v-btn>
+        <v-btn :disabled="!tenancy.startDate" @click="selectPeriod(3)">3 months</v-btn>
+        <v-btn :disabled="!tenancy.startDate" @click="selectPeriod(6)">6 months</v-btn>
+        <v-btn :disabled="!tenancy.startDate" @click="selectPeriod(12)">12 months</v-btn>
       </div>
     </div>
   </div>

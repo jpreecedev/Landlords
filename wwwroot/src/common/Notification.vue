@@ -13,7 +13,7 @@
               :secondary="context === 'secondary'"
               v-model="snackbar">
     {{ text }}
-    <v-btn dark flat @click.native="snackbar = false">Dismiss</v-btn>
+    <v-btn dark flat @click="snackbar = false">Dismiss</v-btn>
   </v-snackbar>
 </template>
 

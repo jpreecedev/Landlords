@@ -7,7 +7,7 @@
                   :required="required"
                   :disabled="disabled"
                   ref="fileTextField"
-                  @click.native="onFocus">
+                  @click="onFocus">
     </v-text-field>
     <input type="file"
            :accept="accept"

@@ -140,7 +140,7 @@
               </div>
             </v-expansion-panel-content>
           </v-expansion-panel>
-          <v-btn @click.native="addTenantAddress(index)">Add another address</v-btn>
+          <v-btn @click="addTenantAddress(index)">Add another address</v-btn>
         </template>
         <template v-if="tenant.isAdult">
           <div class="subheading mt-4">And finally, their contact details</div>
@@ -175,7 +175,7 @@
         </template>
         <div class="row" v-if="index !== 0">
           <div class="col-xs-12">
-            <v-btn primary error @click.native="deleteOccupier(index)">
+            <v-btn primary error @click="deleteOccupier(index)">
               Delete
               &nbsp;<tenant-type :tenant="tenant"></tenant-type>
             </v-btn>
@@ -185,8 +185,8 @@
     </v-expansion-panel>
 
     <div class="expansion-panel__buttons">
-      <v-btn primary @click.native="addOccupier(true)">Add adult tenant</v-btn>
-      <v-btn @click.native="addOccupier(false)">Add child</v-btn>
+      <v-btn primary @click="addOccupier(true)">Add adult tenant</v-btn>
+      <v-btn @click="addOccupier(false)">Add child</v-btn>
     </div>
 
   </div>

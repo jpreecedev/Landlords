@@ -43,7 +43,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn primary flat type="submit" :loading="registering" id="register" name="register">Register</v-btn>
-          <v-btn flat type="reset" @click.native="reset()">Reset</v-btn>
+          <v-btn flat type="reset" @click="reset()">Reset</v-btn>
         </v-card-actions>
       </v-card>
     </form>

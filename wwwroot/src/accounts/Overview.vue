@@ -35,7 +35,7 @@
     <v-btn primary
            v-if="permissions.AC_New"
            class="mt-4"
-           @click.native="addAccount()"
+           @click="addAccount()"
            :loading="isAddingAccount">Add an account</v-btn>
 
   </div>

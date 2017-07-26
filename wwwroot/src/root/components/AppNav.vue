@@ -8,28 +8,28 @@
     </v-toolbar-title>
     <v-spacer></v-spacer>
     <v-toolbar-items class="hidden-xs hidden-sm visible-md visible-lg">
-      <v-btn flat v-if="auth.isLoggedIn" @click.native="$router.push('/dashboard')" :class="{'active': $route.path.startsWith('/dashboard')}">
+      <v-btn flat v-if="auth.isLoggedIn" @click="$router.push('/dashboard')" :class="{'active': $route.path.startsWith('/dashboard')}">
         Dashboard
       </v-btn>
-      <v-btn flat v-if="permissions.LL_List" @click.native="$router.push('/agency/landlord-list')" :class="{'active': $route.path.startsWith('/agency/landlord-list')}">
+      <v-btn flat v-if="permissions.LL_List" @click="$router.push('/agency/landlord-list')" :class="{'active': $route.path.startsWith('/agency/landlord-list')}">
         Landlord List
       </v-btn>
-      <v-btn flat v-if="permissions.PD_GetList" @click.native="$router.push('/manager/property-list')" :class="{'active': $route.path.startsWith('/manager/property-list') || $route.path.startsWith('/manager/property-details')}">
+      <v-btn flat v-if="permissions.PD_GetList" @click="$router.push('/manager/property-list')" :class="{'active': $route.path.startsWith('/manager/property-list') || $route.path.startsWith('/manager/property-details')}">
         Properties
       </v-btn>
-      <v-btn flat v-if="permissions.TE_GetListById" @click.native="$router.push('/tenants/')" :class="{'active': $route.path.startsWith('/tenants')}">
+      <v-btn flat v-if="permissions.TE_GetListById" @click="$router.push('/tenants/')" :class="{'active': $route.path.startsWith('/tenants')}">
         Tenants
       </v-btn>
-      <v-btn flat v-if="permissions.PE_List" @click.native="$router.push('/permissions')" :class="{'active': $route.path.startsWith('/permissions')}">
+      <v-btn flat v-if="permissions.PE_List" @click="$router.push('/permissions')" :class="{'active': $route.path.startsWith('/permissions')}">
         Permissions
       </v-btn>
-      <v-btn flat v-if="permissions.CL_Overview" @click.native="$router.push('/checklists/')" :class="{'active': $route.path.startsWith('/checklists')}">
+      <v-btn flat v-if="permissions.CL_Overview" @click="$router.push('/checklists/')" :class="{'active': $route.path.startsWith('/checklists')}">
         Checklists
       </v-btn>
-      <v-btn flat v-if="!auth.isLoggedIn" @click.native="$router.push('/registration/')" :class="{'active': $route.path.startsWith('/registration')}">
+      <v-btn flat v-if="!auth.isLoggedIn" @click="$router.push('/registration/')" :class="{'active': $route.path.startsWith('/registration')}">
         Log in or Register
       </v-btn>
-      <v-btn flat v-if="permissions.AC_Overview" @click.native="$router.push('/accounts/')" :class="{'active': $route.path.startsWith('/accounts')}">
+      <v-btn flat v-if="permissions.AC_Overview" @click="$router.push('/accounts/')" :class="{'active': $route.path.startsWith('/accounts')}">
         Accounts
       </v-btn>
 
@@ -38,19 +38,19 @@
           Calculators
         </v-btn>
         <v-list>
-          <v-list-tile @click.native="$router.push('/calculators/rental-yield')">
+          <v-list-tile @click="$router.push('/calculators/rental-yield')">
             <v-list-tile-title>Rental Yield</v-list-tile-title>
           </v-list-tile>
-          <v-list-tile @click.native="$router.push('/calculators/monthly-payment')">
+          <v-list-tile @click="$router.push('/calculators/monthly-payment')">
             <v-list-tile-title>Monthly Payment</v-list-tile-title>
           </v-list-tile>
-          <v-list-tile @click.native="$router.push('/calculators/how-much-can-i-borrow')">
+          <v-list-tile @click="$router.push('/calculators/how-much-can-i-borrow')">
             <v-list-tile-title>How much can I borrow?</v-list-tile-title>
           </v-list-tile>
-          <v-list-tile @click.native="$router.push('/calculators/is-this-property-a-good-investment')">
+          <v-list-tile @click="$router.push('/calculators/is-this-property-a-good-investment')">
             <v-list-tile-title>Is this property a good investment?</v-list-tile-title>
           </v-list-tile>
-          <v-list-tile @click.native="$router.push('/calculators/return-on-investment')">
+          <v-list-tile @click="$router.push('/calculators/return-on-investment')">
             <v-list-tile-title>Return on investment (ROI)</v-list-tile-title>
           </v-list-tile>
         </v-list>
@@ -61,15 +61,15 @@
           <v-icon>more_vert</v-icon>
         </v-btn>
         <v-list>
-          <v-list-tile @click.native="logout()">
+          <v-list-tile @click="logout()">
             <v-list-tile-title>Log out</v-list-tile-title>
           </v-list-tile>
-          <v-list-tile @click.native="$router.push('/watchlist')" v-if="permissions.SP_GetListById">
+          <v-list-tile @click="$router.push('/watchlist')" v-if="permissions.SP_GetListById">
             <v-list-tile-title>
               My shortlist
             </v-list-tile-title>
           </v-list-tile>
-          <v-list-tile @click.native="$router.push('/profile')" v-if="permissions.P_View">
+          <v-list-tile @click="$router.push('/profile')" v-if="permissions.P_View">
             <v-list-tile-title>View profile</v-list-tile-title>
           </v-list-tile>
         </v-list>

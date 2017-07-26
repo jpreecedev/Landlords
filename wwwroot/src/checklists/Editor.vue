@@ -17,7 +17,7 @@
       <div class="row mt-5" v-if="permissions.CL_DeleteById">
         <div class="col-xs-12 col-md-4 col-md-offset-8 text-center">
           <p class="red--text">Danger Zone!! You can delete this checklist.<br/>Deleting is permanent and cannot be undone!</p>
-          <v-btn error @click.native="deleteChecklist()" :loading="isDeleting">Delete Checklist</v-btn>
+          <v-btn error @click="deleteChecklist()" :loading="isDeleting">Delete Checklist</v-btn>
         </div>
       </div>
     </div>
