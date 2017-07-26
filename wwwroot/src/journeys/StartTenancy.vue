@@ -17,6 +17,8 @@
         <v-divider></v-divider>
         <v-stepper-step step="5" :complete="newTenancy.step > 5">Payment</v-stepper-step>
         <v-divider></v-divider>
+        <v-stepper-step step="6" :complete="newTenancy.step > 6">Finished</v-stepper-step>
+        <v-divider></v-divider>
       </v-stepper-header>
       <v-stepper-content ref="content1" step="1">
         <announcement></announcement>
@@ -33,14 +35,17 @@
       <v-stepper-content ref="content5" step="5">
         <payments :rentalFrequencies="viewData.rentalFrequencies"></payments>
       </v-stepper-content>
+      <v-stepper-content ref="content6" step="6">
+        <finished></finished>
+      </v-stepper-content>
     </v-stepper>
 
     <div class="row">
       <div class="col-xs-6">
-        <v-btn flat @click="back()" v-if="newTenancy.step !== 1">Go back</v-btn>
+        <v-btn flat @click="back()" v-if="newTenancy.step !== 1 && newTenancy.step !== 6">Go back</v-btn>
       </div>
       <div class="col-xs-6 text-right">
-        <v-btn primary @click="next()">{{ newTenancy.step === 5 ? 'Finished' : 'Continue' }}</v-btn>
+        <v-btn primary @click="next()" v-if="newTenancy.step !== 6">{{ newTenancy.step === 5 ? 'Finished' : 'Continue' }}</v-btn>
       </div>
     </div>
 
@@ -54,6 +59,7 @@
     name: 'startTenancy',
     data () {
       return {
+        isSaving: false,
         permissions: this.$store.state.permissions,
         newTenancy: this.$store.state.newTenancy,
         viewData: {
@@ -69,16 +75,19 @@
         this.$validation.validate(this.$refs['content' + this.newTenancy.step].$children)
           .then(() => {
             if (this.newTenancy.step === 5) {
+              this.isSaving = true
               this.$http.post('/api/journeys/starttenancy', { ...this.newTenancy })
                 .then(response => {
-                  alert('done')
+                  this.$store.commit('TENANCY_NEXT_STEP', this.newTenancy)
                 })
                 .catch(response => {
                   let validationResult = utils.getFormValidationErrors(response)
                   validationResult.errors.forEach(validationError => {
                     console.log('ERROR', validationError.key, validationError.messages[0], 'required')
                   })
-                  debugger
+                })
+                .finally(() => {
+                  this.isSaving = false
                 })
             } else {
               this.$store.commit('TENANCY_NEXT_STEP', this.newTenancy)

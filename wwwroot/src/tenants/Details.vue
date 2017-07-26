@@ -56,37 +56,63 @@
                 </v-card-text>
               </v-card>
             </div>
-            <div class="col-xs-12 col-md-6" v-if="tenant.addresses && tenant.addresses.length === 1">
+            <div class="col-xs-12 col-md-6" v-if="tenant.addresses">
               <v-card>
                 <v-card-title class="title primary">
                   Addresses
                 </v-card-title>
                 <v-card-text>
-                    <text-field v-model="tenant.addresses[0].street"
-                                :rules="[$validation.rules.required, $validation.rules.min_length(tenant.addresses[0].street, 2)]"
-                                label="Street address"
-                                required>
+                    <text-field v-model="tenant.addresses[addressIndex].street"
+                                :rules="[$validation.rules.required, $validation.rules.min_length(tenant.addresses[addressIndex].street, 2)]"
+                                label="Street address">
                     </text-field>
-                    <text-field v-model="tenant.addresses[0].townOrCity"
-                                :rules="[$validation.rules.required, $validation.rules.min_length(tenant.addresses[0].townOrCity, 2)]"
-                                label="Town or city"
-                                required>
+                    <text-field v-model="tenant.addresses[addressIndex].townOrCity"
+                                :rules="[$validation.rules.required, $validation.rules.min_length(tenant.addresses[addressIndex].townOrCity, 2)]"
+                                label="Town or city">
                     </text-field>
-                    <text-field v-model="tenant.addresses[0].countyOrRegion"
-                                :rules="[$validation.rules.required, $validation.rules.min_length(tenant.addresses[0].countyOrRegion, 2)]"
-                                label="County or region"
-                                required>
+                    <text-field v-model="tenant.addresses[addressIndex].countyOrRegion"
+                                :rules="[$validation.rules.required, $validation.rules.min_length(tenant.addresses[addressIndex].countyOrRegion, 2)]"
+                                label="County or region">
                     </text-field>
-                    <text-field v-model="tenant.addresses[0].postcode"
-                                :rules="[$validation.rules.required, $validation.rules.min_length(tenant.addresses[0].postcode, 5), $validation.rules.max_length(tenant.addresses[0].postcode, 7)]"
-                                label="Postcode"
-                                required>
+                    <text-field v-model="tenant.addresses[addressIndex].postcode"
+                                :rules="[$validation.rules.required, $validation.rules.min_length(tenant.addresses[addressIndex].postcode, 5), $validation.rules.max_length(tenant.addresses[addressIndex].postcode, 7)]"
+                                label="Postcode">
                     </text-field>
-                    <p>
-                      Country
-                      <br>
-                      {{ tenant.addresses[0].country }}
-                    </p>
+                    <select-list v-model="tenant.addresses[addressIndex].country"
+                                 :rules="[$validation.rules.required]"
+                                 label="Country">
+                    </select-list>
+                    <div class="subheading mt-5">Time lived at property</div>
+                    <div class="row">
+                      <div class="col-xs-6 col-md-4">
+                        <text-field v-model="tenant.addresses[addressIndex].yearsAtAddress"
+                                    :rules="[$validation.rules.required, $validation.rules.min_value(tenant.addresses[addressIndex].yearsAtAddress, 1), $validation.rules.max_value(tenant.addresses[addressIndex].yearsAtAddress, 100)]"
+                                    label="Years"
+                                    type="number"
+                                    min="0"
+                                    max="100"
+                                    step="1"
+                                    required>
+                        </text-field>
+                      </div>
+                      <div class="col-xs-6 col-md-4">
+                        <text-field v-model="tenant.addresses[addressIndex].monthsAtAddress"
+                                    :rules="[$validation.rules.required, $validation.rules.min_value(tenant.addresses[addressIndex].monthsAtAddress, 0), $validation.rules.max_value(tenant.addresses[addressIndex].monthsAtAddress, 11)]"
+                                    label="Months"
+                                    type="number"
+                                    min="0"
+                                    max="11"
+                                    step="1"
+                                    required>
+                        </text-field>
+                      </div>
+                    </div>
+                    <div class="row" v-if="tenant.addresses && tenant.addresses.length > 0">
+                      <div class="col-xs-12">
+                        <v-btn class="no-left-margin" :disabled="addressIndex === 0" @click="addressIndex -= 1">Previous</v-btn>
+                        <v-btn :disabled="addressIndex === tenant.addresses.length - 1" @click="addressIndex += 1">Next</v-btn>
+                      </div>
+                    </div>
                 </v-card-text>
               </v-card>
             </div>
@@ -113,6 +139,7 @@ export default {
       isSaving: false,
       isLoading: false,
       permissions: this.$store.state.permissions,
+      addressIndex: 0,
       tenant: {
         id: null,
         firstName: null,
