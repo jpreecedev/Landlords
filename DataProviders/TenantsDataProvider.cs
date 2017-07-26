@@ -22,9 +22,9 @@
             //Untested
 
             return await (from tenant in Context.Tenants.AsNoTracking()
-                          join tt in Context.TenantTenancies.Include(x => x.Tenancy.PropertyDetails) on tenant.Id equals tt.TenantId
                           join tenantAddress in Context.TenantAddresses on tenant.Id equals tenantAddress.TenantId into tenantAddressJoin
                           join tenantContacts in Context.TenantContacts on tenant.Id equals tenantContacts.TenantId into tenantContactsJoin
+                          join tt in Context.TenantTenancies.Include(x => x.Tenancy.PropertyDetails) on tenant.Id equals tt.TenantId
                           where tt.Tenancy.PropertyDetails.PortfolioId == portfolioId && tenant.IsLeadTenant && !tenant.IsDeleted && (tenant.FirstName != null || tenant.LastName != null)
                           select new TenantViewModel(tenant, tenantAddressJoin.Where(c => !c.IsDeleted).ToList(), tenantContactsJoin.Where(c => !c.IsDeleted).ToList())
                 )

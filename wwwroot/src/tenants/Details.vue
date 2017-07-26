@@ -61,6 +61,7 @@
                 <v-card-text>
                     <text-field v-model="tenant.addresses[addressIndex].street"
                                 :rules="[$validation.rules.required, $validation.rules.min_length(tenant.addresses[addressIndex].street, 2)]"
+                                :multiline="true"
                                 label="Street address">
                     </text-field>
                     <text-field v-model="tenant.addresses[addressIndex].townOrCity"
@@ -75,10 +76,10 @@
                                 :rules="[$validation.rules.required, $validation.rules.min_length(tenant.addresses[addressIndex].postcode, 5), $validation.rules.max_length(tenant.addresses[addressIndex].postcode, 7)]"
                                 label="Postcode">
                     </text-field>
-                    <select-list v-model="tenant.addresses[addressIndex].country"
-                                 :rules="[$validation.rules.required]"
-                                 label="Country">
-                    </select-list>
+                    <p>
+                      Country: <br/>
+                      {{ tenant.addresses[addressIndex].country }}
+                    </p>
                     <div class="subheading mt-5">Time lived at property</div>
                     <div class="row">
                       <div class="col-xs-6 col-md-4">
