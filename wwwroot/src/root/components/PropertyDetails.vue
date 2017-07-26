@@ -122,6 +122,7 @@
                     </div>
                     <div class="col-xs-12 col-md-6">
                       <text-field v-model="propertyDetails.purchasePrice"
+                                  :rules="[$validation.rules.required]"
                                   label="Purchase price"
                                   prefix="£"
                                   type="number">
