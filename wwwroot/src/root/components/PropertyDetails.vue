@@ -49,23 +49,23 @@
                               label="Property reference"
                               required>
                   </text-field>
-                  <v-select :items="propertyTypes"
-                            :rules="[$validation.rules.required]"
-                            v-model="propertyDetails.propertyType"
-                            label="Property type">
-                  </v-select>
+                  <select-list :items="propertyTypes"
+                               :rules="[$validation.rules.required]"
+                               v-model="propertyDetails.propertyType"
+                               label="Property type">
+                  </select-list>
                   <text-field v-model="propertyDetails.bedrooms"
                               label="Number of bedrooms"
                               type="number">
                   </text-field>
-                  <v-select :items="furnishings"
-                            :rules="[$validation.rules.required]"
-                            v-model="propertyDetails.furnishing"
-                            label="Furnishings">
-                  </v-select>
+                  <select-list :items="furnishings"
+                               :rules="[$validation.rules.required]"
+                               v-model="propertyDetails.furnishing"
+                               label="Furnishings">
+                  </select-list>
                   <date-picker v-model="propertyDetails.constructionDate"
-                                label="Construction date"
-                                :rules="[$validation.rules.required]">
+                               :rules="[$validation.rules.required]"
+                               label="Construction date">
                   </date-picker>
                 </v-card-text>
                 <v-card-title class="title">
@@ -85,22 +85,21 @@
                               label="Town or city"
                               required>
                   </text-field>
-                  <v-select :items="counties"
-                            v-model="propertyDetails.propertyCountyOrRegion"
-                            label="County or region"
-                            required>
-                  </v-select>
+                  <select-list :items="counties"
+                               :rules="[$validation.rules.required]"
+                               v-model="propertyDetails.propertyCountyOrRegion"
+                               label="County or region">
+                  </select-list>
                   <text-field v-model="propertyDetails.propertyPostcode"
                               :rules="[$validation.rules.required, $validation.rules.min_length(propertyDetails.propertyPostcode, 5), $validation.rules.max_length(propertyDetails.propertyPostcode, 7)]"
                               label="Postcode"
                               required>
                   </text-field>
-                  <v-select :items="countries"
-                            :rules="[$validation.rules.required]"
-                            v-model="propertyDetails.propertyCountry"
-                            label="Country"
-                            required>
-                  </v-select>
+                  <select-list :items="countries"
+                               :rules="[$validation.rules.required]"
+                               v-model="propertyDetails.propertyCountry"
+                               label="Country">
+                  </select-list>
                 <v-checkbox v-model="propertyDetails.isAvailableForLetting"
                             color="primary"
                             label="This property is available for letting">
@@ -154,10 +153,10 @@
                       </text-field>
                     </div>
                     <div class="col-xs-12 col-md-6">
-                      <v-select :items="mortgageProviders"
-                                v-model="propertyDetails.mortgageProvider"
-                                label="Mortgage provider">
-                      </v-select>
+                      <select-list :items="mortgageProviders"
+                                   v-model="propertyDetails.mortgageProvider"
+                                   label="Mortgage provider">
+                      </select-list>
                     </div>
                   </div>
                   <div>
@@ -179,10 +178,10 @@
                       </text-field>
                     </div>
                     <div class="col-xs-12 col-md-6">
-                      <v-select :items="paymentTerms"
-                                v-model="propertyDetails.paymentTerm"
-                                label="Payment term">
-                      </v-select>
+                      <select-list :items="paymentTerms"
+                                   v-model="propertyDetails.paymentTerm"
+                                   label="Payment term">
+                      </select-list>
                     </div>
                   </div>
                 </v-card-text>

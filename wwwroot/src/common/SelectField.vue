@@ -6,7 +6,8 @@
             :label="label"
             :item-value="itemValue"
             :required="required"
-            :error-messages="errorMessages">
+            :error-messages="errorMessages"
+            :disabled="disabled">
   </v-select>
 </template>
 
@@ -21,7 +22,12 @@
         default: () => [],
         required: true
       },
-      itemValue: {
+      itemText: {
+        type: String,
+        default: 'text',
+        required: false
+      },
+      'item-value': {
         type: String,
         default: 'value',
         required: false

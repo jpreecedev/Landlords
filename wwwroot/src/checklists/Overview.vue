@@ -8,6 +8,8 @@
 
     <loader :loading="isLoading"></loader>
 
+    <p v-if="!isLoading && overview.checklists.length === 0">You have not created any checklists yet.</p>
+
     <div class="row">
       <div class="col-xs-12 col-md-4 mt-3" v-for="(checklist, index) in overview.checklists" :key="index">
         <v-card>
@@ -38,7 +40,7 @@
     </div>
 
     <div class="mt-3" v-if="permissions.CL_Archived && !hasArchivedLists">
-      <v-btn primary @click.native="getArchived()" :loading="isLoadingArchived">Show Archived</v-btn>
+      <v-btn primary @click.native="getArchived()" :loading="isLoadingArchived" class="no-left-margin">Show Archived</v-btn>
     </div>
 
     <div class="row mt-5" v-if="permissions.CL_Create && overview.availableChecklists && overview.availableChecklists.length">
@@ -50,23 +52,22 @@
           <v-card-text>
             <div class="row">
               <div class="col-xs-12">
-                <v-select :items="overview.availableChecklists"
-                          :disabled="portfolioProperties.length < 1"
-                          v-model="selectedChecklist"
-                          item-value="id"
-                          @input="selectedChecklistChanged($event)"
-                          label="Select a checklist template"
-                          required>
-                </v-select>
+                <select-list :items="overview.availableChecklists"
+                             :disabled="portfolioProperties.length < 1"
+                             v-model="selectedChecklist"
+                             @input="selectedChecklistChanged($event)"
+                             label="Select a checklist template"
+                             :rules="[$validation.rules.required]">
+                </select-list>
               </div>
             </div>
             <div class="row" v-if="selectedChecklist && isPropertyMandatory && portfolioProperties && portfolioProperties.length">
               <div class="col-xs-12">
-                <v-select :items="portfolioProperties"
-                          v-model="selectedProperty"
-                          item-value="id"
-                          label="Select a property from your portfolio">
-                </v-select>
+                <select-list :items="portfolioProperties"
+                             v-model="selectedProperty"
+                             item-value="id"
+                             label="Select a property from your portfolio">
+                </select-list>
               </div>
             </div>
           </v-card-text>
@@ -125,7 +126,7 @@
     },
     methods: {
       createChecklistInstance (selectedChecklist, selectedProperty) {
-        this.$http.post(`/api/checklists/?checklistId=${selectedChecklist}&propertyDetailsId=${selectedProperty}`).then(response => {
+        this.$http.post(`/api/checklists/?checklistId=${selectedChecklist.id}${selectedProperty ? '&propertyDetailsId=' + selectedProperty : ''}`).then(response => {
           this.$router.push({ name: 'editor', params: { checklistId: response.data.id } })
         })
       },
@@ -151,17 +152,14 @@
             this.isLoadingArchived = false
           })
       },
-      selectedChecklistChanged (checklistId) {
-        let checklist = this.overview.availableChecklists.find(item => item.id === checklistId)
+      selectedChecklistChanged (selectedChecklist) {
+        let checklist = this.overview.availableChecklists.find(item => item.id === selectedChecklist.id)
         if (checklist) {
           this.isPropertyMandatory = checklist.isPropertyMandatory
         }
         if (!this.isPropertyMandatory) {
           this.selectedProperty = null
         }
-      },
-      portfolioPropertySelected (value) {
-        this.selectedProperty = value
       }
     }
   }

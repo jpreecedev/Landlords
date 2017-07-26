@@ -314,3 +314,9 @@ header {
 .snack__content {
   height: 72px;
 }
+
+.btn {
+  &.no-left-margin {
+    margin-left: 0;
+  }
+}

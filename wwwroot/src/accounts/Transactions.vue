@@ -25,13 +25,13 @@
             {{ props.item.reference }}
           </td>
           <td class="categories">
-            <v-select :items="transactionCategories"
-                      :hide-details="true"
-                      @input="selectedCategory(props.item)"
-                      v-if="permissions.TR_UpdateCategory"
-                      v-model="props.item.category"
-                      label="Category">
-            </v-select>
+            <select-list :items="transactionCategories"
+                         :hide-details="true"
+                         @input="selectedCategory(props.item)"
+                         v-if="permissions.TR_UpdateCategory"
+                         v-model="props.item.category"
+                         label="Category">
+            </select-list>
             <span v-else>
               {{ props.item.category }}
             </span>

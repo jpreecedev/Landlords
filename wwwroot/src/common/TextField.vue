@@ -16,7 +16,8 @@
                 :suffix="suffix"
                 :multi-line="multiline"
                 :rows="rows"
-                :auto-grow="autogrow">
+                :auto-grow="autogrow"
+                :disabled="disabled">
   </v-text-field>
 </template>
 

@@ -25,10 +25,10 @@
               </div>
               <div class="row">
                 <div class="col-xs-12 col-md-6">
-                  <v-select :items="multipliers"
-                            v-model="multiplier"
-                            label="Multiplier (use the default if unsure)">
-                  </v-select>
+                  <select-list :items="multipliers"
+                               v-model="multiplier"
+                               label="Multiplier (use the default if unsure)">
+                  </select-list>
                 </div>
               </div>
               <div class="row" v-if="!calculateAmountCanBorrow">

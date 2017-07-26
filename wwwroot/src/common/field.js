@@ -23,6 +23,11 @@ export default {
       type: String,
       default: 'text',
       required: false
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
+      required: false
     }
   },
   data () {
