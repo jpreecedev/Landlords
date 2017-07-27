@@ -174,6 +174,7 @@
                 .AddScoped<IChecklistInstanceDataProvider, ChecklistInstanceDataProvider>()
                 .AddScoped<IChecklistItemDataProvider, ChecklistItemDataProvider>()
                 .AddScoped<IAccountsDataProvider, AccountsDataProvider>()
+                .AddScoped<INotificationsDataProvider, NotificationsDataProvider>()
                 .AddScoped<ITransactionsDataProvider, TransactionsDataProvider>()
                 .AddScoped<IUserRepository, UserRepository>()
                 .AddScoped<ILLDbContext, LLDbContext>()

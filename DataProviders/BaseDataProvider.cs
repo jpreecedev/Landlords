@@ -5,6 +5,8 @@
 
     public class BaseDataProvider
     {
+        private NotificationsDataProvider _notificationsDataProvider;
+
         public BaseDataProvider(IHostingEnvironment hostingEnvironment, LLDbContext context)
         {
             HostingEnvironment = hostingEnvironment;

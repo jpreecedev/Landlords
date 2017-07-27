@@ -6,10 +6,11 @@
     using Model.DataTypes;
     using Model.Validation;
     using System.Collections.Generic;
+    using Interfaces;
     using Model.Entities;
 
     //TODO: Use automapper
-    public class PropertyDetailsViewModel : IPropertyDetails
+    public class PropertyDetailsViewModel : IPropertyDetails, INotifications
     {
         public PropertyDetailsViewModel()
         {
@@ -133,5 +134,7 @@
 
         [RequiredGuid]
         public Guid PortfolioId { get; set; }
+
+        public ICollection<NotificationViewModel> Notifications { get; set; }
     }
 }

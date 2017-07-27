@@ -42,6 +42,8 @@
 
         DbSet<ShortlistedProperty> ShortlistedProperties { get; set; }
 
+        DbSet<Notification> Notifications { get; set; }
+
         DbSet<T> Set<T>() where T : class;
     }
 }

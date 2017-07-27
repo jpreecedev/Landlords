@@ -8,9 +8,10 @@ using Landlords.Database;
 namespace Landlords.Migrations
 {
     [DbContext(typeof(LLDbContext))]
-    partial class LLDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170727184312_AddedNotificationsV1")]
+    partial class AddedNotificationsV1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")

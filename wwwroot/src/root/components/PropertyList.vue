@@ -28,6 +28,18 @@
           <td>
               {{ props.item.propertyStreetAddress }}
           </td>
+          <td>
+            <span v-if="!props.item.notifications || props.item.notifications.length === 0">No notifications</span>
+            <ul class="no-bullet" v-else>
+              <li v-for="notification in props.item.notifications" :key="notification.id">
+                <v-icon v-if="notification.type === 'Notice'">alarm</v-icon>
+                <v-icon class="blue--text" v-else-if="notification.type === 'Important'">add_alert</v-icon>
+                <v-icon class="orange--text" v-else-if="notification.type === 'Immediate'">warning</v-icon>
+                <v-icon class="red--text" v-else-if="notification.type === 'Overdue'">error_outline</v-icon>
+                {{ notification.message }}
+              </li>
+            </ul>
+          </td>
         </template>
         <template slot="pageText" scope="{ pageStart, pageStop }">
           From {{ pageStart }} to {{ pageStop }}
@@ -59,6 +71,10 @@ export default {
           sortable: false
         }, {
           text: 'Street Address',
+          left: true,
+          sortable: false
+        }, {
+          text: 'Notifications',
           left: true,
           sortable: false
         }

@@ -73,5 +73,6 @@
         public DbSet<TenantTenancy> TenantTenancies { get; set; }
         public DbSet<TenantContact> TenantContacts { get; set; }
         public DbSet<ShortlistedProperty> ShortlistedProperties { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
     }
 }
