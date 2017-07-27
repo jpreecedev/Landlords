@@ -10,7 +10,7 @@
             <v-card-text>
               <div class="pricing-value green">
                 &pound;0.00
-                <span class="undertext">Per Month</span>
+                <span class="undertext">Per Month.</span>
               </div>
               <ul>
                 <li><v-icon class="green--text">done</v-icon> Always free, 100% guaranteed</li>
@@ -33,8 +33,8 @@
             </v-card-title>
             <v-card-text>
               <div class="pricing-value deep-orange">
-                &pound;4.99
-                <span class="undertext">Per Month.<br/>Free trial.</span>
+                &pound;0.00
+                <span class="undertext">Per Month.</span>
               </div>
               <ul>
                 <li><v-icon class="deep-orange--text">done</v-icon> Property portfolio manager</li>
@@ -57,8 +57,8 @@
             </v-card-title>
             <v-card-text>
               <div class="pricing-value blue-grey">
-                &pound;4.99
-                <span class="undertext">Per Month.<br/>Free trial.</span>
+                &pound;0.00
+                <span class="undertext">Per Month.</span>
               </div>
               <ul>
                 <li><v-icon class="blue-grey--text">done</v-icon> Manage your landlords online</li>

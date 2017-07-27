@@ -77,6 +77,7 @@
 
     <section id="pricing" class="mt-5">
       <h2 class="display-2 grey--text text--darken-1 text-center">Price plans</h2>
+      <p class="text-center">As we're new, we haven't decided on pricing yet.  Sign up today and get a minimum of 12 months membership for free.</p>
       <pricing></pricing>
     </section>
 
