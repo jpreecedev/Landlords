@@ -30,12 +30,9 @@
           </td>
           <td>
             <span v-if="!props.item.notifications || props.item.notifications.length === 0">No notifications</span>
-            <ul class="no-bullet" v-else>
+            <ul class="notifications" v-else>
               <li v-for="notification in props.item.notifications" :key="notification.id">
-                <v-icon v-if="notification.type === 'Notice'">alarm</v-icon>
-                <v-icon class="blue--text" v-else-if="notification.type === 'Important'">add_alert</v-icon>
-                <v-icon class="orange--text" v-else-if="notification.type === 'Immediate'">warning</v-icon>
-                <v-icon class="red--text" v-else-if="notification.type === 'Overdue'">error_outline</v-icon>
+                <notification-icon :type="notification.type"></notification-icon>
                 {{ notification.message }}
               </li>
             </ul>
@@ -109,6 +106,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+  .notifications {
+    list-style: none;
+    padding-left: 0;
+    margin: 1rem 0;
+
+    li {
+      margin-top: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+  }
 
   .thumbnail img {
     max-height: 150px;

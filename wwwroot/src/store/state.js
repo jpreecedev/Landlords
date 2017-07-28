@@ -5,6 +5,12 @@ import moment from 'moment'
 // and you'll see this key set below (if logged in):
 export const STORAGE_KEY = 'landlords'
 
+let notifications = [
+  { id: 'abc123', type: 'Important', message: 'Your tenant has messaged you' },
+  { id: 'abc123', type: 'Notice', message: 'Rent is due' },
+  { id: 'abc123', type: 'Immediate', message: 'Your boiler needs an inspection' },
+  { id: 'abc123', type: 'Overdue', message: 'Rent is overdue' }
+]
 let defaultAddress = {
   street: null,
   townOrCity: null,
@@ -70,6 +76,7 @@ let syncedData = {
 }
 
 let notSyncedData = {
+  notifications: notifications,
   newTenancy: newTenancy
 }
 

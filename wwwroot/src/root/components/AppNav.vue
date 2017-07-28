@@ -56,6 +56,20 @@
         </v-list>
       </v-menu>
 
+      <v-menu class="calculators" transition="v-slide-y-transition" bottom :nudge-right="90" :nudge-top="-10">
+        <v-btn icon class="notifications" slot="activator">
+          <v-icon :class="'c' + notifications.length">add_alert</v-icon>
+        </v-btn>
+        <v-list>
+          <v-list-tile v-for="notification in notifications" :key="notification.id" @click="$router.push('/calculators/rental-yield')">
+            <v-list-tile-title>
+              <notification-icon :type="notification.type"></notification-icon>
+              {{ notification.message }}
+            </v-list-tile-title>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
+
       <v-menu v-if="auth.isLoggedIn" class="more"  transition="v-slide-y-transition" bottom :nudge-right="75" :nudge-top="-10">
         <v-btn icon slot="activator">
           <v-icon>more_vert</v-icon>
@@ -85,7 +99,8 @@ export default {
     return {
       user: this.$store.state.user,
       permissions: this.$store.state.permissions,
-      auth: this.$store.state.auth
+      auth: this.$store.state.auth,
+      notifications: this.$store.state.notifications
     }
   },
   methods: {
@@ -122,6 +137,34 @@ export default {
       font-size: 2rem;
       height: 32px;
       padding-bottom: 4px;
+    }
+  }
+
+  .notifications {
+    position: relative;
+
+    .icon {
+      &:before {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.125rem;
+        width: 1rem;
+        height: 1rem;
+        background-color: rgb(255, 0, 0);
+        border-radius: 0.5rem;
+        padding-top: 3px;
+        color: #ffffff;
+        font-family: Roboto, sans-serif;
+        font-size: 0.625rem;
+      }
+    }
+
+    @for $i from 1 through 10 {
+      .c#{$i} {
+        &:before {
+          content: '#{$i}';
+        }
+      }
     }
   }
 

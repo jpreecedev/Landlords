@@ -1,6 +1,9 @@
 import Vue from 'Vue'
 import moment from 'moment'
 
+let notifications = [
+  { id: 'abc123', type: 'Overdue', message: 'Rent is overdue' }
+]
 let defaultAddress = {
   street: null,
   townOrCity: null,
@@ -91,6 +94,8 @@ export const CLEAR_ALL_DATA = (state) => {
 
   // New tenancy journey
   state.newTenancy = newTenancy
+
+  state.notifications = notifications
 
   // User
   state.user.name = ''
