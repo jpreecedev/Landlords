@@ -17,6 +17,4 @@ const localStoragePlugin = store => {
   })
 }
 
-// TODO: setup env
-// export default process.env.NODE_ENV !== 'production' ? [localStoragePlugin] : [localStoragePlugin]
 export default [localStoragePlugin]

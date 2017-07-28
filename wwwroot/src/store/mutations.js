@@ -1,61 +1,4 @@
-import Vue from 'Vue'
-import moment from 'moment'
-
-let notifications = [
-  { id: 'abc123', type: 'Overdue', message: 'Rent is overdue' }
-]
-let defaultAddress = {
-  street: null,
-  townOrCity: null,
-  postcode: null,
-  countyOrRegion: null,
-  country: null,
-  yearsAtAddress: 0,
-  monthsAtAddress: 0
-}
-let defaultContact = {
-  name: null,
-  relationship: null,
-  mainContactNumber: null,
-  secondaryContactNumber: null
-}
-let defaultTenant = {
-  title: null,
-  firstName: null,
-  lastName: null,
-  mainContactNumber: null,
-  secondaryContactNumber: null,
-  emailAddress: null,
-  dateOfBirth: '1970-01-01',
-  isLeadTenant: true,
-  isAdult: true,
-  addresses: [Object.assign({}, defaultAddress)],
-  contacts: [Object.assign({}, defaultContact)],
-  isSmoker: false,
-  hasPets: false,
-  employmentType: null,
-  occupation: null,
-  companyName: null,
-  workAddress: null,
-  workContactNumber: null,
-  drivingLicenseReference: null,
-  passportReference: null,
-  additionalInformation: null
-}
-
-let newTenancy = {
-  step: 1,
-  tenancy: {
-    startDate: moment().format('YYYY-MM-DD'),
-    endDate: moment().add(12, 'M').subtract(1, 'day').format('YYYY-MM-DD'),
-    rentalAmount: 0,
-    rentalFrequency: null,
-    rentalPaymentReference: null,
-    tenancyType: null,
-    propertyDetailsId: null
-  },
-  tenants: [Object.assign({}, defaultTenant)]
-}
+import defaultState from './defaultState'
 
 export const UPDATE_AUTH = (state, auth) => {
   state.auth = auth
@@ -73,36 +16,13 @@ export const UPDATE_PERMISSIONS = (state, permissions) => {
   state.permissions = permissions
 }
 
-/**
- * Clear each property, one by one, so reactivity still works.
- *
- * (ie. clear out state.auth.isLoggedIn so Navbar component automatically reacts to logged out state,
- * and the Navbar menu adjusts accordingly)
- *
- * TODO: use a common import of default state to reset these values with.
- */
 export const CLEAR_ALL_DATA = (state) => {
-  // Auth
-  state.auth.isLoggedIn = false
-  state.auth.accessToken = null
-  state.auth.refreshToken = null
-
-  // Permissions
-  for (let key in state.permissions) {
-    Vue.delete(state.permissions, key)
-  }
-
-  // New tenancy journey
-  state.newTenancy = newTenancy
-
-  state.notifications = notifications
-
-  // User
-  state.user.name = ''
+  Object.keys(defaultState).forEach(key => { state[key] = defaultState[key] })
+  debugger
 }
 
 export const TENANT_ADD_TENANT = (state, isAdult) => {
-  let item = Object.assign({}, defaultTenant, { isLeadTenant: false, isAdult: isAdult })
+  let item = Object.assign({}, defaultState.tenant, { isLeadTenant: false, isAdult: isAdult })
   if (!isAdult) {
     item.addresses = null
     item.contacts = null
@@ -134,11 +54,11 @@ export const TENANCY_UPDATE_END_DATE = (state, endDate) => {
 }
 
 export const TENANT_ADD_ADDRESS = (state, tenantIndex) => {
-  state.newTenancy.tenants[tenantIndex].addresses.push(Object.assign({}, defaultAddress))
+  state.newTenancy.tenants[tenantIndex].addresses.push(Object.assign({}, defaultState.address))
 }
 
 export const TENANT_ADD_CONTACT = (state, tenantIndex) => {
-  state.newTenancy.tenants[tenantIndex].contacts.push(Object.assign({}, defaultContact))
+  state.newTenancy.tenants[tenantIndex].contacts.push(Object.assign({}, defaultState.contact))
 }
 
 export const TENANT_DELETE_CONTACT = (state, obj) => {

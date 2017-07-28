@@ -3,25 +3,9 @@ import router from 'root/routes'
 import store from 'store'
 import utils from '../utils'
 
-/**
- * @var{string} LOGIN_URL The endpoint for logging in. This endpoint should be proxied by Webpack dev server
- *    and maybe nginx in production (cleaner calls and avoids CORS issues).
- */
 const LOGIN_URL = '/token'
-
 const PERMISSIONS_URL = '/api/permissions'
 
-/**
- * TODO: This is here to demonstrate what an OAuth server will want. Ultimately you don't want to
- * expose a client_secret here. You want your real project backend to take a username/password
- * request and add the client secret on the server-side and forward that request
- * onto an OAuth server. Your backend acts as a middle-man in the process, which is better, for
- * example in situations like DDoS attacks.
- *
- * @var{Object} AUTH_BASIC_HEADERS The options to pass into a Vue-resource http call. Includes
- *    the headers used for login and token refresh and emulateJSON flag since we are hitting an
- *    OAuth server directly that can't handle application/json.
- */
 const AUTH_BASIC_HEADERS = {
   headers: {
     'Content-Type': 'application/x-www-form-urlencoded'

@@ -10,7 +10,7 @@
     using Model.Entities;
 
     //TODO: Use automapper
-    public class PropertyDetailsViewModel : IPropertyDetails, INotifications
+    public class PropertyDetailsViewModel : IPropertyDetails
     {
         public PropertyDetailsViewModel()
         {
@@ -134,7 +134,5 @@
 
         [RequiredGuid]
         public Guid PortfolioId { get; set; }
-
-        public ICollection<NotificationViewModel> Notifications { get; set; }
     }
 }

@@ -56,7 +56,7 @@
         </v-list>
       </v-menu>
 
-      <v-menu class="calculators" transition="v-slide-y-transition" bottom :nudge-right="90" :nudge-top="-10">
+      <v-menu v-if="auth.isLoggedIn" transition="v-slide-y-transition" bottom :nudge-right="90" :nudge-top="-10">
         <v-btn icon class="notifications" slot="activator">
           <v-icon :class="'c' + notifications.length">add_alert</v-icon>
         </v-btn>
@@ -70,7 +70,7 @@
         </v-list>
       </v-menu>
 
-      <v-menu v-if="auth.isLoggedIn" class="more"  transition="v-slide-y-transition" bottom :nudge-right="75" :nudge-top="-10">
+      <v-menu v-if="auth.isLoggedIn" class="more" transition="v-slide-y-transition" bottom :nudge-right="75" :nudge-top="-10">
         <v-btn icon slot="activator">
           <v-icon>more_vert</v-icon>
         </v-btn>

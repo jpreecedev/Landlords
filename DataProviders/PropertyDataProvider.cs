@@ -102,23 +102,17 @@
 
         public async Task<ICollection<PropertyDetailsViewModel>> GetListAsync(Guid portfolioId)
         {
-            var result = await (from details in Context.PropertyDetails.Include(x => x.Portfolio)
-                where details.PortfolioId == portfolioId
-                join images in Context.PropertyImages on details.Id equals images.Property.Id into imageJoin
-                where !details.IsDeleted && !details.Portfolio.IsDeleted
-                select new PropertyDetailsViewModel(details.Id, details.PortfolioId)
-                {
-                    Reference = details.Reference,
-                    PropertyStreetAddress = details.PropertyStreetAddress,
-                    LeadImage = imageJoin.Where(c => !c.IsDeleted).Select(c => new PropertyImageViewModel(c)).FirstOrDefault()
-                }).ToListAsync();
-
-            foreach (var propertyDetails in result)
-            {
-                propertyDetails.Notifications = await _notificationsDataProvider.GetNotificationsForPropertyAsync(propertyDetails.PortfolioId, propertyDetails.Id);
-            }
-            
-            return result;
+            return await (from details in Context.PropertyDetails.Include(x => x.Portfolio)
+                    where details.PortfolioId == portfolioId
+                    join images in Context.PropertyImages on details.Id equals images.Property.Id into imageJoin
+                    where !details.IsDeleted && !details.Portfolio.IsDeleted
+                    select new PropertyDetailsViewModel(details.Id, details.PortfolioId)
+                    {
+                        Reference = details.Reference,
+                        PropertyStreetAddress = details.PropertyStreetAddress,
+                        LeadImage = imageJoin.Where(c => !c.IsDeleted).Select(c => new PropertyImageViewModel(c)).FirstOrDefault()
+                    })
+                .ToListAsync();
         }
     }
 }

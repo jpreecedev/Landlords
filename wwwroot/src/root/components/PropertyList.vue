@@ -29,9 +29,9 @@
               {{ props.item.propertyStreetAddress }}
           </td>
           <td>
-            <span v-if="!props.item.notifications || props.item.notifications.length === 0">No notifications</span>
+            <span v-if="getNotifications(props.item.id).length === 0">No notifications</span>
             <ul class="notifications" v-else>
-              <li v-for="notification in props.item.notifications" :key="notification.id">
+              <li v-for="notification in getNotifications(props.item.id)" :key="notification.id">
                 <notification-icon :type="notification.type"></notification-icon>
                 {{ notification.message }}
               </li>
@@ -77,6 +77,7 @@ export default {
         }
       ],
       permissions: this.$store.state.permissions,
+      notifications: this.$store.state.notifications,
       data: []
     }
   },
@@ -100,6 +101,11 @@ export default {
         .finally(() => {
           this.isAddingProperty = false
         })
+    }
+  },
+  computed: {
+    getNotifications () {
+      return this.$store.getters.getNotifications
     }
   }
 }
