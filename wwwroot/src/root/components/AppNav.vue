@@ -116,6 +116,15 @@ export default {
       notifications: this.$store.state.notifications
     }
   },
+  created () {
+    this.$notifications.open()
+      .then(() => {
+        this.$notifications.get(this.auth.accessToken, 'GetAllNotifications')
+          .then(data => {
+            this.notifications = data
+          })
+      })
+  },
   methods: {
     logout () {
       this.$auth.logout(false)

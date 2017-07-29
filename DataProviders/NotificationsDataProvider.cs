@@ -54,6 +54,23 @@
                 .ToListAsync();
         }
 
+        public async Task<List<NotificationViewModel>> GetNotificationsForPortfolioAsync(Guid portfolioId)
+        {
+            return await(from notification in Context.Notifications.AsNoTracking()
+                    where notification.PortfolioId == portfolioId && !notification.IsDeleted
+                    select new NotificationViewModel
+                    {
+                        Message = notification.Message,
+                        Type = notification.Type,
+                        PortfolioId = notification.PortfolioId,
+                        PropertyDetailsId = notification.PropertyDetailsId,
+                        ShortlistedPropertyId = notification.ShortlistedPropertyId,
+                        TenancyId = notification.TenancyId,
+                        TenantId = notification.TenantId
+                    })
+                .ToListAsync();
+        }
+
         public async Task Delete(Guid portfolioId, Guid notificationId)
         {
             var notification = await Context.Notifications.SingleOrDefaultAsync(c => c.PortfolioId == portfolioId && c.Id == notificationId);

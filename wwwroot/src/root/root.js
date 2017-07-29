@@ -3,6 +3,7 @@ import VueResource from 'vue-resource'
 import store from 'store'
 import App from 'root/components/App'
 import AuthService from 'services/auth.service'
+import NotificationsService from 'services/notifications.service'
 import Interceptors from 'src/interceptors'
 import Autocomplete from 'v-autocomplete'
 import router from './routes'
@@ -31,6 +32,7 @@ Vue.use(Vuetify)
 
 Vue.use(CommonComponents)
 Vue.use(Journeys)
+Vue.use(NotificationsService)
 
 new Vue({
   el: '#app',

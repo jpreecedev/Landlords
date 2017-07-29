@@ -18,6 +18,7 @@
     using Microsoft.IdentityModel.Tokens;
     using Model.Database;
     using Services;
+    using Landlords.Notifications;
 
     public class Startup
     {
@@ -43,6 +44,7 @@
                 });
 
             services.AddCors();
+            services.AddWebSocketManager();
 
             var sqlConnectionString = Configuration.GetConnectionString("LLDbContext");
             services.AddDbContext<LLDbContext>(options => options.UseSqlServer(sqlConnectionString));
@@ -63,11 +65,14 @@
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, 
-                              IOptions<JwtConfiguration> jwtConfiguration, IAntiforgery antiforgery)
+                              IOptions<JwtConfiguration> jwtConfiguration, IAntiforgery antiforgery, IServiceProvider serviceProvider)
         {
 #if DEBUG
             app.UseCors(builder => builder.WithOrigins("http://localhost:8080").AllowAnyHeader().AllowAnyMethod());
 #endif
+
+            app.UseWebSockets();
+            app.MapWebSocketManager("/notifications", serviceProvider.GetService<NotificationsMessageHandler>());
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
