@@ -101,7 +101,6 @@
                     Data = $"The {invocationDescriptor.MethodName} method does not take {invocationDescriptor.Arguments.Length} parameters!"
                 }).ConfigureAwait(false);
             }
-
             catch (ArgumentException e)
             {
                 await SendMessageAsync(socket, new Message

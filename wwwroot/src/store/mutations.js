@@ -92,3 +92,7 @@ export const TENANCY_NEXT_STEP = (state, newTenancy) => {
 export const TENANCY_PREVIOUS_STEP = (state, newTenancy) => {
   state.newTenancy.step = Number(newTenancy.step) - 1
 }
+
+export const UPDATE_NOTIFICATIONS = (state, notifications) => {
+  state.notifications = notifications
+}

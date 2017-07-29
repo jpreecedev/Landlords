@@ -56,7 +56,7 @@
         </v-list>
       </v-menu>
 
-      <v-menu v-if="auth.isLoggedIn" transition="v-slide-y-transition" bottom :nudge-right="260" :nudge-top="-10">
+      <v-menu v-if="auth.isLoggedIn" transition="v-slide-y-transition" bottom :nudge-right="notifications.length > 0 ? 260 : 90" :nudge-top="-10">
         <v-btn icon class="notifications" slot="activator">
           <v-icon :class="'c' + notifications.length">add_alert</v-icon>
         </v-btn>
@@ -69,6 +69,9 @@
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-title>{{notification.message}}</v-list-tile-title>
+                <v-list-tile-sub-title v-if="notification.secondaryMessage">
+                  {{ notification.secondaryMessage }}
+                </v-list-tile-sub-title>
               </v-list-tile-content>
             </v-list-tile>
           </template>
@@ -121,7 +124,7 @@ export default {
       .then(() => {
         this.$notifications.get(this.auth.accessToken, 'GetAllNotifications')
           .then(data => {
-            this.notifications = data
+            this.$store.commit('UPDATE_NOTIFICATIONS', data)
           })
       })
   },

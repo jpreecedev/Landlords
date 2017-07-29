@@ -16,7 +16,7 @@
         public NotificationsDataProvider(IHostingEnvironment hostingEnvironment, LLDbContext context) : base(hostingEnvironment, context)
         {
         }
-        
+
         public async Task<NotificationViewModel> CreateNotification(Guid portfolioId, NotificationViewModel notification)
         {
             var entity = new Notification
@@ -40,13 +40,16 @@
         public async Task<List<NotificationViewModel>> GetNotificationsForPropertyAsync(Guid portfolioId, Guid propertyDetailsId)
         {
             return await (from notification in Context.Notifications.AsNoTracking()
+                    join propertyDetails in Context.PropertyDetails on notification.PropertyDetailsId equals propertyDetails.Id
                     where notification.PortfolioId == portfolioId && notification.PropertyDetailsId == propertyDetailsId && !notification.IsDeleted
                     select new NotificationViewModel
                     {
                         Message = notification.Message,
+                        SecondaryMessage = propertyDetails.Reference,
                         Type = notification.Type,
                         PortfolioId = notification.PortfolioId,
                         PropertyDetailsId = notification.PropertyDetailsId,
+                        PropertyDetails = propertyDetails,
                         ShortlistedPropertyId = notification.ShortlistedPropertyId,
                         TenancyId = notification.TenancyId,
                         TenantId = notification.TenantId
@@ -56,11 +59,13 @@
 
         public async Task<List<NotificationViewModel>> GetNotificationsForPortfolioAsync(Guid portfolioId)
         {
-            return await(from notification in Context.Notifications.AsNoTracking()
+            return await (from notification in Context.Notifications.AsNoTracking()
+                    join propertyDetails in Context.PropertyDetails on notification.PropertyDetailsId.GetValueOrDefault() equals propertyDetails.Id into propertyDetailsJoin
                     where notification.PortfolioId == portfolioId && !notification.IsDeleted
                     select new NotificationViewModel
                     {
                         Message = notification.Message,
+                        SecondaryMessage = propertyDetailsJoin.Any() ? propertyDetailsJoin.First().Reference : null,
                         Type = notification.Type,
                         PortfolioId = notification.PortfolioId,
                         PropertyDetailsId = notification.PropertyDetailsId,
