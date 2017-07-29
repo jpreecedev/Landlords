@@ -1,11 +1,6 @@
 import moment from 'moment'
 
-const notifications = [
-  { id: 'abc123', propertyDetailsId: '132b929e-834a-4bb2-eec9-08d4ab1fb30f', type: 'Notice', message: 'Rent is due' },
-  { id: 'abc123', propertyDetailsId: '132b929e-834a-4bb2-eec9-08d4ab1fb30f', type: 'Important', message: 'Your tenant has messaged you' },
-  { id: 'abc123', propertyDetailsId: '132b929e-834a-4bb2-eec9-08d4ab1fb30f', type: 'Immediate', message: 'Your boiler needs an inspection' },
-  { id: 'abc123', propertyDetailsId: '132b929e-834a-4bb2-eec9-08d4ab1fb30f', type: 'Overdue', message: 'Rent is overdue' }
-]
+const notifications = []
 
 const address = {
   street: null,

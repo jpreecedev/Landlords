@@ -60,12 +60,25 @@
         <v-btn icon class="notifications" slot="activator">
           <v-icon :class="'c' + notifications.length">add_alert</v-icon>
         </v-btn>
-        <v-list>
-          <v-list-tile v-for="notification in notifications" :key="notification.id" @click="$router.push('/calculators/rental-yield')">
-            <v-list-tile-title>
-              <notification-icon :type="notification.type"></notification-icon>
-              {{ notification.message }}
-            </v-list-tile-title>
+        <v-list class="notifications-list" two-line v-if="notifications.length > 0">
+          <v-subheader>Notifications</v-subheader>
+          <template v-for="(notification, index) in notifications">
+            <v-list-tile avatar :key="notification.id" download target="_blank">
+              <v-list-tile-avatar>
+                <notification-icon :type="notification.type"></notification-icon>
+              </v-list-tile-avatar>
+              <v-list-tile-content>
+                <v-list-tile-title>{{notification.message}}</v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
+          </template>
+        </v-list>
+        <v-list v-else>
+          <v-list-tile>
+            <v-list-tile-content>
+              <v-list-tile-title></v-list-tile-title>
+              <v-list-tile-sub-title>You have no notifications</v-list-tile-sub-title>
+            </v-list-tile-content>
           </v-list-tile>
         </v-list>
       </v-menu>
@@ -137,6 +150,12 @@ export default {
       font-size: 2rem;
       height: 32px;
       padding-bottom: 4px;
+    }
+  }
+
+  .notifications-list {
+    .list__tile {
+      padding-right: 3rem;
     }
   }
 
