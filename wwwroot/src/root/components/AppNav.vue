@@ -110,14 +110,15 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
-  data () {
-    return {
-      user: this.$store.state.user,
-      permissions: this.$store.state.permissions,
-      auth: this.$store.state.auth,
-      notifications: this.$store.state.notifications
-    }
+  computed: {
+    ...mapState({
+      notifications: state => state.notifications,
+      user: state => state.user,
+      permissions: state => state.permissions,
+      auth: state => state.auth
+    })
   },
   created () {
     this.$notifications.open()

@@ -62,5 +62,12 @@ export default {
   address,
   contact,
   tenant,
-  newTenancy
+  newTenancy,
+  user: {},
+  permissions: {},
+  auth: {
+    accessToken: null,
+    isLoggedIn: false,
+    refreshToken: null
+  }
 }
