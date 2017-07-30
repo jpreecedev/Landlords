@@ -1,5 +1,4 @@
 export default {
-
   install (Vue) {
     Vue.http.interceptors.push((request, next) => {
       let csrfCookie = this.getCookie('XSRF-TOKEN')

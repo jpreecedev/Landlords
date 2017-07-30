@@ -20,6 +20,9 @@ export default {
   name: 'app',
   components: { AppNav, AppFooter, AppHeader },
   created () {
+    this.$bus.$on('SHOW_VALIDATION_NOTIFICATION', () => {
+      this.$refs.notification.show('Please fix the form validation issues before continuing.  Errors are highlighted in red.', 'error')
+    })
     this.$bus.$on('SHOW_NOTIFICATION', data => {
       this.$refs.notification.show(data.message, data.context, data.timeout)
     })

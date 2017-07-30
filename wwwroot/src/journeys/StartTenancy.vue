@@ -92,10 +92,7 @@
             }
           })
           .catch(() => {
-            this.$bus.$emit('SHOW_NOTIFICATION', {
-              message: 'Please fix the form validation issues before continuing.  Errors are highlighted in red.',
-              context: 'error'
-            })
+            this.$bus.$emit('SHOW_VALIDATION_NOTIFICATION')
           })
       },
       back () {

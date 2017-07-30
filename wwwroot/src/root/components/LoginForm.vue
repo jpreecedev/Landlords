@@ -66,6 +66,9 @@ export default {
               this.loggingIn = false
             })
         })
+        .catch(() => {
+          this.$bus.$emit('SHOW_VALIDATION_NOTIFICATION')
+        })
     },
     reset () {
       this.$validation.reset(this.$children)
