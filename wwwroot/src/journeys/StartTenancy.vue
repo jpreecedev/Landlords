@@ -51,63 +51,68 @@
 </template>
 
 <script>
-  import utils from 'utils'
+import { mapState } from 'vuex'
+import utils from 'utils'
 
-  export default {
-    name: 'startTenancy',
-    data () {
-      return {
-        isSaving: false,
-        permissions: this.$store.state.permissions,
-        newTenancy: this.$store.state.newTenancy,
-        viewData: {
-          counties: [],
-          countries: [],
-          rentalFrequencies: [],
-          tenancyTypes: []
-        }
-      }
-    },
-    methods: {
-      next () {
-        this.$validation.validate(this.$refs['content' + this.newTenancy.step].$children)
-          .then(() => {
-            if (this.newTenancy.step === 5) {
-              this.isSaving = true
-              this.$http.post('/api/journeys/starttenancy', { ...this.newTenancy })
-                .then(response => {
-                  this.$store.commit('TENANCY_NEXT_STEP', this.newTenancy)
-                })
-                .catch(response => {
-                  let validationResult = utils.getFormValidationErrors(response)
-                  validationResult.errors.forEach(validationError => {
-                    console.log('ERROR', validationError.key, validationError.messages[0], 'required')
-                  })
-                })
-                .finally(() => {
-                  this.isSaving = false
-                })
-            } else {
-              this.$store.commit('TENANCY_NEXT_STEP', this.newTenancy)
-            }
-          })
-          .catch(() => {
-            this.$bus.$emit('SHOW_VALIDATION_NOTIFICATION')
-          })
-      },
-      back () {
-        if (this.newTenancy.step !== 1) {
-          this.$store.commit('TENANCY_PREVIOUS_STEP', this.newTenancy)
-        }
-      }
-    },
-    created () {
-      if (this.permissions.J_StartTenancy) {
-        this.$http.get(`/api/journeys/starttenancy`)
-          .then(response => {
-            Object.assign(this.viewData, utils.mapEntity(response.data, null, true))
-          })
+export default {
+  name: 'startTenancy',
+  data () {
+    return {
+      isSaving: false,
+      viewData: {
+        counties: [],
+        countries: [],
+        rentalFrequencies: [],
+        tenancyTypes: []
       }
     }
+  },
+  computed: {
+    ...mapState({
+      permissions: state => state.permissions,
+      newTenancy: state => state.newTenancy
+    })
+  },
+  methods: {
+    next () {
+      this.$validation.validate(this.$refs['content' + this.newTenancy.step].$children)
+        .then(() => {
+          if (this.newTenancy.step === 5) {
+            this.isSaving = true
+            this.$http.post('/api/journeys/starttenancy', { ...this.newTenancy })
+              .then(response => {
+                this.$store.commit('TENANCY_NEXT_STEP', this.newTenancy)
+              })
+              .catch(response => {
+                let validationResult = utils.getFormValidationErrors(response)
+                validationResult.errors.forEach(validationError => {
+                  console.log('ERROR', validationError.key, validationError.messages[0], 'required')
+                })
+              })
+              .finally(() => {
+                this.isSaving = false
+              })
+          } else {
+            this.$store.commit('TENANCY_NEXT_STEP', this.newTenancy)
+          }
+        })
+        .catch(() => {
+          this.$bus.$emit('SHOW_VALIDATION_NOTIFICATION')
+        })
+    },
+    back () {
+      if (this.newTenancy.step !== 1) {
+        this.$store.commit('TENANCY_PREVIOUS_STEP', this.newTenancy)
+      }
+    }
+  },
+  created () {
+    if (this.permissions.J_StartTenancy) {
+      this.$http.get(`/api/journeys/starttenancy`)
+        .then(response => {
+          Object.assign(this.viewData, utils.mapEntity(response.data, null, true))
+        })
+    }
   }
+}
 </script>

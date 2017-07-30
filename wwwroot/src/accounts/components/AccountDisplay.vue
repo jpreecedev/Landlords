@@ -12,12 +12,13 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'account-display',
-  data () {
-    return {
-      permissions: this.$store.state.permissions
-    }
+  computed: {
+    ...mapState({
+      permissions: state => state.permissions
+    })
   },
   props: {
     'account': {

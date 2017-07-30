@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import accordion from './components/Accordion'
 
 export default {
@@ -34,7 +35,6 @@ export default {
     return {
       isLoading: false,
       isDeleting: false,
-      permissions: this.$store.state.permissions,
       checklistId: this.$route.params.checklistId,
       checklist: null
     }
@@ -50,6 +50,9 @@ export default {
       })
   },
   computed: {
+    ...mapState({
+      permissions: state => state.permissions
+    }),
     outstandingActions () {
       if (!this.checklist) {
         return 0

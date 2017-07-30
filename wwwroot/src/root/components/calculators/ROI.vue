@@ -221,99 +221,102 @@
 </template>
 
 <script>
-  import utils from 'utils'
+import { mapState } from 'vuex'
+import utils from 'utils'
 
-  export default {
-    name: 'roi',
-    data () {
-      return {
-        errors: [],
-        isSaving: false,
-        isDeleting: false,
-        permissions: this.$store.state.permissions,
-        shortlistedProperty: {
-          shortlistedPropertyId: null,
-          reference: '3 bedroom house',
-          address: '1 new property lane',
-          pricePaid: 60000,
-          deposit: 15000,
-          fees: 15000,
-          lettableUnits: 1,
-          expectedRentalIncome: 500,
-          mortgageInterestRate: 5,
-          managementCost: 0,
-          repairsContingency: 10,
-          serviceCharge: 0,
-          insurance: 300
-        }
+export default {
+  name: 'roi',
+  data () {
+    return {
+      errors: [],
+      isSaving: false,
+      isDeleting: false,
+      shortlistedProperty: {
+        shortlistedPropertyId: null,
+        reference: '3 bedroom house',
+        address: '1 new property lane',
+        pricePaid: 60000,
+        deposit: 15000,
+        fees: 15000,
+        lettableUnits: 1,
+        expectedRentalIncome: 500,
+        mortgageInterestRate: 5,
+        managementCost: 0,
+        repairsContingency: 10,
+        serviceCharge: 0,
+        insurance: 300
       }
-    },
-    methods: {
-      validateBeforeSubmit () {
-        this.errors = []
-        this.isSaving = true
+    }
+  },
+  methods: {
+    validateBeforeSubmit () {
+      this.errors = []
+      this.isSaving = true
 
-        this.$http.post(`/api/shortlistedproperties`, { ...this.shortlistedProperty })
-          .then(() => {
-            this.isSaving = false
-            this.$router.push({ name: 'watchlist' })
-          })
-          .catch(response => {
-            this.isSaving = false
-            let validationResult = utils.getFormValidationErrors(response)
-            validationResult.errors.forEach(validationError => {
-              this.errors.push({
-                key: validationError.key,
-                message: validationError.messages[0]
-              })
+      this.$http.post(`/api/shortlistedproperties`, { ...this.shortlistedProperty })
+        .then(() => {
+          this.isSaving = false
+          this.$router.push({ name: 'watchlist' })
+        })
+        .catch(response => {
+          this.isSaving = false
+          let validationResult = utils.getFormValidationErrors(response)
+          validationResult.errors.forEach(validationError => {
+            this.errors.push({
+              key: validationError.key,
+              message: validationError.messages[0]
             })
-            if (validationResult.status) {
-              this.errors.push({
-                key: 'GenericError',
-                message: validationResult.status
-              })
-            }
           })
-      },
-      deleteShortlistedProperty () {
-        this.isDeleting = true
-        this.$http.delete(`/api/shortlistedproperties?shortlistedPropertyId=${this.shortlistedProperty.shortlistedPropertyId}`)
-          .then(() => {
-            this.$router.push({ name: 'watchlist' })
-          })
-          .finally(() => {
-            this.isDeleting = false
-          })
-      }
+          if (validationResult.status) {
+            this.errors.push({
+              key: 'GenericError',
+              message: validationResult.status
+            })
+          }
+        })
     },
-    created () {
-      if (this.permissions.SP_GetById && this.$route.params.shortlistedPropertyId) {
-        this.$http.get(`/api/shortlistedproperties/${this.$route.params.shortlistedPropertyId}`)
-          .then(response => {
-            if (response.data) {
-              this.shortlistedProperty = response.data
-            }
-          })
+    deleteShortlistedProperty () {
+      this.isDeleting = true
+      this.$http.delete(`/api/shortlistedproperties?shortlistedPropertyId=${this.shortlistedProperty.shortlistedPropertyId}`)
+        .then(() => {
+          this.$router.push({ name: 'watchlist' })
+        })
+        .finally(() => {
+          this.isDeleting = false
+        })
+    }
+  },
+  created () {
+    if (this.permissions.SP_GetById && this.$route.params.shortlistedPropertyId) {
+      this.$http.get(`/api/shortlistedproperties/${this.$route.params.shortlistedPropertyId}`)
+        .then(response => {
+          if (response.data) {
+            this.shortlistedProperty = response.data
+          }
+        })
+    }
+  },
+  computed: {
+    ...mapState({
+      permissions: state => state.permissions
+    }),
+    score () {
+      if (!this.shortlistedProperty) {
+        return false
       }
-    },
-    computed: {
-      score () {
-        if (!this.shortlistedProperty) {
-          return false
-        }
 
-        return utils.getReturnOnInvestment(this.shortlistedProperty)
-      },
-      scoreInWords () {
-        let roi = this.score.roi * 100
-        if (roi < 3) {
-          return 'a poor'
-        } else if (roi >= 3 && roi < 10) {
-          return 'a good'
-        } else if (roi > 10) {
-          return 'an excellent'
-        }
+      return utils.getReturnOnInvestment(this.shortlistedProperty)
+    },
+    scoreInWords () {
+      let roi = this.score.roi * 100
+      if (roi < 3) {
+        return 'a poor'
+      } else if (roi >= 3 && roi < 10) {
+        return 'a good'
+      } else if (roi > 10) {
+        return 'an excellent'
       }
     }
   }
+}
 </script>

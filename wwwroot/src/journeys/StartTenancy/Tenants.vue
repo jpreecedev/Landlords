@@ -192,64 +192,60 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex'
+import { mapState } from 'vuex'
 
-  export default {
-    name: 'tenants',
-    props: {
-      titles: {
-        type: Array,
-        default: () => []
-      },
-      counties: {
-        type: Array,
-        default: () => []
-      },
-      countries: {
-        type: Array,
-        default: () => []
-      }
+export default {
+  name: 'tenants',
+  props: {
+    titles: {
+      type: Array,
+      default: () => []
     },
-    data () {
-      return {
-        permissions: this.$store.state.permissions
-      }
+    counties: {
+      type: Array,
+      default: () => []
     },
-    computed: {
-      ...mapState({
-        tenants: state => state.newTenancy.tenants
+    countries: {
+      type: Array,
+      default: () => []
+    }
+  },
+  computed: {
+    ...mapState({
+      tenants: state => state.newTenancy.tenants,
+      permissions: state => state.permissions
+    })
+  },
+  methods: {
+    hasEnoughAddressInformation (tenantIndex) {
+      let years = 0
+      let months = 0
+      this.tenants[tenantIndex].addresses.forEach(address => {
+        years += Number.parseInt(address.yearsAtAddress || 0)
+        months += Number.parseInt(address.monthsAtAddress || 0)
       })
+      return years + (months / 12) >= 3
     },
-    methods: {
-      hasEnoughAddressInformation (tenantIndex) {
-        let years = 0
-        let months = 0
-        this.tenants[tenantIndex].addresses.forEach(address => {
-          years += Number.parseInt(address.yearsAtAddress || 0)
-          months += Number.parseInt(address.monthsAtAddress || 0)
-        })
-        return years + (months / 12) >= 3
-      },
-      addTenantAddress (tenantIndex) {
-        this.$store.commit('TENANT_ADD_ADDRESS', tenantIndex)
-      },
-      addOccupier (isAdult) {
-        this.$store.commit('TENANT_ADD_TENANT', isAdult)
-      },
-      deleteOccupier (index) {
-        this.$store.commit('TENANT_REMOVE_TENANT', index)
-      },
-      updateField (index, tenant, field) {
-        this.$store.commit('TENANT_UPDATE_FIELD', Object.assign(tenant, {index, field: field}))
-      },
-      updateAddress (tenantIndex, addressIndex, address, field) {
-        this.$store.commit('TENANT_UPDATE_ADDRESS', {
-          tenantIndex,
-          addressIndex,
-          address,
-          field
-        })
-      }
+    addTenantAddress (tenantIndex) {
+      this.$store.commit('TENANT_ADD_ADDRESS', tenantIndex)
+    },
+    addOccupier (isAdult) {
+      this.$store.commit('TENANT_ADD_TENANT', isAdult)
+    },
+    deleteOccupier (index) {
+      this.$store.commit('TENANT_REMOVE_TENANT', index)
+    },
+    updateField (index, tenant, field) {
+      this.$store.commit('TENANT_UPDATE_FIELD', Object.assign(tenant, {index, field: field}))
+    },
+    updateAddress (tenantIndex, addressIndex, address, field) {
+      this.$store.commit('TENANT_UPDATE_ADDRESS', {
+        tenantIndex,
+        addressIndex,
+        address,
+        field
+      })
     }
   }
+}
 </script>

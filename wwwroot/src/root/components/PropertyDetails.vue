@@ -217,6 +217,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import utils from 'utils'
 import FileUploadService from 'services/file-upload.service'
 
@@ -224,7 +225,6 @@ export default {
   name: 'propertyDetails',
   data () {
     return {
-      permissions: this.$store.state.permissions,
       isUploading: false,
       isLoading: false,
       isSaving: false,
@@ -263,6 +263,11 @@ export default {
         portfolioId: ''
       }
     }
+  },
+  computed: {
+    ...mapState({
+      permissions: state => state.permissions
+    })
   },
   created () {
     this.isLoading = true

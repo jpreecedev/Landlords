@@ -62,13 +62,13 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import UserTemplate from './UserTemplate.vue'
 
 export default {
   name: 'permissions',
   data () {
     return {
-      permissions: this.$store.state.permissions,
       allPermissions: [],
       selectedPermissions: [],
       allocatedPermissions: [],
@@ -78,6 +78,11 @@ export default {
       filteredUsers: [],
       template: UserTemplate
     }
+  },
+  computed: {
+    ...mapState({
+      permissions: state => state.permissions
+    })
   },
   created () {
     this.$http.get(`/api/permissions/all`)

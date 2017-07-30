@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import DocumentUpload from './DocumentUpload'
 import CommentsDateOfAction from './CommentsAndDateOfAction'
 import CommentsOnly from './CommentsOnly'
@@ -58,10 +59,10 @@ export default {
       default: null
     }
   },
-  data () {
-    return {
-      permissions: this.$store.state.permissions
-    }
+  computed: {
+    ...mapState({
+      permissions: state => state.permissions
+    })
   },
   methods: {
     toggleCompleted (newValue, item) {

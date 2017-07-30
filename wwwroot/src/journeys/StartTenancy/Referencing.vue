@@ -173,48 +173,48 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex'
+import { mapState } from 'vuex'
 
-  export default {
-    name: 'tenants',
-    props: {
-      employmentTypes: {
-        type: Array,
-        default: () => []
-      },
-      contactTypes: {
-        type: Array,
-        default: () => []
-      }
+export default {
+  name: 'tenants',
+  props: {
+    employmentTypes: {
+      type: Array,
+      default: () => []
     },
-    data () {
-      return {
-        permissions: this.$store.state.permissions
-      }
-    },
-    methods: {
-      updateField (index, tenant, field) {
-        this.$store.commit('TENANT_UPDATE_FIELD', Object.assign(tenant, {index, field: field}))
-      },
-      updateContact (tenantIndex, contactIndex, contact, field) {
-        this.$store.commit('TENANT_UPDATE_CONTACT', {
-          tenantIndex,
-          contactIndex,
-          contact,
-          field
-        })
-      },
-      addTenantContact (tenantIndex) {
-        this.$store.commit('TENANT_ADD_CONTACT', tenantIndex)
-      },
-      deleteTenantContact (tenantIndex, contactIndex) {
-        this.$store.commit('TENANT_DELETE_CONTACT', { tenantIndex, contactIndex })
-      }
-    },
-    computed: {
-      ...mapState({
-        tenants: state => state.newTenancy.tenants.filter(tenant => tenant.isAdult)
-      })
+    contactTypes: {
+      type: Array,
+      default: () => []
     }
+  },
+  data () {
+    return {
+    }
+  },
+  methods: {
+    updateField (index, tenant, field) {
+      this.$store.commit('TENANT_UPDATE_FIELD', Object.assign(tenant, {index, field: field}))
+    },
+    updateContact (tenantIndex, contactIndex, contact, field) {
+      this.$store.commit('TENANT_UPDATE_CONTACT', {
+        tenantIndex,
+        contactIndex,
+        contact,
+        field
+      })
+    },
+    addTenantContact (tenantIndex) {
+      this.$store.commit('TENANT_ADD_CONTACT', tenantIndex)
+    },
+    deleteTenantContact (tenantIndex, contactIndex) {
+      this.$store.commit('TENANT_DELETE_CONTACT', { tenantIndex, contactIndex })
+    }
+  },
+  computed: {
+    ...mapState({
+      tenants: state => state.newTenancy.tenants.filter(tenant => tenant.isAdult),
+      permissions: state => state.permissions
+    })
   }
+}
 </script>

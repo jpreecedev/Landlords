@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import AccountDisplay from './components/AccountDisplay'
 
 export default {
@@ -71,11 +72,15 @@ export default {
           sortable: false
         }
       ],
-      permissions: this.$store.state.permissions,
       data: {
         accounts: []
       }
     }
+  },
+  computed: {
+    ...mapState({
+      permissions: state => state.permissions
+    })
   },
   created () {
     this.isLoading = true

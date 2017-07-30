@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'tenants-overview',
   data () {
@@ -64,9 +65,13 @@ export default {
           sortable: false
         }
       ],
-      permissions: this.$store.state.permissions,
       data: []
     }
+  },
+  computed: {
+    ...mapState({
+      permissions: state => state.permissions
+    })
   },
   created () {
     this.isLoading = true

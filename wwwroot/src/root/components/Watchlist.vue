@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import utils from 'utils'
 
 export default {
@@ -55,9 +56,13 @@ export default {
           sortable: false
         }
       ],
-      permissions: this.$store.state.permissions,
       data: []
     }
+  },
+  computed: {
+    ...mapState({
+      permissions: state => state.permissions
+    })
   },
   created () {
     this.loading = true

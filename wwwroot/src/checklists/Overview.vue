@@ -83,85 +83,90 @@
 </template>
 
 <script>
-  import PermissionsWarning from 'common/PermissionsWarning'
+import { mapState } from 'vuex'
+import PermissionsWarning from 'common/PermissionsWarning'
 
-  export default {
-    name: 'overview',
-    components: { PermissionsWarning },
-    data () {
-      return {
-        isLoading: false,
-        isLoadingArchived: false,
-        permissions: this.$store.state.permissions,
-        selectedChecklist: null,
-        selectedProperty: null,
-        portfolioProperties: [],
-        hasArchivedLists: false,
-        isPropertyMandatory: false,
-        overview: {
-          checklists: [],
-          availableChecklists: []
-        }
+export default {
+  name: 'overview',
+  components: { PermissionsWarning },
+  data () {
+    return {
+      isLoading: false,
+      isLoadingArchived: false,
+      selectedChecklist: null,
+      selectedProperty: null,
+      portfolioProperties: [],
+      hasArchivedLists: false,
+      isPropertyMandatory: false,
+      overview: {
+        checklists: [],
+        availableChecklists: []
       }
+    }
+  },
+  computed: {
+    ...mapState({
+      permissions: state => state.permissions
+    })
+  },
+  created () {
+    this.isLoading = true
+    this.$http.get(`/api/checklists/overview`)
+      .then(response => {
+        this.overview = response.data
+      })
+      .then(() => {
+        if (this.permissions.PD_GetBasic) {
+          return this.$http.get(`/api/propertydetails/basicdetails`).then(response => {
+            if (response.data) {
+              this.portfolioProperties = response.data
+              this.selectedProperty = this.portfolioProperties[0].id
+            }
+          })
+        }
+      })
+      .finally(() => {
+        this.isLoading = false
+      })
+  },
+  methods: {
+    createChecklistInstance (selectedChecklist, selectedProperty) {
+      this.$http.post(`/api/checklists/?checklistId=${selectedChecklist.id}${selectedProperty ? '&propertyDetailsId=' + selectedProperty : ''}`).then(response => {
+        this.$router.push({ name: 'editor', params: { checklistId: response.data.id } })
+      })
     },
-    created () {
-      this.isLoading = true
-      this.$http.get(`/api/checklists/overview`)
+    archive (selectedChecklist) {
+      this.$http.post(`/api/checklists/archive/?checklistId=${selectedChecklist.id}`).then(response => {
+        let index = this.overview.checklists.indexOf(selectedChecklist)
+        if (index > -1) {
+          this.overview.checklists.splice(index, 1)
+        }
+      })
+    },
+    getArchived () {
+      this.isLoadingArchived = true
+      this.$http.get(`/api/checklists/archived`)
         .then(response => {
-          this.overview = response.data
-        })
-        .then(() => {
-          if (this.permissions.PD_GetBasic) {
-            return this.$http.get(`/api/propertydetails/basicdetails`).then(response => {
-              if (response.data) {
-                this.portfolioProperties = response.data
-                this.selectedProperty = this.portfolioProperties[0].id
-              }
-            })
+          if (response.data) {
+            this.overview.checklists.push(...response.data)
+            this.hasArchivedLists = true
           }
         })
         .finally(() => {
-          this.isLoading = false
+          this.isLoadingArchived = false
         })
     },
-    methods: {
-      createChecklistInstance (selectedChecklist, selectedProperty) {
-        this.$http.post(`/api/checklists/?checklistId=${selectedChecklist.id}${selectedProperty ? '&propertyDetailsId=' + selectedProperty : ''}`).then(response => {
-          this.$router.push({ name: 'editor', params: { checklistId: response.data.id } })
-        })
-      },
-      archive (selectedChecklist) {
-        this.$http.post(`/api/checklists/archive/?checklistId=${selectedChecklist.id}`).then(response => {
-          let index = this.overview.checklists.indexOf(selectedChecklist)
-          if (index > -1) {
-            this.overview.checklists.splice(index, 1)
-          }
-        })
-      },
-      getArchived () {
-        this.isLoadingArchived = true
-        this.$http.get(`/api/checklists/archived`)
-          .then(response => {
-            if (response.data) {
-              this.overview.checklists.push(...response.data)
-              this.hasArchivedLists = true
-            }
-          })
-          .finally(() => {
-            this.isLoadingArchived = false
-          })
-      },
-      selectedChecklistChanged (selectedChecklist) {
-        let checklist = this.overview.availableChecklists.find(item => item.id === selectedChecklist.id)
-        if (checklist) {
-          this.isPropertyMandatory = checklist.isPropertyMandatory
-        }
-        if (!this.isPropertyMandatory) {
-          this.selectedProperty = null
-        }
+    selectedChecklistChanged (selectedChecklist) {
+      let checklist = this.overview.availableChecklists.find(item => item.id === selectedChecklist.id)
+      if (checklist) {
+        this.isPropertyMandatory = checklist.isPropertyMandatory
+      }
+      if (!this.isPropertyMandatory) {
+        this.selectedProperty = null
       }
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>

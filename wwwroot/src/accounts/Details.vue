@@ -94,6 +94,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import utils from 'utils'
 
 export default {
@@ -101,7 +102,6 @@ export default {
   data () {
     return {
       isSaving: false,
-      permissions: this.$store.state.permissions,
       accountTypes: [],
       accountProviders: [],
       account: {
@@ -116,6 +116,11 @@ export default {
         openingBalance: 0
       }
     }
+  },
+  computed: {
+    ...mapState({
+      permissions: state => state.permissions
+    })
   },
   created () {
     this.$http.get(`/api/accounts/${this.$route.params.accountId}`)

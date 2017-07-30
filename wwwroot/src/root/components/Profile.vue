@@ -90,94 +90,99 @@
 </template>
 
 <script>
-  import utils from 'utils'
+import { mapState } from 'vuex'
+import utils from 'utils'
 
-  export default {
-    name: 'profile',
-    data () {
-      return {
-        isLoading: false,
-        isSaving: false,
-        permissions: this.$store.state.permissions,
-        times: [],
-        saved: false,
-        resentVerification: false,
-        confirmed: this.$route.query.confirmed,
+export default {
+  name: 'profile',
+  data () {
+    return {
+      isLoading: false,
+      isSaving: false,
+      times: [],
+      saved: false,
+      resentVerification: false,
+      confirmed: this.$route.query.confirmed,
+      availableFrom: '',
+      availableTo: '',
+      profile: {
+        userId: '',
+        firstName: '',
+        lastName: '',
         availableFrom: '',
         availableTo: '',
-        profile: {
-          userId: '',
-          firstName: '',
-          lastName: '',
-          availableFrom: '',
-          availableTo: '',
-          phoneNumber: '',
-          secondaryPhoneNumber: '',
-          emailAddress: '',
-          emailConfirmed: false
-        }
-      }
-    },
-    created () {
-      this.times = utils.getTimesForSelectList()
-      this.isLoading = true
-      this.$http.get(`/api/profile`)
-        .then(response => {
-          Object.assign(this.profile, response.data)
-          let fields = [ { key: 'availableFrom', value: 28 }, { key: 'availableTo', value: 76 } ]
-          fields.forEach(field => {
-            if (!response.data[field.key]) {
-              this[field.key] = this.profile[field.key] = this.times[field.value]
-            } else {
-              let time = this.times.find(function (item) {
-                return item.value === response.data[field.key]
-              })
-              if (time) {
-                this[field.key] = this.profile[field.key] = time.value
-              }
-            }
-          })
-        })
-        .finally(() => {
-          this.isLoading = false
-          this.$validation.commit(this.$children)
-        })
-    },
-    methods: {
-      validateBeforeSubmit () {
-        this.profile.availableFrom = this.availableFrom
-        this.profile.availableTo = this.availableTo
-
-        this.$validation.validate(this.$children)
-          .then(() => {
-            this.isSaving = true
-            this.$http.post('/api/profile', { ...this.profile })
-              .then(response => {
-                this.saved = true
-              })
-              .catch(response => {
-                let validationResult = utils.getFormValidationErrors(response)
-                validationResult.errors.forEach(validationError => {
-                  console.log('ERROR', validationError.key, validationError.messages[0], 'required')
-                })
-              })
-              .finally(() => {
-                this.isSaving = false
-              })
-          })
-          .catch(() => {
-            this.$bus.$emit('SHOW_VALIDATION_NOTIFICATION')
-          })
-      },
-      resendVerificationEmail () {
-        this.$http.post('/api/register/resendverification')
-          .then(response => {
-            this.resentVerification = true
-          })
-      },
-      reset () {
-        this.$validation.reset(this.$children)
+        phoneNumber: '',
+        secondaryPhoneNumber: '',
+        emailAddress: '',
+        emailConfirmed: false
       }
     }
+  },
+  computed: {
+    ...mapState({
+      permissions: state => state.permissions
+    })
+  },
+  created () {
+    this.times = utils.getTimesForSelectList()
+    this.isLoading = true
+    this.$http.get(`/api/profile`)
+      .then(response => {
+        Object.assign(this.profile, response.data)
+        let fields = [ { key: 'availableFrom', value: 28 }, { key: 'availableTo', value: 76 } ]
+        fields.forEach(field => {
+          if (!response.data[field.key]) {
+            this[field.key] = this.profile[field.key] = this.times[field.value]
+          } else {
+            let time = this.times.find(function (item) {
+              return item.value === response.data[field.key]
+            })
+            if (time) {
+              this[field.key] = this.profile[field.key] = time.value
+            }
+          }
+        })
+      })
+      .finally(() => {
+        this.isLoading = false
+        this.$validation.commit(this.$children)
+      })
+  },
+  methods: {
+    validateBeforeSubmit () {
+      this.profile.availableFrom = this.availableFrom
+      this.profile.availableTo = this.availableTo
+
+      this.$validation.validate(this.$children)
+        .then(() => {
+          this.isSaving = true
+          this.$http.post('/api/profile', { ...this.profile })
+            .then(response => {
+              this.saved = true
+            })
+            .catch(response => {
+              let validationResult = utils.getFormValidationErrors(response)
+              validationResult.errors.forEach(validationError => {
+                console.log('ERROR', validationError.key, validationError.messages[0], 'required')
+              })
+            })
+            .finally(() => {
+              this.isSaving = false
+            })
+        })
+        .catch(() => {
+          this.$bus.$emit('SHOW_VALIDATION_NOTIFICATION')
+        })
+    },
+    resendVerificationEmail () {
+      this.$http.post('/api/register/resendverification')
+        .then(response => {
+          this.resentVerification = true
+        })
+    },
+    reset () {
+      this.$validation.reset(this.$children)
+    }
   }
+}
 </script>

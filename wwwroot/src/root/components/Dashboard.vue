@@ -11,12 +11,13 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'dashboard',
-  data () {
-    return {
-      permissions: this.$store.state.permissions
-    }
+  computed: {
+    ...mapState({
+      permissions: state => state.permissions
+    })
   },
   methods: {
     openDialog (dialog) {

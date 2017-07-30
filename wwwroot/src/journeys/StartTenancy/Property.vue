@@ -53,45 +53,45 @@
 </template>
 
 <script>
-  import moment from 'moment'
-  import { mapState } from 'vuex'
+import moment from 'moment'
+import { mapState } from 'vuex'
 
-  export default {
-    name: 'property',
-    props: {
-      tenancyTypes: {
-        type: Array,
-        default: () => []
-      }
+export default {
+  name: 'property',
+  props: {
+    tenancyTypes: {
+      type: Array,
+      default: () => []
+    }
+  },
+  data () {
+    return {
+      portfolioProperties: []
+    }
+  },
+  created () {
+    if (this.permissions.PD_GetBasic) {
+      this.$http.get(`/api/propertydetails/basicdetails`)
+        .then(response => {
+          if (response.data) {
+            this.portfolioProperties = response.data
+          }
+        })
+    }
+  },
+  computed: {
+    ...mapState({
+      tenancy: state => state.newTenancy.tenancy,
+      permissions: state => state.permissions
+    })
+  },
+  methods: {
+    selectPeriod (period) {
+      this.$store.commit('TENANCY_UPDATE_END_DATE', moment(this.tenancy.startDate).add(period, 'M').subtract(1, 'day').format('YYYY-MM-DD'))
     },
-    data () {
-      return {
-        permissions: this.$store.state.permissions,
-        portfolioProperties: []
-      }
-    },
-    created () {
-      if (this.permissions.PD_GetBasic) {
-        this.$http.get(`/api/propertydetails/basicdetails`)
-          .then(response => {
-            if (response.data) {
-              this.portfolioProperties = response.data
-            }
-          })
-      }
-    },
-    computed: {
-      ...mapState({
-        tenancy: state => state.newTenancy.tenancy
-      })
-    },
-    methods: {
-      selectPeriod (period) {
-        this.$store.commit('TENANCY_UPDATE_END_DATE', moment(this.tenancy.startDate).add(period, 'M').subtract(1, 'day').format('YYYY-MM-DD'))
-      },
-      updateField (tenancy, field) {
-        this.$store.commit('TENANCY_UPDATE', Object.assign(tenancy, { field: field }))
-      }
+    updateField (tenancy, field) {
+      this.$store.commit('TENANCY_UPDATE', Object.assign(tenancy, { field: field }))
     }
   }
+}
 </script>

@@ -41,36 +41,32 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex'
+import { mapState } from 'vuex'
 
-  export default {
-    name: 'payments',
-    props: {
-      rentalFrequencies: {
-        type: Array,
-        default: () => []
-      }
+export default {
+  name: 'payments',
+  props: {
+    rentalFrequencies: {
+      type: Array,
+      default: () => []
+    }
+  },
+  computed: {
+    ...mapState({
+      tenancy: state => state.newTenancy.tenancy,
+      permissions: state => state.permissions
+    })
+  },
+  methods: {
+    updateRentalAmount (rentalAmount) {
+      this.$store.commit('TENANCY_UPDATE_RENTAL_AMOUNT', rentalAmount)
     },
-    data () {
-      return {
-        permissions: this.$store.state.permissions
-      }
+    updateRentalFrequency (rentalFrequency) {
+      this.$store.commit('TENANCY_UPDATE_RENTAL_FREQUENCY', rentalFrequency)
     },
-    computed: {
-      ...mapState({
-        tenancy: state => state.newTenancy.tenancy
-      })
-    },
-    methods: {
-      updateRentalAmount (rentalAmount) {
-        this.$store.commit('TENANCY_UPDATE_RENTAL_AMOUNT', rentalAmount)
-      },
-      updateRentalFrequency (rentalFrequency) {
-        this.$store.commit('TENANCY_UPDATE_RENTAL_FREQUENCY', rentalFrequency)
-      },
-      updateRentalPaymentReference (rentalPaymentReference) {
-        this.$store.commit('TENANCY_UPDATE_RENTAL_PAYMENT_REFERENCE', rentalPaymentReference)
-      }
+    updateRentalPaymentReference (rentalPaymentReference) {
+      this.$store.commit('TENANCY_UPDATE_RENTAL_PAYMENT_REFERENCE', rentalPaymentReference)
     }
   }
+}
 </script>

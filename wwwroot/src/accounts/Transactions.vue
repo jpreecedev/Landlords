@@ -81,6 +81,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import FileUploadService from 'services/file-upload.service'
 import utils from 'utils'
 
@@ -122,12 +123,16 @@ export default {
           value: 'balance'
         }
       ],
-      permissions: this.$store.state.permissions,
       accountId: this.$route.params.accountId,
       files: null,
       progress: 0,
       transactions: []
     }
+  },
+  computed: {
+    ...mapState({
+      permissions: state => state.permissions
+    })
   },
   created () {
     this.isLoading = true

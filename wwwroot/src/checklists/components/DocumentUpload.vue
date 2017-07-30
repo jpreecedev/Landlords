@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'document-upload',
   props: {
@@ -42,9 +43,13 @@ export default {
   },
   data () {
     return {
-      file: null,
-      permissions: this.$store.state.permissions
+      file: null
     }
+  },
+  computed: {
+    ...mapState({
+      permissions: state => state.permissions
+    })
   },
   created () {
     if (!this.checklistItem.payload) {

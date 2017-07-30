@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'comments-only',
   props: {
@@ -24,10 +25,10 @@ export default {
       default: null
     }
   },
-  data () {
-    return {
-      permissions: this.$store.state.permissions
-    }
+  computed: {
+    ...mapState({
+      permissions: state => state.permissions
+    })
   },
   created () {
     if (!this.checklistItem.payload) {

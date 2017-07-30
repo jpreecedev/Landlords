@@ -128,6 +128,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import utils from 'utils'
 
 export default {
@@ -136,7 +137,6 @@ export default {
     return {
       isSaving: false,
       isLoading: false,
-      permissions: this.$store.state.permissions,
       addressIndex: 0,
       tenant: {
         id: null,
@@ -167,6 +167,11 @@ export default {
         this.isLoading = false
         this.$validation.commit(this.$children)
       })
+  },
+  computed: {
+    ...mapState({
+      permissions: state => state.permissions
+    })
   },
   methods: {
     validateBeforeSubmit () {
