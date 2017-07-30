@@ -2,7 +2,14 @@
   <div>
     <header>
       <h1 class="headline primary--text">Your properties</h1>
-      <p class="display-2 grey--text text--darken-1">There are no notifications or upcoming events</p>
+      <p class="display-2 grey--text text--darken-1">
+        <span v-if="notifications.length === 0">
+          There are no notifications or upcoming events
+        </span>
+        <span v-else>
+          There are {{ notifications.length }} notifications that require your attention
+        </span>
+      </p>
       <p class="subheading">Click on the property reference for details.</p>
     </header>
 
@@ -50,6 +57,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'propertylist',
   data () {
@@ -76,8 +84,6 @@ export default {
           sortable: false
         }
       ],
-      permissions: this.$store.state.permissions,
-      notifications: this.$store.state.notifications,
       data: []
     }
   },
@@ -106,7 +112,11 @@ export default {
   computed: {
     getNotifications () {
       return this.$store.getters.getNotifications
-    }
+    },
+    ...mapState({
+      notifications: state => state.notifications,
+      permissions: state => state.permissions
+    })
   }
 }
 </script>
