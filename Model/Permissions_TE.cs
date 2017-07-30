@@ -8,7 +8,7 @@
         
         public const string GetById = "767712a6-3029-4d2a-b09d-b365a6efbb82";
         public const string GetByRouteId = "TE_GetById";
-        public const string GetByDescription = "View a specific bank account";
+        public const string GetByDescription = "View a specific tenant";
 
         public const string NewId = "e97352b5-c280-4ec0-9b9f-7c6818c3b802";
         public const string NewRouteId = "TE_New";

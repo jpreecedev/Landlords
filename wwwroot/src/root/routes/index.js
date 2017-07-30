@@ -4,6 +4,7 @@ import { RouteConfig as RootRouteConfig } from './route-config'
 import { RouteConfig as ChecklistsRouteConfig } from 'checklists/route-config'
 import { RouteConfig as AccountsRouteConfig } from 'accounts/route-config'
 import { RouteConfig as TenantsRouteConfig } from 'tenants/route-config'
+import { RouteConfig as TenanciesRouteConfig } from 'tenancies/route-config'
 
 Vue.use(Router)
 
@@ -15,7 +16,8 @@ const router = new Router({
     ...RootRouteConfig,
     ...ChecklistsRouteConfig,
     ...AccountsRouteConfig,
-    ...TenantsRouteConfig
+    ...TenantsRouteConfig,
+    ...TenanciesRouteConfig
   ]
 })
 

@@ -180,6 +180,7 @@
                 .AddScoped<ILLDbContext, LLDbContext>()
                 .AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>()
                 .AddScoped<ITenantsDataProvider, TenantsDataProvider>()
+                .AddScoped<ITenanciesDataProvider, TenanciesDataProvider>()
                 .AddScoped<IJourneyDataProvider, JourneyDataProvider>()
                 .AddScoped<IShortlistedPropertiesDataProvider, ShortlistedPropertiesDataProvider>()
                 .AddTransient<IEmailSender, EmailSender>();

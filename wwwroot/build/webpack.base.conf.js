@@ -32,6 +32,7 @@ module.exports = {
       'common': resolve("src/common"),
       'journeys': resolve("src/journeys"),
       'tenants': resolve("src/tenants"),
+      'tenancies': resolve("src/tenancies"),
       'src': resolve("src")
     }
   },

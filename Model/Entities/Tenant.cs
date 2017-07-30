@@ -3,6 +3,7 @@
     using Model.Validation;
     using System;
     using System.Collections.Generic;
+    using System.Text;
 
     public class Tenant : BaseModel
     {
@@ -50,5 +51,28 @@
         public ICollection<TenantAddress> Addresses { get; set; }
 
         public ICollection<TenantContact> Contacts { get; set; }
+
+        public string Name
+        {
+            get
+            {
+                var builder = new StringBuilder();
+
+                if (!string.IsNullOrEmpty(Title))
+                {
+                    builder.AppendFormat("{0} ", Title);
+                }
+                if (!string.IsNullOrEmpty(FirstName))
+                {
+                    builder.AppendFormat("{0} ", FirstName);
+                }
+                if (!string.IsNullOrEmpty(LastName))
+                {
+                    builder.AppendFormat("{0}", LastName);
+                }
+
+                return builder.ToString();
+            }
+        }
     }
 }

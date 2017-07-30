@@ -17,8 +17,8 @@
       <v-btn flat v-if="permissions.PD_GetList" @click="$router.push('/manager/property-list')" :class="{'active': $route.path.startsWith('/manager/property-list') || $route.path.startsWith('/manager/property-details')}">
         Properties
       </v-btn>
-      <v-btn flat v-if="permissions.TE_GetListById" @click="$router.push('/tenants/')" :class="{'active': $route.path.startsWith('/tenants')}">
-        Tenants
+      <v-btn flat v-if="permissions.TT_GetListById" @click="$router.push('/tenancies/')" :class="{'active': $route.path.startsWith('/tenancies')}">
+        Tenancies
       </v-btn>
       <v-btn flat v-if="permissions.PE_List" @click="$router.push('/permissions')" :class="{'active': $route.path.startsWith('/permissions')}">
         Permissions

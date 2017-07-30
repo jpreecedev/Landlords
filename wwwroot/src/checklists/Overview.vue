@@ -142,13 +142,12 @@
         this.isLoadingArchived = true
         this.$http.get(`/api/checklists/archived`)
           .then(response => {
-            this.isLoadingArchived = false
             if (response.data) {
               this.overview.checklists.push(...response.data)
               this.hasArchivedLists = true
             }
           })
-          .catch(() => {
+          .finally(() => {
             this.isLoadingArchived = false
           })
       },
