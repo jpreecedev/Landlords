@@ -14,7 +14,7 @@
     </header>
 
     <v-card>
-      <v-data-table :headers="headers" :items="data" :loading="loading">
+      <v-data-table :headers="headers" :items="properties" :loading="loading">
         <template slot="headers" scope="props">
           <tr>
             <th v-for="(header, index) in props.headers" :key="index" class="text-xs-left">
@@ -83,15 +83,14 @@ export default {
           left: true,
           sortable: false
         }
-      ],
-      data: []
+      ]
     }
   },
   created () {
     this.loading = true
     this.$http.get('/api/propertydetails')
       .then(response => {
-        this.data = response.data
+        this.$store.commit('SET_PROPERTIES', response.data)
       })
       .finally(() => {
         this.loading = false
@@ -114,6 +113,7 @@ export default {
       return this.$store.getters.getNotifications
     },
     ...mapState({
+      properties: state => state.properties,
       notifications: state => state.notifications,
       permissions: state => state.permissions
     })

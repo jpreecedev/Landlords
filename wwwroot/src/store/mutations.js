@@ -95,3 +95,7 @@ export const TENANCY_PREVIOUS_STEP = (state, newTenancy) => {
 export const UPDATE_NOTIFICATIONS = (state, notifications) => {
   state.notifications = notifications
 }
+
+export const SET_PROPERTIES = (state, properties) => {
+  state.properties = properties
+}

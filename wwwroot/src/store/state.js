@@ -16,6 +16,7 @@ let syncedData = {
 
 let notSyncedData = {
   notifications: Object.assign([], defaultState.notifications),
+  properties: Object.assign([], defaultState.properties),
   newTenancy: Object.assign({}, defaultState.newTenancy)
 }
 

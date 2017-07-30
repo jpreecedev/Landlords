@@ -1,6 +1,7 @@
 import moment from 'moment'
 
 const notifications = []
+const properties = []
 
 const address = {
   street: null,
@@ -59,6 +60,7 @@ const newTenancy = {
 
 export default {
   notifications,
+  properties,
   address,
   contact,
   tenant,
