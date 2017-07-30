@@ -72,7 +72,6 @@
                   <text-field v-model="propertyDetails.propertyStreetAddress"
                               :multiline="true"
                               :rows="3"
-                              :autogrow="true"
                               :rules="[$validation.rules.required, $validation.rules.min_length(propertyDetails.propertyStreetAddress, 2), $validation.rules.max_length(propertyDetails.propertyStreetAddress, 255)]"
                               label="Street address"
                               required>

@@ -43,7 +43,6 @@
                         :rules="[$validation.rules.required, $validation.rules.min_length(tenant.workAddress, 2)]"
                         :multiline="true"
                         :rows="1"
-                        :autogrow="true"
                         @input="updateField(index, tenant, 'workAddress')"
                         label="Work address"
                         required>
@@ -147,7 +146,6 @@
                         :value="tenant.additionalInformation"
                         :multiline="true"
                         :rows="1"
-                        :autogrow="true"
                         @input="updateField(index, tenant, 'additionalInformation')"
                         label="Any additional information/notes of interest">
             </text-field>

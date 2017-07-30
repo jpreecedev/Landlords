@@ -10,7 +10,6 @@
       <text-field v-model="checklistItem.payload.comments"
                   :multiline="true"
                   :rows="1"
-                  :autogrow="true"
                   @blur="save()"
                   label="Comments">
       </text-field>

@@ -64,7 +64,6 @@
                               :value="address.street"
                               :multiline="true"
                               :rows="1"
-                              :autogrow="true"
                               :rules="[$validation.rules.required, $validation.rules.min_length(address.street, 2)]"
                               @input="updateAddress(index, addressIndex, address, 'street')"
                               label="Street address"

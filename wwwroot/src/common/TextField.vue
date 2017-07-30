@@ -16,7 +16,7 @@
                 :suffix="suffix"
                 :multi-line="multiline"
                 :rows="rows"
-                :auto-grow="autogrow"
+                :auto-grow="multiline"
                 :disabled="disabled">
   </v-text-field>
 </template>
@@ -60,11 +60,6 @@
       rows: {
         type: Number,
         default: 1,
-        required: false
-      },
-      autogrow: {
-        type: Boolean,
-        default: false,
         required: false
       }
     },
