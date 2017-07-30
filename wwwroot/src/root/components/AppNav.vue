@@ -112,11 +112,6 @@
 <script>
 import { mapState } from 'vuex'
 export default {
-  data () {
-    return {
-      hasSetInterval: false
-    }
-  },
   computed: {
     ...mapState({
       notifications: state => state.notifications,
