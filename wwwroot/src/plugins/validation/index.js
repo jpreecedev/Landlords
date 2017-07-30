@@ -7,6 +7,7 @@ import maxValue from './rules/max_value'
 import minLength from './rules/min_length'
 import minValue from './rules/min_value'
 import required from './rules/required'
+import match from './rules/match'
 
 function filter (arr, testCallback) {
   var matches = []
@@ -35,6 +36,7 @@ Vue.prototype.$validation = {
     max_value: maxValue,
     min_length: minLength,
     min_value: minValue,
+    match,
     required
   },
   validate ($elements) {
