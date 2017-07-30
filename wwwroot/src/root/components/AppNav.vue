@@ -57,7 +57,7 @@
       </v-menu>
 
       <v-menu v-if="auth.isLoggedIn" transition="v-slide-y-transition" bottom :nudge-right="notifications.length > 0 ? 260 : 90" :nudge-top="-10">
-        <v-btn icon class="notifications" slot="activator">
+        <v-btn @click="checkNotifications()" icon class="notifications" slot="activator">
           <v-icon :class="'c' + notifications.length">add_alert</v-icon>
         </v-btn>
         <v-list class="notifications-list" two-line v-if="notifications.length > 0">
@@ -112,6 +112,11 @@
 <script>
 import { mapState } from 'vuex'
 export default {
+  data () {
+    return {
+      hasSetInterval: false
+    }
+  },
   computed: {
     ...mapState({
       notifications: state => state.notifications,
@@ -121,15 +126,18 @@ export default {
     })
   },
   created () {
-    this.$notifications.open()
-      .then(() => {
-        this.$notifications.get(this.auth.accessToken, 'GetAllNotifications')
-          .then(data => {
-            this.$store.commit('UPDATE_NOTIFICATIONS', data)
-          })
-      })
+    this.checkNotifications()
   },
   methods: {
+    checkNotifications () {
+      this.$notifications.open()
+        .then(() => {
+          this.$notifications.get(this.auth.accessToken, 'GetAllNotifications')
+            .then(data => {
+              this.$store.commit('UPDATE_NOTIFICATIONS', data)
+            })
+        })
+    },
     logout () {
       this.$auth.logout(false)
     }

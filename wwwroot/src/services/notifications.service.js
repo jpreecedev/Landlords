@@ -5,30 +5,20 @@ export default {
     Vue.prototype.$notifications = Vue.notifications = this
 
     let url = 'ws://localhost:52812/notifications'
-    let enableLogging = false
+    let enableLogging = process.env.NODE_ENV !== 'production'
 
     this.connection = new Connection(url, enableLogging)
   },
   open () {
-    return new Promise((resolve, reject) => {
-      if (!this.connection.open) {
-        this.connection.connectionMethods.onConnected = () => {
+    return new Promise((resolve) => {
+      this.connection.start()
+        .then(() => {
           resolve()
-        }
-        this.connection.connectionMethods.onError = event => {
-          reject(event.error)
-        }
-        this.connection.start()
-      } else {
-        resolve()
-      }
+        })
     })
   },
   get (accessToken, method) {
     return new Promise((resolve, reject) => {
-      this.connection.onError = event => {
-        reject(event.error)
-      }
       this.connection.clientMethods[method] = response => {
         resolve(response)
       }

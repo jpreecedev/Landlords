@@ -34,8 +34,8 @@ module.exports = {
         ws: true
       },
       '/api': {
-        target: 'http://localhost:52812/', // api server
-        changeOrigin: true, // needed for virtual hosted sites
+        target: 'http://localhost:52812/',
+        changeOrigin: true,
         ws: true,
       }
     },
