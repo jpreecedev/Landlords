@@ -8,6 +8,7 @@
         public const string OtherUser = "OtherUser";
         public const string AgencyAdministrator = "Agency";
         public const string AgencyUser = "AgencyUser";
+        public const string Tenant = "Tenant";
 
         public static string[] AllRoles = new[]
         {
@@ -16,7 +17,8 @@
             Accountant,
             OtherUser,
             AgencyAdministrator,
-            AgencyUser
+            AgencyUser,
+            Tenant
         };
     }
 }

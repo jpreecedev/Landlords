@@ -41,13 +41,6 @@
             return Ok(await _tenantsDataProvider.GetTenantByIdAsync(tenantId));
         }
 
-        [HttpPost("new"), ValidateAntiForgeryToken]
-        [Permission(Permissions_TE.NewId, Permissions_TE.NewRouteId, Permissions_TE.NewDescription)]
-        public async Task<IActionResult> New()
-        {
-            return Ok(await _tenantsDataProvider.NewAsync());
-        }
-
         [HttpPost, ValidateAntiForgeryToken]
         [Permission(Permissions_TE.UpdateId, Permissions_TE.UpdateRouteId, Permissions_TE.UpdateDescription)]
         public async Task<IActionResult> Post([FromBody] TenantViewModel value)

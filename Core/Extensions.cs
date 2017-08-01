@@ -183,6 +183,7 @@
                 .AddScoped<ITenanciesDataProvider, TenanciesDataProvider>()
                 .AddScoped<IJourneyDataProvider, JourneyDataProvider>()
                 .AddScoped<IShortlistedPropertiesDataProvider, ShortlistedPropertiesDataProvider>()
+                .AddScoped<IConversationDataProvider, ConversationDataProvider>()
                 .AddTransient<IEmailSender, EmailSender>();
 
             return serviceCollection;

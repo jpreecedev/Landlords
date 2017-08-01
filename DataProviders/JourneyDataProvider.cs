@@ -8,7 +8,9 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Microsoft.EntityFrameworkCore;
     using Model.Entities;
+    using Model.Database;
 
     public class JourneyDataProvider : BaseDataProvider, IJourneyDataProvider
     {
@@ -20,7 +22,7 @@
         {
             //Untested
 
-            var tenants = CreateTenants(viewModel);
+            var tenants = await CreateTenantsAsync(viewModel);
             await Context.Tenants.AddRangeAsync(tenants);
 
             var tenancy = CreateTenancy(viewModel);
@@ -32,27 +34,40 @@
             await Context.SaveChangesAsync();
         }
 
-        private ICollection<Tenant> CreateTenants(StartTenancyJourneyViewModel viewModel)
+        private async Task<ICollection<Tenant>> CreateTenantsAsync(StartTenancyJourneyViewModel viewModel)
         {
             var result = new List<Tenant>();
             foreach (var tenant in viewModel.Tenants)
             {
+                var tenantUser = await Context.Users.FirstOrDefaultAsync(c => c.Email == tenant.EmailAddress);
+                if (tenantUser == null)
+                {
+                    tenantUser = new ApplicationUser
+                    {
+                        UserName = tenant.EmailAddress,
+                        Email = tenant.EmailAddress,
+                        EmailConfirmed = false,
+                        FirstName = tenant.FirstName,
+                        MiddleName = tenant.MiddleName,
+                        LastName = tenant.LastName,
+                        PhoneNumber = tenant.MainContactNumber,
+                        SecondaryPhoneNumber = tenant.SecondaryContactNumber,
+                        Title = tenant.Title
+                    };
+
+                    await Context.Users.AddAsync(tenantUser);
+                }
+
                 var entity = new Tenant
                 {
+                    ApplicationUser = tenantUser,
                     AdditionalInformation = tenant.AdditionalInformation,
                     CompanyName = tenant.CompanyName,
                     Created = DateTime.Now,
                     DateOfBirth = tenant.DateOfBirth,
                     DrivingLicenseReference = tenant.DrivingLicenseReference,
-                    EmailAddress = tenant.EmailAddress,
-                    Title = tenant.Title,
-                    FirstName = tenant.FirstName,
-                    MiddleName = tenant.MiddleName,
-                    LastName = tenant.LastName,
                     HasPets = tenant.HasPets,
                     IsSmoker = tenant.IsSmoker,
-                    MainContactNumber = tenant.MainContactNumber,
-                    SecondaryContactNumber = tenant.SecondaryContactNumber,
                     Occupation = tenant.Occupation,
                     PassportReference = tenant.PassportReference,
                     WorkAddress = tenant.WorkAddress,

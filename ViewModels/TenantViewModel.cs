@@ -3,55 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.Linq;
-    using Microsoft.CodeAnalysis.CSharp.Syntax;
-    using Model.Entities;
     using Model.Validation;
 
     public class TenantViewModel
     {
-        public TenantViewModel()
-        {
-        }
-
-        public TenantViewModel(Tenant tenant, ICollection<TenantAddress> tenantAddresses, ICollection<TenantContact> tenantContacts)
-        {
-            if (tenant == null)
-            {
-                return;
-            }
-
-            Id = tenant.Id;
-            Title = tenant.Title;
-            FirstName = tenant.FirstName;
-            MiddleName = tenant.MiddleName;
-            LastName = tenant.LastName;
-            DateOfBirth = tenant.DateOfBirth;
-            MainContactNumber = tenant.MainContactNumber;
-            SecondaryContactNumber = tenant.SecondaryContactNumber;
-            EmailAddress = tenant.EmailAddress;
-            Occupation = tenant.Occupation;
-            CompanyName = tenant.CompanyName;
-            WorkContactNumber = tenant.WorkContactNumber;
-            WorkAddress = tenant.WorkAddress;
-            DrivingLicenseReference = tenant.DrivingLicenseReference;
-            PassportReference = tenant.PassportReference;
-            IsSmoker = tenant.IsSmoker;
-            HasPets = tenant.HasPets;
-            AdditionalInformation = tenant.AdditionalInformation;
-            IsAdult = tenant.IsAdult;
-            IsLeadTenant = tenant.IsLeadTenant;
-
-            if (tenantAddresses != null)
-            {
-                Addresses = tenantAddresses.Select(c => new TenantAddressViewModel(!IsAdult, c)).ToList();
-            }
-            if (tenantContacts != null)
-            {
-                Contacts = tenantContacts.Select(c => new TenantContactViewModel(c)).ToList();
-            }
-        }
-
         public Guid Id { get; set; }
 
         [Required, MinLength(2)]

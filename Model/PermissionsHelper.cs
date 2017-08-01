@@ -22,7 +22,7 @@
             Permissions_AC.GetById,
             Permissions_AC.NewId,
             Permissions_AC.OverviewId,
-            Permissions_AC.UpdateId,
+            Permissions_AC.UpdateId
         };
 
         public static readonly string[] Landlord =
@@ -51,7 +51,9 @@
             Permissions_AC.NewId,
             Permissions_AC.OverviewId,
             Permissions_AC.UpdateId,
-            Permissions_TR.GetById
+            Permissions_TR.GetById,
+            Permissions_CO.SendId,
+            Permissions_CO.ViewId
         };
 
         public static readonly string[] Accountant =
@@ -109,6 +111,12 @@
             Permissions_CI.ToggleCompletedId,
             Permissions_CI.MoveId,
             Permissions_CI.ApplyTemplateId
+        };
+
+        public static readonly string[] Tenant =
+        {
+            Permissions_CO.SendId,
+            Permissions_CO.ViewId
         };
     }
 }

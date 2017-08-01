@@ -25,6 +25,7 @@
             CreatePermissions(context);
             AsyncHelpers.RunSync(() => CreateEmails(context));
             AsyncHelpers.RunSync(() => CreateRoles(context, roleManager));
+            AsyncHelpers.RunSync(() => CreateTenants(context, userManager));
             AsyncHelpers.RunSync(() => CreateUsers(context, userManager));
             AsyncHelpers.RunSync(() => CreateAgencies(context));
             AsyncHelpers.RunSync(() => CreateChecklists(context, userManager));
@@ -38,6 +39,85 @@
                 {
                     await roleManager.CreateAsync(new ApplicationRole(role));
                 }
+            }
+            if (!await context.Roles.AnyAsync(c => c.Name == ApplicationRoles.Tenant))
+            {
+                await roleManager.CreateAsync(new ApplicationRole(ApplicationRoles.Tenant));
+            }
+        }
+
+        private static async Task CreateTenants(LLDbContext context, ApplicationUserManager userManager)
+        {
+            if (!await context.Users.AnyAsync(c => c.Email == "tenant@hotmail.co.uk"))
+            {
+                var user = new ApplicationUser
+                {
+                    UserName = "tenant@hotmail.co.uk",
+                    Email = "tenant@hotmail.co.uk",
+                    EmailConfirmed = true,
+                    FirstName = "John",
+                    MiddleName = "Paul",
+                    LastName = "Tenant",
+                    PhoneNumber = "07955567790",
+                    SecondaryPhoneNumber = "01925555555",
+                    Title = "Mr"
+                };
+
+                await userManager.CreateAsync(user, "Password123");
+                await userManager.AddToRoleAsync(user, ApplicationRoles.Tenant);
+                await userManager.SetUserPermissionsAsync(user.Id, DefaultPermissions.Tenant.Select(c => Guid.Parse(c)).ToArray());
+
+                var tenant = new Tenant
+                {
+                    DateOfBirth = DateTime.Parse("1987-07-27 00:00:00"),
+                    Created = DateTime.Now,
+                    AdditionalInformation = "Additional",
+                    DrivingLicenseReference = "Driving",
+                    EmploymentType = EmploymentTypes.SelfEmployed,
+                    HasPets = true,
+                    IsAdult = true,
+                    IsLeadTenant = true,
+                    IsSmoker = true,
+                    Occupation = "Web Developer",
+                    PassportReference = "Passport",
+                    CompanyName = "Jon Preece Development Ltd",
+                    WorkAddress = "Work address",
+                    WorkContactNumber = "Work Contact",
+                    ApplicationUserId = user.Id
+                };
+
+                tenant.Addresses = new List<TenantAddress>
+                {
+                    new TenantAddress
+                    {
+                        Tenant = tenant,
+                        Created = DateTime.Now,
+                        Country = Countries.UnitedKingdom,
+                        CountyOrRegion = Counties.Cheshire,
+                        MonthsAtAddress = 6,
+                        Postcode = "WA53SL",
+                        Street = "Bridgeport Mews",
+                        TownOrCity = "Warrington",
+                        YearsAtAddress = 3
+                    }
+                };
+
+                tenant.Contacts = new List<TenantContact>
+                {
+                    new TenantContact
+                    {
+                        Name = "Contact",
+                        Tenant = tenant,
+                        Comments = "Comments",
+                        Created = DateTime.Now,
+                        MainContactNumber = "07955555555",
+                        Relationship = "Manager",
+                        SecondaryContactNumber = "09111111"
+                    }
+                };
+
+                await context.Tenants.AddAsync(tenant);
+                await context.SaveChangesAsync();
             }
         }
 

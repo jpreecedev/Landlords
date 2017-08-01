@@ -44,6 +44,10 @@
 
         DbSet<Notification> Notifications { get; set; }
 
+        DbSet<Conversation> Conversations { get; set; }
+
+        DbSet<ConversationMessage> ConversationMessages { get; set; }
+
         DbSet<T> Set<T>() where T : class;
     }
 }

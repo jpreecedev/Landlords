@@ -93,7 +93,7 @@
             {
                 method.Invoke(this, invocationDescriptor.Arguments);
             }
-            catch (TargetParameterCountException e)
+            catch (TargetParameterCountException)
             {
                 await SendMessageAsync(socket, new Message
                 {
@@ -101,7 +101,7 @@
                     Data = $"The {invocationDescriptor.MethodName} method does not take {invocationDescriptor.Arguments.Length} parameters!"
                 }).ConfigureAwait(false);
             }
-            catch (ArgumentException e)
+            catch (ArgumentException)
             {
                 await SendMessageAsync(socket, new Message
                 {

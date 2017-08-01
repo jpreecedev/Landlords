@@ -3,26 +3,17 @@
     using Model.Validation;
     using System;
     using System.Collections.Generic;
-    using System.Text;
+    using Database;
 
     public class Tenant : BaseModel
     {
-        public string Title { get; set; }
+        [RequiredGuid]
+        public Guid ApplicationUserId { get; set; }
 
-        public string FirstName { get; set; }
-
-        public string MiddleName { get; set; }
-
-        public string LastName { get; set; }
-
+        public ApplicationUser ApplicationUser { get; set; }
+        
         [LLDate]
         public DateTime DateOfBirth { get; set; }
-
-        public string MainContactNumber { get; set; }
-
-        public string SecondaryContactNumber { get; set; }
-
-        public string EmailAddress { get; set; }
 
         public string Occupation { get; set; }
 
@@ -51,28 +42,5 @@
         public ICollection<TenantAddress> Addresses { get; set; }
 
         public ICollection<TenantContact> Contacts { get; set; }
-
-        public string Name
-        {
-            get
-            {
-                var builder = new StringBuilder();
-
-                if (!string.IsNullOrEmpty(Title))
-                {
-                    builder.AppendFormat("{0} ", Title);
-                }
-                if (!string.IsNullOrEmpty(FirstName))
-                {
-                    builder.AppendFormat("{0} ", FirstName);
-                }
-                if (!string.IsNullOrEmpty(LastName))
-                {
-                    builder.AppendFormat("{0}", LastName);
-                }
-
-                return builder.ToString();
-            }
-        }
     }
 }

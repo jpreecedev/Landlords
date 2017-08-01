@@ -120,7 +120,10 @@ export default {
           return this.$http.get(`/api/propertydetails/basicdetails`).then(response => {
             if (response.data) {
               this.portfolioProperties = response.data
-              this.selectedProperty = this.portfolioProperties[0].id
+
+              if (this.portfolioProperties.length) {
+                this.selectedProperty = this.portfolioProperties[0].id
+              }
             }
           })
         }
