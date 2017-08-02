@@ -22,5 +22,7 @@
 
         [MustMatchGuid("TenantId", "LandlordId"), RequiredGuid]
         public Guid SenderId { get; set; }
+
+        public DateTime Sent { get; set; }
     }
 }

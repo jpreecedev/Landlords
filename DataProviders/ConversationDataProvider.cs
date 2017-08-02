@@ -22,8 +22,8 @@
             //untested
 
             return await (Context.Conversations.AsNoTracking()
-                .Include(x => x.Landlord).Include(x => x.Tenant)
-                .Where(c => c.LandlordId == userId || c.TenantId == userId))
+                    .Include(x => x.Landlord).Include(x => x.Tenant)
+                    .Where(c => c.LandlordId == userId || c.TenantId == userId))
                 .Select(c => new ConversationViewModel
                 {
                     TenantId = c.TenantId,
@@ -32,7 +32,20 @@
                     LandlordFirstName = c.Landlord.FirstName,
                     LandlordLastName = c.Landlord.LastName,
                     TenantFirstName = c.Tenant.FirstName,
-                    TenantLastName = c.Tenant.LastName
+                    TenantLastName = c.Tenant.LastName,
+                    Messages = Context.ConversationMessages.Where(message => message.ConversationId == c.Id)
+                        .OrderBy(d => d.Created)
+                        .Select(d => new ConversationMessageViewModel
+                        {
+                            Sent = d.Created,
+                            Id = d.Id,
+                            TenantId = c.TenantId,
+                            LandlordId = c.LandlordId,
+                            Message = d.Message,
+                            ConversationId = c.Id,
+                            SenderId = d.FromId,
+                            Seen = d.Seen
+                        }).ToList()
                 })
                 .ToListAsync();
         }
@@ -45,7 +58,7 @@
                 ConversationId = message.ConversationId,
                 Created = DateTime.Now,
                 FromId = message.SenderId,
-                Message = message.Message
+                Message = message.Message,
             };
 
             await Context.ConversationMessages.AddAsync(entity);

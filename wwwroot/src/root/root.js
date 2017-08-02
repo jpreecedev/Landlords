@@ -8,10 +8,11 @@ import Interceptors from 'src/interceptors'
 import Autocomplete from 'v-autocomplete'
 import router from './routes'
 import Vuetify from 'vuetify'
+import VueChatScroll from 'vue-chat-scroll'
 
 import CommonComponents from 'src/common'
 
-import Journeys from 'journeys'
+import Journeys from 'src/journeys'
 
 import 'src/plugins'
 import 'src/extensions'
@@ -33,6 +34,7 @@ Vue.use(Vuetify)
 Vue.use(CommonComponents)
 Vue.use(Journeys)
 Vue.use(NotificationsService)
+Vue.use(VueChatScroll)
 
 new Vue({
   el: '#app',

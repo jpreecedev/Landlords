@@ -17,6 +17,8 @@
                 :multi-line="multiline"
                 :rows="rows"
                 :auto-grow="multiline"
+                :placeholder="placeholder"
+                :hint="hint"
                 :disabled="disabled">
   </v-text-field>
 </template>
@@ -60,6 +62,16 @@
       rows: {
         type: Number,
         default: 1,
+        required: false
+      },
+      placeholder: {
+        type: String,
+        default: null,
+        required: false
+      },
+      hint: {
+        type: String,
+        default: null,
         required: false
       }
     },

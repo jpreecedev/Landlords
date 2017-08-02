@@ -27,12 +27,7 @@ module.exports = {
       'store': resolve("src/store"),
       'utils': resolve("src/utils"),
       'services': resolve("src/services"),
-      'checklists': resolve("src/checklists"),
-      'accounts': resolve("src/accounts"),
       'common': resolve("src/common"),
-      'journeys': resolve("src/journeys"),
-      'tenants': resolve("src/tenants"),
-      'tenancies': resolve("src/tenancies"),
       'src': resolve("src")
     }
   },
