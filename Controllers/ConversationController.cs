@@ -45,8 +45,7 @@
                 if (!await _context.Conversations.AnyAsync(c => (c.LandlordId == value.TenantId && c.TenantId == value.LandlordId) || (c.LandlordId == value.LandlordId && c.TenantId == value.TenantId)))
                     return BadRequest("Unable to validate payload");
                 
-                await _conversationDataProvider.SendMessageAsync(value);
-                return Ok();
+                return Ok(await _conversationDataProvider.SendMessageAsync(value));
             }
 
             return BadRequest(new { Errors = ModelState.ToErrorCollection() });

@@ -91,9 +91,6 @@
           <v-icon>more_vert</v-icon>
         </v-btn>
         <v-list>
-          <v-list-tile @click="logout()">
-            <v-list-tile-title>Log out</v-list-tile-title>
-          </v-list-tile>
           <v-list-tile @click="$router.push('/watchlist')" v-if="permissions.SP_GetListById">
             <v-list-tile-title>
               My shortlist
@@ -101,6 +98,12 @@
           </v-list-tile>
           <v-list-tile @click="$router.push('/profile')" v-if="permissions.P_View">
             <v-list-tile-title>View profile</v-list-tile-title>
+          </v-list-tile>
+          <v-list-tile @click="$router.push('/conversations')" v-if="permissions.CO_View">
+            <v-list-tile-title>Chat</v-list-tile-title>
+          </v-list-tile>
+          <v-list-tile @click="logout()">
+            <v-list-tile-title>Log out</v-list-tile-title>
           </v-list-tile>
         </v-list>
       </v-menu>

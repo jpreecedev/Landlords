@@ -2,6 +2,7 @@
   <v-text-field ref="field"
                 @input="updateField"
                 @blur="$emit('blur')"
+                @keyup.enter="$emit('keyenter')"
                 :value="value"
                 :label="label"
                 :append-icon="type === 'password' ? (togglePassword ? 'visibility' : 'visibility_off') : null"

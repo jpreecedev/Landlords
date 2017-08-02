@@ -6,7 +6,7 @@
         <h1 class="headline primary--text">Chat</h1>
       </header>
       <v-card class="chat-wrapper">
-        <v-layout row wrap>
+        <v-layout row wrap></v-layout>
           <v-flex xs12 md4 class="conversations">
             <ul>
               <li v-for="item in conversations"
@@ -20,28 +20,36 @@
               </li>
             </ul>
           </v-flex>
-          <v-flex xs12 md8 class="chat grey lighten-4" :class="{'no-messages': selectedConversation.messages.length === 0}">
-                <div class="" v-if="selectedConversation.messages.length === 0">There are no messages to display here.</div>
-                <ul v-if="selectedConversation.messages.length > 0" class="scroll" v-chat-scroll>
-                  <li v-for="message in selectedConversation.messages"
-                      :key="message.id"
-                      :class="{'sender': message.senderId === message.tenantId, 'receiver': message.senderId === message.landlordId}">
-                      <div class="message">
-                        {{ message.message }}
-                        <div class="sent">
-                          <v-icon>alarm</v-icon>
-                          <time :datetime="message.sent">{{ message.sent | formatDateTime }}</time>
-                        </div>
-                      </div>
-                  </li>
-                </ul>
-                <div class="type-message">
-                  <text-field placeholder="Type a message"
-                              hint="Press enter or return to send">
-                  </text-field>
-                </div>
+          <v-flex xs12 md8 v-if="!selectedConversation || !selectedConversation.messages.length === 0" class="no-messages">
+            There are no messages to display here.
+          </v-flex>
+          <v-flex xs12 md8 class="chat grey lighten-4" v-if="selectedConversation">
+            <ul v-if="selectedConversation.messages.length > 0" class="scroll" v-chat-scroll>
+              <li v-for="message in selectedConversation.messages"
+                  :key="message.id"
+                  :class="{'sender': message.senderId === message.tenantId, 'receiver': message.senderId === message.landlordId}">
+                  <div class="message">
+                    {{ message.message }}
+                    <div class="sent">
+                      <v-icon>alarm</v-icon>
+                      <time :datetime="message.sent">{{ message.sent | formatDateTime }}</time>
+                    </div>
+                  </div>
+              </li>
+            </ul>
+            <div class="type-message">
+              <text-field v-model="currentMessage"
+                          @keyenter="sendMessage(currentMessage)"
+                          :disabled="isSending"
+                          placeholder="Type a message"
+                          hint="Press enter or return to send">
+              </text-field>
+            </div>
           </v-flex>
         </v-layout>
+        <v-btn absolute dark fab top right class="pink action-button">
+          <v-icon>add</v-icon>
+        </v-btn>
       </v-card>
     </div>
   </div>
@@ -49,84 +57,16 @@
 
 <script>
 import { mapState } from 'vuex'
+import utils from 'utils'
+
 export default {
   name: 'chat',
   data () {
     return {
+      currentMessage: null,
       isLoading: false,
-      conversations: [
-        {
-          conversationId: 'ABC123',
-          landlordFirstName: 'Jon',
-          landlordLastName: 'Preece',
-          messages: [{
-            conversationId: 'ABC123',
-            id: 1,
-            message: 'Hello',
-            tenantId: 'tenantId',
-            landlordId: 'landlordId',
-            senderId: 'tenantId',
-            sent: '2017-02-08T12:01:24'
-          }, {
-            conversationId: 'ABC123',
-            id: 2,
-            message: 'This is a fairly long response, although not epic This is a fairly long response, although not epic This is a fairly long response, although not epic',
-            tenantId: 'tenantId',
-            landlordId: 'landlordId',
-            senderId: 'landlordId',
-            sent: '2017-02-08T12:01:24'
-          }, {
-            conversationId: 'ABC123',
-            id: 1,
-            message: 'Hello',
-            tenantId: 'tenantId',
-            landlordId: 'landlordId',
-            senderId: 'tenantId',
-            sent: '2017-02-08T12:01:24'
-          }, {
-            conversationId: 'ABC123',
-            id: 2,
-            message: 'This is a fairly long response, although not epic This is a fairly long response, although not epic This is a fairly long response, although not epic',
-            tenantId: 'tenantId',
-            landlordId: 'landlordId',
-            senderId: 'landlordId',
-            sent: '2017-02-08T12:01:24'
-          }, {
-            conversationId: 'ABC123',
-            id: 1,
-            message: 'Hello',
-            tenantId: 'tenantId',
-            landlordId: 'landlordId',
-            senderId: 'tenantId',
-            sent: '2017-02-08T12:01:24'
-          }, {
-            conversationId: 'ABC123',
-            id: 2,
-            message: 'This is a fairly long response, although not epic This is a fairly long response, although not epic This is a fairly long response, although not epic',
-            tenantId: 'tenantId',
-            landlordId: 'landlordId',
-            senderId: 'landlordId',
-            sent: '2017-02-08T12:01:24'
-          }, {
-            conversationId: 'ABC123',
-            id: 1,
-            message: 'Hello',
-            tenantId: 'tenantId',
-            landlordId: 'landlordId',
-            senderId: 'tenantId',
-            sent: '2017-02-08T12:01:24'
-          }, {
-            conversationId: 'ABC123',
-            id: 2,
-            message: 'This is a fairly long response, although not epic This is a fairly long response, although not epic This is a fairly long response, although not epic',
-            tenantId: 'tenantId',
-            landlordId: 'landlordId',
-            senderId: 'landlordId',
-            sent: '2017-02-08T12:01:24'
-          }]
-        },
-        { conversationId: 'ABC456', landlordFirstName: 'Customer', landlordLastName: 'Support', messages: [] }
-      ],
+      isSending: false,
+      conversations: [],
       selectedConversation: {}
     }
   },
@@ -134,7 +74,7 @@ export default {
     this.isLoading = true
     this.$http.get('/api/conversation')
       .then(response => {
-        // this.data = response.data
+        this.conversations = response.data
       })
       .finally(() => {
         this.isLoading = false
@@ -143,6 +83,36 @@ export default {
           this.selectedConversation = this.conversations[0]
         }
       })
+  },
+  methods: {
+    sendMessage (message) {
+      let conversationMessage = {
+        conversationId: this.selectedConversation.conversationId,
+        message,
+        tenantId: null,
+        landlordId: null,
+        senderId: null,
+        sent: new Date()
+      }
+
+      this.$http.post('/api/conversation', conversationMessage)
+        .then(response => {
+          this.selectedConversation.messages.push(response.data)
+        })
+        .catch(response => {
+          let validationResult = utils.getFormValidationErrors(response)
+          validationResult.errors.forEach(validationError => {
+            console.log('ERROR', validationError.key, validationError.messages[0], 'required')
+          })
+        })
+        .finally(() => {
+          this.isLoading = false
+
+          if (this.conversations) {
+            this.selectedConversation = this.conversations[0]
+          }
+        })
+    }
   },
   computed: {
     ...mapState({
@@ -240,12 +210,10 @@ export default {
   }
   .no-messages {
     height: 70vh;
-    div {
-      justify-content: center;
-      align-items: center;
-      display: flex;
-      height: 100%;
-    }
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    height: 100%;
   }
 
   textarea {
@@ -265,5 +233,9 @@ export default {
     &::-webkit-scrollbar-thumb {
       background: #666;
     }
+  }
+
+  .action-button {
+    border-radius: 50%;
   }
 </style>

@@ -50,7 +50,7 @@
                 .ToListAsync();
         }
 
-        public async Task SendMessageAsync(ConversationMessageViewModel message)
+        public async Task<ConversationMessageViewModel> SendMessageAsync(ConversationMessageViewModel message)
         {
             //untested
             var entity = new ConversationMessage
@@ -63,6 +63,18 @@
 
             await Context.ConversationMessages.AddAsync(entity);
             await Context.SaveChangesAsync();
+
+            return new ConversationMessageViewModel
+            {
+                ConversationId = entity.ConversationId,
+                Id = entity.Id,
+                TenantId = entity.Conversation.TenantId,
+                LandlordId = entity.Conversation.LandlordId,
+                Message = entity.Message,
+                Sent = entity.Created,
+                SenderId = entity.FromId,
+                Seen = entity.Seen
+            };
         }
     }
 }

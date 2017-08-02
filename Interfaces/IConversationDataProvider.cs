@@ -8,6 +8,6 @@
     public interface IConversationDataProvider
     {
         Task<ICollection<ConversationViewModel>> GetConversationAsync(Guid userId);
-        Task SendMessageAsync(ConversationMessageViewModel message);
+        Task<ConversationMessageViewModel> SendMessageAsync(ConversationMessageViewModel message);
     }
 }
