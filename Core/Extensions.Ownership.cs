@@ -55,25 +55,5 @@
                 .Where(c => c.ApplicationUserPortfolio.UserId == userId && c.ApplicationUserPortfolio.PortfolioId == portfolioId && c.Account.Id == accountId)
                 .AnyAsync();
         }
-
-        public static async Task<bool> HasARelationshipAsync(this Guid tenantId, Guid landlordId, ILLDbContext context)
-        {
-            if (tenantId.IsDefault() || landlordId.IsDefault() || context == null)
-            {
-                return false;
-            }
-
-            return await (from applicationUser in context.Users.AsNoTracking()
-                    join aup in context.ApplicationUserPortfolios on applicationUser.Id equals aup.UserId
-                    join portfolio in context.Portfolios on aup.PortfolioId equals portfolio.Id
-                    join propertyDetails in context.PropertyDetails on portfolio.Id equals propertyDetails.PortfolioId
-                    join tenancies in context.Tenancies on propertyDetails.Id equals tenancies.PropertyDetailsId into tenanciesJoin
-                    from tenancy in tenanciesJoin
-                    join tenantTenancy in context.TenantTenancies on tenancy.Id equals tenantTenancy.TenancyId
-                    join tenant in context.Tenants on tenantTenancy.TenantId equals tenant.Id
-                    where applicationUser.Id == landlordId
-                    select applicationUser)
-                .AnyAsync();
-        }
     }
 }

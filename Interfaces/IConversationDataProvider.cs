@@ -1,13 +1,14 @@
 ﻿namespace Landlords.Interfaces
 {
-    using System;
-    using System.Collections.Generic;
+    using System.Security.Claims;
     using System.Threading.Tasks;
+    using Model.Database;
     using ViewModels;
 
     public interface IConversationDataProvider
     {
-        Task<ICollection<ConversationViewModel>> GetConversationAsync(Guid userId);
+        Task<ConversationViewModel> NewConversationAsync(ApplicationUser applicationUser, ContactViewModel contact);
+        Task<ConversationOverviewViewModel> GetConversationOverviewAsync(ClaimsPrincipal user, ApplicationUser applicationUser);
         Task<ConversationMessageViewModel> SendMessageAsync(ConversationMessageViewModel message);
     }
 }

@@ -18,9 +18,12 @@
     using Landlords.Permissions;
     using Microsoft.AspNetCore.Authorization;
     using Landlords.Interfaces;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Storage;
     using Model.DataTypes;
     using Model.Entities;
     using Statements;
+    using System.Threading.Tasks;
 
     public static class Extensions
     {
@@ -136,7 +139,7 @@
             throw new InvalidOperationException("Unable to determine claim");
         }
 
-        public static ApplicationUser GetApplicationUser(this ClaimsPrincipal claimsPrincipal, LLDbContext context)
+        public static ApplicationUser GetApplicationUser(this ClaimsPrincipal claimsPrincipal, ILLDbContext context)
         {
             var userId = claimsPrincipal.GetUserId();
             if (userId != default(Guid))
@@ -145,6 +148,11 @@
             }
 
             throw new InvalidOperationException("Unable to determine User");
+        }
+
+        public static async Task<ApplicationUser> GetSiteAdministratorAsync(this DbSet<ApplicationUser> applicationUsers)
+        {
+            return await applicationUsers.SingleAsync(c => c.Email == "admin@landlords.com");
         }
 
         public static bool IsSiteAdministrator(this ClaimsPrincipal claimsPrincipal)
@@ -157,11 +165,14 @@
             return claimsPrincipal.IsInRole(ApplicationRoles.AgencyAdministrator) || claimsPrincipal.IsInRole(ApplicationRoles.AgencyUser);
         }
 
-        public static bool IsEndUser(this ClaimsPrincipal claimsPrincipal)
+        public static bool IsTenant(this ClaimsPrincipal claimsPrincipal)
         {
-            return claimsPrincipal.IsInRole(ApplicationRoles.Landlord) || 
-                claimsPrincipal.IsInRole(ApplicationRoles.Accountant) ||
-                claimsPrincipal.IsInRole(ApplicationRoles.OtherUser);
+            return claimsPrincipal.IsInRole(ApplicationRoles.Tenant);
+        }
+
+        public static bool IsLandlord(this ClaimsPrincipal claimsPrincipal)
+        {
+            return claimsPrincipal.IsInRole(ApplicationRoles.Landlord);
         }
 
         public static IServiceCollection RegisterDI(this IServiceCollection serviceCollection)

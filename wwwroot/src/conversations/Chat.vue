@@ -6,8 +6,8 @@
         <h1 class="headline primary--text">Chat</h1>
       </header>
       <v-card class="chat-wrapper">
-        <v-layout row wrap></v-layout>
-          <v-flex xs12 md4 class="conversations">
+        <v-layout row wrap>
+          <v-flex xs12 sm4 class="conversations">
             <ul>
               <li v-for="item in conversations"
                   :key="item.conversationId"
@@ -15,19 +15,19 @@
                   @click="selectedConversation = item">
                 <v-avatar>
                   <img src="../assets/images/avatar.jpg" alt="Avatar">
-                  <span>{{ item.landlordFirstName + ' ' + item.landlordLastName }}</span>
+                  <span>{{ item.senderFirstName + ' ' + item.senderLastName }}</span>
                 </v-avatar>
               </li>
             </ul>
           </v-flex>
-          <v-flex xs12 md8 v-if="!selectedConversation || !selectedConversation.messages.length === 0" class="no-messages">
+          <v-flex xs12 sm8 v-if="!selectedConversation || !selectedConversation.messages || !selectedConversation.messages.length" class="no-messages">
             There are no messages to display here.
           </v-flex>
-          <v-flex xs12 md8 class="chat grey lighten-4" v-if="selectedConversation">
-            <ul v-if="selectedConversation.messages.length > 0" class="scroll" v-chat-scroll>
+          <v-flex xs12 sm8 class="chat grey lighten-4">
+            <ul v-if="selectedConversation && selectedConversation.messages && selectedConversation.messages.length > 0" class="scroll" v-chat-scroll>
               <li v-for="message in selectedConversation.messages"
                   :key="message.id"
-                  :class="{'sender': message.senderId === message.tenantId, 'receiver': message.senderId === message.landlordId}">
+                  :class="{'sender': selectedConversation.senderId === message.senderId, 'receiver': selectedConversation.senderId === message.receiverId}">
                   <div class="message">
                     {{ message.message }}
                     <div class="sent">
@@ -47,9 +47,27 @@
             </div>
           </v-flex>
         </v-layout>
-        <v-btn absolute dark fab top right class="pink action-button">
-          <v-icon>add</v-icon>
-        </v-btn>
+        <v-dialog v-model="dialog"
+                  v-if="contacts && contacts.length"
+                  lazy absolute>
+          <v-btn class="blue darken-2 action-button"
+                 slot="activator"
+                 absolute dark fab top right>
+            <v-icon>add</v-icon>
+          </v-btn>
+          <v-list>
+            <v-list-tile avatar v-for="contact in contacts" v-bind:key="contact.id">
+              <v-list-tile-avatar>
+                <img src="../assets/images/avatar.jpg"/>
+              </v-list-tile-avatar>
+              <v-list-tile-content>
+                <v-list-tile-title @click="selectContact(contact)">
+                  {{ contact.firstName + ' ' + contact.lastName }}
+                </v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
+          </v-list>
+        </v-dialog>
       </v-card>
     </div>
   </div>
@@ -63,10 +81,12 @@ export default {
   name: 'chat',
   data () {
     return {
+      dialog: false,
       currentMessage: null,
       isLoading: false,
       isSending: false,
       conversations: [],
+      contacts: [],
       selectedConversation: {}
     }
   },
@@ -74,25 +94,34 @@ export default {
     this.isLoading = true
     this.$http.get('/api/conversation')
       .then(response => {
-        this.conversations = response.data
+        let data = response.data
+        this.conversations = data.conversations
+        this.contacts = data.contacts
       })
       .finally(() => {
         this.isLoading = false
-
         if (this.conversations) {
           this.selectedConversation = this.conversations[0]
         }
       })
   },
   methods: {
+    selectContact (contact) {
+      this.dialog = false
+      this.$http.post('/api/conversation/new', { userId: contact.userId })
+        .then(response => {
+          this.conversations.push(response.data)
+        })
+    },
     sendMessage (message) {
+      if (!message) {
+        return
+      }
+
       let conversationMessage = {
         conversationId: this.selectedConversation.conversationId,
-        message,
-        tenantId: null,
-        landlordId: null,
-        senderId: null,
-        sent: new Date()
+        senderId: this.selectedConversation.senderId,
+        message
       }
 
       this.$http.post('/api/conversation', conversationMessage)
@@ -107,6 +136,7 @@ export default {
         })
         .finally(() => {
           this.isLoading = false
+          this.currentMessage = ''
 
           if (this.conversations) {
             this.selectedConversation = this.conversations[0]

@@ -9,5 +9,9 @@
         public const string SendId = "8adedecd-ff55-4111-b39d-99753a240421";
         public const string SendRouteId = "CO_Send";
         public const string SendDescription = "Send and receive messages";
+
+        public const string NewId = "9fd49ac8-01ab-4828-8b62-380bed805823";
+        public const string NewRouteId = "CO_New";
+        public const string NewDescription = "Start a new conversation";
     }
 }

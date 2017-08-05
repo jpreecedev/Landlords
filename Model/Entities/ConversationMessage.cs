@@ -13,8 +13,8 @@
 
         public DateTime? Seen { get; set; }
 
-        public Guid FromId { get; set; }
+        public Guid SenderId { get; set; }
 
-        public ApplicationUser From { get; set; }
+        public ApplicationUser Sender { get; set; }
     }
 }

@@ -10,18 +10,18 @@
         public Guid ConversationId { get; set; }
 
         [RequiredGuid]
-        public Guid TenantId { get; set; }
+        public Guid SenderId { get; set; }
 
         [RequiredGuid]
-        public Guid LandlordId { get; set; }
+        public Guid ReceiverId { get; set; }
 
-        public string TenantFirstName { get; set; }
+        public string SenderFirstName { get; set; }
 
-        public string TenantLastName { get; set; }
+        public string SenderLastName { get; set; }
 
-        public string LandlordFirstName { get; set; }
+        public string ReceiverFirstName { get; set; }
 
-        public string LandlordLastName { get; set; }
+        public string ReceiverLastName { get; set; }
 
         public ICollection<ConversationMessageViewModel> Messages { get; set; }
     }

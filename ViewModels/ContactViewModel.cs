@@ -5,8 +5,23 @@
 
     public class ContactViewModel
     {
-        public ApplicationUser User { get; set; }
+        public ContactViewModel()
+        {
+            
+        }
 
+        public ContactViewModel(ApplicationUser applicationUser)
+        {
+            if (applicationUser == null)
+            {
+                return;
+            }
+            
+            UserId = applicationUser.Id;
+            FirstName = applicationUser.FirstName;
+            LastName = applicationUser.LastName;
+        }
+        
         public Guid UserId { get; set; }
 
         public string FirstName { get; set; }

@@ -6,13 +6,13 @@
 
     public class Conversation : BaseModel
     {
-        public Guid TenantId { get; set; }
+        public Guid SenderId { get; set; }
 
-        public ApplicationUser Tenant { get; set; }
+        public ApplicationUser Sender { get; set; }
 
-        public Guid LandlordId { get; set; }
+        public Guid ReceiverId { get; set; }
 
-        public ApplicationUser Landlord { get; set; }
+        public ApplicationUser Receiver { get; set; }
 
         public ICollection<ConversationMessage> Messages { get; set; }
     }

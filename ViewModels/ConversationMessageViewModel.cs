@@ -15,12 +15,6 @@
         public DateTime? Seen { get; set; }
 
         [RequiredGuid]
-        public Guid TenantId { get; set; }
-
-        [RequiredGuid]
-        public Guid LandlordId { get; set; }
-
-        [MustMatchGuid("TenantId", "LandlordId"), RequiredGuid]
         public Guid SenderId { get; set; }
 
         public DateTime Sent { get; set; }
