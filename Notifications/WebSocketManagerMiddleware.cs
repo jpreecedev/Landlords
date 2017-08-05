@@ -2,11 +2,13 @@
 {
     using System;
     using System.IO;
+    using System.Linq;
     using System.Net.WebSockets;
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
+    using Landlords.Core;
 
     public class WebSocketManagerMiddleware
     {
@@ -26,8 +28,15 @@
             if (!context.WebSockets.IsWebSocketRequest)
                 return;
 
+            var accessToken = context.Request.Query["access_token"].FirstOrDefault();
+            var validationResult = accessToken.ToJwtValidationResult();
+            if (!validationResult.IsValid)
+            {
+                throw new UnauthorizedAccessException();
+            }
+
             var socket = await context.WebSockets.AcceptWebSocketAsync().ConfigureAwait(false);
-            await _webSocketHandler.OnConnected(socket).ConfigureAwait(false);
+            await _webSocketHandler.OnConnected(socket, validationResult.User).ConfigureAwait(false);
 
             await Receive(socket, async (result, serializedInvocationDescriptor) =>
             {
@@ -43,8 +52,9 @@
                         await _webSocketHandler.OnDisconnected(socket);
                     }
 
-                    catch (WebSocketException)
+                    catch (WebSocketException ex)
                     {
+                        Console.WriteLine(ex);
                         throw; //let's not swallow any exception for now
                     }
                 }

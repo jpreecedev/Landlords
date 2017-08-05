@@ -10,9 +10,12 @@
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
     using System.IdentityModel.Tokens.Jwt;
+    using System.Security.Claims;
     using Core;
     using Jwt;
     using Microsoft.IdentityModel.Tokens;
+    using System.Collections.Generic;
+    using System.Linq;
 
     public abstract class WebSocketHandler
     {
@@ -28,9 +31,9 @@
 
         protected WebSocketConnectionManager WebSocketConnectionManager { get; set; }
 
-        public virtual async Task OnConnected(WebSocket socket)
+        public virtual async Task OnConnected(WebSocket socket, ClaimsPrincipal user)
         {
-            WebSocketConnectionManager.AddSocket(socket);
+            WebSocketConnectionManager.AddSocket(socket, user);
 
             await SendMessageAsync(socket, new Message
             {
@@ -89,9 +92,15 @@
                 return;
             }
 
+            var arguments = new List<object>()
+            {
+                context.Request.Query["access_token"].First()
+            };
+            arguments.AddRange(invocationDescriptor.Arguments);
+
             try
             {
-                method.Invoke(this, invocationDescriptor.Arguments);
+                method.Invoke(this, arguments.ToArray());
             }
             catch (TargetParameterCountException)
             {
@@ -109,13 +118,10 @@
                     Data = $"The {invocationDescriptor.MethodName} method takes different arguments!"
                 }).ConfigureAwait(false);
             }
-        }
-
-        protected JwtValidationResult IsTokenValid(string accessToken)
-        {
-            JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
-            var claims = handler.ValidateToken(accessToken, StartupExtensions.GetTokenValidationParameters(), out SecurityToken token);
-            return new JwtValidationResult(claims);
+            catch (Exception)
+            {
+                
+            }
         }
     }
 }

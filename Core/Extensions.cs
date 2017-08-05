@@ -19,14 +19,19 @@
     using Microsoft.AspNetCore.Authorization;
     using Landlords.Interfaces;
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.Storage;
     using Model.DataTypes;
     using Model.Entities;
     using Statements;
     using System.Threading.Tasks;
+    using Newtonsoft.Json.Serialization;
 
     public static class Extensions
     {
+        private static readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings
+        {
+            ContractResolver = new CamelCasePropertyNamesContractResolver()
+        };
+
         public static decimal ToDecimal(this string input)
         {
             if (decimal.TryParse(input, out decimal result))
@@ -94,6 +99,11 @@
             }
 
             return result;
+        }
+
+        public static string ToJson(this object obj)
+        {
+            return JsonConvert.SerializeObject(obj, _jsonSerializerSettings);
         }
 
         public static string AsGenericError(this string message)
@@ -173,6 +183,11 @@
         public static bool IsLandlord(this ClaimsPrincipal claimsPrincipal)
         {
             return claimsPrincipal.IsInRole(ApplicationRoles.Landlord);
+        }
+
+        public static bool HasPropertyPortfolio(this ClaimsPrincipal claimsPrincipal)
+        {
+            return claimsPrincipal.FindFirst(LLClaimTypes.PortfolioIdentifier) != null;
         }
 
         public static IServiceCollection RegisterDI(this IServiceCollection serviceCollection)

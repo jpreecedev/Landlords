@@ -71,13 +71,14 @@
 
             await Context.AddAsync(entity);
             await Context.SaveChangesAsync();
-
+            
             return new ConversationMessageViewModel
             {
                 Id = entity.Id,
                 ConversationId = entity.ConversationId,
                 Message = entity.Message,
                 SenderId = entity.SenderId,
+                ReceiverId = Context.Conversations.Single(c => c.Id == message.ConversationId).ReceiverId,
                 Sent = entity.Created,
                 Seen = entity.Seen
             };
@@ -134,7 +135,7 @@
             //untested
             var siteAdministrator = new ContactViewModel(await Context.Users.GetSiteAdministratorAsync());
 
-            var landlord = await (from user in Context.Users.AsNoTracking()
+            var portfolioManagers = await (from user in Context.Users.AsNoTracking()
                 join aup in Context.ApplicationUserPortfolios on user.Id equals aup.UserId into aupJoin
                 from applicationUserPortfolio in aupJoin
                 join portfolio in Context.Portfolios on applicationUserPortfolio.PortfolioId equals portfolio.Id
@@ -149,13 +150,13 @@
                     FirstName = user.FirstName,
                     LastName = user.LastName,
                     UserId = user.Id
-                }).SingleAsync();
+                }).ToListAsync();
 
             var agencyContacts = await (from user in Context.Users.AsNoTracking()
                 join aup in Context.ApplicationUserPortfolios on user.Id equals aup.UserId into aupJoin
                 from applicationUserPortfolio in aupJoin
                 join appUser in Context.Users on applicationUserPortfolio.AgencyId equals appUser.AgencyId
-                where user.Id == landlord.UserId
+                where portfolioManagers.Any(c => c.UserId == user.Id)
                 select new ContactViewModel
                 {
                     FirstName = user.FirstName,
@@ -166,8 +167,8 @@
             var result = new List<ContactViewModel>
             {
                 siteAdministrator,
-                landlord
             };
+            result.AddRange(portfolioManagers);
             result.AddRange(agencyContacts);
             return result;
         }

@@ -7,20 +7,23 @@
     using Model;
     using Permissions;
     using ViewModels;
-    using System;
     using Database;
-    using Microsoft.EntityFrameworkCore;
+    using Notifications;
+    using System;
+    using System.Linq;
 
     [Route("api/[controller]")]
     public class ConversationController : Controller
     {
         private readonly IConversationDataProvider _conversationDataProvider;
         private readonly ILLDbContext _context;
+        private readonly NotificationsMessageHandler _messageHandler;
 
-        public ConversationController(IConversationDataProvider conversationDataProvider, ILLDbContext context)
+        public ConversationController(IConversationDataProvider conversationDataProvider, ILLDbContext context, NotificationsMessageHandler messageHandler)
         {
             _conversationDataProvider = conversationDataProvider;
             _context = context;
+            _messageHandler = messageHandler;
         }
 
         [HttpGet]
@@ -52,8 +55,11 @@
             {
                 if (value.ConversationId.IsDefault() || value.SenderId.IsDefault())
                     return BadRequest("Unable to validate payload");
-                
-                return Ok(await _conversationDataProvider.SendMessageAsync(value));
+
+                var sentMessage = await _conversationDataProvider.SendMessageAsync(value);
+                await _messageHandler.SendChatMessageToRecipientAsync(Request.Query["access_token"].FirstOrDefault(), sentMessage);
+
+                return Ok(sentMessage);
             }
 
             return BadRequest(new { Errors = ModelState.ToErrorCollection() });

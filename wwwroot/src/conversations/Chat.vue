@@ -5,7 +5,7 @@
       <header>
         <h1 class="headline primary--text">Chat</h1>
       </header>
-      <v-card class="chat-wrapper">
+      <v-card class="chat-wrapper" :class="{'empty': !selectedConversation, 'empty-messages': selectedConversation && selectedConversation.messages && !selectedConversation.messages.length}">
         <v-layout row wrap>
           <v-flex xs12 sm4 class="conversations">
             <ul>
@@ -15,35 +15,57 @@
                   @click="selectedConversation = item">
                 <v-avatar>
                   <img src="../assets/images/avatar.jpg" alt="Avatar">
-                  <span>{{ item.senderFirstName + ' ' + item.senderLastName }}</span>
+                  <span>{{ item.receiverFirstName + ' ' + item.receiverLastName }}</span>
                 </v-avatar>
               </li>
             </ul>
           </v-flex>
-          <v-flex xs12 sm8 v-if="!selectedConversation || !selectedConversation.messages || !selectedConversation.messages.length" class="no-messages">
-            There are no messages to display here.
-          </v-flex>
           <v-flex xs12 sm8 class="chat grey lighten-4">
-            <ul v-if="selectedConversation && selectedConversation.messages && selectedConversation.messages.length > 0" class="scroll" v-chat-scroll>
-              <li v-for="message in selectedConversation.messages"
-                  :key="message.id"
-                  :class="{'sender': selectedConversation.senderId === message.senderId, 'receiver': selectedConversation.senderId === message.receiverId}">
-                  <div class="message">
-                    {{ message.message }}
-                    <div class="sent">
-                      <v-icon>alarm</v-icon>
-                      <time :datetime="message.sent">{{ message.sent | formatDateTime }}</time>
-                    </div>
-                  </div>
-              </li>
-            </ul>
-            <div class="type-message">
-              <text-field v-model="currentMessage"
-                          @keyenter="sendMessage(currentMessage)"
-                          :disabled="isSending"
-                          placeholder="Type a message"
-                          hint="Press enter or return to send">
-              </text-field>
+            <div v-if="!selectedConversation" class="no-messages">
+              <p class="text-center">
+                No messages to display.<br><br>Select a conversation from the left, or click the add button above to begin a conversation
+              </p>
+            </div>
+            <div v-else-if="!selectedConversation.messages || !selectedConversation.messages.length" class="no-messages">
+              <p class="text-center">
+                No messages to display.<br><br>Type a message below and press enter to send.
+              </p>
+            </div>
+              <template v-if="selectedConversation && selectedConversation.messages && selectedConversation.messages.length > 0">
+                <div class="messages-wrapper scroll">
+                  <div class="spacer"></div>
+                  <ul v-chat-scroll>
+                    <li v-for="message in selectedConversation.messages"
+                        :key="message.id"
+                        :class="{'sender': selectedConversation.senderId === message.senderId, 'receiver': selectedConversation.senderId === message.receiverId}">
+                        <div class="message">
+                          {{ message.message }}
+                          <div class="sent">
+                            <v-icon>alarm</v-icon>
+                            <time :datetime="message.sent">{{ message.sent | formatDateTime }}</time>
+                          </div>
+                        </div>
+                    </li>
+                  </ul>
+                </div>
+              </template>
+            <div class="type-message" v-if="selectedConversation">
+              <div class="row">
+                <div class="col-xs-10">
+                  <text-field v-model="currentMessage"
+                              @keyenter="sendMessage(currentMessage)"
+                              :disabled="isSending"
+                              placeholder="Type a message"
+                              hint="Press enter or return to send">
+                  </text-field>
+                </div>
+                <div class="col-xs-2 send-button">
+                  <v-btn outline class="blue--text darken-2"
+                         @click="sendMessage(currentMessage)">
+                         Send
+                  </v-btn>
+                </div>
+              </div>
             </div>
           </v-flex>
         </v-layout>
@@ -56,7 +78,7 @@
             <v-icon>add</v-icon>
           </v-btn>
           <v-list>
-            <v-list-tile avatar v-for="contact in contacts" v-bind:key="contact.id">
+            <v-list-tile avatar v-for="contact in filteredContacts" v-bind:key="contact.id">
               <v-list-tile-avatar>
                 <img src="../assets/images/avatar.jpg"/>
               </v-list-tile-avatar>
@@ -92,17 +114,30 @@ export default {
   },
   created () {
     this.isLoading = true
-    this.$http.get('/api/conversation')
-      .then(response => {
-        let data = response.data
-        this.conversations = data.conversations
-        this.contacts = data.contacts
+    this.$notifications.open(this.auth.accessToken)
+      .then(() => {
+        this.$notifications.listen('ChatMessageReceived')
+          .then(data => {
+            debugger
+            let conversation = this.conversations.find(c => c.conversationId === data.conversationId)
+            if (conversation) {
+              conversation.messages.push(data)
+            }
+          })
       })
-      .finally(() => {
-        this.isLoading = false
-        if (this.conversations) {
-          this.selectedConversation = this.conversations[0]
-        }
+      .then(() => {
+        this.$http.get('/api/conversation')
+          .then(response => {
+            let data = response.data
+            this.conversations = data.conversations
+            this.contacts = data.contacts
+          })
+          .finally(() => {
+            this.isLoading = false
+            if (this.conversations) {
+              this.selectedConversation = this.conversations[0]
+            }
+          })
       })
   },
   methods: {
@@ -111,6 +146,7 @@ export default {
       this.$http.post('/api/conversation/new', { userId: contact.userId })
         .then(response => {
           this.conversations.push(response.data)
+          this.selectedConversation = this.conversations[this.conversations.length - 1]
         })
     },
     sendMessage (message) {
@@ -137,17 +173,21 @@ export default {
         .finally(() => {
           this.isLoading = false
           this.currentMessage = ''
-
-          if (this.conversations) {
-            this.selectedConversation = this.conversations[0]
-          }
         })
     }
   },
   computed: {
     ...mapState({
-      permissions: state => state.permissions
-    })
+      permissions: state => state.permissions,
+      auth: state => state.auth
+    }),
+    filteredContacts () {
+      return this.contacts.filter(contact => {
+        return !this.conversations.find(conversation => {
+          return conversation.receiverId === contact.userId
+        })
+      })
+    }
   }
 }
 </script>
@@ -155,6 +195,24 @@ export default {
 <style lang="scss" scoped>
   .chat-wrapper {
     height: 70vh!important;
+
+    .layout {
+      padding-right: 7px;
+    }
+
+    &.empty {
+      .chat .no-messages {
+        height: 70vh!important;
+        overflow-y: hidden;
+      }
+
+      &-messages {
+        .chat .no-messages {
+          height: calc(70vh - 117px) !important;
+          overflow-y: hidden;
+        }
+      }
+    }
   }
   .conversations {
     border-right: 1px solid #eaeaea;
@@ -176,11 +234,8 @@ export default {
   .chat {
     padding: 0;
     overflow: hidden;
-    ul {
+    ul, .no-messages {
       list-style: none;
-      height: calc(70vh - 117px);
-      overflow-y: scroll;
-      overflow-x: hidden;
       padding: 0 1rem;
       li {
         display: flex;
@@ -238,6 +293,19 @@ export default {
       margin-left: 1rem;
     }
   }
+  .messages-wrapper {
+    display: flex;
+    flex-flow: column;
+    height: calc(70vh - 117px);
+    overflow-y: scroll;
+    overflow-x: hidden;
+    > div {
+      flex: 1 1 auto;
+    }
+    ul {
+      flex: 0 0 auto;
+    }
+  }
   .no-messages {
     height: 70vh;
     justify-content: center;
@@ -268,4 +336,10 @@ export default {
   .action-button {
     border-radius: 50%;
   }
+
+  .send-button {
+    display: flex;
+    align-items: center;
+  }
+
 </style>

@@ -19,7 +19,9 @@ export default class Connection {
         this.log('Text message received. Message: ' + message.data)
       } else if (message.messageType === MessageType.MethodInvocation) {
         let invocationDescriptor = JSON.parse(message.data)
-        this.clientMethods[invocationDescriptor.methodName].apply(this, invocationDescriptor.arguments)
+        if (this.clientMethods[invocationDescriptor.methodName]) {
+          this.clientMethods[invocationDescriptor.methodName].apply(this, invocationDescriptor.arguments)
+        }
       } else if (message.messageType === MessageType.ConnectionEvent) {
         this.connectionId = message.data
       }

@@ -84,5 +84,12 @@
                 notification.Deleted = DateTime.Now;
             }
         }
+
+        public List<NotificationViewModel> GetNotificationsForUserAsync(Guid userId)
+        {
+            //TODO
+
+            return new List<NotificationViewModel>();
+        }
     }
 }

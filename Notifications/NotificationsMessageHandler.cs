@@ -1,12 +1,15 @@
 ﻿namespace Landlords.Notifications
 {
-    using System.Collections.Generic;
     using System.Threading.Tasks;
     using Interfaces;
-    using ViewModels;
     using System;
     using Core;
     using Microsoft.AspNetCore.Authorization;
+    using ViewModels;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Security.Claims;
+    using Jwt;
 
     public class NotificationsMessageHandler : WebSocketHandler
     {
@@ -22,16 +25,35 @@
 
         public async Task GetAllNotifications(string accessToken, string connectionId)
         {
-            var tokenValidation = IsTokenValid(accessToken);
+            var tokenValidation = accessToken.ToJwtValidationResult();
             if (!tokenValidation.IsValid)
             {
                 throw new UnauthorizedAccessException();
             }
 
-            var portfolioId = tokenValidation.User.GetPortfolioId();
-            var notifications = await _notificationsDataProvider.GetNotificationsForPortfolioAsync(portfolioId);
+            List<NotificationViewModel> notifications;
+            if (tokenValidation.User.HasPropertyPortfolio())
+            {
+                var portfolioId = tokenValidation.User.GetPortfolioId();
+                notifications = await _notificationsDataProvider.GetNotificationsForPortfolioAsync(portfolioId);
+            }
+            else
+            {
+                var nameClaim = tokenValidation.User.FindFirst(ClaimTypes.NameIdentifier);
+                var userId = Guid.Parse(nameClaim.Value);
+                notifications = _notificationsDataProvider.GetNotificationsForUserAsync(userId);
+            }
+            
+            await InvokeClientMethodAsync(connectionId, "GetAllNotifications", new[] {notifications});
+        }
 
-            await InvokeClientMethodAsync(connectionId, "GetAllNotifications", new []{ notifications });
+        public async Task SendChatMessageToRecipientAsync(string accessToken, ConversationMessageViewModel conversationMessage)
+        {
+            var userClients = WebSocketConnectionManager.GetClientByUserId(conversationMessage.ReceiverId);
+            foreach (var userClient in userClients)
+            {
+                await InvokeClientMethodAsync(userClient.Key, "ChatMessageReceived", new[] {conversationMessage});
+            }
         }
     }
 }

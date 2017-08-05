@@ -2,6 +2,7 @@
 {
     using System;
     using Model.Validation;
+    using Newtonsoft.Json;
 
     public class ConversationMessageViewModel
     {
@@ -16,6 +17,9 @@
 
         [RequiredGuid]
         public Guid SenderId { get; set; }
+
+        [JsonIgnore]
+        public Guid ReceiverId { get; set; }
 
         public DateTime Sent { get; set; }
     }

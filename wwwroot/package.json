@@ -16,7 +16,6 @@
     "v-autocomplete": "^1.4.1",
     "validator": "^8.0.0",
     "vue": "^2.4.1",
-    "vue-chat-scroll": "^1.2.0",
     "vue-resource": "^1.3.4",
     "vue-router": "^2.5.3",
     "vuetify": "^0.14.7",

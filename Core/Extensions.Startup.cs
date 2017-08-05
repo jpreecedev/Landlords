@@ -5,6 +5,7 @@
     using Microsoft.Extensions.Options;
     using Microsoft.IdentityModel.Tokens;
     using System;
+    using System.IdentityModel.Tokens.Jwt;
     using Microsoft.AspNetCore.Antiforgery;
     using Microsoft.AspNetCore.Http;
 
@@ -12,6 +13,12 @@
     {
         private static IOptions<JwtConfiguration> _jwtConfiguration;
         private static SecurityKey _key;
+
+        public static JwtValidationResult ToJwtValidationResult(this string accessToken)
+        {
+            JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
+            return new JwtValidationResult(handler.ValidateToken(accessToken, GetTokenValidationParameters(), out SecurityToken token));
+        }
 
         public static TokenValidationParameters GetTokenValidationParameters()
         {
