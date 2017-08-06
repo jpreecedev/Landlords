@@ -116,14 +116,12 @@ export default {
     this.isLoading = true
     this.$notifications.open(this.auth.accessToken)
       .then(() => {
-        this.$notifications.listen('ChatMessageReceived')
-          .then(data => {
-            debugger
-            let conversation = this.conversations.find(c => c.conversationId === data.conversationId)
-            if (conversation) {
-              conversation.messages.push(data)
-            }
-          })
+        this.$bus.$on('ChatMessageReceived', data => {
+          let conversation = this.conversations.find(c => c.conversationId === data.conversationId)
+          if (conversation) {
+            conversation.messages.push(data)
+          }
+        })
       })
       .then(() => {
         this.$http.get('/api/conversation')

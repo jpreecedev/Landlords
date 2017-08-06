@@ -1,10 +1,10 @@
+import Vue from 'vue'
 import { InvocationDescriptor } from './invocation-descriptor'
 import { MessageType } from './message'
 
 export default class Connection {
   constructor (url, enableLogging = false) {
     this.enableLogging = false
-    this.clientMethods = {}
     this.open = false
     this.url = url
     this.socket = null
@@ -19,9 +19,7 @@ export default class Connection {
         this.log('Text message received. Message: ' + message.data)
       } else if (message.messageType === MessageType.MethodInvocation) {
         let invocationDescriptor = JSON.parse(message.data)
-        if (this.clientMethods[invocationDescriptor.methodName]) {
-          this.clientMethods[invocationDescriptor.methodName].apply(this, invocationDescriptor.arguments)
-        }
+        Vue.bus.$emit(invocationDescriptor.methodName, ...invocationDescriptor.arguments)
       } else if (message.messageType === MessageType.ConnectionEvent) {
         this.connectionId = message.data
       }
@@ -67,8 +65,12 @@ export default class Connection {
   }
 
   createSocketWithBackoff (done) {
-    this.socket = new WebSocket(this.url)
+    this.socket = this.getWebSocket(this.url)
     this.log('Connecting...')
+
+    if (this.socket.readyState === 1) {
+      done()
+    }
 
     this.socket.onopen = () => {
       this.attempts = 1
@@ -83,6 +85,13 @@ export default class Connection {
         this.createSocketWithBackoff(done)
       }, time)
     }
+  }
+
+  getWebSocket (url) {
+    if (!this.socket || [2, 3].find(item => item === this.socket.readyState)) {
+      return new WebSocket(url)
+    }
+    return this.socket
   }
 
   generateInterval (k) {
