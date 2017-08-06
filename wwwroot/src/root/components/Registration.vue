@@ -12,10 +12,10 @@
       <p class="subheading">Please either sign in or register using the appropriate form below.</p>
     </header>
     <div class="row mt-5">
-      <div class="col-xs-12 col-md-5">
+      <div class="col-xs-12 col-sm-5">
         <loginform></loginform>
       </div>
-      <div class="col-xs-12 col-md-offset-1 col-md-6">
+      <div class="col-xs-12 col-sm-offset-1 col-sm-6">
         <registerform></registerform>
       </div>
     </div>
