@@ -56,35 +56,37 @@
         </v-list>
       </v-menu>
 
-      <v-menu v-if="auth.isLoggedIn" transition="v-slide-y-transition" bottom :nudge-right="notifications.length > 0 ? 260 : 90" :nudge-top="-10">
-        <v-btn @click="checkNotifications()" icon class="notifications" slot="activator">
-          <v-icon :class="'c' + notifications.length">add_alert</v-icon>
-        </v-btn>
-        <v-list class="notifications-list" two-line v-if="notifications.length > 0">
-          <v-subheader>Notifications</v-subheader>
-          <template v-for="(notification, index) in notifications">
-            <v-list-tile avatar :key="notification.id" download target="_blank">
-              <v-list-tile-avatar>
-                <notification-icon :type="notification.type"></notification-icon>
-              </v-list-tile-avatar>
+      <template v-if="notifications && notifications.length">
+        <v-menu v-if="auth.isLoggedIn" transition="v-slide-y-transition" bottom :nudge-right="notifications.length > 0 ? 260 : 90" :nudge-top="-10">
+          <v-btn @click="checkNotifications()" icon class="notifications" slot="activator">
+            <v-icon :class="'c' + notifications.length">add_alert</v-icon>
+          </v-btn>
+          <v-list class="notifications-list" two-line v-if="notifications.length > 0">
+            <v-subheader>Notifications</v-subheader>
+            <template v-for="(notification, index) in notifications">
+              <v-list-tile avatar :key="notification.id" download target="_blank">
+                <v-list-tile-avatar>
+                  <notification-icon :type="notification.type"></notification-icon>
+                </v-list-tile-avatar>
+                <v-list-tile-content>
+                  <v-list-tile-title>{{notification.message}}</v-list-tile-title>
+                  <v-list-tile-sub-title v-if="notification.secondaryMessage">
+                    {{ notification.secondaryMessage }}
+                  </v-list-tile-sub-title>
+                </v-list-tile-content>
+              </v-list-tile>
+            </template>
+          </v-list>
+          <v-list v-else>
+            <v-list-tile>
               <v-list-tile-content>
-                <v-list-tile-title>{{notification.message}}</v-list-tile-title>
-                <v-list-tile-sub-title v-if="notification.secondaryMessage">
-                  {{ notification.secondaryMessage }}
-                </v-list-tile-sub-title>
+                <v-list-tile-title></v-list-tile-title>
+                <v-list-tile-sub-title>You have no notifications</v-list-tile-sub-title>
               </v-list-tile-content>
             </v-list-tile>
-          </template>
-        </v-list>
-        <v-list v-else>
-          <v-list-tile>
-            <v-list-tile-content>
-              <v-list-tile-title></v-list-tile-title>
-              <v-list-tile-sub-title>You have no notifications</v-list-tile-sub-title>
-            </v-list-tile-content>
-          </v-list-tile>
-        </v-list>
-      </v-menu>
+          </v-list>
+        </v-menu>
+      </template>
 
       <v-menu v-if="auth.isLoggedIn" class="more" transition="v-slide-y-transition" bottom :nudge-right="85" :nudge-top="-10">
         <v-btn icon slot="activator">
@@ -128,6 +130,10 @@ export default {
   },
   methods: {
     checkNotifications () {
+      if (!this.auth.isLoggedIn) {
+        return
+      }
+
       this.$notifications.open(this.auth.accessToken)
         .then(() => {
           this.$notifications.get('GetAllNotifications')

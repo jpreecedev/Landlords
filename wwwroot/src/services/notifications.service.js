@@ -5,6 +5,10 @@ export default {
     Vue.prototype.$notifications = Vue.notifications = this
   },
   open (accessToken) {
+    if (!accessToken) {
+      return Promise.reject(new Error('User must be authenticated'))
+    }
+
     let url = `ws://localhost:52812/notifications?access_token=${accessToken}`
     let enableLogging = process.env.NODE_ENV !== 'production'
 
