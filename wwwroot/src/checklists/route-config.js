@@ -1,8 +1,7 @@
 import Checklists from './Checklists'
 import Overview from './Overview'
 import Editor from './Editor'
-
-import guardRoute from 'root/routes/route-guards'
+import { guardRoute } from 'root/routes/route-guards'
 
 export const RouteConfig = [
   {

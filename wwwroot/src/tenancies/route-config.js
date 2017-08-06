@@ -1,7 +1,7 @@
 import Tenancy from './Tenancy'
 import Overview from './Overview'
 import Details from './Details'
-import guardRoute from 'root/routes/route-guards'
+import { guardRoute } from 'root/routes/route-guards'
 
 export const RouteConfig = [
   {

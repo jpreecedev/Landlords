@@ -1,6 +1,6 @@
 import View from './View'
 import Chat from './Chat'
-import guardRoute from 'root/routes/route-guards'
+import { guardRoute } from 'root/routes/route-guards'
 
 export const RouteConfig = [
   {

@@ -2,8 +2,7 @@ import Accounts from './Accounts'
 import Overview from './Overview'
 import Details from './Details'
 import Transactions from './Transactions'
-
-import guardRoute from 'root/routes/route-guards'
+import { guardRoute } from 'root/routes/route-guards'
 
 export const RouteConfig = [
   {
