@@ -50,15 +50,12 @@
                 ConversationId = entity.Id,
                 Messages = new List<ConversationMessageViewModel>(),
                 SenderId = entity.SenderId,
-                SenderFirstName = sender.FirstName,
-                SenderLastName = sender.LastName,
-                ReceiverId = entity.ReceiverId,
                 ReceiverFirstName = receiver.FirstName,
                 ReceiverLastName = receiver.LastName
             };
         }
 
-        public async Task<ConversationMessageViewModel> SendMessageAsync(ConversationMessageViewModel message)
+        public async Task<ConversationMessageViewModel> SendMessageAsync(Guid senderId, ConversationMessageViewModel message)
         {
             //TODO: Check the instigator has the right to post a message to this conversation
             var entity = new ConversationMessage
@@ -66,7 +63,8 @@
                 ConversationId = message.ConversationId,
                 Created = DateTime.Now,
                 Message = message.Message,
-                SenderId = message.SenderId
+                SenderId = senderId,
+                ReceiverId = message.ReceiverId
             };
 
             await Context.AddAsync(entity);
@@ -77,8 +75,7 @@
                 Id = entity.Id,
                 ConversationId = entity.ConversationId,
                 Message = entity.Message,
-                SenderId = entity.SenderId,
-                ReceiverId = Context.Conversations.Single(c => c.Id == message.ConversationId).ReceiverId,
+                ReceiverId = entity.ReceiverId,
                 Sent = entity.Created,
                 Seen = entity.Seen
             };
@@ -96,7 +93,8 @@
                     SenderLastName = c.Sender.LastName,
                     ReceiverId = c.Receiver.Id,
                     ReceiverFirstName = c.Receiver.FirstName,
-                    ReceiverLastName = c.Receiver.LastName
+                    ReceiverLastName = c.Receiver.LastName,
+                    IsToRecipient = applicationUser.Id == c.ReceiverId //??
                 })).ToListAsync();
 
             conversations.ForEach(c =>
@@ -107,7 +105,7 @@
                         Id = m.Id,
                         ConversationId = m.ConversationId,
                         Message = m.Message,
-                        SenderId = m.SenderId,
+                        ReceiverId = m.ReceiverId,
                         Sent = m.Created,
                         Seen = m.Seen
                     })).ToList();

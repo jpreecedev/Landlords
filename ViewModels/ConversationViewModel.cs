@@ -23,6 +23,8 @@
 
         public string ReceiverLastName { get; set; }
 
+        public bool IsToRecipient { get; set; }
+
         public ICollection<ConversationMessageViewModel> Messages { get; set; }
     }
 }

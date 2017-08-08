@@ -53,11 +53,12 @@
         {
             if (ModelState.IsValid)
             {
-                if (value.ConversationId.IsDefault() || value.SenderId.IsDefault())
+                if (value.ConversationId.IsDefault() || value.ReceiverId.IsDefault())
                     return BadRequest("Unable to validate payload");
 
-                var sentMessage = await _conversationDataProvider.SendMessageAsync(value);
-                await _messageHandler.SendChatMessageToRecipientAsync(Request.Query["access_token"].FirstOrDefault(), sentMessage);
+                var senderId = User.GetUserId();
+                var sentMessage = await _conversationDataProvider.SendMessageAsync(senderId, value);
+                await _messageHandler.SendChatMessageToRecipientAsync(Request.Query["access_token"].FirstOrDefault(), senderId, sentMessage);
 
                 return Ok(sentMessage);
             }

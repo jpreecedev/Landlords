@@ -10,6 +10,7 @@
     using System.Linq;
     using System.Security.Claims;
     using Jwt;
+    using System.Collections.Generic;
 
     public class NotificationsMessageHandler : WebSocketHandler
     {
@@ -47,12 +48,16 @@
             await InvokeClientMethodAsync(connectionId, "GetAllNotifications", new[] {notifications});
         }
 
-        public async Task SendChatMessageToRecipientAsync(string accessToken, ConversationMessageViewModel conversationMessage)
+        public async Task SendChatMessageToRecipientAsync(string accessToken, Guid senderId, ConversationMessageViewModel conversationMessage)
         {
-            var userClients = WebSocketConnectionManager.GetClientByUserId(conversationMessage.ReceiverId);
-            foreach (var userClient in userClients)
+            foreach (var userClient in WebSocketConnectionManager.GetClientByUserId(conversationMessage.ReceiverId))
             {
-                await InvokeClientMethodAsync(userClient.Key, "ChatMessageReceived", new[] {conversationMessage});
+                await InvokeClientMethodAsync(userClient.Key, "ChatMessageReceived", new[] { conversationMessage });
+            }
+
+            foreach (var userClient in WebSocketConnectionManager.GetClientByUserId(senderId))
+            {
+                await InvokeClientMethodAsync(userClient.Key, "ChatMessageReceived", new[] { conversationMessage });
             }
         }
     }

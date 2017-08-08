@@ -15,7 +15,7 @@
                   @click="selectedConversation = item">
                 <v-avatar>
                   <img src="../assets/images/avatar.jpg" alt="Avatar">
-                  <span>{{ item.receiverFirstName + ' ' + item.receiverLastName }}</span>
+                  <span>{{ getDisplayName(item) }}</span>
                 </v-avatar>
               </li>
             </ul>
@@ -34,10 +34,11 @@
               <template v-if="selectedConversation && selectedConversation.messages && selectedConversation.messages.length > 0">
                 <div class="messages-wrapper scroll">
                   <div class="spacer"></div>
-                  <ul v-chat-scroll>
+                  <ul v-chat-scroll
+                      :class="{'inverse': selectedConversation.isToRecipient}">
                     <li v-for="message in selectedConversation.messages"
                         :key="message.id"
-                        :class="{'sender': selectedConversation.senderId === message.senderId, 'receiver': selectedConversation.senderId === message.receiverId}">
+                        :class="{'sender': selectedConversation.senderId === message.senderId, 'receiver': selectedConversation.senderId === message.receiverId }">
                         <div class="message">
                           {{ message.message }}
                           <div class="sent">
@@ -142,6 +143,16 @@ export default {
       })
   },
   methods: {
+    getDisplayName (contact) {
+      if (!contact) {
+        return
+      }
+
+      if (contact.isToRecipient) {
+        return contact.senderFirstName + ' ' + contact.senderLastName
+      }
+      return contact.receiverFirstName + ' ' + contact.receiverLastName
+    },
     selectContact (contact) {
       this.dialog = false
       this.$http.post('/api/conversation/new', { userId: contact.userId })
@@ -157,15 +168,12 @@ export default {
 
       let conversationMessage = {
         conversationId: this.selectedConversation.conversationId,
-        senderId: this.selectedConversation.senderId,
+        receiverId: this.selectedConversation.isToRecipient ? this.selectedConversation.senderId : this.selectedConversation.receiverId,
         message
       }
 
       this.isSending = true
       this.$http.post('/api/conversation', conversationMessage)
-        .then(response => {
-          this.selectedConversation.messages.push(response.data)
-        })
         .catch(response => {
           let validationResult = utils.getFormValidationErrors(response)
           validationResult.errors.forEach(validationError => {
@@ -239,13 +247,42 @@ export default {
     ul, .no-messages {
       list-style: none;
       padding: 0 1rem;
+
+      &.inverse {
+        li {
+          justify-content: flex-end;
+          align-items: flex-end;
+
+          .message {
+            background-color: #b3e5fc;
+
+            .sent {
+              text-align: right;
+            }
+
+          }
+          &.receiver {
+            justify-content: flex-start;
+            align-items: flex-start;
+
+            .message {
+              background-color: #fff;
+
+              .sent {
+                text-align: left;
+              }
+            }
+          }
+        }
+      }
+
       li {
         display: flex;
         margin: 1rem 0;
         .message {
           order: 1;
           box-shadow: -1px 2px 0px #D4D4D4;
-          background: #fff;
+          background-color: #fff;
           min-width: 50px;
           max-width: 50%;
           padding: 10px;

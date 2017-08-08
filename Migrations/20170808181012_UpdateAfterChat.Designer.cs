@@ -8,9 +8,10 @@ using Landlords.Database;
 namespace Landlords.Migrations
 {
     [DbContext(typeof(LLDbContext))]
-    partial class LLDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170808181012_UpdateAfterChat")]
+    partial class UpdateAfterChat
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")

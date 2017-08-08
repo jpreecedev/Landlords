@@ -10,6 +10,6 @@
     {
         Task<ConversationViewModel> NewConversationAsync(ApplicationUser applicationUser, ContactViewModel contact);
         Task<ConversationOverviewViewModel> GetConversationOverviewAsync(ClaimsPrincipal user, ApplicationUser applicationUser);
-        Task<ConversationMessageViewModel> SendMessageAsync(ConversationMessageViewModel message);
+        Task<ConversationMessageViewModel> SendMessageAsync(Guid senderId, ConversationMessageViewModel message);
     }
 }
