@@ -10,6 +10,7 @@ export default class Connection {
     this.socket = null
     this.enableLogging = enableLogging
     this.attempts = 1
+    this.startPromise = null
   }
 
   attachMessageHandler () {
@@ -34,7 +35,7 @@ export default class Connection {
   }
 
   start () {
-    return new Promise((resolve) => {
+    this.startPromise = new Promise((resolve) => {
       this.createWebSocket()
         .then(() => {
           this.onMessage = message => {
@@ -48,6 +49,8 @@ export default class Connection {
           this.attachMessageHandler()
         })
     })
+
+    return this.startPromise
   }
 
   invoke (methodName, ...args) {

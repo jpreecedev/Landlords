@@ -1,6 +1,18 @@
+import Vue from 'vue'
 import Connection from 'src/notifications/Connection'
 
-export default {
+var connection = null
+
+function startConnection () {
+  return new Promise((resolve) => {
+    connection.start()
+      .then(() => {
+        resolve()
+      })
+  })
+};
+
+var notifications = {
   install (Vue, options) {
     Vue.prototype.$notifications = Vue.notifications = this
   },
@@ -12,21 +24,30 @@ export default {
     let url = `ws://localhost:52812/notifications?access_token=${accessToken}`
     let enableLogging = process.env.NODE_ENV !== 'production'
 
-    if (!this.connection) {
-      this.connection = new Connection(url, enableLogging)
+    if (!connection) {
+      connection = new Connection(url, enableLogging)
+      return startConnection()
+    } else {
+      if (!connection.socket) {
+        return startConnection()
+      } else {
+        switch (connection.socket.readyState) {
+          case 0: // connecting
+            return connection.startPromise
+          case 1: // open
+            return Promise.resolve()
+          default:
+            return startConnection()
+        }
+      }
     }
-
-    return new Promise((resolve) => {
-      this.connection.start()
-        .then(() => {
-          resolve()
-        })
-    })
   },
-  get (method) {
+  invoke (method) {
     return new Promise((resolve, reject) => {
-      this.connection.invoke(method, this.connection.connectionId)
-      resolve()
+      connection.invoke(method, connection.connectionId)
+      Vue.bus.$on(method, resolve)
     })
   }
 }
+
+export default notifications

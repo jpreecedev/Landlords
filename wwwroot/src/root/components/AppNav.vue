@@ -136,7 +136,7 @@ export default {
 
       this.$notifications.open(this.auth.accessToken)
         .then(() => {
-          this.$notifications.get('GetAllNotifications')
+          this.$notifications.invoke('GetAllNotifications')
             .then(data => {
               this.$store.commit('UPDATE_NOTIFICATIONS', data)
             })
