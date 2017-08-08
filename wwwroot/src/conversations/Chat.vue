@@ -60,7 +60,8 @@
                   </text-field>
                 </div>
                 <div class="col-xs-2 send-button">
-                  <v-btn outline class="blue--text darken-2"
+                  <v-btn :disabled="isSending"
+                         class="blue--text darken-2" outline
                          @click="sendMessage(currentMessage)">
                          Send
                   </v-btn>
@@ -77,18 +78,20 @@
                  absolute dark fab top right>
             <v-icon>add</v-icon>
           </v-btn>
-          <v-list>
-            <v-list-tile avatar v-for="contact in filteredContacts" v-bind:key="contact.id">
-              <v-list-tile-avatar>
-                <img src="../assets/images/avatar.jpg"/>
-              </v-list-tile-avatar>
-              <v-list-tile-content>
-                <v-list-tile-title @click="selectContact(contact)">
-                  {{ contact.firstName + ' ' + contact.lastName }}
-                </v-list-tile-title>
-              </v-list-tile-content>
-            </v-list-tile>
-          </v-list>
+          <v-card>
+            <v-list>
+              <v-list-tile avatar v-for="contact in filteredContacts" v-bind:key="contact.id">
+                <v-list-tile-avatar>
+                  <img src="../assets/images/avatar.jpg"/>
+                </v-list-tile-avatar>
+                <v-list-tile-content>
+                  <v-list-tile-title @click="selectContact(contact)">
+                    {{ contact.firstName + ' ' + contact.lastName }}
+                  </v-list-tile-title>
+                </v-list-tile-content>
+              </v-list-tile>
+            </v-list>
+          </v-card>
         </v-dialog>
       </v-card>
     </div>
@@ -158,6 +161,7 @@ export default {
         message
       }
 
+      this.isSending = true
       this.$http.post('/api/conversation', conversationMessage)
         .then(response => {
           this.selectedConversation.messages.push(response.data)
@@ -169,7 +173,7 @@ export default {
           })
         })
         .finally(() => {
-          this.isLoading = false
+          this.isSending = false
           this.currentMessage = ''
         })
     }
