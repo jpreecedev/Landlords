@@ -69,13 +69,16 @@ export default class Connection {
 
   createSocketWithBackoff (done) {
     this.socket = this.getWebSocket(this.url)
-    this.log('Connecting...')
+    this.log(`Connecting... (${this.attempts})`)
 
     if (this.socket.readyState === 1) {
+      this.log('Connected')
+      this.attempts = 1
       done()
     }
 
     this.socket.onopen = () => {
+      this.log('Connected')
       this.attempts = 1
       done()
     }
