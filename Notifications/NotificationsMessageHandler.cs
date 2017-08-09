@@ -7,10 +7,7 @@
     using Microsoft.AspNetCore.Authorization;
     using ViewModels;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Security.Claims;
-    using Jwt;
-    using System.Collections.Generic;
 
     public class NotificationsMessageHandler : WebSocketHandler
     {
@@ -46,6 +43,17 @@
             }
             
             await InvokeClientMethodAsync(connectionId, "GetAllNotifications", new[] {notifications});
+        }
+        
+        public async Task StartNewConversationAsync(string accessToken, Guid receiverId, ConversationViewModel conversation)
+        {
+            var cloned = conversation.ShallowClone();
+            cloned.IsToReceiver = true;
+
+            foreach (var userClient in WebSocketConnectionManager.GetClientByUserId(receiverId))
+            {
+                await InvokeClientMethodAsync(userClient.Key, "StartNewConversation", new[] { cloned });
+            }
         }
 
         public async Task SendChatMessageToRecipientAsync(string accessToken, Guid senderId, ConversationMessageViewModel conversationMessage)

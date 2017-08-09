@@ -39,12 +39,12 @@
             {
                 MessageType = MessageType.ConnectionEvent,
                 Data = WebSocketConnectionManager.GetId(socket)
-            }).ConfigureAwait(false);
+            });
         }
 
         public virtual async Task OnDisconnected(WebSocket socket)
         {
-            await WebSocketConnectionManager.RemoveSocket(WebSocketConnectionManager.GetId(socket)).ConfigureAwait(false);
+            await WebSocketConnectionManager.RemoveSocket(WebSocketConnectionManager.GetId(socket));
         }
 
         public async Task SendMessageAsync(WebSocket socket, Message message)
@@ -54,12 +54,12 @@
 
             var serializedMessage = JsonConvert.SerializeObject(message, _jsonSerializerSettings);
             await socket.SendAsync(new ArraySegment<byte>(Encoding.ASCII.GetBytes(serializedMessage), 0, serializedMessage.Length),
-                WebSocketMessageType.Text, true, CancellationToken.None).ConfigureAwait(false);
+                WebSocketMessageType.Text, true, CancellationToken.None);
         }
 
         public async Task SendMessageAsync(string socketId, Message message)
         {
-            await SendMessageAsync(WebSocketConnectionManager.GetSocketById(socketId), message).ConfigureAwait(false);
+            await SendMessageAsync(WebSocketConnectionManager.GetSocketById(socketId), message);
         }
 
         public async Task InvokeClientMethodAsync(string socketId, string methodName, object[] arguments)
@@ -74,7 +74,7 @@
                 }, _jsonSerializerSettings)
             };
 
-            await SendMessageAsync(socketId, message).ConfigureAwait(false);
+            await SendMessageAsync(socketId, message);
         }
 
         public async Task ReceiveAsync(HttpContext context, WebSocket socket, WebSocketReceiveResult result, string serializedInvocationDescriptor)
@@ -88,13 +88,13 @@
                 {
                     MessageType = MessageType.Text,
                     Data = $"Cannot find method {invocationDescriptor.MethodName}"
-                }).ConfigureAwait(false);
+                });
                 return;
             }
 
             var arguments = new List<object>()
             {
-                context.Request.Query["access_token"].First()
+                context.Request.GetAccessToken()
             };
             arguments.AddRange(invocationDescriptor.Arguments);
 
@@ -108,7 +108,7 @@
                 {
                     MessageType = MessageType.Text,
                     Data = $"The {invocationDescriptor.MethodName} method does not take {invocationDescriptor.Arguments.Length} parameters!"
-                }).ConfigureAwait(false);
+                });
             }
             catch (ArgumentException)
             {
@@ -116,7 +116,7 @@
                 {
                     MessageType = MessageType.Text,
                     Data = $"The {invocationDescriptor.MethodName} method takes different arguments!"
-                }).ConfigureAwait(false);
+                });
             }
             catch (Exception)
             {

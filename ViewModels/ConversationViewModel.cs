@@ -23,8 +23,13 @@
 
         public string ReceiverLastName { get; set; }
 
-        public bool IsToRecipient { get; set; }
+        public bool IsToReceiver { get; set; }
 
         public ICollection<ConversationMessageViewModel> Messages { get; set; }
+
+        public ConversationViewModel ShallowClone()
+        {
+            return (ConversationViewModel) MemberwiseClone();
+        }
     }
 }

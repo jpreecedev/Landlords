@@ -32,6 +32,16 @@
             ContractResolver = new CamelCasePropertyNamesContractResolver()
         };
 
+        public static string GetAccessToken(this HttpRequest request)
+        {
+            return request.Query["access_token"].FirstOrDefault();
+        }
+
+        public static IEnumerable<T> DistinctBy<T, TKey>(this IEnumerable<T> items, Func<T, TKey> property)
+        {
+            return items.GroupBy(property).Select(x => x.First());
+        }
+
         public static decimal ToDecimal(this string input)
         {
             if (decimal.TryParse(input, out decimal result))

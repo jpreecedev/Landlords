@@ -23,7 +23,9 @@
           <v-flex xs12 sm8 class="chat grey lighten-4">
             <div v-if="!selectedConversation" class="no-messages">
               <p class="text-center">
-                No messages to display.<br><br>Select a conversation from the left, or click the add button above to begin a conversation
+                No messages to display.<br><br>
+                <span v-if="permissions.CO_New">Select a conversation from the left, or click the add button above to begin a conversation</span>
+                <span v-else>Please contact your landlord, agency or support to enable this feature.</span>
               </p>
             </div>
             <div v-else-if="!selectedConversation.messages || !selectedConversation.messages.length" class="no-messages">
@@ -35,7 +37,7 @@
                 <div class="messages-wrapper scroll">
                   <div class="spacer"></div>
                   <ul v-chat-scroll
-                      :class="{'inverse': selectedConversation.isToRecipient}">
+                      :class="{'inverse': selectedConversation.isToReceiver}">
                     <li v-for="message in selectedConversation.messages"
                         :key="message.id"
                         :class="{'sender': selectedConversation.senderId === message.senderId, 'receiver': selectedConversation.senderId === message.receiverId }">
@@ -72,7 +74,7 @@
           </v-flex>
         </v-layout>
         <v-dialog v-model="dialog"
-                  v-if="contacts && contacts.length"
+                  v-if="permissions.CO_New && contacts && contacts.length"
                   lazy absolute>
           <v-btn class="blue darken-2 action-button"
                  slot="activator"
@@ -120,6 +122,13 @@ export default {
     this.isLoading = true
     this.$notifications.open(this.auth.accessToken)
       .then(() => {
+        this.$bus.$on('StartNewConversation', data => {
+          let conversation = this.conversations.find(c => c.conversationId === data.conversationId)
+          if (!conversation) {
+            this.conversations.push(data)
+            this.selectedConversation = this.conversations[this.conversations.length - 1]
+          }
+        })
         this.$bus.$on('ChatMessageReceived', data => {
           let conversation = this.conversations.find(c => c.conversationId === data.conversationId)
           if (conversation) {
@@ -148,7 +157,7 @@ export default {
         return
       }
 
-      if (contact.isToRecipient) {
+      if (contact.isToReceiver) {
         return contact.senderFirstName + ' ' + contact.senderLastName
       }
       return contact.receiverFirstName + ' ' + contact.receiverLastName
@@ -168,7 +177,7 @@ export default {
 
       let conversationMessage = {
         conversationId: this.selectedConversation.conversationId,
-        receiverId: this.selectedConversation.isToRecipient ? this.selectedConversation.senderId : this.selectedConversation.receiverId,
+        receiverId: this.selectedConversation.isToReceiver ? this.selectedConversation.senderId : this.selectedConversation.receiverId,
         message
       }
 

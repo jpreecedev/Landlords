@@ -50,6 +50,9 @@
                 ConversationId = entity.Id,
                 Messages = new List<ConversationMessageViewModel>(),
                 SenderId = entity.SenderId,
+                SenderFirstName = sender.FirstName,
+                SenderLastName = sender.LastName,
+                ReceiverId = entity.ReceiverId,
                 ReceiverFirstName = receiver.FirstName,
                 ReceiverLastName = receiver.LastName
             };
@@ -94,7 +97,7 @@
                     ReceiverId = c.Receiver.Id,
                     ReceiverFirstName = c.Receiver.FirstName,
                     ReceiverLastName = c.Receiver.LastName,
-                    IsToRecipient = applicationUser.Id == c.ReceiverId //??
+                    IsToReceiver = applicationUser.Id == c.ReceiverId
                 })).ToListAsync();
 
             conversations.ForEach(c =>
@@ -124,6 +127,9 @@
 
             if (user.IsAgencyUser())
                 return await GetContactsForAgencyAsync(applicationUser);
+
+            if (user.IsSiteAdministrator())
+                return await GetContactsForSiteAdministratorAsync();
 
             return new List<ContactViewModel>();
         }
@@ -168,7 +174,7 @@
             };
             result.AddRange(portfolioManagers);
             result.AddRange(agencyContacts);
-            return result;
+            return result.DistinctBy(c => c.UserId).ToList();
         }
 
         private async Task<ICollection<ContactViewModel>> GetContactsForLandlordAsync(ApplicationUser applicationUser)
@@ -214,7 +220,7 @@
             };
             result.AddRange(agencyContacts);
             result.AddRange(tenants);
-            return result;
+            return result.DistinctBy(c => c.UserId).ToList();
         }
 
         private async Task<ICollection<ContactViewModel>> GetContactsForAgencyAsync(ApplicationUser applicationUser)
@@ -260,7 +266,27 @@
             };
             result.AddRange(landlords);
             result.AddRange(tenants);
-            return result;
+            return result.DistinctBy(c => c.UserId).ToList();
+        }
+
+        private async Task<ICollection<ContactViewModel>> GetContactsForSiteAdministratorAsync()
+        {
+            //untested
+
+            var result = await (from user in Context.Users.AsNoTracking()
+                    join userRoles in Context.UserRoles on user.Id equals userRoles.UserId into userRolesJoin
+                    from userRole in userRolesJoin
+                    join role in Context.Roles on userRole.RoleId equals role.Id
+                    where role.Name != ApplicationRoles.SiteAdministrator
+                    select new ContactViewModel
+                    {
+                        UserId = user.Id,
+                        LastName = user.LastName,
+                        FirstName = user.FirstName
+                    })
+                .ToListAsync();
+
+            return result.DistinctBy(c => c.UserId).ToList();
         }
     }
 }

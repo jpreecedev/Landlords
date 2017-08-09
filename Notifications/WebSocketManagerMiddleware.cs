@@ -28,21 +28,21 @@
             if (!context.WebSockets.IsWebSocketRequest)
                 return;
 
-            var accessToken = context.Request.Query["access_token"].FirstOrDefault();
+            var accessToken = context.Request.GetAccessToken();
             var validationResult = accessToken.ToJwtValidationResult();
             if (!validationResult.IsValid)
             {
                 throw new UnauthorizedAccessException();
             }
 
-            var socket = await context.WebSockets.AcceptWebSocketAsync().ConfigureAwait(false);
-            await _webSocketHandler.OnConnected(socket, validationResult.User).ConfigureAwait(false);
+            var socket = await context.WebSockets.AcceptWebSocketAsync();
+            await _webSocketHandler.OnConnected(socket, validationResult.User);
 
             await Receive(socket, async (result, serializedInvocationDescriptor) =>
             {
                 if (result.MessageType == WebSocketMessageType.Text)
                 {
-                    await _webSocketHandler.ReceiveAsync(context, socket, result, serializedInvocationDescriptor).ConfigureAwait(false);
+                    await _webSocketHandler.ReceiveAsync(context, socket, result, serializedInvocationDescriptor);
                 }
 
                 else if (result.MessageType == WebSocketMessageType.Close)
@@ -75,7 +75,7 @@
                 {
                     do
                     {
-                        result = await socket.ReceiveAsync(buffer, CancellationToken.None).ConfigureAwait(false);
+                        result = await socket.ReceiveAsync(buffer, CancellationToken.None);
                         ms.Write(buffer.Array, buffer.Offset, result.Count);
                     } while (!result.EndOfMessage);
 
@@ -83,7 +83,7 @@
 
                     using (var reader = new StreamReader(ms, Encoding.UTF8))
                     {
-                        serializedInvocationDescriptor = await reader.ReadToEndAsync().ConfigureAwait(false);
+                        serializedInvocationDescriptor = await reader.ReadToEndAsync();
                     }
                 }
 

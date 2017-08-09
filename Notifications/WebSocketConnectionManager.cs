@@ -49,7 +49,7 @@
 
             await endClient.WebSocket.CloseAsync(closeStatus: WebSocketCloseStatus.NormalClosure,
                 statusDescription: "Closed by the WebSocketManager",
-                cancellationToken: CancellationToken.None).ConfigureAwait(false);
+                cancellationToken: CancellationToken.None);
         }
 
         private string CreateConnectionId()
