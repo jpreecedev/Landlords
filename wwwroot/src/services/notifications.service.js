@@ -47,6 +47,9 @@ var notifications = {
       connection.invoke(method, connection.connectionId)
       Vue.bus.$on(method, resolve)
     })
+  },
+  kill () {
+    connection.kill()
   }
 }
 

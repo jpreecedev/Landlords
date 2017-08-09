@@ -91,6 +91,7 @@ export default {
    */
   logout (expired) {
     store.commit('CLEAR_ALL_DATA')
+    Vue.notifications.kill()
 
     let query
     if (expired) {
@@ -165,6 +166,8 @@ export default {
 
     store.commit('UPDATE_AUTH', auth)
     store.commit('UPDATE_USER', user)
+
+    Vue.notifications.open(auth.accessToken)
   },
 
   _storePermissions (response) {

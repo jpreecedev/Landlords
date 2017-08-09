@@ -11,6 +11,7 @@ export default class Connection {
     this.enableLogging = enableLogging
     this.attempts = 1
     this.startPromise = null
+    this.forceKill = false
   }
 
   attachMessageHandler () {
@@ -84,6 +85,11 @@ export default class Connection {
     }
 
     this.socket.onclose = () => {
+      if (this.forceKill) {
+        this.forceKill = false
+        return
+      }
+
       var time = this.generateInterval(this.attempts)
 
       setTimeout(() => {
@@ -108,5 +114,11 @@ export default class Connection {
     }
 
     return Math.random() * maxInterval
+  }
+
+  kill () {
+    this.forceKill = true
+    this.socket.close()
+    this.log('Closed')
   }
 }
