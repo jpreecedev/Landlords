@@ -10,7 +10,6 @@
     using Database;
     using Notifications;
     using System;
-    using System.Linq;
 
     [Route("api/[controller]")]
     public class ConversationController : Controller
@@ -67,6 +66,17 @@
             }
 
             return BadRequest(new { Errors = ModelState.ToErrorCollection() });
+        }
+
+        [HttpPut("seen/{conversationId}/{conversationMessageId}"), ValidateAntiForgeryToken]
+        [Permission(Permissions_CO.SendId, Permissions_CO.SendRouteId, Permissions_CO.SendDescription)]
+        public async Task<IActionResult> Seen(Guid conversationId, Guid conversationMessageId)
+        {
+            if (conversationId.IsDefault())
+                return BadRequest("Unable to validate payload");
+
+            await _conversationDataProvider.SeenMessageAsync(User.GetUserId(), conversationId, conversationMessageId);
+            return Ok();
         }
     }
 }

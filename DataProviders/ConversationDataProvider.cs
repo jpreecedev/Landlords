@@ -84,6 +84,21 @@
             };
         }
 
+        public async Task SeenMessageAsync(Guid userId, Guid conversationId, Guid conversationMessageId)
+        {
+            var result = await (from conversation in Context.Conversations
+                    join conversationMessage in Context.ConversationMessages on conversation.Id equals conversationMessage.ConversationId
+                    where conversation.Id == conversationId && conversationMessage.Id == conversationMessageId
+                    select conversationMessage)
+                .SingleAsync();
+
+            if (result.ReceiverId == userId)
+            {
+                result.Seen = DateTime.Now;
+                await Context.SaveChangesAsync();
+            }
+        }
+
         private async Task<ICollection<ConversationViewModel>> GetConversationsAsync(ApplicationUser applicationUser)
         {
             var conversations = await (Context.Conversations.Include(x => x.Sender).Include(x => x.Receiver)

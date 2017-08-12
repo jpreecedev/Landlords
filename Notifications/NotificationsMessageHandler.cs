@@ -29,17 +29,19 @@
                 throw new UnauthorizedAccessException();
             }
 
+            var nameClaim = tokenValidation.User.FindFirst(ClaimTypes.NameIdentifier);
+            var userId = Guid.Parse(nameClaim.Value);
+
             List<NotificationViewModel> notifications;
             if (tokenValidation.User.HasPropertyPortfolio())
             {
                 var portfolioId = tokenValidation.User.GetPortfolioId();
                 notifications = await _notificationsDataProvider.GetNotificationsForPortfolioAsync(portfolioId);
+                notifications.AddRange(await _notificationsDataProvider.GetNotificationsForUserAsync(userId));
             }
             else
             {
-                var nameClaim = tokenValidation.User.FindFirst(ClaimTypes.NameIdentifier);
-                var userId = Guid.Parse(nameClaim.Value);
-                notifications = _notificationsDataProvider.GetNotificationsForUserAsync(userId);
+                notifications = await _notificationsDataProvider.GetNotificationsForUserAsync(userId);
             }
             
             await InvokeClientMethodAsync(connectionId, "GetAllNotifications", new[] {notifications});

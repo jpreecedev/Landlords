@@ -11,6 +11,6 @@
         Task Delete(Guid portfolioId, Guid notificationId);
         Task<List<NotificationViewModel>> GetNotificationsForPortfolioAsync(Guid portfolioId);
         Task<List<NotificationViewModel>> GetNotificationsForPropertyAsync(Guid portfolioId, Guid propertyId);
-        List<NotificationViewModel> GetNotificationsForUserAsync(Guid userId);
+        Task<List<NotificationViewModel>> GetNotificationsForUserAsync(Guid userId);
     }
 }

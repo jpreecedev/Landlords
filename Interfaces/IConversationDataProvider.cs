@@ -11,5 +11,6 @@
         Task<ConversationViewModel> NewConversationAsync(ApplicationUser applicationUser, ContactViewModel contact);
         Task<ConversationOverviewViewModel> GetConversationOverviewAsync(ClaimsPrincipal user, ApplicationUser applicationUser);
         Task<ConversationMessageViewModel> SendMessageAsync(Guid senderId, ConversationMessageViewModel message);
+        Task SeenMessageAsync(Guid userId, Guid conversationId, Guid conversationMessageId);
     }
 }

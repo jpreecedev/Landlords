@@ -8,6 +8,7 @@
         public const string Important = "Important";
         public const string Immediate = "Immediate";
         public const string Overdue = "Overdue";
+        public const string Message = "Message";
 
         public static LLDataType[] GetDefaultNotificationTypes()
         {
@@ -16,7 +17,8 @@
                     Notice,
                     Important,
                     Immediate,
-                    Overdue
+                    Overdue,
+                    Message
                 }
                 .Select(c => new LLDataType(c))
                 .ToArray();

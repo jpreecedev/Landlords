@@ -8,17 +8,23 @@
       <v-card class="chat-wrapper" :class="{'empty': !selectedConversation, 'empty-messages': selectedConversation && selectedConversation.messages && !selectedConversation.messages.length}">
         <v-layout row wrap>
           <v-flex xs12 sm4 class="conversations">
-            <ul>
-              <li v-for="item in conversations"
-                  :key="item.conversationId"
-                  :class="{'active': item.conversationId === selectedConversation.conversationId}"
-                  @click="selectedConversation = item">
-                <v-avatar>
-                  <img src="../assets/images/avatar.jpg" alt="Avatar">
-                  <span>{{ getDisplayName(item) }}</span>
-                </v-avatar>
-              </li>
-            </ul>
+            <v-list subheader>
+              <v-subheader>Conversations</v-subheader>
+                <v-list-tile v-for="item in conversations"
+                             :key="item.conversationId"
+                             :class="{'active': item.conversationId === selectedConversation.conversationId}"
+                             @click="selectedConversation = item"
+                             avatar>
+                  <v-list-tile-avatar>
+                    <img src="../assets/images/avatar.jpg"/>
+                  </v-list-tile-avatar>
+                  <v-list-tile-content>
+                    <v-list-tile-title>
+                      {{ getDisplayName(item) }}
+                    </v-list-tile-title>
+                  </v-list-tile-content>
+                </v-list-tile>
+            </v-list>
           </v-flex>
           <v-flex xs12 sm8 class="chat grey lighten-4">
             <div v-if="!selectedConversation" class="no-messages">
@@ -207,6 +213,24 @@ export default {
         })
       })
     }
+  },
+  watch: {
+    selectedConversation (conversation) {
+      if (!conversation || !conversation.messages || !conversation.messages.length) {
+        return
+      }
+
+      var lastMessage = conversation.messages[conversation.messages.length - 1]
+      if (!lastMessage.seen) {
+        this.$http.put(`/api/conversation/seen/${conversation.conversationId}/${lastMessage.id}`)
+          .then(() => {
+            lastMessage.seen = new Date()
+          })
+          .catch(response => {
+            console.log(response)
+          })
+      }
+    }
   }
 }
 </script>
@@ -240,9 +264,6 @@ export default {
       list-style: none;
       padding-left: 0;
       li {
-        cursor: pointer;
-        padding: 1rem;
-        border-bottom: 1px solid #eaeaea;
         margin-left: 3px;
         &.active {
           background-color: #e9ebeb;
