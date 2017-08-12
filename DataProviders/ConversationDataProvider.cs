@@ -160,7 +160,6 @@
                 join aup in Context.ApplicationUserPortfolios on user.Id equals aup.UserId into aupJoin
                 from applicationUserPortfolio in aupJoin
                 join appUser in Context.Users on applicationUserPortfolio.AgencyId equals appUser.AgencyId
-                where portfolioManagers.Any(c => c.UserId == user.Id)
                 select new ContactViewModel
                 {
                     FirstName = user.FirstName,

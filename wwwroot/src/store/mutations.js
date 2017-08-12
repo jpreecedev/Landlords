@@ -1,4 +1,4 @@
-import defaultState from './defaultState'
+import { defaultState } from './defaultState'
 
 export const UPDATE_AUTH = (state, auth) => {
   state.auth = auth

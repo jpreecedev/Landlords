@@ -29,9 +29,9 @@ export default class Connection {
     }
   }
 
-  log (message) {
+  log (message, args = null) {
     if (this.enableLogging) {
-      console.log(message)
+      console.log(message, args)
     }
   }
 
@@ -73,13 +73,13 @@ export default class Connection {
     this.log(`Connecting... (${this.attempts})`)
 
     if (this.socket.readyState === 1) {
-      this.log('Connected')
+      this.log('Connected', this.socket)
       this.attempts = 1
       done()
     }
 
     this.socket.onopen = () => {
-      this.log('Connected')
+      this.log('Connected', this.socket)
       this.attempts = 1
       done()
     }

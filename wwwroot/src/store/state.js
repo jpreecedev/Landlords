@@ -1,4 +1,4 @@
-import defaultState from './defaultState'
+import { defaultState } from './defaultState'
 
 export const STORAGE_KEY = 'landlords'
 

@@ -58,7 +58,7 @@ const newTenancy = {
   tenants: [Object.assign({}, tenant)]
 }
 
-export default {
+export const defaultState = {
   notifications,
   properties,
   address,
