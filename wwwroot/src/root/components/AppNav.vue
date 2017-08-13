@@ -27,7 +27,7 @@
         Checklists
       </v-btn>
       <v-btn flat v-if="permissions.CO_View" @click="$router.push('/conversations')" :class="{'active': $route.path.startsWith('/conversations')}">
-        Conversations
+        Chat
       </v-btn>
       <v-btn flat v-if="!auth.isLoggedIn" @click="$router.push('/registration/')" :class="{'active': $route.path.startsWith('/registration')}">
         Log in or Register
