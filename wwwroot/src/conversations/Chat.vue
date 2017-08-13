@@ -169,9 +169,12 @@ export default {
       return false
     },
     getLastReceivedMessage (conversation) {
-      let userId = conversation.isToReceiver ? conversation.senderId : conversation.receiverId
+      if (!conversation.messages || !conversation.messages.length) {
+        return
+      }
+
       return conversation.messages.filter(message => {
-        return conversation.isToReceiver ? message.senderId === userId : message.receiverId === userId
+        return conversation.senderId === message.receiverId
       }).pop()
     },
     getDisplayName (contact) {
@@ -237,7 +240,7 @@ export default {
       }
 
       let lastMessage = this.getLastReceivedMessage(conversation)
-      if (!lastMessage.seen) {
+      if (lastMessage && !lastMessage.seen) {
         this.$http.put(`/api/conversation/seen/${conversation.conversationId}/${lastMessage.id}`)
           .then(result => {
             if (result) {

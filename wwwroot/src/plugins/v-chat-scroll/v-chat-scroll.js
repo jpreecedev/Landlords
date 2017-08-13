@@ -1,6 +1,8 @@
 const scrollToBottom = el => {
   let scrollableElement = findAncestor(el, 'scroll')
-  scrollableElement.scrollTop = scrollableElement.scrollHeight
+  if (scrollableElement) {
+    scrollableElement.scrollTop = scrollableElement.scrollHeight
+  }
 }
 
 const findAncestor = (el, cls) => {

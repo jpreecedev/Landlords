@@ -91,18 +91,14 @@
             //TODO
             var result = new List<NotificationViewModel>();
 
-            var lastMessageSeen = await (from conversationMessage in Context.ConversationMessages.AsNoTracking()
-                    join conversation in Context.Conversations on conversationMessage.ConversationId equals conversation.Id
-                    orderby conversationMessage.Created descending 
-                    where conversation.ReceiverId == userId || conversationMessage.ReceiverId == userId
-                    select new
-                    {
-                        ConversationMessage = conversationMessage,
-                        Conversation = conversation
-                    })
-                .FirstOrDefaultAsync();
-
-            if (lastMessageSeen != null && lastMessageSeen.ConversationMessage.Seen == null)
+            var lastUnseenMessage = await (from conversation in Context.Conversations
+                    join conversationMessage in Context.ConversationMessages on conversation.Id equals conversationMessage.ConversationId into messagesJoin
+                    let lastMessage = messagesJoin.LastOrDefault(message => (conversation.SenderId == userId && message.ReceiverId == userId) || (conversation.ReceiverId == userId && message.SenderId == userId))
+                    where lastMessage != null && lastMessage.Seen == null
+                    select lastMessage)
+                    .FirstOrDefaultAsync();
+            
+            if (lastUnseenMessage != null && lastUnseenMessage.Seen == null)
             {
                 result.Add(new NotificationViewModel
                 {
