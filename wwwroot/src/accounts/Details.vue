@@ -153,7 +153,6 @@ export default {
         })
     },
     reset () {
-      debugger
       this.$validation.reset(this.$children)
     }
   }

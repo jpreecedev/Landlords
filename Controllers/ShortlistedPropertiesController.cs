@@ -13,10 +13,12 @@
     public class ShortlistedPropertiesController : Controller
     {
         private readonly IShortlistedPropertiesDataProvider _shortlistedPropertiesDataProvider;
+        private readonly IPropertyDataProvider _propertyDataProvider;
 
-        public ShortlistedPropertiesController(IShortlistedPropertiesDataProvider shortlistedPropertiesDataProvider)
+        public ShortlistedPropertiesController(IShortlistedPropertiesDataProvider shortlistedPropertiesDataProvider, IPropertyDataProvider propertyDataProvider)
         {
             _shortlistedPropertiesDataProvider = shortlistedPropertiesDataProvider;
+            _propertyDataProvider = propertyDataProvider;
         }
 
         [HttpGet]
@@ -52,9 +54,21 @@
         {
             if (ModelState.IsValid)
             {
-                var portfolioId = User.GetPortfolioId();
-                await _shortlistedPropertiesDataProvider.UpdateAsync(portfolioId, value);
+                await _shortlistedPropertiesDataProvider.UpdateAsync(User.GetPortfolioId(), value);
                 return Ok();
+            }
+
+            return BadRequest(new { Errors = ModelState.ToErrorCollection() });
+        }
+
+        [HttpPost("promote"), ValidateAntiForgeryToken]
+        [Permission(Permissions_SP.PromoteId, Permissions_SP.PromoteRouteId, Permissions_SP.PromoteDescription)]
+        public async Task<IActionResult> Promote([FromBody] ShortlistedPropertyViewModel value)
+        {
+            if (ModelState.IsValid)
+            {
+                var propertyDetailsId = await _propertyDataProvider.PromoteAsync(User.GetPortfolioId(), value);
+                return Ok(propertyDetailsId);
             }
 
             return BadRequest(new { Errors = ModelState.ToErrorCollection() });

@@ -17,5 +17,9 @@
         public const string UpdateId = "4337dc36-1fa2-41f1-a8d7-6f224df4aa31";
         public const string UpdateRouteId = "SP_Update";
         public const string UpdateDescription = "Update a shortlisted property";
+
+        public const string PromoteId = "27a458a5-4b64-4f3f-ad9f-69185de125f8";
+        public const string PromoteRouteId = "SP_Promote";
+        public const string PromoteDescription = "Promote a shortlisted property to a live investment";
     }
 }

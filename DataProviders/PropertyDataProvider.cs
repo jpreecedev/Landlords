@@ -64,6 +64,33 @@
                 .ToListAsync();
         }
 
+        public async Task<Guid> PromoteAsync(Guid portfolioId, ShortlistedPropertyViewModel viewModel)
+        {
+            var entity = new PropertyDetails
+            {
+                Reference = viewModel.Reference,
+                PropertyStreetAddress = viewModel.Address,
+                PurchasePrice = viewModel.PricePaid,
+                TargetRent = viewModel.ExpectedRentalIncome,
+                InterestRate = (double?) viewModel.MortgageInterestRate,
+                Created = DateTime.Now,
+                PortfolioId = portfolioId,
+                MortgageAmount = viewModel.PricePaid - viewModel.Deposit
+            };
+
+            await Context.PropertyDetails.AddAsync(entity);
+            await Context.SaveChangesAsync();
+
+            var shortlistedPropertyEntity = await Context.ShortlistedProperties.FirstOrDefaultAsync(c => c.Id == viewModel.ShortlistedPropertyId && c.PortfolioId == portfolioId);
+            if (shortlistedPropertyEntity != null)
+            {
+                shortlistedPropertyEntity.Deleted = DateTime.Now;
+                await Context.SaveChangesAsync();
+            }
+
+            return entity.Id;
+        }
+
         public async Task<PropertyDetailsViewModel> GetDetailsAsync(Guid propertyId)
         {
             return await (from details in Context.PropertyDetails

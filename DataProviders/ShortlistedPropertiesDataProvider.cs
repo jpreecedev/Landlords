@@ -6,10 +6,10 @@
     using System.Threading.Tasks;
     using Database;
     using Interfaces;
-    using Microsoft.AspNetCore.Hosting;
     using Microsoft.EntityFrameworkCore;
     using Model.Entities;
     using ViewModels;
+    using Microsoft.AspNetCore.Hosting;
 
     public class ShortlistedPropertiesDataProvider : BaseDataProvider, IShortlistedPropertiesDataProvider
     {

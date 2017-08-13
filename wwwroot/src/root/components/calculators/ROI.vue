@@ -212,10 +212,17 @@
       </div>
       <div class="row mt-3">
         <div class="col-xs-12">
+          <v-btn v-if="permissions.SP_Promote"
+                 @click="promoteShortlistedProperty()"
+                 :loading="isPromoting"
+                 class="no-left-margin"
+                 type="button"
+                 primary>
+            Promote
+          </v-btn>
           <v-btn v-if="permissions.SP_Update"
                  :loading="isSaving"
                  type="submit"
-                 class="no-left-margin"
                  primary>
             {{ this.shortlistedProperty.shortlistedPropertyId === null ? 'Add to shortlist' : 'Save changes' }}
           </v-btn>
@@ -234,9 +241,9 @@ export default {
   name: 'roi',
   data () {
     return {
-      errors: [],
       isSaving: false,
       isDeleting: false,
+      isPromoting: false,
       shortlistedProperty: {
         shortlistedPropertyId: null,
         reference: '3 bedroom house',
@@ -254,31 +261,38 @@ export default {
       }
     }
   },
+  created () {
+    if (this.permissions.SP_GetById && this.$route.params.shortlistedPropertyId) {
+      this.$http.get(`/api/shortlistedproperties/${this.$route.params.shortlistedPropertyId}`)
+        .then(response => {
+          if (response.data) {
+            this.shortlistedProperty = response.data
+            this.$validation.commit(this.$children)
+          }
+        })
+    }
+  },
   methods: {
     validateBeforeSubmit () {
-      this.errors = []
-      this.isSaving = true
-
-      this.$http.post(`/api/shortlistedproperties`, { ...this.shortlistedProperty })
+      this.$validation.validate(this.$children)
         .then(() => {
-          this.isSaving = false
-          this.$router.push({ name: 'watchlist' })
+          this.isSaving = true
+          this.$http.post(`/api/shortlistedproperties`, { ...this.shortlistedProperty })
+            .then(() => {
+              this.$router.push({ name: 'watchlist' })
+            })
+            .catch(response => {
+              let validationResult = utils.getFormValidationErrors(response)
+              validationResult.errors.forEach(validationError => {
+                console.log('ERROR', validationError.key, validationError.messages[0], 'required')
+              })
+            })
+            .finally(() => {
+              this.isSaving = false
+            })
         })
-        .catch(response => {
-          this.isSaving = false
-          let validationResult = utils.getFormValidationErrors(response)
-          validationResult.errors.forEach(validationError => {
-            this.errors.push({
-              key: validationError.key,
-              message: validationError.messages[0]
-            })
-          })
-          if (validationResult.status) {
-            this.errors.push({
-              key: 'GenericError',
-              message: validationResult.status
-            })
-          }
+        .catch(() => {
+          this.$bus.$emit('SHOW_VALIDATION_NOTIFICATION')
         })
     },
     deleteShortlistedProperty () {
@@ -290,15 +304,16 @@ export default {
         .finally(() => {
           this.isDeleting = false
         })
-    }
-  },
-  created () {
-    if (this.permissions.SP_GetById && this.$route.params.shortlistedPropertyId) {
-      this.$http.get(`/api/shortlistedproperties/${this.$route.params.shortlistedPropertyId}`)
+    },
+    promoteShortlistedProperty () {
+      this.isPromoting = true
+      this.$http.post(`/api/shortlistedproperties/promote`, { ...this.shortlistedProperty })
         .then(response => {
-          if (response.data) {
-            this.shortlistedProperty = response.data
-          }
+          debugger
+          this.$router.push({ name: 'propertyDetails', params: { propertyId: response.data } })
+        })
+        .finally(() => {
+          this.isPromoting = false
         })
     }
   },
