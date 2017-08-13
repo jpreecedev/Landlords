@@ -7,6 +7,7 @@
     using Microsoft.AspNetCore.Authorization;
     using ViewModels;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Security.Claims;
 
     public class NotificationsMessageHandler : WebSocketHandler
@@ -21,6 +22,22 @@
             _authService = authService;
         }
 
+        public async Task GetAllNotificationsAsync(ClaimsPrincipal user)
+        {
+            var nameClaim = user.FindFirst(ClaimTypes.NameIdentifier);
+            var userId = Guid.Parse(nameClaim.Value);
+            var connections = WebSocketConnectionManager.GetConnectionIdsByUserId(userId);
+
+            if (!connections.Any())
+                return;
+
+            var notifications = await GetNotificationsAsync(user, userId);
+            foreach (var userConnection in connections)
+            {
+                await InvokeClientMethodAsync(userConnection, "GetAllNotifications", new[] { notifications });
+            }
+        }
+
         public async Task GetAllNotifications(string accessToken, string connectionId)
         {
             var tokenValidation = accessToken.ToJwtValidationResult();
@@ -32,19 +49,8 @@
             var nameClaim = tokenValidation.User.FindFirst(ClaimTypes.NameIdentifier);
             var userId = Guid.Parse(nameClaim.Value);
 
-            List<NotificationViewModel> notifications;
-            if (tokenValidation.User.HasPropertyPortfolio())
-            {
-                var portfolioId = tokenValidation.User.GetPortfolioId();
-                notifications = await _notificationsDataProvider.GetNotificationsForPortfolioAsync(portfolioId);
-                notifications.AddRange(await _notificationsDataProvider.GetNotificationsForUserAsync(userId));
-            }
-            else
-            {
-                notifications = await _notificationsDataProvider.GetNotificationsForUserAsync(userId);
-            }
-            
-            await InvokeClientMethodAsync(connectionId, "GetAllNotifications", new[] {notifications});
+            var notifications = await GetNotificationsAsync(tokenValidation.User, userId);
+            await InvokeClientMethodAsync(Guid.Parse(connectionId), "GetAllNotifications", new[] {notifications});
         }
         
         public async Task StartNewConversationAsync(string accessToken, Guid receiverId, ConversationViewModel conversation)
@@ -69,6 +75,24 @@
             {
                 await InvokeClientMethodAsync(userClient.Key, "ChatMessageReceived", new[] { conversationMessage });
             }
+        }
+
+        private async Task<ICollection<NotificationViewModel>> GetNotificationsAsync(ClaimsPrincipal user, Guid userId)
+        {
+            var result = new List<NotificationViewModel>();
+
+            if (user.HasPropertyPortfolio())
+            {
+                var portfolioId = user.GetPortfolioId();
+                result = await _notificationsDataProvider.GetNotificationsForPortfolioAsync(portfolioId);
+                result.AddRange(await _notificationsDataProvider.GetNotificationsForUserAsync(userId));
+            }
+            else
+            {
+                result = await _notificationsDataProvider.GetNotificationsForUserAsync(userId);
+            }
+
+            return result;
         }
     }
 }

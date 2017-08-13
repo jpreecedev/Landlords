@@ -94,7 +94,7 @@
             var lastMessageSeen = await (from conversationMessage in Context.ConversationMessages.AsNoTracking()
                     join conversation in Context.Conversations on conversationMessage.ConversationId equals conversation.Id
                     orderby conversationMessage.Created descending 
-                    where conversation.ReceiverId == userId
+                    where conversation.ReceiverId == userId || conversationMessage.ReceiverId == userId
                     select new
                     {
                         ConversationMessage = conversationMessage,

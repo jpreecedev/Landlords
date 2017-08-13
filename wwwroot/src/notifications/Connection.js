@@ -90,7 +90,7 @@ export default class Connection {
         return
       }
 
-      var time = this.generateInterval(this.attempts)
+      let time = this.generateInterval(this.attempts)
 
       setTimeout(() => {
         this.attempts++

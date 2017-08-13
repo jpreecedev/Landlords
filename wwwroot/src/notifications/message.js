@@ -1,4 +1,4 @@
-export var MessageType;
+export let MessageType;
 (function (MessageType) {
   MessageType[MessageType['Text'] = 0] = 'Text'
   MessageType[MessageType['MethodInvocation'] = 1] = 'MethodInvocation'

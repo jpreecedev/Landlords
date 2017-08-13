@@ -9,13 +9,9 @@
     using Microsoft.AspNetCore.Http;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
-    using System.IdentityModel.Tokens.Jwt;
     using System.Security.Claims;
     using Core;
-    using Jwt;
-    using Microsoft.IdentityModel.Tokens;
     using System.Collections.Generic;
-    using System.Linq;
 
     public abstract class WebSocketHandler
     {
@@ -38,7 +34,7 @@
             await SendMessageAsync(socket, new Message
             {
                 MessageType = MessageType.ConnectionEvent,
-                Data = WebSocketConnectionManager.GetId(socket)
+                Data = WebSocketConnectionManager.GetId(socket).ToString()
             });
         }
 
@@ -57,12 +53,12 @@
                 WebSocketMessageType.Text, true, CancellationToken.None);
         }
 
-        public async Task SendMessageAsync(string socketId, Message message)
+        public async Task SendMessageAsync(Guid socketId, Message message)
         {
             await SendMessageAsync(WebSocketConnectionManager.GetSocketById(socketId), message);
         }
 
-        public async Task InvokeClientMethodAsync(string socketId, string methodName, object[] arguments)
+        public async Task InvokeClientMethodAsync(Guid socketId, string methodName, object[] arguments)
         {
             var message = new Message
             {

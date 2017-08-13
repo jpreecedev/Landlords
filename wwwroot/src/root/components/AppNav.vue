@@ -26,6 +26,9 @@
       <v-btn flat v-if="permissions.CL_Overview" @click="$router.push('/checklists/')" :class="{'active': $route.path.startsWith('/checklists')}">
         Checklists
       </v-btn>
+      <v-btn flat v-if="permissions.CO_View" @click="$router.push('/conversations')" :class="{'active': $route.path.startsWith('/conversations')}">
+        Conversations
+      </v-btn>
       <v-btn flat v-if="!auth.isLoggedIn" @click="$router.push('/registration/')" :class="{'active': $route.path.startsWith('/registration')}">
         Log in or Register
       </v-btn>
@@ -101,9 +104,6 @@
           <v-list-tile @click="$router.push('/profile')" v-if="permissions.P_View">
             <v-list-tile-title>View profile</v-list-tile-title>
           </v-list-tile>
-          <v-list-tile @click="$router.push('/conversations')" v-if="permissions.CO_View">
-            <v-list-tile-title>Chat</v-list-tile-title>
-          </v-list-tile>
           <v-list-tile @click="logout()">
             <v-list-tile-title>Log out</v-list-tile-title>
           </v-list-tile>
@@ -129,6 +129,9 @@ export default {
     this.checkNotifications()
   },
   methods: {
+    updateStore (data) {
+      this.$store.commit('UPDATE_NOTIFICATIONS', data)
+    },
     checkNotifications () {
       if (!this.auth.isLoggedIn) {
         return
@@ -136,10 +139,8 @@ export default {
 
       this.$notifications.open(this.auth.accessToken)
         .then(() => {
-          this.$notifications.invoke('GetAllNotifications')
-            .then(data => {
-              this.$store.commit('UPDATE_NOTIFICATIONS', data)
-            })
+          this.$notifications.invoke('GetAllNotifications').then(this.updateStore)
+          this.$bus.$on('GetAllNotifications', this.updateStore)
         })
     },
     logout () {

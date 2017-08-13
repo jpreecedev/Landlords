@@ -75,8 +75,13 @@
             if (conversationId.IsDefault())
                 return BadRequest("Unable to validate payload");
 
-            await _conversationDataProvider.SeenMessageAsync(User.GetUserId(), conversationId, conversationMessageId);
-            return Ok();
+            var result = await _conversationDataProvider.SeenMessageAsync(User.GetUserId(), conversationId, conversationMessageId);
+            if (result)
+            {
+                await _messageHandler.GetAllNotificationsAsync(User);
+            }
+
+            return Ok(result);
         }
     }
 }

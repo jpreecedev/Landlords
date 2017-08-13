@@ -23,6 +23,9 @@
                       {{ getDisplayName(item) }}
                     </v-list-tile-title>
                   </v-list-tile-content>
+                  <v-list-tile-action v-if="hasUnreadMessages(item)">
+                    <v-icon>chat_bubble</v-icon>
+                  </v-list-tile-action>
                 </v-list-tile>
             </v-list>
           </v-flex>
@@ -158,6 +161,19 @@ export default {
       })
   },
   methods: {
+    hasUnreadMessages (conversation) {
+      let lastReceivedMessage = this.getLastReceivedMessage(conversation)
+      if (lastReceivedMessage) {
+        return !lastReceivedMessage.seen
+      }
+      return false
+    },
+    getLastReceivedMessage (conversation) {
+      let userId = conversation.isToReceiver ? conversation.senderId : conversation.receiverId
+      return conversation.messages.filter(message => {
+        return conversation.isToReceiver ? message.senderId === userId : message.receiverId === userId
+      }).pop()
+    },
     getDisplayName (contact) {
       if (!contact) {
         return
@@ -220,11 +236,13 @@ export default {
         return
       }
 
-      var lastMessage = conversation.messages[conversation.messages.length - 1]
+      let lastMessage = this.getLastReceivedMessage(conversation)
       if (!lastMessage.seen) {
         this.$http.put(`/api/conversation/seen/${conversation.conversationId}/${lastMessage.id}`)
-          .then(() => {
-            lastMessage.seen = new Date()
+          .then(result => {
+            if (result) {
+              lastMessage.seen = new Date()
+            }
           })
           .catch(response => {
             console.log(response)

@@ -1,5 +1,7 @@
 ﻿namespace Landlords.Notifications
 {
+    using System;
+
     public enum MessageType
     {
         Text,

@@ -84,7 +84,7 @@
             };
         }
 
-        public async Task SeenMessageAsync(Guid userId, Guid conversationId, Guid conversationMessageId)
+        public async Task<bool> SeenMessageAsync(Guid userId, Guid conversationId, Guid conversationMessageId)
         {
             var result = await (from conversation in Context.Conversations
                     join conversationMessage in Context.ConversationMessages on conversation.Id equals conversationMessage.ConversationId
@@ -92,11 +92,31 @@
                     select conversationMessage)
                 .SingleAsync();
 
-            if (result.ReceiverId == userId)
+            Action updateEntity = async () =>
             {
                 result.Seen = DateTime.Now;
                 await Context.SaveChangesAsync();
+            };
+
+            var isToReceiver = userId == result.ReceiverId;
+            if (isToReceiver)
+            {
+                if (result.ReceiverId == userId)
+                {
+                    updateEntity();
+                    return true;
+                }
             }
+            else
+            {
+                if (result.SenderId == userId)
+                {
+                    updateEntity();
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private async Task<ICollection<ConversationViewModel>> GetConversationsAsync(ApplicationUser applicationUser)

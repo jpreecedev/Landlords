@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Connection from 'src/notifications/Connection'
 
-var connection = null
+let connection = null
 
 function startConnection () {
   return new Promise((resolve) => {
@@ -12,7 +12,7 @@ function startConnection () {
   })
 };
 
-var notifications = {
+let notifications = {
   install (Vue, options) {
     Vue.prototype.$notifications = Vue.notifications = this
   },
@@ -44,8 +44,8 @@ var notifications = {
   },
   invoke (method) {
     return new Promise((resolve, reject) => {
-      connection.invoke(method, connection.connectionId)
       Vue.bus.$on(method, resolve)
+      connection.invoke(method, connection.connectionId)
     })
   },
   kill () {

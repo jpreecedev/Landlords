@@ -10,7 +10,7 @@ import required from './rules/required'
 import match from './rules/match'
 
 function filter (arr, testCallback) {
-  var matches = []
+  let matches = []
   if (!Array.isArray(arr)) {
     return matches
   }
