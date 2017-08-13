@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.IO;
     using System.Threading.Tasks;
     using Database;
     using Microsoft.AspNetCore.Hosting;
@@ -11,6 +10,7 @@
     using Microsoft.EntityFrameworkCore;
     using Landlords.Interfaces;
     using Model.Entities;
+    using Landlords.Core;
 
     public class PropertyImageDataProvider : BaseDataProvider, IPropertyImageDataProvider
     {
@@ -30,44 +30,30 @@
 
         public async Task<ICollection<PropertyImageViewModel>> UploadAsync(ICollection<IFormFile> files, Guid portfolioId, Guid propertyId)
         {
-            var uploadDirectory = Path.Combine(HostingEnvironment.WebRootPath, "static", "uploads", portfolioId.ToString());
-            if (!Directory.Exists(uploadDirectory))
-            {
-                Directory.CreateDirectory(uploadDirectory);
-            }
-
             var result = new List<PropertyImageViewModel>();
 
-            foreach (var file in files)
+            var resources = await files.ProcessResourcesAsync(HostingEnvironment.WebRootPath, portfolioId.ToString());
+            if (resources == null)
             {
-                if (file.Length > 0)
-                {
-                    using (var fileStream = new FileStream(Path.Combine(uploadDirectory, file.FileName), FileMode.Create))
-                    {
-                        await file.CopyToAsync(fileStream);
+                return null;
+            }
 
-                        var entity = await AttachToPropertyAsync(propertyId, file.FileName);
-                        result.Add(new PropertyImageViewModel(entity));
-                    }
-                }
+            foreach (var resource in resources)
+            {
+                var entity = new PropertyImage
+                {
+                    PropertyId = propertyId,
+                    FileName = resource.FileName,
+                    Created = DateTime.Now
+                };
+
+                await Context.PropertyImages.AddAsync(entity);
+                await Context.SaveChangesAsync();
+
+                result.Add(new PropertyImageViewModel(entity));
             }
 
             return result;
-        }
-
-        private async Task<PropertyImage> AttachToPropertyAsync(Guid propertyId, string fileName)
-        {
-            var entity = new PropertyImage
-            {
-                PropertyId = propertyId,
-                FileName = fileName,
-                Created = DateTime.Now
-            };
-
-            await Context.PropertyImages.AddAsync(entity);
-            await Context.SaveChangesAsync();
-
-            return entity;
         }
     }
 }
