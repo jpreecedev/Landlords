@@ -38,13 +38,21 @@
           </td>
           <td>
             {{ props.item.tenancyEndDate | formatDate }}
-          </td>
+        </td>
         </template>
         <template slot="pageText" scope="{ pageStart, pageStop }">
           From {{ pageStart }} to {{ pageStop }}
         </template>
       </v-data-table>
+      <v-btn v-if="permissions.J_StartTenancy"
+             @click="$router.push('/tenancies/new')"
+             class="blue darken-2 action-button"
+             absolute dark fab top right>
+        <v-icon>add</v-icon>
+      </v-btn>
     </v-card>
+
+    <v-btn primary v-if="permissions.J_StartTenancy" type="button" class="mt-4 no-left-margin" @click="$router.push('/tenancies/new')">Start new tenancy</v-btn>
   </div>
 </template>
 

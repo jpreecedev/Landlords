@@ -423,10 +423,6 @@ export default {
     }
   }
 
-  .action-button {
-    border-radius: 50%;
-  }
-
   .send-button {
     display: flex;
     align-items: center;

@@ -27,6 +27,13 @@
           From {{ pageStart }} to {{ pageStop }}
         </template>
       </v-data-table>
+
+      <v-btn @click="$router.push('/calculators/return-on-investment')"
+             class="blue darken-2 action-button"
+             absolute dark fab top right>
+        <v-icon>add</v-icon>
+      </v-btn>
+
     </v-card>
   </div>
 </template>

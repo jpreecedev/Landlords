@@ -49,6 +49,12 @@
           From {{ pageStart }} to {{ pageStop }}
         </template>
       </v-data-table>
+      <v-btn v-if="permissions.PD_New"
+             @click="addProperty()"
+             class="blue darken-2 action-button"
+             absolute dark fab top right>
+        <v-icon>add</v-icon>
+      </v-btn>
     </v-card>
 
     <v-btn primary v-if="permissions.PD_New" type="button" class="mt-4 no-left-margin" @click="addProperty()" :loading="isAddingProperty">Add a property</v-btn>

@@ -319,4 +319,9 @@ header {
   &.no-left-margin {
     margin-left: 0;
   }
+
+  &.action-button {
+    border-radius: 50%;
+  }
+
 }
