@@ -1,7 +1,6 @@
 import LandingPage from 'root/components/LandingPage'
 import Registration from 'root/components/Registration'
 import Permissions from 'root/components/Permissions'
-import Dashboard from 'root/components/Dashboard'
 import Profile from 'root/components/Profile'
 import Agency from 'root/components/Agency'
 import LandlordList from 'root/components/LandlordList'
@@ -15,6 +14,9 @@ import HowMuch from 'root/components/Calculators/HowMuch'
 import MonthlyPayment from 'root/components/Calculators/MonthlyPayment'
 import RentalYield from 'root/components/Calculators/RentalYield'
 import ROI from 'root/components/Calculators/ROI'
+
+import Dashboard from 'src/Dashboard/Dashboard'
+
 import { guardRoute } from 'root/routes/route-guards'
 
 export const RouteConfig = [

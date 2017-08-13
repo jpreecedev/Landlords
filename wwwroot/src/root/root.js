@@ -12,6 +12,7 @@ import Vuetify from 'vuetify'
 import CommonComponents from 'src/common'
 
 import Journeys from 'src/journeys'
+import Dashboard from 'src/dashboard'
 
 import 'src/plugins'
 import 'src/extensions'
@@ -32,6 +33,7 @@ Vue.use(Vuetify)
 
 Vue.use(CommonComponents)
 Vue.use(Journeys)
+Vue.use(Dashboard)
 Vue.use(NotificationsService)
 
 new Vue({

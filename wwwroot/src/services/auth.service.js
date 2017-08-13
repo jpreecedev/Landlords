@@ -5,6 +5,7 @@ import utils from '../utils'
 
 const LOGIN_URL = '/token'
 const PERMISSIONS_URL = '/api/permissions'
+const ROLE_CLAIM = 'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'
 
 const AUTH_BASIC_HEADERS = {
   headers: {
@@ -161,6 +162,7 @@ export default {
     auth.isLoggedIn = true
     auth.accessToken = response.body.access_token
     auth.refreshToken = response.body.refresh_token
+    auth.role = this._parseJwt(response.body.access_token)[ROLE_CLAIM]
 
     user.name = response.body.name
 
@@ -214,5 +216,11 @@ export default {
     }
 
     return errors
+  },
+
+  _parseJwt (token) {
+    let base64Url = token.split('.')[1]
+    let base64 = base64Url.replace('-', '+').replace('_', '/')
+    return JSON.parse(window.atob(base64))
   }
 }

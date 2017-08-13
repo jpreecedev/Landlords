@@ -70,6 +70,7 @@ export const defaultState = {
   auth: {
     accessToken: null,
     isLoggedIn: false,
-    refreshToken: null
+    refreshToken: null,
+    role: null
   }
 }

@@ -57,11 +57,13 @@
                 <v-card-text>
                   <select-list :items="times"
                                :rules="[$validation.rules.required]"
+                               :disabled="!permissions.P_Update"
                                v-model="availableFrom"
                                label="Available from">
                   </select-list>
                   <select-list :items="times"
                                :rules="[$validation.rules.required]"
+                               :disabled="!permissions.P_Update"
                                v-model="availableTo"
                                label="Available to">
                   </select-list>
