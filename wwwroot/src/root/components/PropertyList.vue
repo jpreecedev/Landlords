@@ -135,6 +135,7 @@ export default {
   }
 
   .thumbnail img {
+    border: 1px solid transparent;
     max-height: 150px;
     max-width: 150px;
 

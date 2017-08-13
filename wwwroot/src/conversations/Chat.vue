@@ -262,6 +262,7 @@ export default {
 
     .layout {
       padding-right: 7px;
+      padding-left: 3px;
     }
 
     &.empty {
@@ -285,7 +286,6 @@ export default {
       list-style: none;
       padding-left: 0;
       li {
-        margin-left: 3px;
         &.active {
           background-color: #e9ebeb;
         }
