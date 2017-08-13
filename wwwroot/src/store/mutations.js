@@ -17,7 +17,7 @@ export const UPDATE_PERMISSIONS = (state, permissions) => {
 }
 
 export const CLEAR_ALL_DATA = (state) => {
-  Object.keys(defaultState).forEach(key => { state[key] = defaultState[key] })
+  Object.keys(defaultState).forEach(key => { state[key] = Object.assign({}, defaultState[key]) })
 }
 
 export const TENANT_ADD_TENANT = (state, isAdult) => {
