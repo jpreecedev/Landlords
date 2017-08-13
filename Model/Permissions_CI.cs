@@ -13,5 +13,9 @@
         public const string ApplyTemplateId = "d6a6737c-518b-46b4-8a38-bab84ef254ce";
         public const string ApplyTemplateRouteId = "CI_ApplyTemplate";
         public const string ApplyTemplateDescription = "Completion of checklist item template";
+
+        public const string UploadDocumentId = "38c0be1c-53a0-4ed3-89d0-2b4c3478166a";
+        public const string UploadDocumentRouteId = "CI_UploadDocument";
+        public const string UploadDocumentDescription = "Upload document to checklist item";
     }
 }

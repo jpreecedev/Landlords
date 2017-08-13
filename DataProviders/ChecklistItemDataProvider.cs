@@ -1,11 +1,15 @@
 ﻿namespace Landlords.DataProviders
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Core;
     using Database;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.EntityFrameworkCore;
+    using ViewModels;
 
     public class ChecklistItemDataProvider : BaseDataProvider, IChecklistItemDataProvider
     {
@@ -66,6 +70,11 @@
                 checklist.Item.Payload = payload;
                 await Context.SaveChangesAsync();
             }
+        }
+
+        public async Task<ICollection<ResourceViewModel>> UploadAsync(ICollection<IFormFile> files, Guid checklistId, Guid checklistItemId)
+        {
+            return await files.ProcessResourcesAsync(HostingEnvironment.WebRootPath, checklistId.ToString() + checklistItemId.ToString());
         }
     }
 }

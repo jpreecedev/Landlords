@@ -4,6 +4,7 @@
     using Microsoft.AspNetCore.Http;
     using ViewModels;
     using System.IO;
+    using System.Linq;
     using System.Threading.Tasks;
 
     public static class ResourceExtensions
@@ -34,7 +35,8 @@
                         result.Add(new ResourceViewModel
                         {
                             FileName = file.FileName,
-                            FilePath = fullPath
+                            FilePath = fullPath,
+                            RelativeFilePath = $"/static/uploads/{subDirectoryPath}/{file.FileName}"
                         });
                     }
                 }

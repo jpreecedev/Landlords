@@ -5,10 +5,18 @@
     using System.Threading.Tasks;
     using Database;
     using Microsoft.EntityFrameworkCore;
-    using Model.Entities;
 
     public static class Ownership
     {
+        public static async Task<bool> OwnsChecklistAsync(this Guid portfolioId, Guid checklistId, ILLDbContext context)
+        {
+            if (portfolioId.IsDefault() || checklistId.IsDefault() || context == null)
+            {
+                return false;
+            }
+
+            return await context.ChecklistInstances.Where(c => c.PortfolioId == portfolioId && c.Id == checklistId).AnyAsync();
+        }
         public static async Task<bool> OwnsPropertyImageAsync(this Guid userId, Guid propertyImageId, ILLDbContext context)
         {
             if (userId.IsDefault() || propertyImageId.IsDefault() || context == null)

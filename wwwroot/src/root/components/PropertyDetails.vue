@@ -28,9 +28,7 @@
             </div>
             <div class="row mt-4" v-if="isUploading">
               <div class="col-xs-12">
-                <div class="progress">
-                  <div class="progress-bar" role="progressbar" :aria-valuenow="progress" aria-valuemin="0" aria-valuemax="100" :style="{ width: progress + '%', height: '20px' }">{{ progress }}%</div>
-                </div>
+                <v-progress-linear v-model="progress"></v-progress-linear>
               </div>
             </div>
           </div>
