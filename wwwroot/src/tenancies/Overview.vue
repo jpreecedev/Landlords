@@ -19,10 +19,10 @@
         </template>
         <template slot="items" scope="props">
           <td>
-            <!-- <router-link v-if="permissions.TT_GetById" :to="'/tenancies/details/' + props.item.tenancyId">
+            <router-link v-if="permissions.TT_GetById" :to="'/tenancies/details/' + props.item.tenancyId">
               <span>{{ props.item.leadTenant }}</span>
-            </router-link> -->
-            <span>{{ props.item.leadTenant }}</span>
+            </router-link>
+            <span v-else>{{ props.item.leadTenant }}</span>
           </td>
           <td>
             <span>{{ props.item.tenantPhoneNumber }} <span v-if="props.item.tenantSecondaryPhoneNumber">or {{ props.item.tenantSecondaryPhoneNumber }}</span></span>

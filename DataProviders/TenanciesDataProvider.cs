@@ -9,6 +9,7 @@
     using Microsoft.EntityFrameworkCore;
     using ViewModels;
     using System.Linq;
+    using System.Reflection.Metadata.Ecma335;
 
     public class TenanciesDataProvider : BaseDataProvider, ITenanciesDataProvider
     {
@@ -47,9 +48,50 @@
             return null;
         }
 
-        public async Task<TenantTenancyViewModel> GetTenancyByIdAsync(Guid portfolioId, Guid tenancyId)
+        public async Task<StartTenancyJourneyViewModel> GetTenancyJourneyByIdAsync(Guid portfolioId, Guid tenancyId)
         {
-            return null;
+            var tenantsDataSet = await (from tenant in Context.Tenants
+                join applicationUser in Context.Users on tenant.ApplicationUserId equals applicationUser.Id
+                join tenantTenancies in Context.TenantTenancies on tenant.Id equals tenantTenancies.TenantId into tenantTenanciesJoin
+                join tenantAddresses in Context.TenantAddresses on tenant.Id equals tenantAddresses.TenantId into tenantAddressesJoin
+                join tenantContacts in Context.TenantContacts on tenant.Id equals tenantContacts.TenantId into tenantContactsJoin
+                from tenantTenanciesItem in tenantTenanciesJoin
+                join tenancy in Context.Tenancies on tenantTenanciesItem.TenancyId equals tenancy.Id
+                join propertyDetails in Context.PropertyDetails on tenancy.PropertyDetailsId equals propertyDetails.Id
+                join portfolio in Context.Portfolios on propertyDetails.PortfolioId equals portfolio.Id
+                where tenancy.Id == tenancyId && portfolio.Id == portfolioId
+                select new
+                {
+                    ApplicationUser = applicationUser,
+                    Tenant = tenant,
+                    TenantAddresses = tenantAddressesJoin.ToList(),
+                    TenantContacts = tenantContactsJoin.ToList()
+                })
+                .ToListAsync();
+
+            var tenancyDataSet = await (from tenancy in Context.Tenancies
+                    join propertyDetails in Context.PropertyDetails on tenancy.PropertyDetailsId equals propertyDetails.Id
+                    join portfolio in Context.Portfolios on propertyDetails.PortfolioId equals portfolio.Id
+                    where tenancy.Id == tenancyId && portfolio.Id == portfolioId
+                    select new
+                    {
+                        Tenancy = tenancy,
+                        PropertyDetailsId = propertyDetails.Id
+                    })
+                    .SingleAsync();
+
+            return new StartTenancyJourneyViewModel
+            {
+                Tenants = tenantsDataSet.Select(c =>
+                {
+                    return new TenantViewModel(c.Tenant, c.ApplicationUser)
+                    {
+                        Addresses = c.TenantAddresses.Select(d => new TenantAddressViewModel(!c.Tenant.IsAdult, d)).ToList(),
+                        Contacts = c.TenantContacts.Select(d => new TenantContactViewModel(d)).ToList(),
+                    };
+                }).ToList(),
+                Tenancy = new TenancyViewModel(tenancyDataSet.Tenancy, tenancyDataSet.PropertyDetailsId)
+            };
         }
     }
 }

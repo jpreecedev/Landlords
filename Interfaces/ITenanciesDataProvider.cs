@@ -9,6 +9,6 @@
     {
         Task<ICollection<TenantTenancyViewModel>> GetTenanciesByPortfolioIdAsync(Guid portfolioId);
         Task<ICollection<TenantTenancyViewModel>> GetTenanciesByAgencyIdAsync(Guid agencyId);
-        Task<TenantTenancyViewModel> GetTenancyByIdAsync(Guid portfolioId, Guid tenancyId);
+        Task<StartTenancyJourneyViewModel> GetTenancyJourneyByIdAsync(Guid portfolioId, Guid tenancyId);
     }
 }

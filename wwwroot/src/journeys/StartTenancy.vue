@@ -1,13 +1,5 @@
 <template>
   <section>
-    <header>
-      <h1 class="headline primary--text">New tenancy</h1>
-      <p class="display-2 grey--text text--darken-1">Capture your agreement with your new tenant</p>
-      <p class="subheading">
-        <span v-if="newTenancy.step === 1">Click 'Continue' below to get started.</span>
-        <span v-else>Click 'Continue' to go to the next step.</span>
-      </p>
-    </header>
     </notification>
     <v-stepper v-if="newTenancy && newTenancy.step" v-model="newTenancy.step">
       <v-stepper-header>

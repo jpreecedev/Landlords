@@ -3,10 +3,55 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.Linq;
+    using Model.Database;
     using Model.Validation;
+    using Model.Entities;
 
     public class TenantViewModel
     {
+        public TenantViewModel()
+        {
+            
+        }
+
+        public TenantViewModel(Tenant tenant, ApplicationUser applicationUser)
+        {
+            if (tenant == null)
+            {
+                return;
+            }
+
+            Id = tenant.Id;
+            Title = applicationUser.Title;
+            FirstName = applicationUser.FirstName;
+            MiddleName = applicationUser.MiddleName;
+            LastName = applicationUser.LastName;
+            DateOfBirth = tenant.DateOfBirth;
+            MainContactNumber = applicationUser.PhoneNumber;
+            SecondaryContactNumber = applicationUser.SecondaryPhoneNumber;
+            EmailAddress = applicationUser.Email;
+            CompanyName = tenant.CompanyName;
+            WorkContactNumber = tenant.WorkContactNumber;
+            WorkAddress = tenant.WorkAddress;
+            DrivingLicenseReference = tenant.DrivingLicenseReference;
+            PassportReference = tenant.PassportReference;
+            IsSmoker = tenant.IsSmoker;
+            HasPets = tenant.HasPets;
+            AdditionalInformation = tenant.AdditionalInformation;
+            IsLeadTenant = tenant.IsLeadTenant;
+            IsAdult = tenant.IsAdult;
+
+            if (tenant.Addresses != null)
+            {
+                Addresses = tenant.Addresses.Select(c => new TenantAddressViewModel(!tenant.IsAdult, c)).ToList();
+            }
+            if (tenant.Contacts != null)
+            { 
+                Contacts = tenant.Contacts.Select(c => new TenantContactViewModel(c)).ToList();
+            }
+        }
+
         public Guid Id { get; set; }
 
         [Required, MinLength(2)]

@@ -92,6 +92,17 @@ export const TENANCY_PREVIOUS_STEP = (state, newTenancy) => {
   state.newTenancy.step = Number(newTenancy.step) - 1
 }
 
+export const TENANCY_CLEAR = (state) => {
+  state.newTenancy = Object.assign({}, defaultState.newTenancy)
+}
+
+export const TENANCY_SET = (state, tenancy) => {
+  state.newTenancy = Object.assign({}, defaultState.newTenancy, {
+    tenancy: tenancy.tenancy,
+    tenants: tenancy.tenants
+  })
+}
+
 export const UPDATE_NOTIFICATIONS = (state, notifications) => {
   state.notifications = notifications
 }

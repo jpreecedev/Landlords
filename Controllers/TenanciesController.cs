@@ -33,11 +33,11 @@
             return Ok(await _tenanciesDataProvider.GetTenanciesByPortfolioIdAsync(portfolioId));
         }
 
-        [HttpGet("{tenancyId}")]
+        [HttpGet("tenancy")]
         [Permission(Permissions_TT.GetById, Permissions_TT.GetByRouteId, Permissions_TT.GetByDescription)]
         public async Task<IActionResult> Get(Guid tenancyId)
         {
-            return Ok(await _tenanciesDataProvider.GetTenancyByIdAsync(User.GetPortfolioId(), tenancyId));
+            return Ok(await _tenanciesDataProvider.GetTenancyJourneyByIdAsync(User.GetPortfolioId(), tenancyId));
         }
     }
 }
