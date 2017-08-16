@@ -74,7 +74,7 @@
 
         [HttpPost("update"), ValidateAntiForgeryToken, MustOwnChecklist]
         [Permission(Permissions_CI.UpdateId, Permissions_CI.UpdateRouteId, Permissions_CI.UpdateDescription)]
-        public async Task<IActionResult> Update(Guid checklistId, Guid checklistItemId, [FromBody] string value)
+        public async Task<IActionResult> Update(Guid checklistId, Guid checklistItemId, [FromBody] ChecklistItemViewModel value)
         {
             if (checklistId.IsDefault() || checklistItemId.IsDefault())
             {

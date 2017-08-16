@@ -51,28 +51,12 @@
         </v-card>
       </v-expansion-panel-content>
     </v-expansion-panel>
-    <v-layout row justify-center>
-      <v-dialog v-model="dialog"
-                @open="$refs.displayText.focus()"
-                :width="500">
-        <v-card>
-          <v-card-title>
-            <span class="headline">Edit description</span>
-          </v-card-title>
-          <v-card-text>
-            <text-field v-model="newDescription"
-                        label="Update the new description for this checklist item"
-                        ref="displayText"
-                        @keyenter="closeEditDialog()">
-            </text-field>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn class="blue--text darken-1" flat @click="closeEditDialog()">Save</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-    </v-layout>
+    <checklist-dialog label="Update the description for this checklist item"
+                      title="Edit checklist item description"
+                      v-on:closed="closeEditDialog"
+                      :isOpen="dialog"
+                      :value="newDescription">
+    </checklist-dialog>
   </div>
   <div v-else>
     Checklist is unavailable
@@ -81,19 +65,9 @@
 
 <script>
 import { mapState } from 'vuex'
-import DocumentUpload from './DocumentUpload'
-import CommentsDateOfAction from './CommentsAndDateOfAction'
-import CommentsOnly from './CommentsOnly'
-import DateOfAction from './DateOfAction'
 
 export default {
   name: 'accordion',
-  components: {
-    DocumentUpload,
-    CommentsDateOfAction,
-    CommentsOnly,
-    DateOfAction
-  },
   data () {
     return {
       dialog: false,
@@ -117,10 +91,12 @@ export default {
       checklistItem.isCompleted = !checklistItem.isCompleted === true
       this.$emit('toggleCompleted', checklistItem)
     },
-    closeEditDialog () {
-      this.selectedChecklistItem.displayText = this.newDescription
+    closeEditDialog (newDescription) {
+      if (newDescription) {
+        this.selectedChecklistItem.displayText = newDescription
+        this.$emit('editChecklistItem', this.selectedChecklistItem)
+      }
       this.dialog = false
-      this.$emit('editChecklistItem', this.selectedChecklistItem)
     },
     editChecklistItem (checklistItem) {
       this.selectedChecklistItem = checklistItem

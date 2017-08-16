@@ -3,6 +3,7 @@
                 @input="updateField"
                 @blur="$emit('blur')"
                 @keyup.enter="$emit('keyenter')"
+                @keyup.esc="$emit('keyesc')"
                 :value="value"
                 :label="label"
                 :append-icon="type === 'password' ? (togglePassword ? 'visibility' : 'visibility_off') : null"
@@ -79,6 +80,13 @@
     data () {
       return {
         togglePassword: false
+      }
+    },
+    methods: {
+      focus () {
+        setTimeout(() => {
+          this.$refs.field.focus()
+        }, 100)
       }
     }
   }

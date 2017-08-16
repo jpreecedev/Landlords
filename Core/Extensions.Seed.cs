@@ -607,6 +607,23 @@
                 await context.ChecklistItems.AddRangeAsync(checklistItems);
                 await context.SaveChangesAsync();
             }
+
+            if (!await context.Checklists.AnyAsync(c => c.Name == "Blank"))
+            {
+                var blankChecklist = new Checklist
+                {
+                    Created = DateTime.Now,
+                    Name = "Blank",
+                    Image = "checklist.png",
+                    Description = "Blank checklist template",
+                    IsAvailableDownstream = true,
+                    IsPropertyMandatory = false,
+                    UserId = admin.Id
+                };
+
+                await context.Checklists.AddAsync(blankChecklist);
+                await context.SaveChangesAsync();
+            }
         }
 
         private static class AsyncHelpers

@@ -13,6 +13,7 @@ import CommonComponents from 'src/common'
 
 import Journeys from 'src/journeys'
 import Dashboard from 'src/dashboard'
+import Checklists from 'src/Checklists'
 
 import 'src/plugins'
 import 'src/extensions'
@@ -34,6 +35,7 @@ Vue.use(Vuetify)
 Vue.use(CommonComponents)
 Vue.use(Journeys)
 Vue.use(Dashboard)
+Vue.use(Checklists)
 Vue.use(NotificationsService)
 
 new Vue({

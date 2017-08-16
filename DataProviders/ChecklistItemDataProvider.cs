@@ -90,7 +90,7 @@
             await Context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(Guid portfolioId, Guid checklistId, Guid checklistItemId, string displayText)
+        public async Task UpdateAsync(Guid portfolioId, Guid checklistId, Guid checklistItemId, ChecklistItemViewModel viewModel)
         {
             var entity = await (from checklistItem in Context.ChecklistItemInstances
                     join checklist in Context.ChecklistInstances on checklistItem.ChecklistInstanceId equals checklist.Id
@@ -98,7 +98,9 @@
                     select checklistItem)
                 .SingleAsync();
 
-            entity.DisplayText = displayText;
+            entity.DisplayText = viewModel.DisplayText;
+            entity.Template = viewModel.Template;
+
             await Context.SaveChangesAsync();
         }
     }

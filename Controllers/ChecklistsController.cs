@@ -47,7 +47,7 @@
                 return BadRequest("Unable to validate payload");
             }
 
-            return Ok(await _checklistInstanceDataProvider.CreateChecklistInstanceAsync(User.GetPortfolioId(), checklistId, propertyDetailsId));
+            return Ok(await _checklistInstanceDataProvider.CreateAsync(User.GetPortfolioId(), checklistId, propertyDetailsId));
         }
         
         [HttpPost("archive"), ValidateAntiForgeryToken]
@@ -59,7 +59,20 @@
                 return BadRequest("Unable to validate payload");
             }
 
-            await _checklistInstanceDataProvider.ArchiveChecklistInstanceAsync(User.GetPortfolioId(), checklistId);
+            await _checklistInstanceDataProvider.ArchiveAsync(User.GetPortfolioId(), checklistId);
+            return Ok();
+        }
+
+        [HttpPost("update"), ValidateAntiForgeryToken]
+        [Permission(Permissions_CL.UpdateId, Permissions_CL.UpdateRouteId, Permissions_CL.UpdateDescription)]
+        public async Task<IActionResult> Update(Guid checklistId, [FromBody] ChecklistInstanceViewModel value)
+        {
+            if (checklistId.IsDefault())
+            {
+                return BadRequest("Unable to validate payload");
+            }
+
+            await _checklistInstanceDataProvider.UpdateAsync(User.GetPortfolioId(), checklistId, value);
             return Ok();
         }
 
@@ -67,7 +80,7 @@
         [Permission(Permissions_CL.ArchivedId, Permissions_CL.ArchivedRouteId, Permissions_CL.ArchivedDescription)]
         public async Task<IActionResult> Archived()
         {
-            return Ok(await _checklistInstanceDataProvider.GetArchivedChecklistInstancesAsync(User.GetPortfolioId()));
+            return Ok(await _checklistInstanceDataProvider.GetArchivedAsync(User.GetPortfolioId()));
         }
 
         [HttpDelete("{checklistId}"), ValidateAntiForgeryToken]
@@ -79,7 +92,7 @@
                 return BadRequest("Unable to validate payload");
             }
 
-            await _checklistInstanceDataProvider.DeleteInstanceAsync(User.GetPortfolioId(), checklistId);
+            await _checklistInstanceDataProvider.DeleteAsync(User.GetPortfolioId(), checklistId);
             return Ok();
         }
     }

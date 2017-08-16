@@ -41,7 +41,7 @@
                 }).FirstOrDefaultAsync();
         }
 
-        public async Task<ChecklistViewModel> CreateChecklistInstanceAsync(Guid portfolioId, Guid checklistId, Guid? propertyDetailsId)
+        public async Task<ChecklistViewModel> CreateAsync(Guid portfolioId, Guid checklistId, Guid? propertyDetailsId)
         {
             var checklist = await Context.Checklists.FirstOrDefaultAsync(c => c.Id == checklistId);
             if (checklist != null)
@@ -78,7 +78,7 @@
             return null;
         }
 
-        public async Task DeleteInstanceAsync(Guid portfolioId, Guid checklistId)
+        public async Task DeleteAsync(Guid portfolioId, Guid checklistId)
         {
             var checklist = await Context.ChecklistInstances.FirstOrDefaultAsync(c => c.PortfolioId == portfolioId && c.Id == checklistId);
             if (checklist != null)
@@ -88,7 +88,7 @@
             }
         }
 
-        public async Task ArchiveChecklistInstanceAsync(Guid portfolioId, Guid checklistId)
+        public async Task ArchiveAsync(Guid portfolioId, Guid checklistId)
         {
             var checklist = await Context.ChecklistInstances.FirstOrDefaultAsync(c => c.PortfolioId == portfolioId && c.Id == checklistId);
             if (checklist != null)
@@ -98,7 +98,7 @@
             }
         }
 
-        public async Task<ICollection<ChecklistViewModel>> GetArchivedChecklistInstancesAsync(Guid portfolioId)
+        public async Task<ICollection<ChecklistViewModel>> GetArchivedAsync(Guid portfolioId)
         {
             return await (from checklist in Context.ChecklistInstances.AsNoTracking()
                           join checklistItems in Context.ChecklistItemInstances on checklist.Id equals checklistItems.ChecklistInstanceId into checklistItemsJoin
@@ -111,6 +111,17 @@
                           }
                 )
                 .ToListAsync();
+        }
+
+        public async Task UpdateAsync(Guid portfolioId, Guid checklistId, ChecklistInstanceViewModel viewModel)
+        {
+            var entity = await (from checklistInstance in Context.ChecklistInstances
+                    where checklistInstance.PortfolioId == portfolioId && checklistInstance.Id == checklistId
+                    select checklistInstance)
+                .SingleAsync();
+
+            entity.MapFrom(viewModel);
+            await Context.SaveChangesAsync();
         }
     }
 }
