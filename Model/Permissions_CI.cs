@@ -17,5 +17,13 @@
         public const string UploadDocumentId = "38c0be1c-53a0-4ed3-89d0-2b4c3478166a";
         public const string UploadDocumentRouteId = "CI_UploadDocument";
         public const string UploadDocumentDescription = "Upload document to checklist item";
+
+        public const string DeleteId = "6d23e769-1177-47d4-bf6c-eceb5609f76e";
+        public const string DeleteRouteId = "CI_Delete";
+        public const string DeleteDescription = "Delete a checklist item";
+
+        public const string UpdateId = "dd168013-423a-492a-89ae-5f6a639daa0d";
+        public const string UpdateRouteId = "CI_Update";
+        public const string UpdateDescription = "Update/edit a checklist item";
     }
 }

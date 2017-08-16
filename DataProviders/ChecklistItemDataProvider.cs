@@ -76,5 +76,30 @@
         {
             return await files.ProcessResourcesAsync(HostingEnvironment.WebRootPath, checklistId.ToString() + checklistItemId.ToString());
         }
+
+        public async Task DeleteAsync(Guid portfolioId, Guid checklistId, Guid checklistItemId)
+        {
+            var entity = await (from checklistItem in Context.ChecklistItemInstances
+                                join checklist in Context.ChecklistInstances on checklistItem.ChecklistInstanceId equals checklist.Id
+                                where checklist.PortfolioId == portfolioId && checklist.Id == checklistId && checklistItem.Id == checklistItemId
+                                select checklistItem)
+                                .SingleAsync();
+
+            entity.Deleted = DateTime.Now;
+
+            await Context.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(Guid portfolioId, Guid checklistId, Guid checklistItemId, string displayText)
+        {
+            var entity = await (from checklistItem in Context.ChecklistItemInstances
+                    join checklist in Context.ChecklistInstances on checklistItem.ChecklistInstanceId equals checklist.Id
+                    where checklist.PortfolioId == portfolioId && checklist.Id == checklistId && checklistItem.Id == checklistItemId
+                    select checklistItem)
+                .SingleAsync();
+
+            entity.DisplayText = displayText;
+            await Context.SaveChangesAsync();
+        }
     }
 }

@@ -11,12 +11,16 @@
       </header>
 
       <p class="text-muted">There are {{ outstandingActions }} outstanding actions.</p>
-      <accordion :checklist="checklist" v-on:toggleCompleted="toggleCompleted">
+      <accordion :checklist="checklist"
+                 v-on:toggleCompleted="toggleCompleted"
+                 v-on:deleteChecklistItem="deleteChecklistItem"
+                 v-on:editChecklistItem="editChecklistItem">
       </accordion>
 
       <div class="row mt-5" v-if="permissions.CL_DeleteById">
         <div class="col-xs-12 col-md-4 col-md-offset-8 text-center">
-          <p class="red--text">Danger Zone!! You can delete this checklist.<br/>Deleting is permanent and cannot be undone!</p>
+          <h5 class="red--text">Danger Zone!!</h5>
+          <p class="red--text">You can delete this checklist.<br/>Deleting is permanent and cannot be undone!</p>
           <v-btn error @click="deleteChecklist()" :loading="isDeleting">Delete Checklist</v-btn>
         </div>
       </div>
@@ -79,8 +83,20 @@ export default {
           this.isDeleting = false
         })
     },
-    toggleCompleted (item) {
-      this.$http.post(`/api/checklistitem/completed?checklistId=${this.checklistId}&checklistItemId=${item.id}&completed=${item.isCompleted}`)
+    deleteChecklistItem (checklistItem) {
+      this.$http.delete(`/api/checklistitem?checklistId=${this.checklist.id}&checklistItemId=${checklistItem.id}`)
+        .then(() => {
+          this.checklist.checklistItems.splice(this.checklist.checklistItems.indexOf(checklistItem), 1)
+        })
+        .catch(() => {
+          alert('Unable to delete checklist item at this time')
+        })
+    },
+    editChecklistItem (checklistItem) {
+      this.$http.post(`/api/checklistItem/update?checklistId=${this.checklistId}&checklistItemId=${checklistItem.id}`, JSON.stringify(checklistItem.displayText))
+    },
+    toggleCompleted (checklistItem) {
+      this.$http.post(`/api/checklistitem/completed?checklistId=${this.checklistId}&checklistItemId=${checklistItem.id}&completed=${checklistItem.isCompleted}`)
     }
   }
 }

@@ -8,6 +8,7 @@
     using Permissions;
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Http;
+    using ViewModels;
 
     [Route("api/[controller]")]
     public class ChecklistItemController : Controller
@@ -58,12 +59,42 @@
             return Ok();
         }
 
+        [HttpDelete, ValidateAntiForgeryToken, MustOwnChecklist]
+        [Permission(Permissions_CI.DeleteId, Permissions_CI.DeleteRouteId, Permissions_CI.DeleteDescription)]
+        public async Task<IActionResult> Delete(Guid checklistId, Guid checklistItemId)
+        {
+            if (checklistId.IsDefault() || checklistItemId.IsDefault())
+            {
+                return BadRequest("Unable to validate payload");
+            }
+
+            await _checklistItemDataProvider.DeleteAsync(User.GetPortfolioId(), checklistId, checklistItemId);
+            return Ok();
+        }
+
+        [HttpPost("update"), ValidateAntiForgeryToken, MustOwnChecklist]
+        [Permission(Permissions_CI.UpdateId, Permissions_CI.UpdateRouteId, Permissions_CI.UpdateDescription)]
+        public async Task<IActionResult> Update(Guid checklistId, Guid checklistItemId, [FromBody] string value)
+        {
+            if (checklistId.IsDefault() || checklistItemId.IsDefault())
+            {
+                return BadRequest("Unable to validate payload");
+            }
+
+            if (ModelState.IsValid)
+            {
+                await _checklistItemDataProvider.UpdateAsync(User.GetPortfolioId(), checklistId, checklistItemId, value);
+                return Ok();
+            }
+
+            return BadRequest(new { Errors = ModelState.ToErrorCollection() });
+        }
+
         [HttpPost("upload"), ValidateAntiForgeryToken, MustOwnChecklist]
         [Permission(Permissions_CI.UploadDocumentId, Permissions_CI.UploadDocumentRouteId, Permissions_CI.UploadDocumentDescription)]
         public async Task<IActionResult> Upload(ICollection<IFormFile> files, Guid checklistId, Guid checklistItemId)
         {
             if (checklistId.IsDefault() || checklistItemId.IsDefault())
-
             {
                 return BadRequest("Unable to validate payload");
             }

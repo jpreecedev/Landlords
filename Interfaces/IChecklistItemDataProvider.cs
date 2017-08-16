@@ -12,5 +12,7 @@
         Task MoveAsync(Guid portfolioId, Guid checklistId, Guid checklistItemId, string direction);
         Task ApplyTemplatePayloadAsync(Guid portfolioId, Guid checklistId, Guid checklistItemId, string payload);
         Task<ICollection<ResourceViewModel>> UploadAsync(ICollection<IFormFile> files, Guid checklistId, Guid checklistItemId);
+        Task DeleteAsync(Guid portfolioId, Guid checklistId, Guid checklistItemId);
+        Task UpdateAsync(Guid portfolioId, Guid checklistId, Guid checklistItemId, string displayText);
     }
 }
