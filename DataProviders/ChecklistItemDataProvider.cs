@@ -9,6 +9,7 @@
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
     using Microsoft.EntityFrameworkCore;
+    using Model.Entities;
     using ViewModels;
 
     public class ChecklistItemDataProvider : BaseDataProvider, IChecklistItemDataProvider
@@ -102,6 +103,22 @@
             entity.Template = viewModel.Template;
 
             await Context.SaveChangesAsync();
+        }
+
+        public async Task<ChecklistItemViewModel> AddAsync(Guid checklistId, ChecklistItemViewModel value)
+        {
+            var entity = new ChecklistItemInstance
+            {
+                ChecklistInstanceId = checklistId,
+                Created = DateTime.Now,
+                DisplayText = value.DisplayText,
+                Template = value.Template
+            };
+
+            await Context.ChecklistItemInstances.AddAsync(entity);
+            await Context.SaveChangesAsync();
+
+            return new ChecklistItemViewModel(entity);
         }
     }
 }

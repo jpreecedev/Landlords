@@ -7,12 +7,26 @@
           <span class="headline">{{ title }}</span>
         </v-card-title>
         <v-card-text>
-          <text-field v-model="textValue"
-                      :label="label"
-                      ref="input"
-                      @keyenter="closeAndSave()"
-                      @keyesc="close()">
-          </text-field>
+          <div v-if="showTextField"
+               class="row">
+            <div class="col-xs-12">
+              <text-field v-model="textFieldValue"
+                          :label="textLabel"
+                          ref="textField"
+                          @keyenter="!showList && closeAndSave()"
+                          @keyesc="close()">
+              </text-field>
+            </div>
+          </div>
+          <div v-if="showList"
+               class="row">
+            <div class="col-xs-12">
+              <select-list :items="listItems"
+                           :label="listLabel"
+                           v-model="selectListValue">
+              </select-list>
+            </div>
+          </div>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -32,22 +46,43 @@ export default {
       type: Boolean,
       default: false
     },
-    'label': {
-      type: String,
-      required: true
-    },
     'title': {
       type: String,
       required: true
     },
-    'value': {
+    'textValue': {
       type: String,
+      default: null
+    },
+    'textLabel': {
+      type: String,
+      required: true
+    },
+    'showTextField': {
+      type: Boolean,
+      required: false,
+      default: true
+    },
+    'showList': {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    'listItems': {
+      type: Array,
+      required: false,
+      default: () => []
+    },
+    'listLabel': {
+      type: String,
+      required: false,
       default: null
     }
   },
   data () {
     return {
-      textValue: null,
+      textFieldValue: null,
+      selectListValue: null,
       dialog: false
     }
   },
@@ -56,7 +91,7 @@ export default {
       this.$emit('closed')
     },
     closeAndSave () {
-      this.$emit('closed', this.textValue)
+      this.$emit('closed', this.textFieldValue, this.selectListValue)
     }
   },
   watch: {
@@ -67,9 +102,10 @@ export default {
     },
     isOpen () {
       if (this.isOpen) {
-        this.textValue = this.value
+        this.textFieldValue = this.textValue
+        this.selectListValue = this.listValue
         this.dialog = true
-        this.$refs.input.focus()
+        this.$refs.textField.focus()
       } else {
         this.dialog = false
       }

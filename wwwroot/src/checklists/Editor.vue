@@ -17,12 +17,24 @@
         </p>
       </header>
 
-      <p class="text-muted">There are {{ outstandingActions }} outstanding actions.</p>
+      <p v-if="checklist.checklistItems && checklist.checklistItems.length"
+         class="text-muted">
+         There are {{ outstandingActions }} outstanding actions.
+      </p>
+      <p v-else>There is nothing to show here.</p>
+
       <accordion :checklist="checklist"
                  v-on:toggleCompleted="toggleCompleted"
                  v-on:deleteChecklistItem="deleteChecklistItem"
                  v-on:editChecklistItem="editChecklistItem">
       </accordion>
+
+      <v-btn v-if="permissions.CI_Add"
+             @click.stop="addChecklistItem()"
+             class="no-left-margin"
+             primary>
+       Add Checklist Item
+      </v-btn>
 
       <div class="row mt-5" v-if="permissions.CL_DeleteById">
         <div class="col-xs-12 col-md-4 col-md-offset-8 delete-checklist">
@@ -32,17 +44,26 @@
       </div>
     </div>
 
-    <checklist-dialog label="Update the name of this checklist"
-                      title="Edit checklist name"
+    <checklist-dialog title="Edit checklist name"
+                      textLabel="Update the name of this checklist"
                       v-on:closed="closeEditNameDialog"
                       :isOpen="dialog"
                       :value="newName">
+    </checklist-dialog>
+    <checklist-dialog title="Checklist item description"
+                      textLabel="Add a description for the checklist item"
+                      listLabel="Select a template"
+                      v-on:closed="closeNewDialog"
+                      :showList="true"
+                      :listItems="templates"
+                      :isOpen="newDialog">
     </checklist-dialog>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
+import { templates } from './templates'
 
 export default {
   name: 'newTenantMoveIn',
@@ -53,7 +74,9 @@ export default {
       isLoading: false,
       isDeleting: false,
       checklistId: this.$route.params.checklistId,
-      checklist: null
+      checklist: null,
+      newDialog: false,
+      templates
     }
   },
   created () {
@@ -85,6 +108,18 @@ export default {
     }
   },
   methods: {
+    addChecklistItem () {
+      this.newDialog = true
+    },
+    closeNewDialog (description, template) {
+      if (description && template) {
+        this.$http.post(`/api/checklistItem/add?checklistId=${this.checklistId}`, { displayText: description, template: template })
+          .then(response => {
+            this.checklist.checklistItems.push(response.data)
+          })
+      }
+      this.newDialog = false
+    },
     deleteChecklist () {
       this.isDeleting = true
       this.$http.delete(`/api/checklists/${this.checklistId}`)

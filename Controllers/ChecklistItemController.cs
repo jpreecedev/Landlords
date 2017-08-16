@@ -108,5 +108,22 @@
                 return BadRequest(e.Message);
             }
         }
+
+        [HttpPost("add"), ValidateAntiForgeryToken, MustOwnChecklist]
+        [Permission(Permissions_CI.AddId, Permissions_CI.AddRouteId, Permissions_CI.AddDescription)]
+        public async Task<IActionResult> Add(Guid checklistId, [FromBody] ChecklistItemViewModel value)
+        {
+            if (checklistId.IsDefault())
+            {
+                return BadRequest("Unable to validate payload");
+            }
+
+            if (ModelState.IsValid)
+            {
+                return Ok(await _checklistItemDataProvider.AddAsync(checklistId, value));
+            }
+
+            return BadRequest(new { Errors = ModelState.ToErrorCollection() });
+        }
     }
 }

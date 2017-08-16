@@ -14,5 +14,6 @@
         Task<ICollection<ResourceViewModel>> UploadAsync(ICollection<IFormFile> files, Guid checklistId, Guid checklistItemId);
         Task DeleteAsync(Guid portfolioId, Guid checklistId, Guid checklistItemId);
         Task UpdateAsync(Guid portfolioId, Guid checklistId, Guid checklistItemId, ChecklistItemViewModel viewModel);
+        Task<ChecklistItemViewModel> AddAsync(Guid checklistId, ChecklistItemViewModel value);
     }
 }

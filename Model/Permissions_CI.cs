@@ -25,5 +25,9 @@
         public const string UpdateId = "dd168013-423a-492a-89ae-5f6a639daa0d";
         public const string UpdateRouteId = "CI_Update";
         public const string UpdateDescription = "Update/edit a checklist item";
+
+        public const string AddId = "aca09348-9c20-4249-9ea6-bcdfba2acca8";
+        public const string AddRouteId = "CI_Add";
+        public const string AddDescription = "Add a new checklist item";
     }
 }

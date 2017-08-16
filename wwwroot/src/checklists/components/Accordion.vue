@@ -51,15 +51,12 @@
         </v-card>
       </v-expansion-panel-content>
     </v-expansion-panel>
-    <checklist-dialog label="Update the description for this checklist item"
-                      title="Edit checklist item description"
+    <checklist-dialog title="Edit checklist item description"
+                      textLabel="Update the description for this checklist item"
                       v-on:closed="closeEditDialog"
                       :isOpen="dialog"
-                      :value="newDescription">
+                      :textValue="newDescription">
     </checklist-dialog>
-  </div>
-  <div v-else>
-    Checklist is unavailable
   </div>
 </template>
 

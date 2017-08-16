@@ -2,6 +2,7 @@
 {
     using System;
     using Model.Entities;
+    using System.ComponentModel.DataAnnotations;
 
     public class ChecklistItemViewModel
     {
@@ -42,13 +43,22 @@
             Id = checklistItem.Id;
         }
 
+        [Required]
         public string DisplayText { get; set; }
+
         public string Key { get; set; }
+
         public bool IsExpanded { get; set; }
+
+        [Required]
         public string Template { get; set; }
+
         public bool IsCompleted { get; set; }
+
         public int Order { get; set; }
+
         public string Payload { get; set; }
+
         public Guid Id { get; set; }
     }
 }
