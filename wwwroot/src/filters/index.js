@@ -1,8 +1,8 @@
 import Vue from 'vue'
 
-import date from './date'
-import dateTime from './dateTime'
-import currency from './currency'
+import * as date from './date'
+import * as dateTime from './dateTime'
+import * as currency from './currency'
 
 Vue.use(date)
 Vue.use(dateTime)
