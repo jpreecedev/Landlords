@@ -41,6 +41,8 @@
             AdditionalInformation = tenant.AdditionalInformation;
             IsLeadTenant = tenant.IsLeadTenant;
             IsAdult = tenant.IsAdult;
+            Occupation = tenant.Occupation;
+            EmploymentType = tenant.EmploymentType;
 
             if (tenant.Addresses != null)
             {
@@ -108,6 +110,10 @@
         [Display(Name = "Passport reference")]
         [RequiredIfTrue("IsAdult"), MinLength(2)]
         public string PassportReference { get; set; }
+
+        [Display(Name = "Employment type")]
+        [RequiredIfTrue("IsAdult"), MinLength(2)]
+        public string EmploymentType { get; set; }
 
         public bool IsSmoker { get; set; }
 

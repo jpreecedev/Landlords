@@ -68,6 +68,7 @@
                     DrivingLicenseReference = tenant.DrivingLicenseReference,
                     HasPets = tenant.HasPets,
                     IsSmoker = tenant.IsSmoker,
+                    EmploymentType = tenant.EmploymentType,
                     Occupation = tenant.Occupation,
                     PassportReference = tenant.PassportReference,
                     WorkAddress = tenant.WorkAddress,
