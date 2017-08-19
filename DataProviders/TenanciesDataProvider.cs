@@ -9,11 +9,15 @@
     using Microsoft.EntityFrameworkCore;
     using ViewModels;
     using System.Linq;
+    using Model.Entities;
 
     public class TenanciesDataProvider : BaseDataProvider, ITenanciesDataProvider
     {
-        public TenanciesDataProvider(IHostingEnvironment hostingEnvironment, LLDbContext context) : base(hostingEnvironment, context)
+        private readonly ITenantsDataProvider _tenantsDataProvider;
+
+        public TenanciesDataProvider(ITenantsDataProvider tenantsDataProvider, IHostingEnvironment hostingEnvironment, LLDbContext context) : base(hostingEnvironment, context)
         {
+            _tenantsDataProvider = tenantsDataProvider;
         }
 
         public async Task<ICollection<TenantTenancyViewModel>> GetTenanciesByPortfolioIdAsync(Guid portfolioId)
@@ -91,6 +95,44 @@
                 }).ToList(),
                 Tenancy = new TenancyViewModel(tenancyDataSet.Tenancy, tenancyDataSet.PropertyDetailsId)
             };
+        }
+
+        public async Task<TenancyViewModel> CreateAsync(Guid portfolioId, TenancyViewModel viewModel, ICollection<TenantViewModel> tenants)
+        {
+            //Untested
+            var tenancy = new Tenancy
+            {
+                PropertyDetailsId = viewModel.PropertyDetailsId,
+                Created = DateTime.Now,
+                StartDate = viewModel.StartDate,
+                EndDate = viewModel.EndDate,
+                RentalAmount = viewModel.RentalAmount,
+                RentalFrequency = viewModel.RentalFrequency,
+                RentalPaymentReference = viewModel.RentalPaymentReference,
+                TenancyType = viewModel.TenancyType
+            };
+
+            await Context.Tenancies.AddAsync(tenancy);
+            await Context.SaveChangesAsync();
+
+            var tenancyViewModel = new TenancyViewModel(tenancy, tenancy.PropertyDetailsId);
+            await CreateTenantTenancyAsync(tenancyViewModel, tenants);
+
+            return new TenancyViewModel(tenancy, tenancy.PropertyDetailsId);
+        }
+
+        private async Task CreateTenantTenancyAsync(TenancyViewModel tenancy, ICollection<TenantViewModel> tenants)
+        {
+            var tenantTenacies = tenants.Select(c => new TenantTenancy
+                {
+                    Created = DateTime.Now,
+                    TenancyId = tenancy.Id,
+                    TenantId = c.Id
+                })
+                .ToList();
+
+            await Context.AddRangeAsync(tenantTenacies);
+            await Context.SaveChangesAsync();
         }
     }
 }

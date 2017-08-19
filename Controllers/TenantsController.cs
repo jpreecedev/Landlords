@@ -47,7 +47,7 @@
         {
             if (ModelState.IsValid)
             {
-                await _tenantsDataProvider.UpdateAsync(value);
+                await _tenantsDataProvider.UpdateAsync(User.GetPortfolioId(), value);
                 return Ok();
             }
 
