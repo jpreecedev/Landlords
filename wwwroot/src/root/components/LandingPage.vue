@@ -52,26 +52,44 @@
       </div>
     </section>
 
-    <section class="no-padding" id="portfolio">
-      <div class="row no-gutter">
-          <div class="col-lg-4 col-sm-6">
-            <img src="../../assets/images/landing-page/1.png" class="responsive" alt="">
+    <section class="features mt-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-5 ml-auto">
+            Hello
           </div>
-          <div class="col-lg-4 col-sm-6">
-            <img src="../../assets/images/landing-page/2.png" class="responsive" alt="">
+          <div class="col-lg-5 mr-auto">
+            Is it me you're looking for?
           </div>
-          <div class="col-lg-4 col-sm-6">
-            <img src="../../assets/images/landing-page/3.png" class="responsive" alt="">
+        </div>
+        <div class="row">
+          <div class="col-lg-5 ml-auto">
+            Hello
           </div>
-          <div class="col-lg-4 col-sm-6">
-            <img src="../../assets/images/landing-page/4.png" class="responsive" alt="">
+          <div class="col-lg-5 mr-auto">
+            Is it me you're looking for?
           </div>
-          <div class="col-lg-4 col-sm-6">
-            <img src="../../assets/images/landing-page/5.png" class="responsive" alt="">
+        </div>
+      </div>
+    </section>
+    <section class="features mt-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-5 ml-auto">
+            Hello
           </div>
-          <div class="col-lg-4 col-sm-6">
-            <img src="../../assets/images/landing-page/6.png" class="responsive" alt="">
+          <div class="col-lg-5 mr-auto">
+            Is it me you're looking for?
           </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-5 ml-auto">
+            Hello
+          </div>
+          <div class="col-lg-5 mr-auto">
+            Is it me you're looking for?
+          </div>
+        </div>
       </div>
     </section>
 
@@ -109,3 +127,16 @@
     </section>
   </div>
 </template>
+
+<style lang="scss" scoped>
+  .features {
+    padding: 50px 0;
+    background: #fff;
+    &:nth-child(even) {
+      background-color: #f8f8f8;
+      border-top: 1px solid #e7e7e7;
+      border-bottom: 1px solid #e7e7e7;
+    }
+  }
+</style>
+
