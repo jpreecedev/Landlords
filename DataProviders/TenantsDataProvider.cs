@@ -228,6 +228,7 @@
                 };
 
                 await Context.Users.AddAsync(tenantUser);
+                await Context.SaveChangesAsync();
             }
 
             var entity = new Tenant

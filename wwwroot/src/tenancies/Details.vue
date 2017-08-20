@@ -4,7 +4,7 @@
     <div v-if="!isLoading">
       <header>
         <h1 class="headline primary--text">Tenancy details</h1>
-        <p class="display-2 grey--text text--darken-1">See details of your agreement with your tenant</p>
+        <p class="display-2 grey--text text--darken-1">Manage your agreement with your tenant</p>
         <p class="subheading">
           <span v-if="tenancy.step === 1">Click 'Continue' below to get started.</span>
           <span v-else>Click 'Continue' to go to the next step.</span>

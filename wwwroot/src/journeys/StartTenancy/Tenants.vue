@@ -113,7 +113,7 @@
                 <div class="col-xs-6 col-md-2">
                   <text-field v-model="address.yearsAtAddress"
                               :value="address.yearsAtAddress"
-                              :rules="[$validation.rules.required, $validation.rules.min_value(address.yearsAtAddress, 1), $validation.rules.max_value(address.yearsAtAddress, 100)]"
+                              :rules="[$validation.rules.required, $validation.rules.min_value(address.yearsAtAddress, 0), $validation.rules.max_value(address.yearsAtAddress, 100)]"
                               @input="updateAddress(index, addressIndex, address, 'yearsAtAddress')"
                               label="Years"
                               type="number"

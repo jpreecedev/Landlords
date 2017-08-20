@@ -11,6 +11,7 @@
     using Model.Database;
     using Newtonsoft.Json;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using Jwt;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
@@ -35,6 +36,11 @@
         public static string GetAccessToken(this HttpRequest request)
         {
             return request.Query["access_token"].FirstOrDefault();
+        }
+
+        public static DateTime StartOfMonth(this DateTime dateTime)
+        {
+            return DateTime.Parse($"1/{dateTime.Month}/{dateTime.Year}");
         }
 
         public static IEnumerable<T> DistinctBy<T, TKey>(this IEnumerable<T> items, Func<T, TKey> property)
@@ -69,19 +75,32 @@
 
         public static IEnumerable<IdentityError> ToGeneric(this IEnumerable<IdentityError> errors)
         {
-            return errors.Select(c => new IdentityError {Code = "GenericError", Description = c.Description});
+            return errors.Select(c => new IdentityError { Code = "GenericError", Description = c.Description });
         }
 
         public static object ToErrorCollection(this IEnumerable<IdentityError> errors)
         {
-            return errors.Select(c => new { Key = c.Code, Value = new[] {c.Description} })
+            return errors.Select(c => new { Key = c.Code, Value = new[] { c.Description } })
                 .ToList();
+        }
+
+        public static object ToErrorCollection(this IEnumerable<ValidationResult> modelState)
+        {
+            var modelErrors = new ModelStateDictionary();
+            foreach (var result in modelState)
+            {
+                foreach (var member in result.MemberNames)
+                {
+                    modelErrors.AddModelError(member, result.ErrorMessage);
+                }
+            }
+            return modelErrors.ToErrorCollection();
         }
 
         public static object ToErrorCollection(this ModelStateDictionary modelState)
         {
             return modelState.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray())
-                .Select(c => new {c.Key, c.Value})
+                .Select(c => new { c.Key, c.Value })
                 .ToList();
         }
 

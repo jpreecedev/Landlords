@@ -31,5 +31,10 @@
 
             await _tenanciesDataProvider.CreateAsync(portfolioId, viewModel.Tenancy, tenants);
         }
+
+        public async Task UpdateTenancyAsync(Guid portfolioId, StartTenancyJourneyViewModel viewModel)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

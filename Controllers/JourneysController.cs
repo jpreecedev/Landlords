@@ -29,9 +29,18 @@
         [Permission(Permissions_J.CreateTenancyId, Permissions_J.CreateTenancyRouteId, Permissions_J.CreateTenancyDescription)]
         public async Task<IActionResult> Post([FromBody] StartTenancyJourneyViewModel value)
         {
+            var portfolioId = User.GetPortfolioId();
             if (ModelState.IsValid)
             {
-                await _journeyDataProvider.CreateTenancyAsync(User.GetPortfolioId(), value);
+                if (value.IsNew())
+                {
+                    await _journeyDataProvider.CreateTenancyAsync(portfolioId, value);
+                }
+                else
+                {
+                    await _journeyDataProvider.UpdateTenancyAsync(portfolioId, value);
+                }
+
                 return Ok();
             }
 

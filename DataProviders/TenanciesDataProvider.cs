@@ -118,7 +118,7 @@
             var tenancyViewModel = new TenancyViewModel(tenancy, tenancy.PropertyDetailsId);
             await CreateTenantTenancyAsync(tenancyViewModel, tenants);
 
-            return new TenancyViewModel(tenancy, tenancy.PropertyDetailsId);
+            return tenancyViewModel;
         }
 
         private async Task CreateTenantTenancyAsync(TenancyViewModel tenancy, ICollection<TenantViewModel> tenants)
