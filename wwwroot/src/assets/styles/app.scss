@@ -329,3 +329,44 @@ header {
 textarea {
   overflow: hidden;
 }
+
+.accordion-header {
+  display: flex;
+  width: 100%;
+  padding: 0 3rem 0 0;
+}
+
+.accordion {
+  &.col {
+    .display-text {
+      transform: translateY(6px);
+      padding: 0 0 0 1rem;
+      display: inline-block;
+
+      &.default {
+        transform: translateY(10px);
+        padding: 0;
+      }
+    }
+  }
+
+  &.grow {
+    flex-grow: 1;
+    height: 36px;
+  }
+
+  .btn {
+    margin: 0;
+  }
+
+  .icon {
+    margin-right: 0;
+  }
+
+  .accordion-checkbox {
+    padding: 0;
+    .input-group__details {
+      display: none;
+    }
+  }
+}

@@ -6,6 +6,9 @@
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using Core;
+    using Database;
+    using Microsoft.EntityFrameworkCore;
+    using System.Threading.Tasks;
 
     public class StartTenancyJourneyViewModel : IValidatableObject
     {
@@ -28,7 +31,7 @@
         public LLDataType[] DefaultEmploymentTypes { get; } = EmploymentTypes.GetDefaultEmploymentTypes();
 
         public LLDataType[] DefaultTenantContactTypes { get; } = TenantContactTypes.GetDefaultTenantContactTypes();
-        
+
         public bool IsNew()
         {
             return Tenancy.Id.IsDefault();
@@ -68,6 +71,23 @@
                     yield return new ValidationResult("Each tenant must supply at least 3 years address details");
                 }
             }
+        }
+
+        public async Task<bool> VerifyPermissionsAsync(ILLDbContext context, Guid portfolioId)
+        {
+            //For tenancy, property must belong to portfolio
+            var hasProperty = await (from propertyDetails in context.PropertyDetails.AsNoTracking()
+                    join portfolio in context.Portfolios on propertyDetails.PortfolioId equals portfolio.Id
+                    where portfolio.Id == portfolioId
+                    select 1)
+                .AnyAsync();
+
+            if (!hasProperty)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

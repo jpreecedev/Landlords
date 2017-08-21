@@ -34,6 +34,9 @@
 
         public async Task UpdateTenancyAsync(Guid portfolioId, StartTenancyJourneyViewModel viewModel)
         {
+            // If the tenant has previous been created, and has now been deleted, this will be reflected in IsDeleted on the tenant view model
+            // same for tenant address
+
             throw new NotImplementedException();
         }
     }

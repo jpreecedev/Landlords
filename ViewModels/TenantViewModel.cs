@@ -124,5 +124,7 @@
         public bool IsLeadTenant { get; set; }
 
         public bool IsAdult { get; set; }
+
+        public bool IsDeleted { get; set; }
     }
 }

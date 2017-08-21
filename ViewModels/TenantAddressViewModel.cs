@@ -55,5 +55,7 @@
         [Display(Name = "Months at address")]
         [RangeIfTrue("IsChild", 0, 12)]
         public int MonthsAtAddress { get; set; }
+
+        public bool IsDeleted { get; set; }
     }
 }

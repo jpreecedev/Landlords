@@ -2,7 +2,7 @@
   <div v-if="checklist && checklist.checklistItems && checklist.checklistItems.length">
     <v-expansion-panel>
       <v-expansion-panel-content v-for="(item, index) in checklist.checklistItems" :key="index">
-        <div slot="header" class="header">
+        <div slot="header" class="accordion-header">
           <div class="accordion col">
             <v-checkbox v-if="permissions.CI_ToggleCompleted"
                         v-model="item.isCompleted"
@@ -108,38 +108,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-  .accordion-checkbox {
-    padding: 0;
-    .input-group__details {
-      display: none;
-    }
-  }
-
-  .header {
-    display: flex;
-    width: 100%;
-    padding: 1.25rem 3rem 0 0;
-
-    .accordion {
-      &.col {
-        .display-text {
-          transform: translateY(6px);
-          padding: 0 0 0 1rem;
-          display: inline-block;
-        }
-      }
-      &.grow {
-        flex-grow: 1;
-      }
-      .btn {
-        margin: 0;
-      }
-      .icon {
-        margin-right: 0;
-      }
-    }
-  }
-
-</style>

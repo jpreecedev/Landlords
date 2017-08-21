@@ -30,7 +30,12 @@ export const TENANT_ADD_TENANT = (state, isAdult) => {
 }
 
 export const TENANT_REMOVE_TENANT = (state, index) => {
-  state.newTenancy.tenants.splice(index, 1)
+  let tenant = state.newTenancy.tenants[index]
+  if (tenant.id) {
+    tenant.isDeleted = true
+  } else {
+    state.newTenancy.tenants.splice(index, 1)
+  }
 }
 
 export const TENANT_UPDATE_FIELD = (state, tenant) => {
@@ -54,6 +59,15 @@ export const TENANCY_UPDATE_END_DATE = (state, endDate) => {
 
 export const TENANT_ADD_ADDRESS = (state, tenantIndex) => {
   state.newTenancy.tenants[tenantIndex].addresses.push(Object.assign({}, defaultState.address))
+}
+
+export const TENANT_DELETE_ADDRESS = (state, data) => {
+  let address = state.newTenancy.tenants[data.tenantIndex].addresses[data.addressIndex]
+  if (address.id) {
+    address.isDeleted = true
+  } else {
+    state.newTenancy.tenants[data.tenantIndex].addresses.splice(data.addressIndex, 1)
+  }
 }
 
 export const TENANT_ADD_CONTACT = (state, tenantIndex) => {

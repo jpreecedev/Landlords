@@ -55,8 +55,19 @@
           <div class="subheading">Now, tell us the tenants address history - we need 3 years total.</div>
           <v-expansion-panel class="mt-3 mb-3 white">
             <v-expansion-panel-content v-for="(address, addressIndex) in tenant.addresses" :key="addressIndex">
-              <div slot="header">
-                Address {{ addressIndex + 1 }}
+              <div slot="header" class="accordion-header">
+                <div class="accordion col">
+                  <span v-if="!address.isDeleted" class="display-text default">Address {{ addressIndex + 1 }}</span>
+                  <del v-else class="display-text default text-muted">Address {{ addressIndex + 1 }}</del>
+                </div>
+                <div class="accordion grow"></div>
+                <div class="accordion col">
+                  <v-btn @click="deleteTenantAddress(index, addressIndex)"
+                         v-if="addressIndex > 0 && !address.isDeleted"
+                         icon>
+                    <v-icon>delete_forever</v-icon>
+                  </v-btn>
+                </div>
               </div>
               <div class="row">
                 <div class="col-xs-6">
@@ -228,6 +239,12 @@ export default {
     },
     addTenantAddress (tenantIndex) {
       this.$store.commit('TENANT_ADD_ADDRESS', tenantIndex)
+    },
+    deleteTenantAddress (tenantIndex, addressIndex) {
+      this.$store.commit('TENANT_DELETE_ADDRESS', {
+        tenantIndex,
+        addressIndex
+      })
     },
     addOccupier (isAdult) {
       this.$store.commit('TENANT_ADD_TENANT', isAdult)

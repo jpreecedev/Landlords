@@ -85,7 +85,11 @@ export default {
               .catch(response => {
                 let validationResult = utils.getFormValidationErrors(response)
                 validationResult.errors.forEach(validationError => {
-                  console.log('ERROR', validationError.key, validationError.messages[0], 'required')
+                  this.$bus.$emit('SHOW_NOTIFICATION', {
+                    message: validationError.messages[0],
+                    context: 'error',
+                    timeout: 10000
+                  })
                 })
               })
               .finally(() => {
