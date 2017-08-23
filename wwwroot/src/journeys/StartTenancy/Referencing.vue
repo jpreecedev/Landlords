@@ -84,9 +84,20 @@
           <div class="col-xs-12">
             <v-expansion-panel class="mt-3 mb-3 white">
               <v-expansion-panel-content v-for="(contact, contactIndex) in tenant.contacts" :key="contactIndex">
-                <div slot="header">
-                  Contact {{ contactIndex + 1 }} <template v-if="contact.name">({{ contact.name }})</template>
+              <div slot="header" class="accordion-header">
+                <div class="accordion col">
+                  <span v-if="!contact.isDeleted" class="display-text default">Contact {{ contactIndex + 1 }} <template v-if="contact.name">({{ contact.name }})</template></span>
+                  <del v-else class="display-text default text-muted">Contact {{ contactIndex + 1 }} <template v-if="contact.name">({{ contact.name }})</template></del>
                 </div>
+                <div class="accordion grow"></div>
+                <div class="accordion col">
+                  <v-btn @click.stop="deleteTenantContact(index, contactIndex)"
+                         v-if="contactIndex > 0 && !contact.isDeleted"
+                         icon>
+                    <v-icon>delete_forever</v-icon>
+                  </v-btn>
+                </div>
+              </div>
                 <div class="row">
                   <div class="col-xs-6">
                     <text-field v-model="contact.name"
@@ -114,7 +125,7 @@
                                 :rules="[$validation.rules.required, $validation.rules.min_length(contact.mainContactNumber, 2)]"
                                 @input="updateContact(index, contactIndex, contact, 'mainContactNumber')"
                                 label="Main contact number"
-                                type="number"
+                                type="text"
                                 required>
                     </text-field>
                   </div>
@@ -125,13 +136,6 @@
                                 label="Alternative contact number"
                                 type="number">
                     </text-field>
-                  </div>
-                </div>
-                <div class="row" v-if="contactIndex !== 0">
-                  <div class="col-xs-12">
-                    <v-btn primary error @click="deleteTenantContact(index, contactIndex)">
-                      Delete Contact
-                    </v-btn>
                   </div>
                 </div>
               </v-expansion-panel-content>

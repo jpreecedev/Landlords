@@ -2,10 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
     using Database;
     using Interfaces;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.EntityFrameworkCore;
     using ViewModels;
 
     public class JourneyDataProvider : BaseDataProvider, IJourneyDataProvider
@@ -36,8 +38,23 @@
         {
             // If the tenant has previous been created, and has now been deleted, this will be reflected in IsDeleted on the tenant view model
             // same for tenant address
+            // same for tenant contact
 
-            throw new NotImplementedException();
+            var hasTenantTenancy = await (from tt in Context.TenantTenancies.AsNoTracking()
+                    join tenancy in Context.Tenancies on tt.TenancyId equals tenancy.Id
+                    join propertyDetails in Context.PropertyDetails on tenancy.PropertyDetailsId equals propertyDetails.Id
+                    join portfolio in Context.Portfolios on propertyDetails.PortfolioId equals portfolio.Id
+                    where portfolio.Id == portfolioId && tenancy.Id == viewModel.Tenancy.Id
+                    select tt)
+                .AnyAsync();
+
+            if (!hasTenantTenancy)
+            {
+                throw new InvalidOperationException("Unable to find tenant tenancy");
+            }
+
+            await _tenanciesDataProvider.UpdateAsync(portfolioId, viewModel.Tenancy);
+            await _tenantsDataProvider.UpdateAsync(portfolioId, viewModel.Tenants);
         }
     }
 }

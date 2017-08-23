@@ -4,8 +4,19 @@
 
     <v-expansion-panel>
       <v-expansion-panel-content v-for="(tenant, index) in tenants" :key="index">
-        <div slot="header">
-          <tenant-type :tenant="tenant"></tenant-type>
+        <div slot="header" class="accordion-header">
+          <div class="accordion col">
+            <span v-if="!tenant.isDeleted" class="display-text default"><tenant-type :tenant="tenant"></tenant-type></span>
+            <del v-else class="display-text default text-muted"><tenant-type :tenant="tenant"></tenant-type></del>
+          </div>
+          <div class="accordion grow"></div>
+          <div class="accordion col">
+            <v-btn @click.stop="deleteOccupier(index)"
+                    v-if="!tenant.isLeadTenant && !tenant.isDeleted"
+                    icon>
+              <v-icon>delete_forever</v-icon>
+            </v-btn>
+          </div>
         </div>
         <div class="subheading">What is the {{ tenant.isAdult ? 'tenants' : 'childs' }} name?</div>
         <div class="row">
@@ -62,7 +73,7 @@
                 </div>
                 <div class="accordion grow"></div>
                 <div class="accordion col">
-                  <v-btn @click="deleteTenantAddress(index, addressIndex)"
+                  <v-btn @click.stop="deleteTenantAddress(index, addressIndex)"
                          v-if="addressIndex > 0 && !address.isDeleted"
                          icon>
                     <v-icon>delete_forever</v-icon>
@@ -183,14 +194,6 @@
             </div>
           </div>
         </template>
-        <div class="row" v-if="index !== 0">
-          <div class="col-xs-12">
-            <v-btn primary error @click="deleteOccupier(index)">
-              Delete
-              &nbsp;<tenant-type :tenant="tenant"></tenant-type>
-            </v-btn>
-          </div>
-        </div>
       </v-expansion-panel-content>
     </v-expansion-panel>
 

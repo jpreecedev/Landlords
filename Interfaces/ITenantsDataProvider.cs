@@ -12,6 +12,7 @@
         Task<ICollection<TenantViewModel>> GetTenantsByAgencyIdAsync(Guid agencyId);
         Task<TenantViewModel> GetTenantByIdAsync(Guid tenantId);
         Task<TenantViewModel> CreateAsync(Guid portfolioId, TenantViewModel tenant);
+        Task UpdateAsync(Guid portfolioId, ICollection<TenantViewModel> tenants);
         Task UpdateAsync(Guid portfolioId, TenantViewModel tenant);
     }
 }

@@ -75,7 +75,12 @@ export const TENANT_ADD_CONTACT = (state, tenantIndex) => {
 }
 
 export const TENANT_DELETE_CONTACT = (state, obj) => {
-  state.newTenancy.tenants[obj.tenantIndex].contacts.splice(obj.contactIndex, 1)
+  let contact = state.newTenancy.tenants[obj.tenantIndex].contacts[obj.contactIndex]
+  if (contact.id) {
+    contact.isDeleted = true
+  } else {
+    state.newTenancy.tenants[obj.tenantIndex].contacts.splice(obj.contactIndex, 1)
+  }
 }
 
 export const TENANT_UPDATE_ADDRESS = (state, obj) => {

@@ -43,6 +43,16 @@
             return DateTime.Parse($"1/{dateTime.Month}/{dateTime.Year}");
         }
 
+        public static ICollection<T> AddRange<T>(this ICollection<T> collection, ICollection<T> items)
+        {
+            foreach (var item in items)
+            {
+                collection.Add(item);
+            }
+
+            return collection;
+        }
+
         public static IEnumerable<T> DistinctBy<T, TKey>(this IEnumerable<T> items, Func<T, TKey> property)
         {
             return items.GroupBy(property).Select(x => x.First());

@@ -2,7 +2,6 @@
 {
     using Model.Validation;
     using System;
-    using System.Collections.ObjectModel;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
     using System.Reflection;
@@ -47,7 +46,7 @@
             }
 
             var properties = GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
-            foreach (PropertyInfo p in properties.Where(c => !c.Name.Contains("Id")))
+            foreach (PropertyInfo p in properties.Where(c => !c.Name.Contains("Id") && c.Name != "IsDeleted"))
             {
                 var property = viewModel.GetType().GetProperty(p.Name);
                 if (property != null)
@@ -62,6 +61,32 @@
                         catch (Exception)
                         {
                             //TODO: Remove this.  This method doesn't like generic collections
+                        }
+                    }
+                }
+            }
+
+            foreach (PropertyInfo p in properties.Where(c => c.Name == "IsDeleted"))
+            {
+                var property = viewModel.GetType().GetProperty("IsDeleted");
+                if (property != null)
+                {
+                    var pv = (bool)property.GetValue(viewModel);
+                    if (pv)
+                    {
+                        var deletedProperty = GetType().GetProperty("Deleted");
+                        var deletedValue = deletedProperty.GetValue(this);
+                        if (deletedValue == null)
+                        {
+                            try
+                            {
+                                deletedProperty.SetValue(this, DateTime.Now);
+                            }
+                            catch (Exception)
+                            {
+
+                                throw;
+                            }
                         }
                     }
                 }

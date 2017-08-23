@@ -121,6 +121,21 @@
             return tenancyViewModel;
         }
 
+        public async Task UpdateAsync(Guid portfolioId, TenancyViewModel viewModel)
+        {
+            var entity = await (from tenancy in Context.Tenancies
+                    join propertyDetails in Context.PropertyDetails on tenancy.PropertyDetailsId equals propertyDetails.Id
+                    join portfolio in Context.Portfolios on propertyDetails.PortfolioId equals portfolio.Id
+                    where portfolio.Id == portfolioId && tenancy.Id == viewModel.Id
+                    select tenancy)
+                .SingleAsync();
+
+            entity.MapFrom(viewModel);
+
+            Context.Tenancies.Update(entity);
+            await Context.SaveChangesAsync();
+        }
+
         private async Task CreateTenantTenancyAsync(TenancyViewModel tenancy, ICollection<TenantViewModel> tenants)
         {
             var tenantTenacies = tenants.Select(c => new TenantTenancy

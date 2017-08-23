@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Core;
     using Database;
     using Interfaces;
     using Microsoft.AspNetCore.Hosting;
@@ -171,15 +172,20 @@
                           })
                 .FirstOrDefaultAsync();
         }
-        
+
+        public async Task UpdateAsync(Guid portfolioId, ICollection<TenantViewModel> tenants)
+        {
+            foreach (var tenant in tenants)
+            {
+                await UpdateAsync(portfolioId, tenant);
+            }
+        }
+
         public async Task UpdateAsync(Guid portfolioId, TenantViewModel tenant)
         {
             var existingEntity = await Context.Tenants.Include(x => x.Addresses)
                 .Include(x => x.Contacts)
-                .FirstOrDefaultAsync(c => c.Id == tenant.Id && !c.IsDeleted);
-
-            if (existingEntity == null)
-                return;
+                .SingleAsync(c => c.Id == tenant.Id && !c.IsDeleted);
 
             existingEntity.MapFrom(tenant);
             if (tenant.Addresses != null && tenant.Addresses.Any())
@@ -192,6 +198,7 @@
                         existingEntityAddress.MapFrom(updatedEntity);
                     }
                 }
+                existingEntity.Addresses.AddRange(CreateTenantAddresses(existingEntity, tenant.Addresses.Where(c => c.Id.IsDefault()).ToList()));
             }
             if (tenant.Contacts != null && tenant.Contacts.Any())
             {
@@ -203,6 +210,7 @@
                         existingEntityContact.MapFrom(updatedEntity);
                     }
                 }
+                existingEntity.Contacts.AddRange(CreateTenantContacts(existingEntity, tenant.Contacts.Where(c => c.Id.IsDefault()).ToList()));
             }
 
             Context.Tenants.Update(existingEntity);

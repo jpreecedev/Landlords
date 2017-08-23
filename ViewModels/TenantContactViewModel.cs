@@ -40,5 +40,7 @@
         public string Relationship { get; set; }
 
         public string Comments { get; set; }
+
+        public bool IsDeleted { get; set; }
     }
 }
