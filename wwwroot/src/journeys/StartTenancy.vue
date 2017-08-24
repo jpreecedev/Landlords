@@ -42,7 +42,12 @@
         <v-btn flat @click="back()" v-if="newTenancy.step !== 1 && newTenancy.step !== 6">Go back</v-btn>
       </div>
       <div class="col-xs-6 text-right">
-        <v-btn primary @click="next()" v-if="newTenancy.step !== 6">{{ newTenancy.step === 5 ? 'Finished' : 'Continue' }}</v-btn>
+        <v-btn @click="next()"
+               v-if="newTenancy.step !== 6"
+               :loading="isSaving"
+               primary>
+          {{ newTenancy.step === 5 ? 'Finished' : 'Continue' }}
+        </v-btn>
       </div>
     </div>
 

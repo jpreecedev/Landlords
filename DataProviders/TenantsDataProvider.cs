@@ -177,7 +177,14 @@
         {
             foreach (var tenant in tenants)
             {
-                await UpdateAsync(portfolioId, tenant);
+                if (tenant.IsNew)
+                {
+                    await CreateAsync(portfolioId, tenant);
+                }
+                else
+                {
+                    await UpdateAsync(portfolioId, tenant);
+                }
             }
         }
 
@@ -186,16 +193,24 @@
             var existingEntity = await Context.Tenants.Include(x => x.Addresses)
                 .Include(x => x.Contacts)
                 .SingleAsync(c => c.Id == tenant.Id && !c.IsDeleted);
-
+            
             existingEntity.MapFrom(tenant);
+
+            var applicationUser = await Context.Users.SingleAsync(c => c.Id == existingEntity.ApplicationUserId);
+            UpdateApplicationUser(applicationUser, tenant);
+
             if (tenant.Addresses != null && tenant.Addresses.Any())
             {
-                foreach (var existingEntityAddress in existingEntity.Addresses)
+                foreach (var address in existingEntity.Addresses)
                 {
-                    var updatedEntity = tenant.Addresses.FirstOrDefault(c => c.Id == existingEntityAddress.Id);
-                    if (updatedEntity != null)
+                    var updatedAddress = tenant.Addresses.FirstOrDefault(c => c.Id == address.Id);
+                    if (updatedAddress != null)
                     {
-                        existingEntityAddress.MapFrom(updatedEntity);
+                        address.MapFrom(updatedAddress);
+                        if (updatedAddress.IsDeleted)
+                        {
+                            address.Deleted = DateTime.Now;
+                        }
                     }
                 }
                 existingEntity.Addresses.AddRange(CreateTenantAddresses(existingEntity, tenant.Addresses.Where(c => c.Id.IsDefault()).ToList()));
@@ -208,6 +223,10 @@
                     if (updatedEntity != null)
                     {
                         existingEntityContact.MapFrom(updatedEntity);
+                        if (updatedEntity.IsDeleted)
+                        {
+                            existingEntityContact.Deleted = DateTime.Now;
+                        }
                     }
                 }
                 existingEntity.Contacts.AddRange(CreateTenantContacts(existingEntity, tenant.Contacts.Where(c => c.Id.IsDefault()).ToList()));
@@ -220,7 +239,7 @@
         public async Task<TenantViewModel> CreateAsync(Guid portfolioId, TenantViewModel tenant)
         {
             var tenantUser = await Context.Users.FirstOrDefaultAsync(c => c.Email == tenant.EmailAddress);
-            if (tenantUser == null)
+            if (tenantUser == null && tenant.IsAdult)
             {
                 tenantUser = new ApplicationUser
                 {
@@ -319,6 +338,15 @@
                 result.Add(entity);
             }
             return result;
+        }
+
+        private void UpdateApplicationUser(ApplicationUser applicationUser, TenantViewModel tenant)
+        {
+            applicationUser.Email = applicationUser.UserName = tenant.EmailAddress;
+            applicationUser.NormalizedEmail = applicationUser.NormalizedUserName = tenant.EmailAddress.ToUpper();
+            applicationUser.PhoneNumber = tenant.MainContactNumber;
+            applicationUser.SecondaryPhoneNumber = tenant.SecondaryContactNumber;
+            applicationUser.MapFrom(tenant);
         }
     }
 }

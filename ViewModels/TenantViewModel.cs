@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
+    using Core;
     using Model.Database;
     using Model.Validation;
     using Model.Entities;
@@ -126,5 +127,10 @@
         public bool IsAdult { get; set; }
 
         public bool IsDeleted { get; set; }
+
+        public bool IsNew
+        {
+            get { return Id.IsDefault(); }
+        }
     }
 }

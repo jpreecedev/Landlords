@@ -48,27 +48,30 @@
                 yield return new ValidationResult("There must be at least 1 lead adult tenant");
             }
 
-            if (Tenants.Any(c => c.Contacts == null || c.Contacts.Count < 1))
+            if (Tenants.Any(c => c.IsAdult && (c.Contacts == null || c.Contacts.Count < 1)))
             {
                 yield return new ValidationResult("All tenants must have at least one contact");
             }
 
-            if (Tenants.Any(c => c.Addresses == null || c.Addresses.Count < 1))
+            if (Tenants.Any(c => c.IsAdult && (c.Addresses == null || c.Addresses.Count < 1)))
             {
                 yield return new ValidationResult("All tenants must have at least one previous address");
             }
 
             foreach (var tenantViewModel in Tenants)
             {
-                var start = DateTime.Now.Date.StartOfMonth();
-                foreach (var tenantAddressViewModel in tenantViewModel.Addresses)
+                if (tenantViewModel.IsAdult)
                 {
-                    start = start.Date.AddYears(tenantAddressViewModel.YearsAtAddress * -1).AddMonths(tenantAddressViewModel.MonthsAtAddress * -1);
-                }
+                    var start = DateTime.Now.Date.StartOfMonth();
+                    foreach (var tenantAddressViewModel in tenantViewModel.Addresses)
+                    {
+                        start = start.Date.AddYears(tenantAddressViewModel.YearsAtAddress * -1).AddMonths(tenantAddressViewModel.MonthsAtAddress * -1);
+                    }
 
-                if (start > DateTime.Now.Date.StartOfMonth().AddYears(-3))
-                {
-                    yield return new ValidationResult("Each tenant must supply at least 3 years address details");
+                    if (start > DateTime.Now.Date.StartOfMonth().AddYears(-3))
+                    {
+                        yield return new ValidationResult("Each tenant must supply at least 3 years address details");
+                    }
                 }
             }
         }

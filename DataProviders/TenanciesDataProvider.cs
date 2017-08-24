@@ -67,15 +67,15 @@
                 {
                     ApplicationUser = applicationUser,
                     Tenant = tenant,
-                    TenantAddresses = tenantAddressesJoin.ToList(),
-                    TenantContacts = tenantContactsJoin.ToList()
+                    TenantAddresses = tenantAddressesJoin.Where(c => !c.IsDeleted).ToList(),
+                    TenantContacts = tenantContactsJoin.Where(c => !c.IsDeleted).ToList()
                 })
                 .ToListAsync();
 
             var tenancyDataSet = await (from tenancy in Context.Tenancies
                     join propertyDetails in Context.PropertyDetails on tenancy.PropertyDetailsId equals propertyDetails.Id
                     join portfolio in Context.Portfolios on propertyDetails.PortfolioId equals portfolio.Id
-                    where tenancy.Id == tenancyId && portfolio.Id == portfolioId
+                    where tenancy.Id == tenancyId && portfolio.Id == portfolioId && !tenancy.IsDeleted && !portfolio.IsDeleted
                     select new
                     {
                         Tenancy = tenancy,
@@ -130,7 +130,16 @@
                     select tenancy)
                 .SingleAsync();
 
+            var propertyDetailsId = entity.PropertyDetailsId;
+
             entity.MapFrom(viewModel);
+
+            var tenantTenacy = await (from tenantTenancy in Context.TenantTenancies.Include(x => x.Tenancy)
+                    where tenantTenancy.TenancyId == entity.Id && tenantTenancy.Tenancy.PropertyDetailsId == propertyDetailsId
+                    select tenantTenancy)
+                .SingleAsync();
+
+            tenantTenacy.Tenancy.PropertyDetailsId = viewModel.PropertyDetailsId;
 
             Context.Tenancies.Update(entity);
             await Context.SaveChangesAsync();

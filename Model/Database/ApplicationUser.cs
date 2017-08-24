@@ -50,5 +50,10 @@
                 return builder.ToString();
             }
         }
+
+        public void MapFrom(object model)
+        {
+            EntityMapper.MapFrom(this, model);
+        }
     }
 }
