@@ -112,7 +112,7 @@ export const TENANCY_PREVIOUS_STEP = (state, newTenancy) => {
 }
 
 export const TENANCY_CLEAR = (state) => {
-  state.newTenancy = Object.assign({}, defaultState.newTenancy)
+  state.newTenancy = Object.assign({}, JSON.parse(JSON.stringify(defaultState.newTenancy)))
 }
 
 export const TENANCY_SET = (state, tenancy) => {

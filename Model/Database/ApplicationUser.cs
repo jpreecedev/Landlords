@@ -26,6 +26,8 @@
         
         public Agency Agency { get; set; }
 
+        public bool IsPermitted { get; set; }
+
         public ICollection<ApplicationUserPortfolio> Portfolios { get; set; }
         
         public string Name

@@ -9,7 +9,7 @@
     using Model.Validation;
     using Model.Entities;
 
-    public class TenantViewModel
+    public class TenantViewModel : IValidatableObject
     {
         public TenantViewModel()
         {
@@ -73,10 +73,10 @@
         [LLDate]
         public DateTime DateOfBirth { get; set; }
 
-        [RequiredIfTrue("IsAdult"), EnsureMinimumElements(1)]
+        [RequiredIfTrue("IsAdult")]
         public ICollection<TenantAddressViewModel> Addresses { get; set; }
 
-        [RequiredIfTrue("IsAdult"), EnsureMinimumElements(1)]
+        [RequiredIfTrue("IsAdult")]
         public ICollection<TenantContactViewModel> Contacts { get; set; }
         
         [Display(Name = "Main contact number")]
@@ -131,6 +131,22 @@
         public bool IsNew
         {
             get { return Id.IsDefault(); }
+        }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (IsAdult)
+            {
+                if (Contacts == null || Contacts.Count < 1)
+                {
+                    yield return new ValidationResult("All tenants must have at least one contact");
+                }
+
+                if (Addresses == null || Addresses.Count < 1)
+                {
+                    yield return new ValidationResult("All tenants must have at least one previous address");
+                }
+            }
         }
     }
 }

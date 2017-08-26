@@ -173,31 +173,34 @@
                 .FirstOrDefaultAsync();
         }
 
-        public async Task UpdateAsync(Guid portfolioId, ICollection<TenantViewModel> tenants)
+        public async Task<ICollection<TenantViewModel>> UpdateAsync(Guid portfolioId, ICollection<TenantViewModel> tenants)
         {
+            var result = new List<TenantViewModel>();
+
             foreach (var tenant in tenants)
             {
                 if (tenant.IsNew)
                 {
-                    await CreateAsync(portfolioId, tenant);
+                    result.Add(await CreateAsync(portfolioId, tenant));
                 }
                 else
                 {
-                    await UpdateAsync(portfolioId, tenant);
+                    result.Add(await UpdateAsync(portfolioId, tenant));
                 }
             }
+
+            return result;
         }
 
-        public async Task UpdateAsync(Guid portfolioId, TenantViewModel tenant)
+        public async Task<TenantViewModel> UpdateAsync(Guid portfolioId, TenantViewModel tenant)
         {
             var existingEntity = await Context.Tenants.Include(x => x.Addresses)
                 .Include(x => x.Contacts)
                 .SingleAsync(c => c.Id == tenant.Id && !c.IsDeleted);
-            
+
             existingEntity.MapFrom(tenant);
 
-            var applicationUser = await Context.Users.SingleAsync(c => c.Id == existingEntity.ApplicationUserId);
-            UpdateApplicationUser(applicationUser, tenant);
+            var applicationUser = await UpdateApplicationUser(existingEntity, tenant);
 
             if (tenant.Addresses != null && tenant.Addresses.Any())
             {
@@ -234,12 +237,14 @@
 
             Context.Tenants.Update(existingEntity);
             await Context.SaveChangesAsync();
+
+            return new TenantViewModel(existingEntity, applicationUser);
         }
 
         public async Task<TenantViewModel> CreateAsync(Guid portfolioId, TenantViewModel tenant)
         {
             var tenantUser = await Context.Users.FirstOrDefaultAsync(c => c.Email == tenant.EmailAddress);
-            if (tenantUser == null && tenant.IsAdult)
+            if (tenantUser == null)
             {
                 tenantUser = new ApplicationUser
                 {
@@ -251,7 +256,8 @@
                     LastName = tenant.LastName,
                     PhoneNumber = tenant.MainContactNumber,
                     SecondaryPhoneNumber = tenant.SecondaryContactNumber,
-                    Title = tenant.Title
+                    Title = tenant.Title,
+                    IsPermitted = tenant.IsAdult
                 };
 
                 await Context.Users.AddAsync(tenantUser);
@@ -340,13 +346,23 @@
             return result;
         }
 
-        private void UpdateApplicationUser(ApplicationUser applicationUser, TenantViewModel tenant)
+        private async Task<ApplicationUser> UpdateApplicationUser(Tenant tenantEntity, TenantViewModel tenantViewModel)
         {
-            applicationUser.Email = applicationUser.UserName = tenant.EmailAddress;
-            applicationUser.NormalizedEmail = applicationUser.NormalizedUserName = tenant.EmailAddress.ToUpper();
-            applicationUser.PhoneNumber = tenant.MainContactNumber;
-            applicationUser.SecondaryPhoneNumber = tenant.SecondaryContactNumber;
-            applicationUser.MapFrom(tenant);
+            var applicationUser = await Context.Users.SingleAsync(c => c.Id == tenantEntity.ApplicationUserId);
+            
+            if (applicationUser.IsPermitted)
+            {
+                applicationUser.Email = applicationUser.UserName = tenantViewModel.EmailAddress;
+                applicationUser.NormalizedEmail = applicationUser.NormalizedUserName = tenantViewModel.EmailAddress.ToUpper();
+                applicationUser.PhoneNumber = tenantViewModel.MainContactNumber;
+                applicationUser.SecondaryPhoneNumber = tenantViewModel.SecondaryContactNumber;
+                applicationUser.MapFrom(tenantViewModel);
+
+                Context.Users.Update(applicationUser);
+                await Context.SaveChangesAsync();
+            }
+
+            return applicationUser;
         }
     }
 }

@@ -62,7 +62,7 @@
                 join tenancy in Context.Tenancies on tenantTenanciesItem.TenancyId equals tenancy.Id
                 join propertyDetails in Context.PropertyDetails on tenancy.PropertyDetailsId equals propertyDetails.Id
                 join portfolio in Context.Portfolios on propertyDetails.PortfolioId equals portfolio.Id
-                where tenancy.Id == tenancyId && portfolio.Id == portfolioId
+                where tenancy.Id == tenancyId && portfolio.Id == portfolioId && !tenant.IsDeleted && !tenancy.IsDeleted && !propertyDetails.IsDeleted && !portfolio.IsDeleted
                 select new
                 {
                     ApplicationUser = applicationUser,
@@ -116,17 +116,16 @@
             await Context.SaveChangesAsync();
 
             var tenancyViewModel = new TenancyViewModel(tenancy, tenancy.PropertyDetailsId);
-            await CreateTenantTenancyAsync(tenancyViewModel, tenants);
 
             return tenancyViewModel;
         }
 
-        public async Task UpdateAsync(Guid portfolioId, TenancyViewModel viewModel)
+        public async Task<TenancyViewModel> UpdateAsync(Guid portfolioId, TenancyViewModel viewModel, ICollection<TenantViewModel> tenants)
         {
             var entity = await (from tenancy in Context.Tenancies
                     join propertyDetails in Context.PropertyDetails on tenancy.PropertyDetailsId equals propertyDetails.Id
                     join portfolio in Context.Portfolios on propertyDetails.PortfolioId equals portfolio.Id
-                    where portfolio.Id == portfolioId && tenancy.Id == viewModel.Id
+                    where portfolio.Id == portfolioId && tenancy.Id == viewModel.Id && !tenancy.IsDeleted && !portfolio.IsDeleted && !portfolio.IsDeleted
                     select tenancy)
                 .SingleAsync();
 
@@ -134,28 +133,43 @@
 
             entity.MapFrom(viewModel);
 
-            var tenantTenacy = await (from tenantTenancy in Context.TenantTenancies.Include(x => x.Tenancy)
-                    where tenantTenancy.TenancyId == entity.Id && tenantTenancy.Tenancy.PropertyDetailsId == propertyDetailsId
+            var tenantTenacies = await (from tenantTenancy in Context.TenantTenancies.Include(x => x.Tenancy)
+                    where tenantTenancy.TenancyId == entity.Id && tenantTenancy.Tenancy.PropertyDetailsId == propertyDetailsId && !tenantTenancy.IsDeleted && !tenantTenancy.Tenancy.IsDeleted && !tenantTenancy.Tenant.IsDeleted
                     select tenantTenancy)
-                .SingleAsync();
+                .ToListAsync();
 
-            tenantTenacy.Tenancy.PropertyDetailsId = viewModel.PropertyDetailsId;
-
+            foreach (var tenantTenancy in tenantTenacies)
+            {
+                tenantTenancy.Tenancy.PropertyDetailsId = viewModel.PropertyDetailsId;
+            }
+            
             Context.Tenancies.Update(entity);
             await Context.SaveChangesAsync();
+
+            return new TenancyViewModel(entity, viewModel.PropertyDetailsId);
         }
 
-        private async Task CreateTenantTenancyAsync(TenancyViewModel tenancy, ICollection<TenantViewModel> tenants)
+        public async Task CreateTenantTenancyAsync(TenancyViewModel tenancy, ICollection<TenantViewModel> tenants)
         {
-            var tenantTenacies = tenants.Select(c => new TenantTenancy
+            if (tenants == null || tenants.Count == 0)
+            {
+                return;
+            }
+            
+            foreach (var tenantViewModel in tenants)
+            {
+                var entity = await Context.TenantTenancies.FirstOrDefaultAsync(c => c.TenancyId == tenancy.Id && c.TenantId == tenantViewModel.Id && !c.IsDeleted);
+                if (entity == null)
                 {
-                    Created = DateTime.Now,
-                    TenancyId = tenancy.Id,
-                    TenantId = c.Id
-                })
-                .ToList();
+                    await Context.TenantTenancies.AddAsync(new TenantTenancy
+                    {
+                        Created = DateTime.Now,
+                        TenancyId = tenancy.Id,
+                        TenantId = tenantViewModel.Id
+                    });
+                }
+            }
 
-            await Context.AddRangeAsync(tenantTenacies);
             await Context.SaveChangesAsync();
         }
     }

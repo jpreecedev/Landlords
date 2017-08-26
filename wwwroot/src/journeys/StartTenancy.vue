@@ -43,10 +43,11 @@
       </div>
       <div class="col-xs-6 text-right">
         <v-btn @click="next()"
-               v-if="newTenancy.step !== 6"
                :loading="isSaving"
                primary>
-          {{ newTenancy.step === 5 ? 'Finished' : 'Continue' }}
+          <template v-if="newTenancy.step === 5">Finished</template>
+          <template v-else-if="newTenancy.step === 6">Exit</template>
+          <template v-else>Continue</template>
         </v-btn>
       </div>
     </div>
@@ -100,6 +101,9 @@ export default {
               .finally(() => {
                 this.isSaving = false
               })
+          } else if (this.newTenancy.step === 6) {
+            this.$store.commit('TENANCY_CLEAR')
+            this.$router.push({ name: 'tenancy-overview' })
           } else {
             this.$store.commit('TENANCY_NEXT_STEP', this.newTenancy)
           }

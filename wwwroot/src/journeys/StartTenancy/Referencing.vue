@@ -2,7 +2,7 @@
   <div>
     <h2 class="title">Confirm the identity of each adult tenant</h2>
     <v-expansion-panel>
-      <v-expansion-panel-content v-for="(tenant, index) in tenants" :key="index">
+      <v-expansion-panel-content v-if="tenant.isAdult" v-for="(tenant, index) in tenants" :key="index">
         <div slot="header">
           <tenant-type :tenant="tenant"></tenant-type>
         </div>
@@ -84,20 +84,20 @@
           <div class="col-xs-12">
             <v-expansion-panel class="mt-3 mb-3 white">
               <v-expansion-panel-content v-for="(contact, contactIndex) in tenant.contacts" :key="contactIndex">
-              <div slot="header" class="accordion-header">
-                <div class="accordion col">
-                  <span v-if="!contact.isDeleted" class="display-text default">Contact {{ contactIndex + 1 }} <template v-if="contact.name">({{ contact.name }})</template></span>
-                  <del v-else class="display-text default text-muted">Contact {{ contactIndex + 1 }} <template v-if="contact.name">({{ contact.name }})</template></del>
+                <div slot="header" class="accordion-header">
+                  <div class="accordion col">
+                    <span v-if="!contact.isDeleted" class="display-text default">Contact {{ contactIndex + 1 }} <template v-if="contact.name">({{ contact.name }})</template></span>
+                    <del v-else class="display-text default text-muted">Contact {{ contactIndex + 1 }} <template v-if="contact.name">({{ contact.name }})</template></del>
+                  </div>
+                  <div class="accordion grow"></div>
+                  <div class="accordion col">
+                    <v-btn @click.stop="deleteTenantContact(index, contactIndex)"
+                          v-if="contactIndex > 0 && !contact.isDeleted"
+                          icon>
+                      <v-icon>delete_forever</v-icon>
+                    </v-btn>
+                  </div>
                 </div>
-                <div class="accordion grow"></div>
-                <div class="accordion col">
-                  <v-btn @click.stop="deleteTenantContact(index, contactIndex)"
-                         v-if="contactIndex > 0 && !contact.isDeleted"
-                         icon>
-                    <v-icon>delete_forever</v-icon>
-                  </v-btn>
-                </div>
-              </div>
                 <div class="row">
                   <div class="col-xs-6">
                     <text-field v-model="contact.name"
@@ -216,7 +216,7 @@ export default {
   },
   computed: {
     ...mapState({
-      tenants: state => state.newTenancy.tenants.filter(tenant => tenant.isAdult),
+      tenants: state => state.newTenancy.tenants,
       permissions: state => state.permissions
     })
   }

@@ -8,9 +8,10 @@ using Landlords.Database;
 namespace Landlords.Migrations
 {
     [DbContext(typeof(LLDbContext))]
-    partial class LLDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170826121745_TenantApplicationUserOptional")]
+    partial class TenantApplicationUserOptional
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
@@ -142,8 +143,6 @@ namespace Landlords.Migrations
                     b.Property<bool>("EmailConfirmed");
 
                     b.Property<string>("FirstName");
-
-                    b.Property<bool>("IsPermitted");
 
                     b.Property<string>("LastName");
 
@@ -700,7 +699,7 @@ namespace Landlords.Migrations
 
                     b.Property<string>("AdditionalInformation");
 
-                    b.Property<Guid>("ApplicationUserId");
+                    b.Property<Guid?>("ApplicationUserId");
 
                     b.Property<string>("CompanyName");
 
@@ -1086,8 +1085,7 @@ namespace Landlords.Migrations
                 {
                     b.HasOne("Model.Database.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ApplicationUserId");
                 });
 
             modelBuilder.Entity("Model.Entities.TenantAddress", b =>

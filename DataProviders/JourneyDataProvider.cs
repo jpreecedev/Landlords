@@ -31,7 +31,8 @@
                 tenants.Add(await _tenantsDataProvider.CreateAsync(portfolioId, tenant));
             }
 
-            await _tenanciesDataProvider.CreateAsync(portfolioId, viewModel.Tenancy, tenants);
+            var tenancy = await _tenanciesDataProvider.CreateAsync(portfolioId, viewModel.Tenancy, tenants);
+            await _tenanciesDataProvider.CreateTenantTenancyAsync(tenancy, tenants);
         }
 
         public async Task UpdateTenancyAsync(Guid portfolioId, StartTenancyJourneyViewModel viewModel)
@@ -53,8 +54,10 @@
                 throw new InvalidOperationException("Unable to find tenant tenancy");
             }
 
-            await _tenanciesDataProvider.UpdateAsync(portfolioId, viewModel.Tenancy);
-            await _tenantsDataProvider.UpdateAsync(portfolioId, viewModel.Tenants);
+            var updatedTenants = await _tenantsDataProvider.UpdateAsync(portfolioId, viewModel.Tenants);
+            var updatedTenancy = await _tenanciesDataProvider.UpdateAsync(portfolioId, viewModel.Tenancy, viewModel.Tenants);
+
+            await _tenanciesDataProvider.CreateTenantTenancyAsync(updatedTenancy, updatedTenants);
         }
     }
 }

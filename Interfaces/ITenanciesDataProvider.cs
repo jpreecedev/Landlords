@@ -11,6 +11,7 @@
         Task<ICollection<TenantTenancyViewModel>> GetTenanciesByAgencyIdAsync(Guid agencyId);
         Task<StartTenancyJourneyViewModel> GetTenancyJourneyByIdAsync(Guid portfolioId, Guid tenancyId);
         Task<TenancyViewModel> CreateAsync(Guid portfolioId, TenancyViewModel viewModel, ICollection<TenantViewModel> tenants);
-        Task UpdateAsync(Guid portfolioId, TenancyViewModel viewModel);
+        Task<TenancyViewModel> UpdateAsync(Guid portfolioId, TenancyViewModel viewModel, ICollection<TenantViewModel> tenants);
+        Task CreateTenantTenancyAsync(TenancyViewModel tenancy, ICollection<TenantViewModel> tenants);
     }
 }
