@@ -40,7 +40,9 @@
     </div>
 
     <div class="mt-3" v-if="permissions.CL_Archived && !hasArchivedLists">
-      <v-btn primary @click="getArchived()" :loading="isLoadingArchived" class="no-left-margin">Show Archived</v-btn>
+      <v-btn primary @click="getArchived()" :loading="isLoadingArchived" class="no-left-margin">
+        Show Archived
+      </v-btn>
     </div>
 
     <div class="row mt-5" v-if="permissions.CL_Create && overview.availableChecklists && overview.availableChecklists.length">

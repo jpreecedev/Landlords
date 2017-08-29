@@ -39,7 +39,10 @@
 
     <div class="row">
       <div class="col-xs-6">
-        <v-btn flat @click="back()" v-if="newTenancy.step !== 1 && newTenancy.step !== 6">Go back</v-btn>
+        <v-btn flat @click="back()" v-if="newTenancy.step !== 1 && newTenancy.step !== 6">
+          <v-icon>navigate_before</v-icon>
+          Go back
+        </v-btn>
       </div>
       <div class="col-xs-6 text-right">
         <v-btn @click="next()"
@@ -47,7 +50,10 @@
                primary>
           <template v-if="newTenancy.step === 5">Finished</template>
           <template v-else-if="newTenancy.step === 6">Exit</template>
-          <template v-else>Continue</template>
+          <template v-else>
+            Continue
+            <v-icon dark>navigate_next</v-icon>
+          </template>
         </v-btn>
       </div>
     </div>

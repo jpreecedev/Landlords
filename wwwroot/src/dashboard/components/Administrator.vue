@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <header>
     <h1 class="headline primary--text">Dashboard</h1>
-  </div>
+  </header>
 </template>
 
 <script>

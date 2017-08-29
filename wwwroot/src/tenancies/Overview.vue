@@ -52,7 +52,10 @@
       </v-btn>
     </v-card>
 
-    <v-btn primary v-if="permissions.J_StartTenancy" type="button" class="mt-4 no-left-margin" @click="$router.push('/tenancies/new')">Start new tenancy</v-btn>
+    <v-btn primary v-if="permissions.J_StartTenancy" type="button" class="mt-4 no-left-margin" @click="$router.push('/tenancies/new')">
+      <v-icon dark>add</v-icon>
+      Start new tenancy
+    </v-btn>
   </div>
 </template>
 

@@ -24,9 +24,10 @@
         </file-upload>
         <v-btn v-if="checklistItem.payload.file.relativeFilePath"
                @click="openFile(checklistItem.payload.file.relativeFilePath)"
-               class="blue--text darken-2"
+               class="blue--text darken-2 no-left-margin"
                outline>
-          Open
+          <v-icon class="blue--text">file_download</v-icon>
+          Download File
         </v-btn>
       </div>
     </div>
