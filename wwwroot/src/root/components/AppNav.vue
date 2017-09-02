@@ -64,8 +64,8 @@
 
       <template v-if="notifications && notifications.length">
         <v-menu v-if="auth.isLoggedIn" transition="v-slide-y-transition" bottom :nudge-right="notifications.length > 0 ? 260 : 90" :nudge-top="-10">
-          <v-btn @click="checkNotifications()" icon class="notifications" slot="activator">
-            <v-icon :class="'c' + notifications.length">add_alert</v-icon>
+          <v-btn @click="checkNotifications()" icon slot="activator">
+            <v-icon class="red--after notifications" v-badge="{ value: notifications.length }">add_alert</v-icon>
           </v-btn>
           <v-list class="notifications-list" two-line v-if="notifications.length > 0">
             <v-subheader>Notifications</v-subheader>
@@ -189,30 +189,9 @@ export default {
   }
 
   .notifications {
-    position: relative;
-
-    .icon {
-      &:before {
-        position: absolute;
-        top: 0.5rem;
-        right: 0.125rem;
-        width: 1rem;
-        height: 1rem;
-        background-color: rgb(255, 0, 0);
-        border-radius: 0.5rem;
-        padding-top: 3px;
-        color: #ffffff;
-        font-family: Roboto, sans-serif;
-        font-size: 0.625rem;
-      }
-    }
-
-    @for $i from 1 through 10 {
-      .c#{$i} {
-        &:before {
-          content: '#{$i}';
-        }
-      }
+    &::after {
+      top: -7px;
+      right: -10px;
     }
   }
 
