@@ -1,112 +1,114 @@
 <template>
   <div>
     <loader :loading="isLoading"></loader>
-    <div v-if="!isLoading">
-      <header>
-        <h1 class="headline primary--text">Chat</h1>
-      </header>
-      <v-card class="chat-wrapper" :class="{'empty': !selectedConversation, 'empty-messages': selectedConversation && selectedConversation.messages && !selectedConversation.messages.length}">
-        <v-layout row wrap>
-          <v-flex xs12 sm4 class="conversations">
-            <v-list subheader>
-              <v-subheader>Conversations</v-subheader>
-                <v-list-tile v-for="item in conversations"
-                             :key="item.conversationId"
-                             :class="{'active': item.conversationId === selectedConversation.conversationId}"
-                             @click="selectedConversation = item"
-                             avatar>
+    <transition appear name="fade">
+      <div v-if="!isLoading">
+        <header>
+          <h1 class="headline primary--text">Chat</h1>
+        </header>
+        <v-card class="chat-wrapper" :class="{'empty': !selectedConversation, 'empty-messages': selectedConversation && selectedConversation.messages && !selectedConversation.messages.length}">
+          <v-layout row wrap>
+            <v-flex xs12 sm4 class="conversations">
+              <v-list subheader>
+                <v-subheader>Conversations</v-subheader>
+                  <v-list-tile v-for="item in conversations"
+                              :key="item.conversationId"
+                              :class="{'active': item.conversationId === selectedConversation.conversationId}"
+                              @click="selectedConversation = item"
+                              avatar>
+                    <v-list-tile-avatar>
+                      <img src="../assets/images/avatar.jpg"/>
+                    </v-list-tile-avatar>
+                    <v-list-tile-content>
+                      <v-list-tile-title>
+                        {{ getDisplayName(item) }}
+                      </v-list-tile-title>
+                    </v-list-tile-content>
+                    <v-list-tile-action v-if="hasUnreadMessages(item)">
+                      <v-icon>chat_bubble</v-icon>
+                    </v-list-tile-action>
+                  </v-list-tile>
+              </v-list>
+            </v-flex>
+            <v-flex xs12 sm8 class="chat grey lighten-4">
+              <div v-if="!selectedConversation" class="no-messages">
+                <p class="text-center">
+                  No messages to display.<br><br>
+                  <span v-if="permissions.CO_New">Select a conversation from the left, or click the add button above to begin a conversation</span>
+                  <span v-else>Please contact your landlord, agency or support to enable this feature.</span>
+                </p>
+              </div>
+              <div v-else-if="!selectedConversation.messages || !selectedConversation.messages.length" class="no-messages">
+                <p class="text-center">
+                  No messages to display.<br><br>Type a message below and press enter to send.
+                </p>
+              </div>
+                <template v-if="selectedConversation && selectedConversation.messages && selectedConversation.messages.length > 0">
+                  <div class="messages-wrapper scroll">
+                    <div class="spacer"></div>
+                    <ul v-chat-scroll
+                        :class="{'inverse': selectedConversation.isToReceiver}">
+                      <li v-for="message in selectedConversation.messages"
+                          :key="message.id"
+                          :class="{'sender': selectedConversation.senderId === message.senderId, 'receiver': selectedConversation.senderId === message.receiverId }">
+                          <div class="message">
+                            {{ message.message }}
+                            <div class="sent">
+                              <v-icon>alarm</v-icon>
+                              <time :datetime="message.sent">{{ message.sent | formatDateTime }}</time>
+                            </div>
+                          </div>
+                      </li>
+                    </ul>
+                  </div>
+                </template>
+              <div class="type-message" v-if="selectedConversation">
+                <div class="row">
+                  <div class="col-xs-10">
+                    <text-field v-model="currentMessage"
+                                @keyenter="sendMessage(currentMessage)"
+                                :disabled="isSending"
+                                placeholder="Type a message"
+                                hint="Press enter or return to send">
+                    </text-field>
+                  </div>
+                  <div class="col-xs-2 send-button">
+                    <v-btn :disabled="isSending"
+                          class="blue--text darken-2" outline
+                          @click="sendMessage(currentMessage)">
+                          Send
+                    </v-btn>
+                  </div>
+                </div>
+              </div>
+            </v-flex>
+          </v-layout>
+          <v-dialog v-model="dialog"
+                    v-if="permissions.CO_New && contacts && contacts.length"
+                    lazy absolute>
+            <v-btn class="blue darken-2 action-button"
+                  slot="activator"
+                  absolute dark fab top right>
+              <v-icon>add</v-icon>
+            </v-btn>
+            <v-card>
+              <v-list>
+                <v-list-tile avatar v-for="contact in filteredContacts" v-bind:key="contact.id">
                   <v-list-tile-avatar>
                     <img src="../assets/images/avatar.jpg"/>
                   </v-list-tile-avatar>
                   <v-list-tile-content>
-                    <v-list-tile-title>
-                      {{ getDisplayName(item) }}
+                    <v-list-tile-title @click="selectContact(contact)">
+                      {{ contact.firstName + ' ' + contact.lastName }}
                     </v-list-tile-title>
                   </v-list-tile-content>
-                  <v-list-tile-action v-if="hasUnreadMessages(item)">
-                    <v-icon>chat_bubble</v-icon>
-                  </v-list-tile-action>
                 </v-list-tile>
-            </v-list>
-          </v-flex>
-          <v-flex xs12 sm8 class="chat grey lighten-4">
-            <div v-if="!selectedConversation" class="no-messages">
-              <p class="text-center">
-                No messages to display.<br><br>
-                <span v-if="permissions.CO_New">Select a conversation from the left, or click the add button above to begin a conversation</span>
-                <span v-else>Please contact your landlord, agency or support to enable this feature.</span>
-              </p>
-            </div>
-            <div v-else-if="!selectedConversation.messages || !selectedConversation.messages.length" class="no-messages">
-              <p class="text-center">
-                No messages to display.<br><br>Type a message below and press enter to send.
-              </p>
-            </div>
-              <template v-if="selectedConversation && selectedConversation.messages && selectedConversation.messages.length > 0">
-                <div class="messages-wrapper scroll">
-                  <div class="spacer"></div>
-                  <ul v-chat-scroll
-                      :class="{'inverse': selectedConversation.isToReceiver}">
-                    <li v-for="message in selectedConversation.messages"
-                        :key="message.id"
-                        :class="{'sender': selectedConversation.senderId === message.senderId, 'receiver': selectedConversation.senderId === message.receiverId }">
-                        <div class="message">
-                          {{ message.message }}
-                          <div class="sent">
-                            <v-icon>alarm</v-icon>
-                            <time :datetime="message.sent">{{ message.sent | formatDateTime }}</time>
-                          </div>
-                        </div>
-                    </li>
-                  </ul>
-                </div>
-              </template>
-            <div class="type-message" v-if="selectedConversation">
-              <div class="row">
-                <div class="col-xs-10">
-                  <text-field v-model="currentMessage"
-                              @keyenter="sendMessage(currentMessage)"
-                              :disabled="isSending"
-                              placeholder="Type a message"
-                              hint="Press enter or return to send">
-                  </text-field>
-                </div>
-                <div class="col-xs-2 send-button">
-                  <v-btn :disabled="isSending"
-                         class="blue--text darken-2" outline
-                         @click="sendMessage(currentMessage)">
-                         Send
-                  </v-btn>
-                </div>
-              </div>
-            </div>
-          </v-flex>
-        </v-layout>
-        <v-dialog v-model="dialog"
-                  v-if="permissions.CO_New && contacts && contacts.length"
-                  lazy absolute>
-          <v-btn class="blue darken-2 action-button"
-                 slot="activator"
-                 absolute dark fab top right>
-            <v-icon>add</v-icon>
-          </v-btn>
-          <v-card>
-            <v-list>
-              <v-list-tile avatar v-for="contact in filteredContacts" v-bind:key="contact.id">
-                <v-list-tile-avatar>
-                  <img src="../assets/images/avatar.jpg"/>
-                </v-list-tile-avatar>
-                <v-list-tile-content>
-                  <v-list-tile-title @click="selectContact(contact)">
-                    {{ contact.firstName + ' ' + contact.lastName }}
-                  </v-list-tile-title>
-                </v-list-tile-content>
-              </v-list-tile>
-            </v-list>
-          </v-card>
-        </v-dialog>
-      </v-card>
-    </div>
+              </v-list>
+            </v-card>
+          </v-dialog>
+        </v-card>
+      </div>
+    </transition>
   </div>
 </template>
 

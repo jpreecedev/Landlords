@@ -4,7 +4,7 @@
     <app-header v-if="$route.path === '/'"></app-header>
     <notification ref="notification"></notification>
     <main :class="{ contained: $route.path !== '/', wide: $route.path.indexOf('/accounts/transactions') > -1 }">
-      <transition name="fade">
+      <transition appear name="fade">
         <router-view></router-view>
       </transition>
     </main>
@@ -40,7 +40,7 @@ export default {
   transition: all .3s ease;
 }
 .fade-enter {
-  transform: translateY(10px);
+  transform: translateX(10px);
   opacity: 0;
 }
 .fade-leave-to, .fade-leave-active {

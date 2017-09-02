@@ -29,6 +29,9 @@
       <v-btn flat v-if="permissions.CO_View" @click="$router.push('/conversations')" :class="{'active': $route.path.startsWith('/conversations')}">
         Chat
       </v-btn>
+      <v-btn flat v-if="permissions.MR_Overview" @click="$router.push('/maintenance')" :class="{'active': $route.path.startsWith('/maintenance')}">
+        Maintenance &amp; Repairs
+      </v-btn>
       <v-btn flat v-if="!auth.isLoggedIn" @click="$router.push('/registration/')" :class="{'active': $route.path.startsWith('/registration')}">
         Log in or Register
       </v-btn>

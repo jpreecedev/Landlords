@@ -49,6 +49,9 @@
             modelBuilder.Entity<Tenant>()
                 .HasMany(c => (List<TenantContact>) c.Contacts);
 
+            modelBuilder.Entity<MaintenanceRequest>()
+                .HasMany(c => (List<MaintenanceEntry>) c.Entries);
+
             base.OnModelCreating(modelBuilder);
         }
 
@@ -76,5 +79,7 @@
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Conversation> Conversations { get; set; }
         public DbSet<ConversationMessage> ConversationMessages { get; set; }
+        public DbSet<MaintenanceRequest> MaintenanceRequests { get; set; }
+        public DbSet<MaintenanceEntry> MaintenanceEntries { get; set; }
     }
 }

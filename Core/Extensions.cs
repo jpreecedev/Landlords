@@ -249,6 +249,7 @@
                 .AddScoped<IJourneyDataProvider, JourneyDataProvider>()
                 .AddScoped<IShortlistedPropertiesDataProvider, ShortlistedPropertiesDataProvider>()
                 .AddScoped<IConversationDataProvider, ConversationDataProvider>()
+                .AddScoped<IMaintenanceRequestsDataProvider, MaintenanceRequestsDataProvider>()
                 .AddTransient<IEmailSender, EmailSender>();
 
             return serviceCollection;

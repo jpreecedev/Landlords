@@ -48,6 +48,10 @@
 
         DbSet<ConversationMessage> ConversationMessages { get; set; }
 
+        DbSet<MaintenanceRequest> MaintenanceRequests { get; set; }
+
+        DbSet<MaintenanceEntry> MaintenanceEntries { get; set; }
+
         DbSet<T> Set<T>() where T : class;
     }
 }

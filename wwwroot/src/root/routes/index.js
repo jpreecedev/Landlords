@@ -6,6 +6,7 @@ import { RouteConfig as AccountsRouteConfig } from '../../accounts/route-config'
 import { RouteConfig as TenantsRouteConfig } from '../../tenants/route-config'
 import { RouteConfig as TenanciesRouteConfig } from '../../tenancies/route-config'
 import { RouteConfig as ConversationRouteConfig } from '../../conversations/route-config'
+import { RouteConfig as MaintenanceRequestRouteConfig } from '../../maintenance/route-config'
 
 Vue.use(Router)
 
@@ -19,7 +20,8 @@ const router = new Router({
     ...AccountsRouteConfig,
     ...TenantsRouteConfig,
     ...TenanciesRouteConfig,
-    ...ConversationRouteConfig
+    ...ConversationRouteConfig,
+    ...MaintenanceRequestRouteConfig
   ]
 })
 
