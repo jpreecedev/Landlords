@@ -280,11 +280,8 @@ export default {
     }
   }
   .conversations {
-    border-right: 1px solid #eaeaea;
-    padding-right: 0;
     ul {
-      list-style: none;
-      padding-left: 0;
+      margin-left: 4px;
       li {
         &.active {
           background-color: #e9ebeb;
