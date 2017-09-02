@@ -28,8 +28,7 @@ namespace Landlords.ViewModels
                 Entries = maintenanceEntries.Select(c => new MaintenanceEntryViewModel(c)).ToList();
             }
         }
-
-        [RequiredGuid]
+        
         public Guid Id { get; set; }
 
         [Display(Name = "Title")]
@@ -44,7 +43,5 @@ namespace Landlords.ViewModels
         public string Severity { get; set; }
 
         public ICollection<MaintenanceEntryViewModel> Entries { get; set; }
-
-        public LLDataType[] DefaultMaintenanceSeverities { get; } = MaintenanceSeverity.GetDefaultMaintenanceSeverities();
     }
 }

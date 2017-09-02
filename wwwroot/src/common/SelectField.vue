@@ -4,9 +4,11 @@
             :items="items"
             :value="value"
             :label="label"
+            :item-text="itemText"
             :item-value="itemValue"
             :required="required"
             :error-messages="errorMessages"
+            :return-object="returnObject"
             :disabled="disabled">
   </v-select>
 </template>
@@ -27,9 +29,14 @@
         default: 'text',
         required: false
       },
-      'item-value': {
+      itemValue: {
         type: String,
         default: 'value',
+        required: false
+      },
+      returnObject: {
+        type: Boolean,
+        default: false,
         required: false
       }
     }

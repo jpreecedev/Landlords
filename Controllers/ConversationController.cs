@@ -49,6 +49,7 @@
 
             return BadRequest(new { Errors = ModelState.ToErrorCollection() });
         }
+
         [HttpPost, ValidateAntiForgeryToken]
         [Permission(Permissions_CO.SendId, Permissions_CO.SendRouteId, Permissions_CO.SendDescription)]
         public async Task<IActionResult> Post([FromBody] ConversationMessageViewModel value)

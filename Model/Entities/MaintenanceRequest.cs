@@ -16,7 +16,7 @@ namespace Model.Entities
 
         public ApplicationUser User { get; set; }
 
-        public Guid PortfolioId { get; set; }
+        public Guid? PortfolioId { get; set; }
 
         public Portfolio Portfolio { get; set; }
 

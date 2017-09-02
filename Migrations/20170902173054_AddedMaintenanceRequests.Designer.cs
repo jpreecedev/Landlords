@@ -8,7 +8,7 @@ using Landlords.Database;
 namespace Landlords.Migrations
 {
     [DbContext(typeof(LLDbContext))]
-    [Migration("20170902081202_AddedMaintenanceRequests")]
+    [Migration("20170902173054_AddedMaintenanceRequests")]
     partial class AddedMaintenanceRequests
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -504,7 +504,7 @@ namespace Landlords.Migrations
 
                     b.Property<string>("Description");
 
-                    b.Property<Guid>("PortfolioId");
+                    b.Property<Guid?>("PortfolioId");
 
                     b.Property<string>("Severity");
 
@@ -1098,8 +1098,7 @@ namespace Landlords.Migrations
                 {
                     b.HasOne("Model.Entities.Portfolio", "Portfolio")
                         .WithMany()
-                        .HasForeignKey("PortfolioId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("PortfolioId");
 
                     b.HasOne("Model.Database.ApplicationUser", "User")
                         .WithMany()

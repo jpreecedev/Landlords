@@ -16,7 +16,7 @@ namespace Landlords.Migrations
                     Created = table.Column<DateTime>(nullable: false),
                     Deleted = table.Column<DateTime>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    PortfolioId = table.Column<Guid>(nullable: false),
+                    PortfolioId = table.Column<Guid>(nullable: true),
                     Severity = table.Column<string>(nullable: true),
                     Title = table.Column<string>(nullable: true),
                     UserId = table.Column<Guid>(nullable: false)
@@ -29,7 +29,7 @@ namespace Landlords.Migrations
                         column: x => x.PortfolioId,
                         principalTable: "Portfolios",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_MaintenanceRequests_AspNetUsers_UserId",
                         column: x => x.UserId,

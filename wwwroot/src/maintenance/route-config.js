@@ -1,6 +1,5 @@
 import View from './View'
 import Overview from './Overview'
-import Details from './Details'
 import { guardRoute } from 'root/routes/route-guards'
 
 export const RouteConfig = [
@@ -12,10 +11,6 @@ export const RouteConfig = [
       path: '/',
       name: 'maintenance-request-overview',
       component: Overview
-    }, {
-      path: 'details/:accountId',
-      name: 'maintenance-request-details',
-      component: Details
     }]
   }
 ]

@@ -503,7 +503,7 @@ namespace Landlords.Migrations
 
                     b.Property<string>("Description");
 
-                    b.Property<Guid>("PortfolioId");
+                    b.Property<Guid?>("PortfolioId");
 
                     b.Property<string>("Severity");
 
@@ -1097,8 +1097,7 @@ namespace Landlords.Migrations
                 {
                     b.HasOne("Model.Entities.Portfolio", "Portfolio")
                         .WithMany()
-                        .HasForeignKey("PortfolioId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("PortfolioId");
 
                     b.HasOne("Model.Database.ApplicationUser", "User")
                         .WithMany()
