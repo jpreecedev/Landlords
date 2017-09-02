@@ -72,53 +72,54 @@
                   </text-field>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-xs-6">
-                  <v-radio value="Monthly"
-                           color="primary"
-                           v-model="rentalIncomeFrequency"
-                           label="Monthly"
-                           checked>
-                  </v-radio>
+              <v-radio-group v-model="rentalIncomeFrequency"
+                              :mandatory="true">
+                <div class="row">
+                    <div class="col-xs-6">
+                      <v-radio value="Monthly"
+                              color="primary"
+                              label="Monthly"
+                              checked>
+                      </v-radio>
+                    </div>
+                    <div class="col-xs-6">
+                      <v-radio value="Annual"
+                              color="primary"
+                              label="Annual">
+                      </v-radio>
+                    </div>
                 </div>
-                <div class="col-xs-6">
-                  <v-radio value="Annual"
-                           color="primary"
-                           v-model="rentalIncomeFrequency"
-                           label="Annual">
-                  </v-radio>
-                </div>
-              </div>
+              </v-radio-group>
             </v-card-text>
             <v-card-title class="title">
               Taxation
             </v-card-title>
             <v-card-text>
               <p>Which tax band are you in?</p>
-              <div class="row">
-                <div class="col-xs-12 col-md-4">
-                  <v-radio value="BasicRate"
-                           color="primary"
-                           v-model="taxBand"
-                           label="Basic (20%)">
-                  </v-radio>
+              <v-radio-group v-model="taxBand"
+                             :mandatory="true">
+                <div class="row">
+                  <div class="col-xs-12 col-md-4">
+                    <v-radio value="BasicRate"
+                            color="primary"
+                            label="Basic (20%)">
+                    </v-radio>
+                  </div>
+                  <div class="col-xs-12 col-md-4">
+                    <v-radio value="Higher"
+                            color="primary"
+                            label="Higher (40%)"
+                            checked>
+                    </v-radio>
+                  </div>
+                  <div class="col-xs-12 col-md-4">
+                    <v-radio value="Top"
+                            color="primary"
+                            label="Top (45%)">
+                    </v-radio>
+                  </div>
                 </div>
-                <div class="col-xs-12 col-md-4">
-                  <v-radio value="Higher"
-                           color="primary"
-                           v-model="taxBand"
-                           label="Higher (40%)"
-                           checked>
-                  </v-radio>
-                </div>
-                <div class="col-xs-12 col-md-4">
-                  <v-radio value="Top"
-                           color="primary"
-                           v-model="taxBand"
-                           label="Top (45%)">
-                  </v-radio>
-                </div>
-              </div>
+              </v-radio-group>
             </v-card-text>
             <v-card-title class="title">
               Other
@@ -182,23 +183,24 @@
                   </text-field>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-xs-12 col-md-6">
-                  <v-radio value="Monthly"
-                           color="primary"
-                           v-model="agencyFeeFrequency"
-                           label="Monthly"
-                           checked>
-                  </v-radio>
+              <v-radio-group v-model="agencyFeeFrequency"
+                             :mandatory="true">
+                <div class="row">
+                  <div class="col-xs-12 col-md-6">
+                    <v-radio value="Monthly"
+                            color="primary"
+                            label="Monthly"
+                            checked>
+                    </v-radio>
+                  </div>
+                  <div class="col-xs-12 col-md-6">
+                    <v-radio value="Annual"
+                            color="primary"
+                            label="Annual">
+                    </v-radio>
+                  </div>
                 </div>
-                <div class="col-xs-12 col-md-6">
-                  <v-radio value="Annual"
-                           color="primary"
-                           v-model="agencyFeeFrequency"
-                           label="Annual">
-                  </v-radio>
-                </div>
-              </div>
+              </v-radio-group>
             </v-card-text>
             <v-card-title class="title">
               Maintenance Fees
@@ -215,23 +217,24 @@
                   </text-field>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-xs-12 col-md-6">
-                  <v-radio value="Monthly"
-                           color="primary"
-                           v-model="maintenanceFeeFrequency"
-                           label="Monthly"
-                           checked>
-                  </v-radio>
+              <v-radio-group v-model="maintenanceFeeFrequency"
+                             :mandatory="true">
+                <div class="row">
+                  <div class="col-xs-12 col-md-6">
+                    <v-radio value="Monthly"
+                             color="primary"
+                             label="Monthly"
+                             checked>
+                    </v-radio>
+                  </div>
+                  <div class="col-xs-12 col-md-6">
+                    <v-radio value="Annual"
+                             color="primary"
+                             label="Annual">
+                    </v-radio>
+                  </div>
                 </div>
-                <div class="col-xs-12 col-md-6">
-                  <v-radio value="Annual"
-                           color="primary"
-                           v-model="maintenanceFeeFrequency"
-                           label="Annual">
-                  </v-radio>
-                </div>
-              </div>
+              </v-radio-group>
             </v-card-text>
             <v-card-title class="title">
               Insurance

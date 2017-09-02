@@ -86,6 +86,7 @@ p {
 }
 
 .expansion-panel {
+  border: 1px solid rgba(0, 0, 0, 0.2);
   margin-bottom: .5rem;
 }
 
@@ -333,7 +334,7 @@ textarea {
 .accordion-header {
   display: flex;
   width: 100%;
-  padding: 0 3rem 0 0;
+  padding: 0 1rem 0 0;
 }
 
 .accordion {
