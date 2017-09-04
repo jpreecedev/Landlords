@@ -121,11 +121,14 @@
                             .Select(c => new MaintenanceEntryViewModel
                             {
                                 Id = c.Id,
-                                Description = c.Description,
-                                Status = c.Status,
+                                MaintenanceRequestId = c.MaintenanceRequestId,
+                                User = c.User,
                                 UserId = c.UserId,
-                                User = c.User
+                                Description = c.Description,
+                                Created = c.Created,
+                                Status = c.Status
                             })
+                            .OrderBy(c => c.Created)
                             .ToList()
                     })
                 .ToListAsync();

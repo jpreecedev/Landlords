@@ -18,8 +18,12 @@
             if (maintenanceEntry == null) return;
 
             Id = maintenanceEntry.Id;
+            MaintenanceRequestId = maintenanceEntry.MaintenanceRequestId;
+            UserId = maintenanceEntry.UserId;
+            User = maintenanceEntry.User;
             Description = maintenanceEntry.Description;
             Status = maintenanceEntry.Status;
+            Created = maintenanceEntry.Created;
         }
 
         [RequiredGuid]
@@ -38,6 +42,8 @@
 
         [Required, MinLength(2)]
         public string Status { get; set; }
+
+        public DateTime Created { get; set; }
 
         public LLDataType[] DefaultMaintenanceStatuses { get; } = MaintenanceStatus.GetDefaultMaintenanceStatuses();
     }

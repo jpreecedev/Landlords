@@ -10,9 +10,8 @@
     </header>
     <v-card v-if="maintenanceRequests && maintenanceRequests.length">
       <div class="container">
-        <div class="col-xs-12 col-md-6">
-          <div class="row">
-            <div class="col-xs-12">
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
               <select-list v-model="selectedMaintenanceRequest"
                            :items="maintenanceRequests"
                            :return-object="true"
@@ -21,9 +20,9 @@
                            label="Select a maintenance request">
               </select-list>
             </div>
-            <div class="col-xs-12">
-
-            </div>
+          <div v-if="selectedMaintenanceRequest"
+               class="col-xs-12">
+            <timeline :events="selectedMaintenanceRequest.entries"></timeline>
           </div>
         </div>
       </div>
