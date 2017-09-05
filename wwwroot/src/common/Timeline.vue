@@ -7,8 +7,8 @@
             <ul class="timeline">
               <li v-for="event in events"
                   :key="event.id"
-                  :class="{ event}">
-                <h3>Status: {{ event.status }}</h3>
+                  :class="['event', event.status.toLowerCase().replace(' ', '-')]">
+                <h3>{{ event.status }}</h3>
                 <p>
                   {{ event.description }}
                 </p>
@@ -50,44 +50,70 @@
   /* Timeline */
 
   .timeline {
-    border-left: 8px solid #42A5F5;
-    border-bottom-right-radius: 2px;
-    border-top-right-radius: 2px;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
     color: #333;
-    margin: 50px auto;
+    margin: 2rem auto;
     letter-spacing: 0.5px;
     position: relative;
     line-height: 24px;
-    padding: 20px;
     list-style: none;
     text-align: left;
+    padding: 0;
     h3 {
       font-size: 1.5rem;
       padding-top: .25rem;
     }
     .event {
+      border-left: 8px solid #2196f3;
       border-bottom: 1px solid rgba(160, 160, 160, 0.2);
       padding-bottom: 15px;
-      margin-bottom: 20px;
+      margin-bottom: 0;
       position: relative;
-      padding-left: 10px;
+      padding: 20px;
       &:last-of-type {
-        padding-bottom: 0;
-        margin-bottom: 0;
-        border: none;
+        border-bottom: none;
       }
       &:after {
         position: absolute;
         display: block;
-        box-shadow: 0 0 0 8px #42A5F5;
-        left: -30px;
+        box-shadow: 0 0 0 8px #2196f3;
+        left: -9px;
         background: #212121;
         border-radius: 50%;
         height: 11px;
         width: 11px;
         content: "";
-        top: 5px;
+        top: 42px;
+      }
+      &:hover {
+        background-color: #bbdefb;
+      }
+      &.in-progress {
+        border-left: 8px solid #ffeb3b;
+        &:after {
+          box-shadow: 0 0 0 8px #ffeb3b;
+        }
+        &:hover {
+          background-color: #fff9c4;
+        }
+      }
+      &.action-required {
+        border-left: 8px solid #ff5722;
+        &:after {
+          box-shadow: 0 0 0 8px #ff5722;
+        }
+        &:hover {
+          background-color: #ffccbc;
+        }
+      }
+      &.closed {
+        border-left: 8px solid #4caf50;
+        &:after {
+          box-shadow: 0 0 0 8px #4caf50;
+        }
+        &:hover {
+          background-color: #c8e6c9;
+        }
       }
     }
   }
