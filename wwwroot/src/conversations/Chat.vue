@@ -9,7 +9,8 @@
         <v-card class="chat-wrapper" :class="{'empty': !selectedConversation, 'empty-messages': selectedConversation && selectedConversation.messages && !selectedConversation.messages.length}">
           <v-layout row wrap>
             <v-flex xs12 sm4 class="conversations">
-              <v-list subheader>
+              <v-list v-if="conversations && conversations.length"
+                      subheader>
                 <v-subheader>Conversations</v-subheader>
                   <v-list-tile v-for="item in conversations"
                               :key="item.conversationId"
@@ -28,6 +29,23 @@
                       <v-icon>chat_bubble</v-icon>
                     </v-list-tile-action>
                   </v-list-tile>
+              </v-list>
+              <v-list v-if="permissions.CO_New && filteredContacts && filteredContacts.length"
+                      subHeader>
+                <v-subheader>Contacts</v-subheader>
+                <v-list-tile v-for="contact in filteredContacts"
+                            :key="contact.id"
+                            @click="selectContact(contact)"
+                            avatar>
+                  <v-list-tile-avatar>
+                    <img src="../assets/images/avatar.jpg"/>
+                  </v-list-tile-avatar>
+                  <v-list-tile-content>
+                    <v-list-tile-title>
+                      {{ contact.firstName + ' ' + contact.lastName }}
+                    </v-list-tile-title>
+                  </v-list-tile-content>
+                </v-list-tile>
               </v-list>
             </v-flex>
             <v-flex xs12 sm8 class="chat grey lighten-4">
@@ -83,29 +101,6 @@
               </div>
             </v-flex>
           </v-layout>
-          <v-dialog v-model="dialog"
-                    v-if="permissions.CO_New && contacts && contacts.length"
-                    lazy absolute>
-            <v-btn class="blue darken-2 action-button"
-                  slot="activator"
-                  absolute dark fab top right>
-              <v-icon>add</v-icon>
-            </v-btn>
-            <v-card>
-              <v-list>
-                <v-list-tile avatar v-for="contact in filteredContacts" v-bind:key="contact.id">
-                  <v-list-tile-avatar>
-                    <img src="../assets/images/avatar.jpg"/>
-                  </v-list-tile-avatar>
-                  <v-list-tile-content>
-                    <v-list-tile-title @click="selectContact(contact)">
-                      {{ contact.firstName + ' ' + contact.lastName }}
-                    </v-list-tile-title>
-                  </v-list-tile-content>
-                </v-list-tile>
-              </v-list>
-            </v-card>
-          </v-dialog>
         </v-card>
       </div>
     </transition>
