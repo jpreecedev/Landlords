@@ -1,27 +1,25 @@
 <template>
-  <div class="main-container">
-    <section id="timeline" class="timeline-outer">
-      <div class="content">
-        <div class="row">
-          <div class="col-xs-12">
-            <ul class="timeline">
-              <li v-for="event in events"
-                  :key="event.id"
-                  :class="['event', event.status.toLowerCase().replace(' ', '-')]">
-                <h3>{{ event.status }}</h3>
-                <p>
-                  {{ event.description }}
-                </p>
-                <small class="italic">
-                  By {{ event.user.name }} on {{ event.created | formatDate }}
-                </small>
-              </li>
-            </ul>
-          </div>
+  <section id="timeline" class="timeline-outer">
+    <div class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <ul class="timeline">
+            <li v-for="event in events"
+                :key="event.id"
+                :class="['event', event.status.toLowerCase().replace(' ', '-')]">
+              <h3 class="headline">{{ event.status }}</h3>
+              <p class="subheading">
+                {{ event.description }}
+              </p>
+              <small class="italic">
+                By {{ event.user.name }} on {{ event.created | formatDate }}
+              </small>
+            </li>
+          </ul>
         </div>
       </div>
-    </section>
-  </div>
+    </div>
+  </section>
 </template>
 
 <script>
@@ -59,17 +57,13 @@
     list-style: none;
     text-align: left;
     padding: 0;
-    h3 {
-      font-size: 1.5rem;
-      padding-top: .25rem;
-    }
     .event {
       border-left: 8px solid #2196f3;
       border-bottom: 1px solid rgba(160, 160, 160, 0.2);
       padding-bottom: 15px;
       margin-bottom: 0;
       position: relative;
-      padding: 20px;
+      padding: 20px 30px;
       &:last-of-type {
         border-bottom: none;
       }
@@ -114,54 +108,6 @@
         &:hover {
           background-color: #c8e6c9;
         }
-      }
-    }
-  }
-
-  /**/
-  /*——————————————
-  Responsive Stuff
-  ———————————————*/
-
-  @media (max-width: 945px) {
-    .timeline {
-      .event::before {
-        left: 0.5px;
-        top: 20px;
-        min-width: 0;
-        font-size: 13px;
-      }
-      h3 {
-        font-size: 16px;
-      }
-      p {
-        padding-top: 20px;
-      }
-    }
-    section.lab h3.card-title {
-      padding: 5px;
-      font-size: 16px;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .timeline {
-      .event {
-        &::before {
-          left: 0.5px;
-          top: 20px;
-          min-width: 0;
-          font-size: 13px;
-        }
-        &:nth-child(1)::before, &:nth-child(3)::before, &:nth-child(5)::before {
-          top: 38px;
-        }
-      }
-      h3 {
-        font-size: 16px;
-      }
-      p {
-        padding-top: 20px;
       }
     }
   }

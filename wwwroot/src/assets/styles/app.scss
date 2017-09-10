@@ -4,6 +4,7 @@
 @import 'forms';
 @import 'layout';
 @import '../../../node_modules/flexboxgrid/dist/flexboxgrid.min.css';
+
 html,
 body {
   height: 100%;
@@ -283,7 +284,6 @@ img {
   }
 
   &__content {
-    height: 48px;
     margin: 0 auto;
     max-width: 1140px;
 

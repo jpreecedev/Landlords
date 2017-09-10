@@ -86,16 +86,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  @import 'src/assets/styles/mixins';
 
-  .container {
-    margin-top: 1rem;
-
-    &.pricing {
-      .card__title {
-        display: block;
-        width: 100%;
-        text-align: center;
-      }
+  .pricing {
+    .card__title {
+      display: block;
+      width: 100%;
+      text-align: center;
     }
   }
 
@@ -104,11 +101,13 @@ export default {
   }
 
   .card {
-    margin: 20px;
-    transition: transform 200ms linear;
+    @include desktop {
+      margin: 20px;
+      transition: transform 200ms linear;
 
-    &:hover {
-      transform: scale(1.01);
+      &:hover {
+        transform: scale(1.01);
+      }
     }
   }
 
@@ -117,9 +116,13 @@ export default {
     padding: 0;
 
     li {
-      padding: 20px;
+      padding: 20px 0;
       text-align: center;
       border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+
+      @include tablet {
+        padding: 20px;
+      }
     }
   }
 

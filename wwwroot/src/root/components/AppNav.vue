@@ -1,13 +1,41 @@
 <template>
-  <v-toolbar class="primary" :class="$route.path === '/' ? 'green' : ''" dark fixed>
-    <v-toolbar-title class="hidden-xs hidden-sm visible-md visible-lg">
+  <div>
+    <v-navigation-drawer v-model="drawer"
+                         light overflow
+                         class="hidden-md-and-up">
+      <v-toolbar flat class="transparent">
+        <v-list>
+          <v-list-tile>
+            <v-list-tile-content>
+              <v-list-tile-title>HomesInOne.co.uk</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </v-list>
+      </v-toolbar>
+      <v-list class="pt-0" dense>
+        <v-divider></v-divider>
+        <v-list-tile v-for="item in items" :key="item.title">
+          <v-list-tile-action>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
+    </v-navigation-drawer>
+  <v-toolbar class="primary" :class="$route.path === '/' ? 'green' : ''" dark fixed dense>
+    <v-toolbar-side-icon @click.stop="drawer = !drawer"
+                         class="hidden-md-and-up toolbar-trigger">
+    </v-toolbar-side-icon>
+    <v-toolbar-title>
       <router-link :to="auth.isLoggedIn ? '/dashboard' : '/'" tag="a" class="home">
-        <v-icon class="white--text">home</v-icon>
-        <span class="white--text">Landlords</span>
+        <v-icon class="hidden-sm-and-down white--text">home</v-icon>
+        <span class="white--text">HomesInOne.co.uk</span>
       </router-link>
     </v-toolbar-title>
     <v-spacer></v-spacer>
-    <v-toolbar-items class="hidden-xs hidden-sm visible-md visible-lg">
+    <v-toolbar-items class="hidden-xs-only">
       <v-btn flat v-if="auth.isLoggedIn" @click="$router.push('/dashboard')" :class="{'active': $route.path.startsWith('/dashboard')}">
         Dashboard
       </v-btn>
@@ -115,6 +143,7 @@
     </v-toolbar-items>
 
   </v-toolbar>
+  </div>
 </template>
 
 <script>
@@ -127,6 +156,15 @@ export default {
       permissions: state => state.permissions,
       auth: state => state.auth
     })
+  },
+  data () {
+    return {
+      drawer: false,
+      items: [
+        { title: 'Home', icon: 'dashboard' },
+        { title: 'About', icon: 'question_answer' }
+      ]
+    }
   },
   created () {
     this.checkNotifications()

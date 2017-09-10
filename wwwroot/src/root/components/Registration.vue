@@ -11,7 +11,7 @@
       <p class="display-2 grey--text text--darken-1">We need to know who you are</p>
       <p class="subheading">Please either sign in or register using the appropriate form below.</p>
     </header>
-    <div class="row mt-5">
+    <div class="row">
       <div class="col-xs-12 col-sm-5">
         <loginform></loginform>
       </div>

@@ -52,7 +52,7 @@
               <div v-if="!selectedConversation" class="no-messages">
                 <p class="text-center">
                   No messages to display.<br><br>
-                  <span v-if="permissions.CO_New">Select a conversation from the left, or click the add button above to begin a conversation</span>
+                  <span v-if="permissions.CO_New">Select a contact from the left to begin a conversation.</span>
                   <span v-else>Please contact your landlord, agency or support to enable this feature.</span>
                 </p>
               </div>
