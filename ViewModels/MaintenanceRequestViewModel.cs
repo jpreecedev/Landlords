@@ -42,6 +42,8 @@ namespace Landlords.ViewModels
         [Required]
         public string Severity { get; set; }
 
+        public string Text => string.Format("{0} ({1})", Title, Severity);
+
         public ICollection<MaintenanceEntryViewModel> Entries { get; set; }
     }
 }

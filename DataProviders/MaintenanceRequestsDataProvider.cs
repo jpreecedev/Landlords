@@ -8,6 +8,7 @@
     using Interfaces;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.EntityFrameworkCore;
+    using Model.Database;
     using Model.DataTypes;
     using Model.Entities;
     using ViewModels;
@@ -36,7 +37,7 @@
             return new MaintenanceRequestViewModel(entity, null);
         }
 
-        public async Task<MaintenanceRequestViewModel> CreateForTenantAsync(Guid userId, MaintenanceRequestViewModel maintenanceRequest)
+        public async Task<MaintenanceRequestViewModel> CreateForTenantAsync(ApplicationUser user, MaintenanceRequestViewModel maintenanceRequest)
         {
             var entity = new MaintenanceRequest
             {
@@ -44,13 +45,33 @@
                 Description = maintenanceRequest.Description,
                 Severity = maintenanceRequest.Severity,
                 Title = maintenanceRequest.Title,
-                UserId = userId
+                UserId = user.Id
             };
 
             await Context.AddAsync(entity);
             await Context.SaveChangesAsync();
 
-            return new MaintenanceRequestViewModel(entity, null);
+            var maintenanceEntryEntity = new MaintenanceEntry
+            {
+                Created = DateTime.Now,
+                MaintenanceRequestId = entity.Id,
+                Status = MaintenanceStatus.Open,
+                UserId = user.Id
+            };
+
+            await Context.AddAsync(maintenanceEntryEntity);
+            await Context.SaveChangesAsync();
+
+            return new MaintenanceRequestViewModel(entity, null)
+            {
+                Entries = new List<MaintenanceEntryViewModel>
+                {
+                    new MaintenanceEntryViewModel(maintenanceEntryEntity)
+                    {
+                        User = user
+                    }
+                }
+            };
         }
 
         public async Task<MaintenanceEntryViewModel> UpdateMaintenanceEntryAsync(Guid userId, Guid? portfolioId, MaintenanceEntryViewModel viewModel)
@@ -83,9 +104,9 @@
             return maintenanceRequest;
         }
 
-        public async Task<MaintenanceEntryViewModel> AddMaintenanceEntryAsync(Guid userId, Guid? portfolioId, MaintenanceEntryViewModel maintenanceEntry)
+        public async Task<MaintenanceEntryViewModel> AddMaintenanceEntryAsync(ApplicationUser user, Guid? portfolioId, MaintenanceEntryViewModel maintenanceEntry)
         {
-            var maintenanceRequest = await Context.MaintenanceRequests.SingleOrDefaultAsync(c => (c.UserId == userId || (portfolioId != null ? c.PortfolioId == portfolioId.GetValueOrDefault() : false)) && c.Id == maintenanceEntry.MaintenanceRequestId);
+            var maintenanceRequest = await Context.MaintenanceRequests.SingleOrDefaultAsync(c => (c.UserId == user.Id || (portfolioId != null ? c.PortfolioId == portfolioId.GetValueOrDefault() : false)) && c.Id == maintenanceEntry.MaintenanceRequestId);
             if (maintenanceRequest != null)
             {
                 var entity = new MaintenanceEntry
@@ -93,14 +114,17 @@
                     Created = DateTime.Now,
                     Description = maintenanceEntry.Description,
                     MaintenanceRequestId = maintenanceRequest.Id,
-                    Status = MaintenanceStatus.Open,
-                    UserId = userId
+                    Status = maintenanceEntry.Status,
+                    UserId = user.Id
                 };
 
                 await Context.AddAsync(entity);
                 await Context.SaveChangesAsync();
 
-                return new MaintenanceEntryViewModel(entity);
+                return new MaintenanceEntryViewModel(entity)
+                {
+                    User = user
+                };
             }
 
             return null;

@@ -8,11 +8,12 @@
                 :key="event.id"
                 :class="['event', event.status.toLowerCase().replace(' ', '-')]">
               <h3 class="headline">{{ event.status }}</h3>
-              <p class="subheading">
+              <p v-if="event.description"
+                 class="subheading">
                 {{ event.description }}
               </p>
               <small class="italic">
-                By {{ event.user.name }} on {{ event.created | formatDate }}
+                By {{ event.user.name }} on <time :datetime="event.created">{{ event.created | formatDate }} at {{ event.created | formatTime }}</time>
               </small>
             </li>
           </ul>
@@ -45,8 +46,6 @@
     margin: 0 auto;
   }
 
-  /* Timeline */
-
   .timeline {
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
     color: #333;
@@ -63,7 +62,7 @@
       padding-bottom: 15px;
       margin-bottom: 0;
       position: relative;
-      padding: 20px 30px;
+      padding: 16px 30px;
       &:last-of-type {
         border-bottom: none;
       }
@@ -79,35 +78,38 @@
         content: "";
         top: 42px;
       }
+      &:not(:last-of-type) {
+        opacity: .5;
+      }
       &:hover {
+        opacity: 1;
+      }
+      &:last-of-type {
         background-color: #bbdefb;
-      }
-      &.in-progress {
-        border-left: 8px solid #ffeb3b;
-        &:after {
-          box-shadow: 0 0 0 8px #ffeb3b;
-        }
-        &:hover {
+        &.in-progress {
+          border-left: 8px solid #ffeb3b;
           background-color: #fff9c4;
+          &:after {
+            box-shadow: 0 0 0 8px #ffeb3b;
+          }
         }
-      }
-      &.action-required {
-        border-left: 8px solid #ff5722;
-        &:after {
-          box-shadow: 0 0 0 8px #ff5722;
-        }
-        &:hover {
+        &.action-required {
+          border-left: 8px solid #ff5722;
           background-color: #ffccbc;
+          &:after {
+            box-shadow: 0 0 0 8px #ff5722;
+          }
+        }
+        &.closed {
+          border-left: 8px solid #4caf50;
+          background-color: #c8e6c9;
+          &:after {
+            box-shadow: 0 0 0 8px #4caf50;
+          }
         }
       }
-      &.closed {
-        border-left: 8px solid #4caf50;
-        &:after {
-          box-shadow: 0 0 0 8px #4caf50;
-        }
-        &:hover {
-          background-color: #c8e6c9;
-        }
+      .headline {
+        margin-bottom: 0;
       }
     }
   }

@@ -25,8 +25,7 @@
             Status = maintenanceEntry.Status;
             Created = maintenanceEntry.Created;
         }
-
-        [RequiredGuid]
+        
         public Guid Id { get; set; }
 
         [RequiredGuid]
@@ -44,7 +43,5 @@
         public string Status { get; set; }
 
         public DateTime Created { get; set; }
-
-        public LLDataType[] DefaultMaintenanceStatuses { get; } = MaintenanceStatus.GetDefaultMaintenanceStatuses();
     }
 }
