@@ -30,7 +30,7 @@ export default {
       }
     }
   },
-  created () {
+  mounted () {
     this.isLoading = true
     this.$store.commit('TENANCY_CLEAR')
     this.$http.get(`/api/tenancies/tenancy?tenancyId=${this.$route.params.tenancyId}`)

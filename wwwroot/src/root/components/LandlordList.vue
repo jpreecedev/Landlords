@@ -59,7 +59,7 @@ export default {
       data: []
     }
   },
-  created () {
+  mounted () {
     this.isLoading = true
     this.$http.get('/api/landlord')
       .then(response => {

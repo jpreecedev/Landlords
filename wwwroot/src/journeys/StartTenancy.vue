@@ -124,7 +124,7 @@ export default {
       }
     }
   },
-  created () {
+  mounted () {
     if (this.permissions.J_StartTenancy) {
       this.$http.get(`/api/journeys/starttenancy`)
         .then(response => {

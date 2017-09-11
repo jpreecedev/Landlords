@@ -166,7 +166,7 @@ export default {
       ]
     }
   },
-  created () {
+  mounted () {
     this.checkNotifications()
   },
   methods: {

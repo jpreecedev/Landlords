@@ -19,7 +19,7 @@ import AppHeader from './Header.vue'
 export default {
   name: 'app',
   components: { AppNav, AppFooter, AppHeader },
-  created () {
+  mounted () {
     this.$bus.$on('SHOW_VALIDATION_NOTIFICATION', () => {
       this.$refs.notification.show('Please fix the form validation issues before continuing.  Errors are highlighted in red.', 'error')
     })

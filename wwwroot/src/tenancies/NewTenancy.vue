@@ -16,7 +16,7 @@
 import { mapState } from 'vuex'
 export default {
   name: 'new-tenancy',
-  created () {
+  mounted () {
     this.$store.commit('TENANCY_CLEAR')
   },
   computed: {

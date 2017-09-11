@@ -79,7 +79,7 @@ export default {
       templates
     }
   },
-  created () {
+  mounted () {
     this.isLoading = true
     this.$http.get(`/api/checklists/${this.checklistId}`)
       .then(response => {

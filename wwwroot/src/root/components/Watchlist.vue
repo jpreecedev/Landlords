@@ -71,7 +71,7 @@ export default {
       permissions: state => state.permissions
     })
   },
-  created () {
+  mounted () {
     this.loading = true
     this.$http.get('/api/shortlistedproperties')
       .then(response => {

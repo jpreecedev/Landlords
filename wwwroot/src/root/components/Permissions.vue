@@ -84,7 +84,7 @@ export default {
       permissions: state => state.permissions
     })
   },
-  created () {
+  mounted () {
     this.$http.get(`/api/permissions/all`)
       .then(response => {
         this.allPermissions = response.data

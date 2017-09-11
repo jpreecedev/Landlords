@@ -42,7 +42,7 @@ Vue.use(NotificationsService)
 
 new Vue({
   el: '#app',
-  created () {
+  mounted () {
     window.Vue = this
   },
   router,

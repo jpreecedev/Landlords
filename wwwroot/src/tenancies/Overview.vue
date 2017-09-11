@@ -92,7 +92,7 @@ export default {
       data: []
     }
   },
-  created () {
+  mounted () {
     this.isLoading = true
     this.$http.get('/api/tenancies')
       .then(response => {

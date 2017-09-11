@@ -134,7 +134,7 @@ export default {
       permissions: state => state.permissions
     })
   },
-  created () {
+  mounted () {
     this.isLoading = true
     this.$http.get(`/api/transactions/?accountId=${this.accountId}`)
       .then(response => {

@@ -267,7 +267,7 @@ export default {
       permissions: state => state.permissions
     })
   },
-  created () {
+  mounted () {
     this.isLoading = true
     this.$http.get(`/api/propertydetails/${this.$route.params.propertyId ? this.$route.params.propertyId : 'viewdata'}`)
       .then(response => {

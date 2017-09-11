@@ -124,7 +124,7 @@ export default {
       selectedConversation: {}
     }
   },
-  created () {
+  mounted () {
     this.isLoading = true
     this.$notifications.open(this.auth.accessToken)
       .then(() => {

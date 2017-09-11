@@ -95,7 +95,7 @@ export default {
       ]
     }
   },
-  created () {
+  mounted () {
     this.loading = true
     this.$http.get('/api/propertydetails')
       .then(response => {

@@ -30,7 +30,7 @@ export default {
       permissions: state => state.permissions
     })
   },
-  created () {
+  mounted () {
     if (!this.checklistItem.payload) {
       this.checklistItem.payload = {
         actioned: null

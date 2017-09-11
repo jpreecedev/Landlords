@@ -157,7 +157,7 @@ export default {
       }
     }
   },
-  created () {
+  mounted () {
     this.isLoading = true
     this.$http.get(`/api/tenants/${this.$route.params.tenantId}`)
       .then(response => {

@@ -69,7 +69,7 @@ export default {
       portfolioProperties: []
     }
   },
-  created () {
+  mounted () {
     if (this.permissions.PD_GetBasic) {
       this.$http.get(`/api/propertydetails/basicdetails`)
         .then(response => {

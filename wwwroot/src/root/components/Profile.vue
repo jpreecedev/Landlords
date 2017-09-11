@@ -125,7 +125,7 @@ export default {
       permissions: state => state.permissions
     })
   },
-  created () {
+  mounted () {
     this.times = utils.getTimesForSelectList()
     this.isLoading = true
     this.$http.get(`/api/profile`)

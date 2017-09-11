@@ -261,7 +261,7 @@ export default {
       }
     }
   },
-  created () {
+  mounted () {
     if (this.permissions.SP_GetById && this.$route.params.shortlistedPropertyId) {
       this.$http.get(`/api/shortlistedproperties/${this.$route.params.shortlistedPropertyId}`)
         .then(response => {

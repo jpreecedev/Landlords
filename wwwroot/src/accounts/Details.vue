@@ -122,7 +122,7 @@ export default {
       permissions: state => state.permissions
     })
   },
-  created () {
+  mounted () {
     this.$http.get(`/api/accounts/${this.$route.params.accountId}`)
       .then(response => {
         Object.assign(this, utils.mapEntity(response.data, 'account', false))

@@ -79,7 +79,7 @@ export default {
       permissions: state => state.permissions
     })
   },
-  created () {
+  mounted () {
     this.isLoading = true
     this.$http.get('/api/maintenancerequests')
       .then(response => {
