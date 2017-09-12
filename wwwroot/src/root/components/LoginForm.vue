@@ -2,10 +2,11 @@
   <div>
     <form @submit.prevent="validateBeforeSubmit" role="form" novalidate>
       <v-card>
-        <v-card-title class="primary title">
-          Sign in
-        </v-card-title>
         <v-card-text>
+          <header>
+            <h3 class="text-left blue--text">Hello</h3>
+            <p class="text-left subheading">Please log in with you account details</p>
+          </header>
           <div class="row">
             <div class="col-xs-12">
               <p v-if="errors.length > 0">
@@ -76,3 +77,10 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  h3 {
+    margin: 1.5rem 0 0 0;
+  }
+</style>
+

@@ -1,22 +1,33 @@
 <template>
   <div>
-    <v-alert error :value="expired" class="mb-4">
-      Your session has expired, please log in again.
-    </v-alert>
-    <v-alert success :value="loggedOut" class="mb-4">
-      You have been logged out
-    </v-alert>
-    <header>
-      <h1 class="headline primary--text">Please sign in or register</h1>
-      <p class="display-2 grey--text text--darken-1">We need to know who you are</p>
-      <p class="subheading">Please either sign in or register using the appropriate form below.</p>
-    </header>
-    <div class="row">
-      <div class="col-xs-12 col-sm-5">
-        <loginform></loginform>
-      </div>
-      <div class="col-xs-12 col-sm-offset-1 col-sm-6">
-        <registerform></registerform>
+    <div class="row center-xs">
+      <div class="col-xs-12 col-md-5">
+        <v-tabs class="elevation-3"
+                dark fixed icons centered>
+          <v-tabs-bar>
+            <v-tabs-slider class="blue"></v-tabs-slider>
+            <v-tabs-item href="login">
+              <v-icon>face</v-icon>
+              Log In
+            </v-tabs-item>
+            <v-tabs-item href="register">
+              <v-icon>account_circle</v-icon>
+              Register
+            </v-tabs-item>
+          </v-tabs-bar>
+          <v-tabs-items>
+            <v-tabs-content key="login" id="login">
+              <v-card flat>
+                <loginform></loginform>
+              </v-card>
+            </v-tabs-content>
+            <v-tabs-content key="register" id="register">
+              <v-card flat>
+                <registerform></registerform>
+              </v-card>
+            </v-tabs-content>
+          </v-tabs-items>
+        </v-tabs>
       </div>
     </div>
   </div>

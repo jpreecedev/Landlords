@@ -24,7 +24,7 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-  <v-toolbar class="primary" :class="$route.path === '/' ? 'green' : ''" dark fixed dense>
+  <v-toolbar class="primary" :class="auth.isLoggedIn ? '' : 'green'" dark fixed>
     <v-toolbar-side-icon @click.stop="drawer = !drawer"
                          class="hidden-md-and-up toolbar-trigger">
     </v-toolbar-side-icon>
