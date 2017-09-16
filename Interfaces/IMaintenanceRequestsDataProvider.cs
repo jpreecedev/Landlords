@@ -18,5 +18,7 @@
 
         Task<ICollection<MaintenanceRequestViewModel>> GetMaintenanceRequestsForTenant(Guid userId);
         Task<ICollection<MaintenanceRequestViewModel>> GetMaintenanceRequests(Guid portfolioId);
+
+        Task ArchiveMaintenanceRequest(Guid userId, Guid? portfolioId, Guid maintenanceRequestId);
     }
 }

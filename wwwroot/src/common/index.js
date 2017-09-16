@@ -9,6 +9,7 @@ import DatePicker from './DatePicker'
 import Notification from './Notification'
 import NotificationIcon from './NotificationIcon'
 import Timeline from './Timeline'
+import Help from './Help'
 
 export default function install (Vue) {
   Vue.component('permissions-warning', PermissionsWarning)
@@ -22,4 +23,5 @@ export default function install (Vue) {
   Vue.component('notification', Notification)
   Vue.component('notification-icon', NotificationIcon)
   Vue.component('timeline', Timeline)
+  Vue.component('help', Help)
 }

@@ -134,13 +134,14 @@
         {
             return await (from maintenanceRequest in Context.MaintenanceRequests.AsNoTracking()
                     join maintenanceEntry in Context.MaintenanceEntries on maintenanceRequest.Id equals maintenanceEntry.MaintenanceRequestId into maintenanceEntriesJoin
-                    where maintenanceRequest.UserId == userId && !maintenanceRequest.IsDeleted
+                    where maintenanceRequest.UserId == userId && !maintenanceRequest.IsDeleted && !maintenanceRequest.IsArchived
                     select new MaintenanceRequestViewModel
                     {
                         Id = maintenanceRequest.Id,
                         Title = maintenanceRequest.Title,
                         Description = maintenanceRequest.Description,
                         Severity = maintenanceRequest.Severity,
+                        IsArchived = maintenanceRequest.IsArchived,
                         Entries = maintenanceEntriesJoin.Where(c => !c.IsDeleted)
                             .Select(c => new MaintenanceEntryViewModel
                             {
@@ -152,7 +153,7 @@
                                 Created = c.Created,
                                 Status = c.Status
                             })
-                            .OrderBy(c => c.Created)
+                            .OrderByDescending(c => c.Created)
                             .ToList()
                     })
                 .ToListAsync();
@@ -162,13 +163,14 @@
         {
             return await (from maintenanceRequest in Context.MaintenanceRequests.AsNoTracking()
                     join maintenanceEntry in Context.MaintenanceEntries on maintenanceRequest.Id equals maintenanceEntry.MaintenanceRequestId into maintenanceEntriesJoin
-                    where maintenanceRequest.PortfolioId == portfolioId && !maintenanceRequest.IsDeleted
+                    where maintenanceRequest.PortfolioId == portfolioId && !maintenanceRequest.IsDeleted && !maintenanceRequest.IsArchived
                     select new MaintenanceRequestViewModel
                     {
                         Id = maintenanceRequest.Id,
                         Title = maintenanceRequest.Title,
                         Description = maintenanceRequest.Description,
                         Severity = maintenanceRequest.Severity,
+                        IsArchived = maintenanceRequest.IsArchived,
                         Entries = maintenanceEntriesJoin.Where(c => !c.IsDeleted)
                             .Select(c => new MaintenanceEntryViewModel
                             {
@@ -178,9 +180,20 @@
                                 UserId = c.UserId,
                                 User = c.User
                             })
+                            .OrderByDescending(c => c.Created)
                             .ToList()
                     })
                 .ToListAsync();
+        }
+
+        public async Task ArchiveMaintenanceRequest(Guid userId, Guid? portfolioId, Guid maintenanceRequestId)
+        {
+            var maintenanceRequest = await Context.MaintenanceRequests.SingleOrDefaultAsync(c => (c.UserId == userId || (portfolioId != null ? c.PortfolioId == portfolioId.GetValueOrDefault() : false)) && c.Id == maintenanceRequestId);
+            if (maintenanceRequest != null)
+            {
+                maintenanceRequest.IsArchived = true;
+                await Context.SaveChangesAsync();
+            }
         }
     }
 }

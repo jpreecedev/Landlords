@@ -13,5 +13,9 @@
         public const string NewEntryId = "a2c24e88-2815-457b-92ee-4db44794493a";
         public const string NewEntryRouteId = "MR_NewEntry";
         public const string NewEntryDescription = "Create a new maintenance entry";
+
+        public const string ArchiveId = "85df53f8-e8f9-494b-a301-537bfd5325bc";
+        public const string ArchiveRouteId = "MR_Archive";
+        public const string ArchiveDescription = "Archive a maintenance request";
     }
 }

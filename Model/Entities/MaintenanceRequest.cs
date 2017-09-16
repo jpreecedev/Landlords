@@ -20,6 +20,8 @@ namespace Model.Entities
 
         public Portfolio Portfolio { get; set; }
 
+        public bool IsArchived { get; set; }
+
         public ICollection<MaintenanceEntry> Entries { get; set; }
     }
 }

@@ -24,14 +24,22 @@
                 </div>
               <div v-if="selectedMaintenanceRequest"
                   class="col-xs-12">
-                <timeline :events="selectedMaintenanceRequest.entries"></timeline>
                 <v-btn primary
-                      class="mt-4 no-left-margin"
-                      v-if="permissions.MR_NewEntry"
-                      :loading="isAddingMaintenanceEntry"
-                      @click.stop="addMaintenanceEntry()">
-                  Update Status
+                       class="no-left-margin"
+                       v-if="permissions.MR_NewEntry"
+                       :loading="isAddingMaintenanceEntry"
+                       @click.stop="addMaintenanceEntry()">
+                       Update Status
                 </v-btn>
+                <v-btn v-if="permissions.MR_Archive"
+                       :loading="isArchiving"
+                       @click="archiveMaintenanceRequest(selectedMaintenanceRequest)">
+                       Archive
+                </v-btn>
+                <timeline :events="selectedMaintenanceRequest.entries"></timeline>
+                <help title="What happens next?"
+                      text="Your landlord or managing agency will review the maintenance request and take appropriate action.  You will be automatically notified when this happens.">
+                </help>
               </div>
             </div>
           </div>
@@ -86,6 +94,7 @@ export default {
       isAddingMaintenanceEntry: false,
       isMaintenanceDialogOpen: false,
       isAddEventDialogOpen: false,
+      isArchiving: false,
       maintenanceSeverities: [],
       maintenanceRequests: [],
       maintenanceStatuses: [],
@@ -124,6 +133,25 @@ export default {
     addMaintenanceEntry () {
       this.isAddEventDialogOpen = true
     },
+    archiveMaintenanceRequest (maintenanceRequest) {
+        if (maintenanceRequest) {
+          this.isArchiving = true
+
+          this.$http.post(`/api/maintenancerequests/archive/${maintenanceRequest.id}`)
+            .then(response => {
+              this.maintenanceRequests.splice(this.maintenanceRequests.indexOf(maintenanceRequest), 1)
+            })
+            .finally(() => {
+              this.isArchiving = false
+
+              if (this.maintenanceRequests.length) {
+                this.selectedMaintenanceRequest = this.maintenanceRequests[this.maintenanceRequests.length - 1]
+              } else {
+                this.selectedMaintenanceRequest = null
+              }
+            })
+      }
+    },
     closeMaintenanceDialog (newMaintenaceRequest) {
       this.isMaintenanceDialogOpen = false
 
@@ -152,7 +180,7 @@ export default {
               this.selectedMaintenanceRequest.entries = []
             }
             console.log(response.data)
-            this.selectedMaintenanceRequest.entries.push(response.data)
+            this.selectedMaintenanceRequest.entries.splice(0, 0, response.data)
           })
           .finally(() => {
             this.isAddingMaintenanceEntry = false
@@ -162,11 +190,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-
-  td a {
-    text-decoration: none;
-  }
-
-</style>

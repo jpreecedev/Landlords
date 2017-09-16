@@ -49,7 +49,7 @@
   .timeline {
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
     color: #333;
-    margin: 2rem auto;
+    margin: 2rem auto 0 auto;
     letter-spacing: 0.5px;
     position: relative;
     line-height: 24px;
@@ -63,7 +63,7 @@
       margin-bottom: 0;
       position: relative;
       padding: 16px 30px;
-      &:last-of-type {
+      &:first-of-type {
         border-bottom: none;
       }
       &:after {
@@ -78,13 +78,13 @@
         content: "";
         top: 42px;
       }
-      &:not(:last-of-type) {
+      &:not(:first-of-type) {
         opacity: .5;
       }
       &:hover {
         opacity: 1;
       }
-      &:last-of-type {
+      &:first-of-type {
         background-color: #bbdefb;
         &.in-progress {
           border-left: 8px solid #ffeb3b;

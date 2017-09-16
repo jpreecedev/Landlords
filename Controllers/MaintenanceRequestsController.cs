@@ -69,5 +69,21 @@
 
             return BadRequest(new { Errors = ModelState.ToErrorCollection() });
         }
+
+        [HttpPost("archive/{maintenanceRequestId}"), ValidateAntiForgeryToken]
+        [Permission(Permissions_MR.ArchiveId, Permissions_MR.ArchiveRouteId, Permissions_MR.ArchiveDescription)]
+        public async Task<IActionResult> Archive(Guid maintenanceRequestId)
+        {
+            if (ModelState.IsValid)
+            {
+                var userId = User.GetUserId();
+                var portfolioId = User.IsTenant() ? null : (Guid?)User.GetPortfolioId();
+
+                await _maintenanceRequestsDataProvider.ArchiveMaintenanceRequest(userId, portfolioId, maintenanceRequestId);
+                return Ok();
+            }
+
+            return BadRequest(new { Errors = ModelState.ToErrorCollection() });
+        }
     }
 }

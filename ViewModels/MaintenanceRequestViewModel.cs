@@ -4,9 +4,7 @@ namespace Landlords.ViewModels
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
-    using Model.DataTypes;
     using Model.Entities;
-    using Model.Validation;
 
     public class MaintenanceRequestViewModel
     {
@@ -22,6 +20,7 @@ namespace Landlords.ViewModels
             Title = maintenanceRequest.Title;
             Description = maintenanceRequest.Description;
             Severity = maintenanceRequest.Severity;
+            IsArchived = maintenanceRequest.IsArchived;
 
             if (maintenanceEntries != null)
             {
@@ -41,6 +40,8 @@ namespace Landlords.ViewModels
 
         [Required]
         public string Severity { get; set; }
+
+        public bool IsArchived { get; set; }
 
         public string Text => string.Format("{0} ({1})", Title, Severity);
 
