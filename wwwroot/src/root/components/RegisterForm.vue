@@ -5,7 +5,7 @@
         <v-card-text>
           <header>
             <h3 class="text-left blue--text">Welcome</h3>
-            <p class="text-left subheading">Enter a few basic details to quickly create your account</p>
+            <p class="text-left subheading">Tell us the basics to quickly create your account</p>
           </header>
           <text-field v-model="newUser.firstName"
                       :rules="[$validation.rules.required, $validation.rules.min_length(newUser.firstName, 2)]"
@@ -101,6 +101,6 @@
 
 <style lang="scss" scoped>
   h3 {
-    margin: 1.5rem 0 0 0;
+    margin: 1.5rem 0 .5rem 0;
   }
 </style>

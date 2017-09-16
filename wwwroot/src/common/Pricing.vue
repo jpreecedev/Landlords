@@ -37,12 +37,11 @@
                 <span class="undertext">Per Month.</span>
               </div>
               <ul>
-                <li><v-icon class="deep-orange--text">done</v-icon> Property portfolio manager</li>
-                <li><v-icon class="deep-orange--text">done</v-icon> New tenancy wizards</li>
-                <li><v-icon class="deep-orange--text">done</v-icon> Checklists</li>
-                <li><v-icon class="deep-orange--text">done</v-icon> Bank/credit card manager</li>
-                <li><v-icon class="deep-orange--text">done</v-icon> Financial calculators</li>
-                <li><v-icon class="deep-orange--text">done</v-icon> Support and contribute to the development of this platform</li>
+                <li><v-icon class="deep-orange--text">done</v-icon> Easily manage all your properties in one place</li>
+                <li><v-icon class="deep-orange--text">done</v-icon> Manage and chat with your tenants directly</li>
+                <li><v-icon class="deep-orange--text">done</v-icon> Create convenient templates to help systematize your workload</li>
+                <li><v-icon class="deep-orange--text">done</v-icon> Upload your bank statements to track your portfolio profitability</li>
+                <li><v-icon class="deep-orange--text">done</v-icon> Use our financial calculators to weigh up a new investment</li>
               </ul>
               <div class="sign-up">
                 <v-btn outline large class="deep-orange deep-orange--text">Sign up</v-btn>
@@ -66,7 +65,6 @@
                 <li><v-icon class="blue-grey--text">done</v-icon> Checklists</li>
                 <li><v-icon class="blue-grey--text">done</v-icon> Bank/credit card manager</li>
                 <li><v-icon class="blue-grey--text">done</v-icon> Calculators</li>
-                <li><v-icon class="blue-grey--text">done</v-icon> Support and contribute to the development of this platform</li>
               </ul>
               <div class="sign-up">
                 <v-btn outline large class="blue-grey blue-grey--text">Sign up</v-btn>
@@ -121,7 +119,7 @@ export default {
       border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 
       @include tablet {
-        padding: 20px;
+        padding: 20px 10px;
       }
     }
   }

@@ -80,7 +80,7 @@ export default {
 
 <style lang="scss" scoped>
   h3 {
-    margin: 1.5rem 0 0 0;
+    margin: 1.5rem 0 .5rem 0;
   }
 </style>
 
