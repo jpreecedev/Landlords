@@ -1,10 +1,34 @@
 ﻿namespace Landlords.ViewModels
 {
     using System;
+    using Model.Entities;
     using Model.Validation;
 
     public class PropertyBasicDetailsViewModel
     {
+        public PropertyBasicDetailsViewModel()
+        {
+            
+        }
+
+        public PropertyBasicDetailsViewModel(PropertyDetails propertyDetails)
+        {
+            if (propertyDetails == null)
+            {
+                return;
+            }
+
+            Id = propertyDetails.Id;
+            PropertyReference = propertyDetails.Reference;
+            PropertyStreetAddress = propertyDetails.PropertyStreetAddress;
+            PortfolioId = propertyDetails.PortfolioId;
+
+            if (propertyDetails.Portfolio != null)
+            {
+                PortfolioName = propertyDetails.Portfolio.DisplayName;
+            }
+        }
+
         [RequiredGuid]
         public Guid Id { get; set; }
         

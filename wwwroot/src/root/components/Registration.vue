@@ -5,7 +5,7 @@
         <v-tabs class="elevation-3"
                 dark fixed icons centered>
           <v-tabs-bar>
-            <v-tabs-slider class="green"></v-tabs-slider>
+            <v-tabs-slider class="white"></v-tabs-slider>
             <v-tabs-item href="login">
               <v-icon>face</v-icon>
               Log In

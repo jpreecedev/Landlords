@@ -2,8 +2,6 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    using Model.Database;
-    using Model.DataTypes;
     using Model.Entities;
     using Model.Validation;
 
@@ -20,7 +18,7 @@
             Id = maintenanceEntry.Id;
             MaintenanceRequestId = maintenanceEntry.MaintenanceRequestId;
             UserId = maintenanceEntry.UserId;
-            User = maintenanceEntry.User;
+            User = new ApplicationUserViewModel(maintenanceEntry.User);
             Description = maintenanceEntry.Description;
             Status = maintenanceEntry.Status;
             Created = maintenanceEntry.Created;
@@ -33,7 +31,7 @@
 
         public Guid UserId { get; set; }
 
-        public ApplicationUser User { get; set; }
+        public ApplicationUserViewModel User { get; set; }
 
         [Display(Name = "Title")]
         [Required, MinLength(2)]

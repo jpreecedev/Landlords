@@ -21,6 +21,7 @@ namespace Landlords.ViewModels
             Description = maintenanceRequest.Description;
             Severity = maintenanceRequest.Severity;
             IsArchived = maintenanceRequest.IsArchived;
+            PropertyDetails = new PropertyBasicDetailsViewModel(maintenanceRequest.PropertyDetails);
 
             if (maintenanceEntries != null)
             {
@@ -43,7 +44,19 @@ namespace Landlords.ViewModels
 
         public bool IsArchived { get; set; }
 
-        public string Text => string.Format("{0} ({1})", Title, Severity);
+        public string Text
+        {
+            get
+            {
+                if (PropertyDetails == null || string.IsNullOrEmpty(PropertyDetails.PropertyStreetAddress))
+                {
+                    return string.Format("{0} ({1})", Title, Severity);
+                }
+                return string.Format("{0} ({1}, {2})", Title, Severity, PropertyDetails.PropertyStreetAddress);
+            }
+        }
+
+        public PropertyBasicDetailsViewModel PropertyDetails { get; set; }
 
         public ICollection<MaintenanceEntryViewModel> Entries { get; set; }
     }

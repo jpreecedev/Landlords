@@ -29,7 +29,7 @@
         [Permission(Permissions_CO.ViewId, Permissions_CO.ViewRouteId, Permissions_CO.ViewDescription)]
         public async Task<IActionResult> Get()
         {
-            return Ok(await _conversationDataProvider.GetConversationOverviewAsync(User, User.GetApplicationUser(_context)));
+            return Ok(await _conversationDataProvider.GetConversationOverviewAsync(User, await User.GetApplicationUserAsync(_context)));
         }
 
         [HttpPost("new"), ValidateAntiForgeryToken]
@@ -41,7 +41,7 @@
                 if (value.UserId.IsDefault())
                     return BadRequest("Unable to validate payload");
 
-                var conversation = await _conversationDataProvider.NewConversationAsync(User.GetApplicationUser(_context), value);
+                var conversation = await _conversationDataProvider.NewConversationAsync(await User.GetApplicationUserAsync(_context), value);
                 await _messageHandler.StartNewConversationAsync(Request.GetAccessToken(), value.UserId, conversation);
 
                 return Ok(conversation);

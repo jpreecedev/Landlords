@@ -11,6 +11,7 @@
     using Landlords.Database;
     using System.Collections.Generic;
     using Core;
+    using Landlords.ViewModels;
 
     public class TokenProviderMiddleware
     {
@@ -125,7 +126,7 @@
 
                     return await Task.FromResult(new JwtIdentity
                     {
-                        User = user,
+                        User = new ApplicationUserViewModel(user),
                         ClaimsIdentity = new ClaimsIdentity(claims)
                     });
                 }

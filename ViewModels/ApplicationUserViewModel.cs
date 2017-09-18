@@ -1,13 +1,32 @@
-﻿namespace Model.Database
+﻿namespace Landlords.ViewModels
 {
-    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-    using Model.Entities;
     using System;
-    using System.Collections.Generic;
     using System.Text;
+    using Model.Database;
 
-    public class ApplicationUser : IdentityUser<Guid>, IApplicationUser
+    public class ApplicationUserViewModel
     {
+        public ApplicationUserViewModel()
+        {
+        }
+
+        public ApplicationUserViewModel(ApplicationUser applicationUser)
+        {
+            if (applicationUser == null)
+            {
+                return;
+            }
+
+            Title = applicationUser.Title;
+            FirstName = applicationUser.FirstName;
+            MiddleName = applicationUser.MiddleName;
+            LastName = applicationUser.LastName;
+            SecondaryPhoneNumber = applicationUser.SecondaryPhoneNumber;
+            AvailableFrom = applicationUser.AvailableFrom;
+            AvailableTo = applicationUser.AvailableTo;
+            AgencyId = applicationUser.AgencyId;
+        }
+
         public string Title { get; set; }
 
         public string FirstName { get; set; }
@@ -15,7 +34,7 @@
         public string MiddleName { get; set; }
 
         public string LastName { get; set; }
-        
+
         public string SecondaryPhoneNumber { get; set; }
 
         public DateTime? AvailableFrom { get; set; }
@@ -23,12 +42,6 @@
         public DateTime? AvailableTo { get; set; }
 
         public Guid? AgencyId { get; set; }
-        
-        public Agency Agency { get; set; }
-
-        public bool IsPermitted { get; set; }
-
-        public ICollection<ApplicationUserPortfolio> Portfolios { get; set; }
 
         public string Name
         {
@@ -51,11 +64,6 @@
 
                 return builder.ToString();
             }
-        }
-
-        public void MapFrom(object model)
-        {
-            EntityMapper.MapFrom(this, model);
         }
     }
 }

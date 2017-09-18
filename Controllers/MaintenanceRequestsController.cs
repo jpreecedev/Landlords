@@ -3,7 +3,6 @@
     using System;
     using System.Threading.Tasks;
     using Core;
-    using Database;
     using Interfaces;
     using Microsoft.AspNetCore.Mvc;
     using Model;
@@ -13,32 +12,35 @@
     [Route("api/[controller]")]
     public class MaintenanceRequestsController : Controller
     {
-        private readonly ILLDbContext _context;
         private readonly IMaintenanceRequestsDataProvider _maintenanceRequestsDataProvider;
+        private readonly IPropertyDataProvider _propertyDataProvider;
 
-        public MaintenanceRequestsController(ILLDbContext context, IMaintenanceRequestsDataProvider maintenanceRequestsDataProvider)
+        public MaintenanceRequestsController(IMaintenanceRequestsDataProvider maintenanceRequestsDataProvider, IPropertyDataProvider propertyDataProvider)
         {
-            _context = context;
             _maintenanceRequestsDataProvider = maintenanceRequestsDataProvider;
+            _propertyDataProvider = propertyDataProvider;
         }
 
         [HttpGet]
         [Permission(Permissions_MR.OverviewId, Permissions_MR.OverviewRouteId, Permissions_MR.OverviewDescription)]
         public async Task<IActionResult> Get()
         {
-            if (User.IsTenant())
-            {
-                return Ok(await _maintenanceRequestsDataProvider.GetMaintenanceRequestsForTenant(User.GetUserId()));
-            }
-
-            return Ok(await _maintenanceRequestsDataProvider.GetMaintenanceRequests(User.GetPortfolioId()));
+            return Ok(await _maintenanceRequestsDataProvider.GetMaintenanceRequests(User));
         }
 
         [HttpGet("ViewData")]
         [Permission(Permissions_MR.OverviewId, Permissions_MR.OverviewRouteId, Permissions_MR.OverviewDescription)]
-        public IActionResult GetViewData()
+        public async Task<IActionResult> GetViewData()
         {
-            return Ok(new MaintenanceRequestOverviewViewModel());
+            if (User.IsTenant())
+            {
+                return Ok(new MaintenanceRequestOverviewViewModel());
+            }
+
+            return Ok(new MaintenanceRequestOverviewViewModel
+            {
+                Properties = await _propertyDataProvider.GetBasicDetailsAsync(User.GetUserId())
+            });
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -47,11 +49,7 @@
         {
             if (ModelState.IsValid)
             {
-                if (User.IsTenant())
-                {
-                    return Ok(await _maintenanceRequestsDataProvider.CreateForTenantAsync(User.GetApplicationUser(_context), value));
-                }
-                return Ok(await _maintenanceRequestsDataProvider.CreateForPortfolioAsync(User.GetUserId(), User.GetPortfolioId(), value));
+                return Ok(await _maintenanceRequestsDataProvider.CreateAsync(User, value));
             }
 
             return BadRequest(new { Errors = ModelState.ToErrorCollection() });
@@ -63,8 +61,7 @@
         {
             if (ModelState.IsValid)
             {
-                var portfolioId = User.IsTenant() ? null : (Guid?) User.GetPortfolioId();
-                return Ok(await _maintenanceRequestsDataProvider.AddMaintenanceEntryAsync(User.GetApplicationUser(_context), portfolioId, value));
+                return Ok(await _maintenanceRequestsDataProvider.AddMaintenanceEntryAsync(User, value));
             }
 
             return BadRequest(new { Errors = ModelState.ToErrorCollection() });
@@ -76,10 +73,7 @@
         {
             if (ModelState.IsValid)
             {
-                var userId = User.GetUserId();
-                var portfolioId = User.IsTenant() ? null : (Guid?)User.GetPortfolioId();
-
-                await _maintenanceRequestsDataProvider.ArchiveMaintenanceRequest(userId, portfolioId, maintenanceRequestId);
+                await _maintenanceRequestsDataProvider.ArchiveMaintenanceRequest(User, maintenanceRequestId);
                 return Ok();
             }
 

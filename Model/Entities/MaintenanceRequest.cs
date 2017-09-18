@@ -12,15 +12,11 @@ namespace Model.Entities
 
         public string Severity { get; set; }
 
-        public Guid UserId { get; set; }
-
-        public ApplicationUser User { get; set; }
-
-        public Guid? PortfolioId { get; set; }
-
-        public Portfolio Portfolio { get; set; }
-
         public bool IsArchived { get; set; }
+
+        public PropertyDetails PropertyDetails { get; set; }
+
+        public Guid PropertyDetailsId { get; set; }
 
         public ICollection<MaintenanceEntry> Entries { get; set; }
     }

@@ -188,12 +188,12 @@
             throw new InvalidOperationException("Unable to determine claim");
         }
 
-        public static ApplicationUser GetApplicationUser(this ClaimsPrincipal claimsPrincipal, ILLDbContext context)
+        public static async Task<ApplicationUser> GetApplicationUserAsync(this ClaimsPrincipal claimsPrincipal, ILLDbContext context)
         {
             var userId = claimsPrincipal.GetUserId();
             if (userId != default(Guid))
             {
-                return context.Users.FirstOrDefault(c => c.Id == userId);
+                return await context.Users.FirstOrDefaultAsync(c => c.Id == userId);
             }
 
             throw new InvalidOperationException("Unable to determine User");
@@ -223,7 +223,7 @@
         {
             return claimsPrincipal.IsInRole(ApplicationRoles.Landlord);
         }
-
+       
         public static bool HasPropertyPortfolio(this ClaimsPrincipal claimsPrincipal)
         {
             return claimsPrincipal.FindFirst(LLClaimTypes.PortfolioIdentifier) != null;

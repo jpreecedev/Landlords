@@ -30,7 +30,7 @@
         [HttpPost("resendverification"), ValidateAntiForgeryToken]
         public async Task<IActionResult> ResendVerificationCode()
         {
-            var user = User.GetApplicationUser(_context);
+            var user = await User.GetApplicationUserAsync(_context);
             var code = await _userRepository.GenerateEmailConfirmationTokenAsync(user);
             var template = new EmailViewModel
             {

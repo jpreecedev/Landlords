@@ -3,22 +3,20 @@
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using Model.Database;
     using ViewModels;
+    using System.Security.Claims;
 
     public interface IMaintenanceRequestsDataProvider
     {
-        Task<MaintenanceRequestViewModel> CreateForPortfolioAsync(Guid userId, Guid portfolioId, MaintenanceRequestViewModel maintenanceRequest);
-        Task<MaintenanceRequestViewModel> CreateForTenantAsync(ApplicationUser user, MaintenanceRequestViewModel maintenanceRequest);
+        Task<MaintenanceRequestViewModel> CreateAsync(ClaimsPrincipal user, MaintenanceRequestViewModel maintenanceRequest);
 
-        Task<MaintenanceRequestViewModel> UpdateMaintenanceRequestAsync(Guid userId, Guid? portfolioId, MaintenanceRequestViewModel maintenanceRequest);
-        Task<MaintenanceEntryViewModel> UpdateMaintenanceEntryAsync(Guid userId, Guid? portfolioId, MaintenanceEntryViewModel viewModel);
+        Task<MaintenanceRequestViewModel> UpdateMaintenanceRequestAsync(ClaimsPrincipal user, MaintenanceRequestViewModel maintenanceRequest);
+        Task<MaintenanceEntryViewModel> UpdateMaintenanceEntryAsync(ClaimsPrincipal user, MaintenanceEntryViewModel viewModel);
 
-        Task<MaintenanceEntryViewModel> AddMaintenanceEntryAsync(ApplicationUser user, Guid? portfolioId, MaintenanceEntryViewModel maintenanceEntry);
+        Task<MaintenanceEntryViewModel> AddMaintenanceEntryAsync(ClaimsPrincipal user, MaintenanceEntryViewModel maintenanceEntry);
 
-        Task<ICollection<MaintenanceRequestViewModel>> GetMaintenanceRequestsForTenant(Guid userId);
-        Task<ICollection<MaintenanceRequestViewModel>> GetMaintenanceRequests(Guid portfolioId);
+        Task<ICollection<MaintenanceRequestViewModel>> GetMaintenanceRequests(ClaimsPrincipal user);
 
-        Task ArchiveMaintenanceRequest(Guid userId, Guid? portfolioId, Guid maintenanceRequestId);
+        Task ArchiveMaintenanceRequest(ClaimsPrincipal user, Guid maintenanceRequestId);
     }
 }

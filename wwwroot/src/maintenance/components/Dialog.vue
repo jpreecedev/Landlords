@@ -9,6 +9,17 @@
             <h2 class="headline">{{ subTitle }}</h2>
           </v-card-title>
           <v-card-text>
+            <div v-if="properties && properties.length"
+                 class="row">
+              <div class="col-xs-12">
+                <select-list :items="properties"
+                             :rules="[$validation.rules.required]"
+                             label="Property"
+                             v-model="propertyListValue"
+                             required>
+                </select-list>
+              </div>
+            </div>
             <div class="row">
               <div class="col-xs-12">
                 <text-field v-model="titleFieldValue"
@@ -77,6 +88,11 @@ export default {
     'severities': {
       type: Array,
       required: true
+    },
+    'properties': {
+      type: Array,
+      required: false,
+      default: () => []
     }
   },
   data () {
@@ -84,6 +100,7 @@ export default {
       titleFieldValue: null,
       descriptionFieldValue: null,
       severityListValue: null,
+      propertyListValue: null,
       dialog: false,
       errors: []
     }
@@ -102,7 +119,8 @@ export default {
           this.$emit('closed', {
             title: this.titleFieldValue,
             description: this.descriptionFieldValue,
-            severity: this.severityListValue
+            severity: this.severityListValue,
+            propertyDetails: this.propertyListValue
           })
         })
         .catch(() => {

@@ -1,11 +1,11 @@
 ﻿namespace Landlords.Jwt
 {
     using System.Security.Claims;
-    using Model.Database;
+    using Landlords.ViewModels;
 
     public class JwtIdentity
     {
         public ClaimsIdentity ClaimsIdentity { get; set; }
-        public ApplicationUser User { get; set; }
+        public ApplicationUserViewModel User { get; set; }
     }
 }
