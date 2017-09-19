@@ -17,5 +17,9 @@
         public const string NewId = "dd72bd61-f6fc-475e-9961-df25103d2a5e";
         public const string NewRouteId = "FI_New";
         public const string NewDescription = "Create new bank account";
+
+        public const string DeleteAccountId = "5c6c5483-3882-43d9-b190-b2e3e1eb55be";
+        public const string DeleteAccountRouteId = "FI_DeleteAccount";
+        public const string DeleteAccountDescription = "Delete a bank account";
     }
 }

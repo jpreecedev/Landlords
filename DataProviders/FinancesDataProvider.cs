@@ -7,6 +7,7 @@
     using Interfaces;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.EntityFrameworkCore;
+    using MimeKit;
     using ViewModels;
     using Model;
     using Model.DataTypes;
@@ -80,6 +81,16 @@
             {
                 existingEntity.MapFrom(account);
                 Context.Accounts.Update(existingEntity);
+                await Context.SaveChangesAsync();
+            }
+        }
+
+        public async Task DeleteAccountAsync(Guid portfolioId, Guid accountId)
+        {
+            var entity = await Context.Accounts.SingleOrDefaultAsync(c => c.PortfolioId == portfolioId && c.Id == accountId);
+            if (entity != null)
+            {
+                entity.Deleted = DateTime.Now;
                 await Context.SaveChangesAsync();
             }
         }

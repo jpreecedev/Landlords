@@ -10,5 +10,6 @@
         Task<AccountViewModel> GetAccountByIdAsync(Guid portfolioId, Guid accountId);
         Task<AccountViewModel> NewAsync(Guid portfolioId);
         Task UpdateAsync(Guid portfolioId, AccountViewModel account);
+        Task DeleteAccountAsync(Guid portfolioId, Guid accountId);
     }
 }

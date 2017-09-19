@@ -88,6 +88,12 @@
             <v-btn flat v-if="permissions.FI_Update" @click="reset()">Reset</v-btn>
           </div>
         </div>
+        <div class="row mt-5" v-if="permissions.FI_DeleteAccount">
+          <div class="col-xs-12 col-md-4 col-md-offset-8 delete-prompt">
+            <p class="red--text">You can delete this account.<br/>Deleting is permanent and cannot be undone!</p>
+            <v-btn error @click="deleteAccount()" :loading="isDeleting">Delete Account</v-btn>
+          </div>
+        </div>
       </fieldset>
     </form>
   </div>
@@ -102,6 +108,7 @@ export default {
   data () {
     return {
       isSaving: false,
+      isDeleting: false,
       accountTypes: [],
       accountProviders: [],
       account: {
@@ -130,6 +137,17 @@ export default {
       })
   },
   methods: {
+    deleteAccount () {
+      this.isDeleting = true
+      this.$http.delete(`/api/finances/delete-account?entityId=${this.account.id}`)
+        .then(response => {
+          this.isDeleting = false
+          this.$router.push({ name: 'accounts-overview' })
+        })
+        .catch(() => {
+          this.isDeleting = false
+        })
+    },
     validateBeforeSubmit () {
       this.$validation.validate(this.$children)
         .then(() => {

@@ -37,7 +37,7 @@
       </v-btn>
 
       <div class="row mt-5" v-if="permissions.CL_DeleteById">
-        <div class="col-xs-12 col-md-4 col-md-offset-8 delete-checklist">
+        <div class="col-xs-12 col-md-4 col-md-offset-8 delete-prompt">
           <p class="red--text">You can delete this checklist.<br/>Deleting is permanent and cannot be undone!</p>
           <v-btn error @click="deleteChecklist()" :loading="isDeleting">Delete Checklist</v-btn>
         </div>
@@ -167,14 +167,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .delete-checklist {
-    border: 1px solid #f44336;
-    border-radius: 5px;
-    text-align: center;
-    padding: 1rem;
-    background-color: #ffcdd2;
-  }
-
   h1 .btn {
     margin: -0.5rem 0 0 0.5rem;
   }

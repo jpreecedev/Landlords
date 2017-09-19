@@ -52,5 +52,18 @@
 
             return BadRequest(new { Errors = ModelState.ToErrorCollection() });
         }
+
+        [HttpDelete("delete-account"), ValidateAntiForgeryToken, MustOwnAccount]
+        [Permission(Permissions_FI.DeleteAccountId, Permissions_FI.DeleteAccountRouteId, Permissions_FI.DeleteAccountDescription)]
+        public async Task<IActionResult> Delete(Guid entityId)
+        {
+            if (entityId.IsDefault())
+            {
+                return BadRequest("Unable to validate payload");
+            }
+
+            await _financesDataProvider.DeleteAccountAsync(User.GetPortfolioId(), entityId);
+            return Ok();
+        }
     }
 }
