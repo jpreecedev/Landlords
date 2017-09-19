@@ -63,8 +63,8 @@
       <v-btn flat v-if="!auth.isLoggedIn" @click="$router.push('/registration/')" :class="{'active': $route.path.startsWith('/registration')}">
         Log in or Register
       </v-btn>
-      <v-btn flat v-if="permissions.AC_Overview" @click="$router.push('/accounts/')" :class="{'active': $route.path.startsWith('/accounts')}">
-        Accounts
+      <v-btn flat v-if="permissions.FI_Overview" @click="$router.push('/finances/')" :class="{'active': $route.path.startsWith('/finances')}">
+        Finances
       </v-btn>
 
       <v-menu class="calculators" transition="v-slide-y-transition" bottom :nudge-right="90" :nudge-top="-10">

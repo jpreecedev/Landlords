@@ -5,7 +5,7 @@
       <p class="display-2 grey--text text--darken-1">Your bank account or other financial account details</p>
     </header>
     <form @submit.prevent="validateBeforeSubmit" role="form" novalidate>
-      <fieldset :disabled="!permissions.AC_Update">
+      <fieldset :disabled="!permissions.FI_Update">
         <div class="row">
           <div class="col-xs-12 col-md-6">
             <v-card>
@@ -84,8 +84,8 @@
         </div>
         <div class="row mt-3">
           <div class="col-xs-12">
-            <v-btn primary v-if="permissions.AC_Update" type="submit" :loading="isSaving">Save</v-btn>
-            <v-btn flat v-if="permissions.AC_Update" @click="reset()">Reset</v-btn>
+            <v-btn primary v-if="permissions.FI_Update" type="submit" :loading="isSaving">Save</v-btn>
+            <v-btn flat v-if="permissions.FI_Update" @click="reset()">Reset</v-btn>
           </div>
         </div>
       </fieldset>
@@ -98,7 +98,7 @@ import { mapState } from 'vuex'
 import utils from 'utils'
 
 export default {
-  name: 'accountDetails',
+  name: 'account-details',
   data () {
     return {
       isSaving: false,
@@ -123,7 +123,7 @@ export default {
     })
   },
   mounted () {
-    this.$http.get(`/api/accounts/${this.$route.params.accountId}`)
+    this.$http.get(`/api/finances/${this.$route.params.accountId}`)
       .then(response => {
         Object.assign(this, utils.mapEntity(response.data, 'account', false))
         this.$validation.commit(this.$children)
@@ -134,7 +134,7 @@ export default {
       this.$validation.validate(this.$children)
         .then(() => {
           this.isSaving = true
-          this.$http.post(`/api/accounts/`, { ...this.account })
+          this.$http.post(`/api/finances/`, { ...this.account })
             .then(() => {
               this.$router.push({ name: 'accounts-overview' })
             })

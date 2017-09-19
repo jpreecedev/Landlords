@@ -4,7 +4,7 @@
     using System.Threading.Tasks;
     using ViewModels;
 
-    public interface IAccountsDataProvider
+    public interface IFinancesDataProvider
     {
         Task<AccountsOverviewViewModel> GetAccountsOverviewAsync(Guid portfolioId);
         Task<AccountViewModel> GetAccountByIdAsync(Guid portfolioId, Guid accountId);

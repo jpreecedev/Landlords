@@ -3,7 +3,7 @@
     <app-nav></app-nav>
     <app-header v-if="$route.path === '/'"></app-header>
     <notification ref="notification"></notification>
-    <main :class="{ contained: $route.path !== '/', wide: $route.path.indexOf('/accounts/transactions') > -1 }">
+    <main :class="{ contained: $route.path !== '/', wide: $route.path.indexOf('/finances/transactions') > -1 }">
       <transition appear name="fade">
         <router-view></router-view>
       </transition>

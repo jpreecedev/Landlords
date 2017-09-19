@@ -238,7 +238,7 @@
                 .AddScoped<IChecklistDataProvider, ChecklistDataProvider>()
                 .AddScoped<IChecklistInstanceDataProvider, ChecklistInstanceDataProvider>()
                 .AddScoped<IChecklistItemDataProvider, ChecklistItemDataProvider>()
-                .AddScoped<IAccountsDataProvider, AccountsDataProvider>()
+                .AddScoped<IFinancesDataProvider, FinancesDataProvider>()
                 .AddScoped<INotificationsDataProvider, NotificationsDataProvider>()
                 .AddScoped<ITransactionsDataProvider, TransactionsDataProvider>()
                 .AddScoped<IUserRepository, UserRepository>()

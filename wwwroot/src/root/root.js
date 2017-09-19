@@ -15,6 +15,7 @@ import Journeys from 'src/journeys'
 import Dashboard from 'src/dashboard'
 import Checklists from 'src/Checklists'
 import Maintenance from 'src/Maintenance'
+import Finances from 'src/Finances'
 
 import 'src/plugins'
 import 'src/extensions'
@@ -38,6 +39,7 @@ Vue.use(Journeys)
 Vue.use(Dashboard)
 Vue.use(Checklists)
 Vue.use(Maintenance)
+Vue.use(Finances)
 Vue.use(NotificationsService)
 
 new Vue({

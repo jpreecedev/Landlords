@@ -21,7 +21,7 @@
           <td>{{ props.item.type }}</td>
           <td>{{ props.item.providerName }}</td>
           <td>
-            <router-link v-if="permissions.AC_GetById" :to="'/accounts/details/' + props.item.id">
+            <router-link v-if="permissions.FI_GetById" :to="'/finances/account-details/' + props.item.id">
               <v-icon>edit</v-icon>
             </router-link>
           </td>
@@ -30,7 +30,7 @@
           From {{ pageStart }} to {{ pageStop }}
         </template>
       </v-data-table>
-      <v-btn v-if="permissions.AC_New"
+      <v-btn v-if="permissions.FI_New"
              @click="addAccount()"
              class="blue darken-2 action-button"
              absolute dark fab top right>
@@ -39,7 +39,7 @@
     </v-card>
 
     <v-btn primary
-           v-if="permissions.AC_New"
+           v-if="permissions.FI_New"
            class="mt-4 no-left-margin"
            @click="addAccount()"
            :loading="isAddingAccount">Add an account</v-btn>
@@ -49,11 +49,9 @@
 
 <script>
 import { mapState } from 'vuex'
-import AccountDisplay from './components/AccountDisplay'
 
 export default {
   name: 'accounts-overview',
-  components: { AccountDisplay },
   data () {
     return {
       isLoading: false,
@@ -90,7 +88,7 @@ export default {
   },
   mounted () {
     this.isLoading = true
-    this.$http.get('/api/accounts')
+    this.$http.get('/api/finances')
       .then(response => {
         this.data = response.data
       })
@@ -101,7 +99,7 @@ export default {
   methods: {
     addAccount () {
       this.isAddingAccount = true
-      this.$http.post('/api/accounts/new')
+      this.$http.post('/api/finances/new')
         .then(response => {
           this.isAddingAccount = false
           this.$router.push({ name: 'accounts-details', params: { accountId: response.data.id } })

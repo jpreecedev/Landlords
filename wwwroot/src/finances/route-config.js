@@ -1,22 +1,22 @@
-import Accounts from './Accounts'
-import Overview from './Overview'
-import Details from './Details'
+import View from './View'
+import AccountsOverview from './AccountsOverview'
+import AccountDetails from './AccountDetails'
 import Transactions from './Transactions'
 import { guardRoute } from 'root/routes/route-guards'
 
 export const RouteConfig = [
   {
-    path: '/accounts',
+    path: '/finances',
     beforeEnter: guardRoute,
-    component: Accounts,
+    component: View,
     children: [{
       path: '/',
       name: 'accounts-overview',
-      component: Overview
+      component: AccountsOverview
     }, {
-      path: 'details/:accountId',
+      path: 'account-details/:accountId',
       name: 'accounts-details',
-      component: Details
+      component: AccountDetails
     },
     {
       path: 'transactions/:accountId',

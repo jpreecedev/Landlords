@@ -12,9 +12,9 @@
     using Model.DataTypes;
     using Model.Entities;
 
-    public class AccountsDataProvider : BaseDataProvider, IAccountsDataProvider
+    public class FinancesDataProvider : BaseDataProvider, IFinancesDataProvider
     {
-        public AccountsDataProvider(IHostingEnvironment hostingEnvironment, LLDbContext context) : base(hostingEnvironment, context)
+        public FinancesDataProvider(IHostingEnvironment hostingEnvironment, LLDbContext context) : base(hostingEnvironment, context)
         {
         }
 

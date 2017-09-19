@@ -1,6 +1,6 @@
 <template>
   <div class="mt-2">
-    <router-link v-if="permissions.TR_GetById" :to="'/accounts/transactions/' + account.id" class="mt-3 d-block">
+    <router-link v-if="permissions.TR_GetById" :to="'/finances/transactions/' + account.id" class="mt-3 d-block">
       <span>{{ account.name }}</span>
     </router-link>
     <span v-else>{{ account.name }}</span>
