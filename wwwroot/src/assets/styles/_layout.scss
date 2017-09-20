@@ -33,3 +33,77 @@ nav.primary.toolbar {
     padding-left: 0 !important;
   }
 }
+
+table.app-table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 1rem;
+  border-collapse: collapse;
+  background-color: transparent;
+
+  th {
+    text-align: left;
+    padding: .75rem;
+    border-top: 1px solid #eceeef;
+  }
+
+  thead {
+    th {
+      vertical-align: bottom;
+      border-bottom: 2px solid #eceeef;
+      color: #fff;
+      background-color: #2196f3;
+      border-right: 1px solid #eceeef;
+
+      &:last-child {
+        border-right: none;
+      }
+    }
+  }
+
+  tbody {
+    border-right: 1px solid #eaeaea;
+    border-left: 1px solid #eaeaea;
+    border-bottom: 1px solid #eaeaea;
+
+    th {
+      vertical-align: top;
+    }
+
+    td {
+      padding: 8px;
+
+      .input-group--text-field-box {
+        padding-top: 0;
+
+        .input-group__input {
+          background-color: rgba(255, 255, 255, .5) !important;
+          border: 1px solid #f9f9f9;
+          min-height: 35px;
+          border-radius: 0;
+        }
+        .input-group__details {
+          display: none;
+        }
+        &.input-group--multi-line {
+          .input-group__input {
+            padding-top: 0 !important;
+          }
+          textarea {
+            padding-top: 0;
+            padding-left: 16px;
+            padding-right: 16px;
+          }
+        }
+      }
+    }
+
+    tr {
+      background-color: #eee;
+
+      &:hover {
+        background-color: #e6e6e6;
+      }
+    }
+  }
+}

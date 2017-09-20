@@ -21,7 +21,8 @@
                 :auto-grow="multiline"
                 :placeholder="placeholder"
                 :hint="hint"
-                :disabled="disabled">
+                :disabled="disabled"
+                :box="box">
   </v-text-field>
 </template>
 
@@ -74,6 +75,11 @@
       hint: {
         type: String,
         default: null,
+        required: false
+      },
+      box: {
+        type: Boolean,
+        default: false,
         required: false
       }
     },
