@@ -52,6 +52,12 @@
 
         DbSet<MaintenanceEntry> MaintenanceEntries { get; set; }
 
+        DbSet<Invoice> Invoices { get; set; }
+
+        DbSet<InvoiceLine> InvoiceLines { get; set; }
+
+        DbSet<Supplier> Suppliers { get; set; }
+
         DbSet<T> Set<T>() where T : class;
     }
 }

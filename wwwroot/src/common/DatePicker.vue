@@ -1,7 +1,11 @@
 <template>
   <v-menu ref="field"
           lazy
-          :nudge-left="100">
+          offset-y
+          full-width
+          :nudge-left="40"
+          :nudge-top="60"
+          max-width="290px">
     <v-text-field slot="activator"
                   @input="updateField"
                   :label="label"
@@ -12,8 +16,8 @@
                   readonly>
     </v-text-field>
     <v-date-picker :value="value"
-                    @input="updateField"
-                    scrollable>
+                   @input="updateField"
+                   scrollable>
     </v-date-picker>
   </v-menu>
 </template>

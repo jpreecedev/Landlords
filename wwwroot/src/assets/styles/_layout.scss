@@ -65,6 +65,7 @@ table.app-table {
     border-right: 1px solid #eaeaea;
     border-left: 1px solid #eaeaea;
     border-bottom: 1px solid #eaeaea;
+    font-size: 16px;
 
     th {
       vertical-align: top;
@@ -75,6 +76,8 @@ table.app-table {
 
       .input-group--text-field-box {
         padding-top: 0;
+        border: 1px solid #dfe0e1;
+        background-color: #f9f9f9!important;
 
         .input-group__input {
           background-color: rgba(255, 255, 255, .5) !important;
@@ -89,6 +92,7 @@ table.app-table {
           .input-group__input {
             padding-top: 0 !important;
           }
+
           textarea {
             padding-top: 0;
             padding-left: 16px;
@@ -99,10 +103,10 @@ table.app-table {
     }
 
     tr {
-      background-color: #eee;
+      background-color: #fff;
 
       &:hover {
-        background-color: #e6e6e6;
+        background-color: rgba(0, 0, 0, .03);
       }
     }
   }

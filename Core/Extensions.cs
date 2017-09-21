@@ -250,6 +250,7 @@
                 .AddScoped<IShortlistedPropertiesDataProvider, ShortlistedPropertiesDataProvider>()
                 .AddScoped<IConversationDataProvider, ConversationDataProvider>()
                 .AddScoped<IMaintenanceRequestsDataProvider, MaintenanceRequestsDataProvider>()
+                .AddScoped<IInvoicesDataProvider, InvoicesDataProvider>()
                 .AddTransient<IEmailSender, EmailSender>();
 
             return serviceCollection;

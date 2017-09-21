@@ -47,10 +47,10 @@
                 .HasMany(c => (List<TenantAddress>)c.Addresses);
 
             modelBuilder.Entity<Tenant>()
-                .HasMany(c => (List<TenantContact>) c.Contacts);
+                .HasMany(c => (List<TenantContact>)c.Contacts);
 
             modelBuilder.Entity<MaintenanceRequest>()
-                .HasMany(c => (List<MaintenanceEntry>) c.Entries);
+                .HasMany(c => (List<MaintenanceEntry>)c.Entries);
 
             base.OnModelCreating(modelBuilder);
         }
@@ -81,5 +81,8 @@
         public DbSet<ConversationMessage> ConversationMessages { get; set; }
         public DbSet<MaintenanceRequest> MaintenanceRequests { get; set; }
         public DbSet<MaintenanceEntry> MaintenanceEntries { get; set; }
+        public DbSet<Invoice> Invoices { get; set; }
+        public DbSet<InvoiceLine> InvoiceLines { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
     }
 }

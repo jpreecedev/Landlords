@@ -3,6 +3,7 @@ import AccountsOverview from './AccountsOverview'
 import AccountDetails from './AccountDetails'
 import Transactions from './Transactions'
 import Invoice from './Invoice'
+import InvoicesOverview from './InvoicesOverview'
 import { guardRoute } from 'root/routes/route-guards'
 
 export const RouteConfig = [
@@ -28,6 +29,11 @@ export const RouteConfig = [
       path: 'invoice/:invoiceId?',
       name: 'invoice',
       component: Invoice
+    },
+    {
+      path: 'invoices',
+      name: 'invoices',
+      component: InvoicesOverview
     }]
   }
 ]
