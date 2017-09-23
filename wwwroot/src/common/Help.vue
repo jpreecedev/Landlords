@@ -17,16 +17,15 @@
     name: 'help',
     props: {
       'title': {
-       type: String,
-       default: null
+        type: String,
+        default: null
       },
       'text': {
-       type: String,
-       default: null
+        type: String,
+        default: null
       }
     }
   }
-
 </script>
 
 <style lang="scss" scoped>
@@ -54,5 +53,4 @@
   p {
     margin-bottom: 0;
   }
-
 </style>

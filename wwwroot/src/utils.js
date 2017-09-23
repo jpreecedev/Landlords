@@ -1,5 +1,15 @@
 module.exports = {
 
+  createNewGuid () {
+    function s4 () {
+      return Math.floor((1 + Math.random()) * 0x10000)
+        .toString(16)
+        .substring(1)
+    }
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+      s4() + '-' + s4() + s4() + s4()
+  },
+
   /**
    * Get the error from a response.
    *
@@ -21,7 +31,10 @@ module.exports = {
     if (!response) {
       return []
     }
-    let result = { status, errors: [] }
+    let result = {
+      status,
+      errors: []
+    }
 
     if (response.data && response.data.errors) {
       response.data.errors.forEach(error => {
@@ -49,7 +62,10 @@ module.exports = {
           messages.push(validationMessage)
         })
 
-        result.errors.push({ key, messages })
+        result.errors.push({
+          key,
+          messages
+        })
       })
     }
     if (response.status === 500 && response.statusText) {

@@ -8,7 +8,7 @@
                         v-model="item.isCompleted"
                         class="accordion-checkbox"
                         color="primary"
-                        @click.stop="newValue => { toggleCompleted(newValue, item); }">
+                        @click.stop="newValue => { toggleCompleted(newValue, item) }">
             </v-checkbox>
           </div>
           <div class="accordion col">

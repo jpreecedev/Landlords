@@ -115,7 +115,7 @@ export default {
       })
   },
   methods: {
-    addInvoice() {
+    addInvoice () {
       this.$router.push({ name: 'invoice' })
     }
   }

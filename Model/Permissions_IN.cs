@@ -7,7 +7,7 @@
         public const string GetDescription = "Get a list of invoices";
 
         public const string GetById = "f93836fe-14da-4db4-a42e-bbc0aca119c9";
-        public const string GetByRouteId = "IN_SaveInvoice";
+        public const string GetByRouteId = "IN_GetById";
         public const string GetByDescription = "Get a specific invoice";
 
         public const string SaveInvoiceId = "34a48375-3b87-4407-8fd2-f5b44bd68cb9";

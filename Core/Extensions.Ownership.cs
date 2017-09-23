@@ -76,5 +76,18 @@
                 .Where(c => c.ApplicationUserPortfolio.UserId == userId && c.ApplicationUserPortfolio.PortfolioId == portfolioId && c.Invoice.Id == invoiceId)
                 .AnyAsync();
         }
+
+        public static async Task<bool> OwnsSupplierAsync(this Guid userId, Guid portfolioId, Guid supplierId, ILLDbContext context)
+        {
+            if (userId.IsDefault() || portfolioId.IsDefault() || supplierId.IsDefault() || context == null)
+            {
+                return false;
+            }
+
+            return await context.ApplicationUserPortfolios.AsNoTracking()
+                .Join(context.Suppliers, aup => aup.PortfolioId, supplier => supplier.PortfolioId, (portfolio, supplier) => new { ApplicationUserPortfolio = portfolio, Supplier = supplier })
+                .Where(c => c.ApplicationUserPortfolio.UserId == userId && c.ApplicationUserPortfolio.PortfolioId == portfolioId && c.Supplier.Id == supplierId)
+                .AnyAsync();
+        }
     }
 }

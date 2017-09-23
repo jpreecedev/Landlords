@@ -14,11 +14,12 @@
           <v-card-text>
             <div class="row">
               <div class="col-xs-12 col-md-4">
-                <select-list :items="suppliers"
-                              v-model="invoice.supplier"
-                              label="Supplier"
-                              :rules="[$validation.rules.required]">
-                </select-list>
+                <supplier v-model="invoice.supplier"
+                          @supplierAdded = "supplierAdded"
+                          @input="supplierChanged"
+                          :canAddSupplier = "permissions.SU_SaveSupplier == true"
+                          :suppliers="suppliers">
+                </supplier>
               </div>
               <div class="col-xs-12 col-md-4">
                 <date-picker v-model="invoice.date"
@@ -36,14 +37,13 @@
             <div class="row">
               <div class="col-xs-12 col-md-offset-4 col-md-4">
                 <date-picker v-model="invoice.dueDate"
-                            label="Invoice date"
+                            label="Due date"
                             :rules="[$validation.rules.required]">
                 </date-picker>
               </div>
               <div class="col-xs-12 col-md-4">
                 <text-field v-model="invoice.poNumber"
-                            label="Purchase Order Number"
-                            :rules="[$validation.rules.required]">
+                            label="Purchase Order Number">
                 </text-field>
               </div>
             </div>
@@ -63,14 +63,12 @@
                     :key="line.id">
                   <td>
                     <text-field v-model="line.item"
-                                @blur="addMoreLines()"
                                 :rules="[$validation.rules.required]"
                                 :box="true">
                     </text-field>
                   </td>
                   <td>
                     <text-field v-model="line.description"
-                                @blur="addMoreLines()"
                                 :multiline="true"
                                 :rows="1"
                                 :rules="[$validation.rules.required]"
@@ -79,7 +77,6 @@
                   </td>
                   <td>
                     <text-field v-model="line.unitCost"
-                                @blur="addMoreLines()"
                                 :value="line.unitCost"
                                 :rules="[$validation.rules.required, $validation.rules.min_value(line.unitCost, 0), $validation.rules.max_value(line.unitCost, 1000000)]"
                                 :box="true"
@@ -92,7 +89,6 @@
                   </td>
                   <td>
                     <text-field v-model="line.quantity"
-                                @blur="addMoreLines()"
                                 :value="line.quantity"
                                 :rules="[$validation.rules.required, $validation.rules.min_value(line.quantity, 0), $validation.rules.max_value(line.quantity, 10000)]"
                                 :box="true"
@@ -161,12 +157,12 @@
   import utils from 'utils'
 
   const defaultLine = {
-    id: '1',
+    id: utils.createNewGuid(),
     item: null,
     description: null,
     unitCost: 0,
     quantity: 1
-  };
+  }
 
   export default {
     name: 'invoice',
@@ -197,43 +193,55 @@
         this.$http.get(`/api/finances/invoices/${this.$route.params.invoiceId}`)
           .then(response => {
             Object.assign(this, utils.mapEntity(response.data, 'invoice', false))
+          })
+          .finally(() => {
             this.$validation.commit(this.$children)
           })
+      } else {
+        this.$validation.commit(this.$children)
       }
+
+      this.$http.get(`/api/finances/suppliers`)
+        .then(response => {
+          this.suppliers = response.data
+        })
     },
     methods: {
-      getLineTotal(line) {
+      getLineTotal (line) {
         return line.unitCost * line.quantity
       },
-      getSubTotal() {
-        let subTotal = 0;
+      getSubTotal () {
+        let subTotal = 0
         this.invoice.lines.forEach(line => {
           subTotal += this.getLineTotal(line)
         })
         return subTotal
       },
-      getTax() {
+      getTax () {
         let tax = 0
         this.invoice.lines.forEach(line => {
           tax += this.getLineTotal(line) * 0.2
         })
         return tax
       },
-      getBalanceDue() {
+      getBalanceDue () {
         return this.getSubTotal() + this.getTax()
       },
-      isLineEmpty(line) {
-        return !(line.item || line.description || line.unitCost || line.quantity !== 1);
+      isLineEmpty (line) {
+        return !(line.item || line.description || line.unitCost || line.quantity !== 1)
       },
-      addMoreLines() {
-        let lastLine = this.invoice.lines[this.invoice.lines.length - 1];
-        if (lastLine && !this.isLineEmpty(lastLine)) {
-          let newLine = Object.assign({}, defaultLine, {
-            id: String(this.invoice.lines.length + 1)
-          })
+      addMoreLines () {
+        let newLine = Object.assign({}, defaultLine, {
+          id: String(this.invoice.lines.length + 1)
+        })
 
-          this.invoice.lines.push(newLine)
-        }
+        this.invoice.lines.push(newLine)
+      },
+      supplierAdded (newSupplier) {
+        this.suppliers.push(newSupplier)
+      },
+      supplierChanged (newSupplier) {
+        this.invoice.supplier = newSupplier
       },
       validateBeforeSubmit () {
         this.$validation.validate(this.$children)
@@ -262,7 +270,6 @@
       }
     }
   }
-
 </script>
 
 <style lang="scss" scoped>

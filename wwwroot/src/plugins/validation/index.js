@@ -47,6 +47,7 @@ Vue.prototype.$validation = {
       })
 
       if (results) {
+        console.log(results)
         results.forEach($element => $element.validate(true))
         success = results.every($element => $element.isValid)
       }

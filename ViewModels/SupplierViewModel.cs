@@ -26,9 +26,12 @@
             MainContactNumber = supplier.MainContactNumber;
             SecondaryContactNumber = supplier.SecondaryContactNumber;
             EmailAddress = supplier.EmailAddress;
+            PortfolioId = supplier.PortfolioId;
         }
 
         public Guid Id { get; set; }
+
+        public Guid PortfolioId { get; set; }
 
         public string Name { get; set; }
 
@@ -48,9 +51,8 @@
 
         public string EmailAddress { get; set; }
 
-        public override string ToString()
-        {
-            return Name;
-        }
+        public string Text => Name;
+
+        public string Value => Id.ToString();
     }
 }

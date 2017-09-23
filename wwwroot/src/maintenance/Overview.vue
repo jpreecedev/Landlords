@@ -134,22 +134,22 @@ export default {
       this.isAddEventDialogOpen = true
     },
     archiveMaintenanceRequest (maintenanceRequest) {
-        if (maintenanceRequest) {
-          this.isArchiving = true
+      if (maintenanceRequest) {
+        this.isArchiving = true
 
-          this.$http.post(`/api/maintenancerequests/archive/${maintenanceRequest.id}`)
-            .then(response => {
-              this.maintenanceRequests.splice(this.maintenanceRequests.indexOf(maintenanceRequest), 1)
-            })
-            .finally(() => {
-              this.isArchiving = false
+        this.$http.post(`/api/maintenancerequests/archive/${maintenanceRequest.id}`)
+          .then(response => {
+            this.maintenanceRequests.splice(this.maintenanceRequests.indexOf(maintenanceRequest), 1)
+          })
+          .finally(() => {
+            this.isArchiving = false
 
-              if (this.maintenanceRequests.length) {
-                this.selectedMaintenanceRequest = this.maintenanceRequests[this.maintenanceRequests.length - 1]
-              } else {
-                this.selectedMaintenanceRequest = null
-              }
-            })
+            if (this.maintenanceRequests.length) {
+              this.selectedMaintenanceRequest = this.maintenanceRequests[this.maintenanceRequests.length - 1]
+            } else {
+              this.selectedMaintenanceRequest = null
+            }
+          })
       }
     },
     closeMaintenanceDialog (newMaintenaceRequest) {

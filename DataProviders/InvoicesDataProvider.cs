@@ -38,7 +38,6 @@
                     select new InvoiceViewModel
                     {
                         Id = invoice.Id,
-                        Supplier = new  SupplierViewModel(supplier),
                         Date = invoice.Date,
                         Total = invoice.Total,
                         VAT = invoice.VAT,
@@ -46,6 +45,20 @@
                         Number = invoice.Number,
                         PoNumber = invoice.PoNumber,
                         SubTotal = invoice.SubTotal,
+                        Supplier = new SupplierViewModel
+                        {
+                            Id = supplier.Id,
+                            Name = supplier.Name,
+                            EmailAddress = supplier.EmailAddress,
+                            PortfolioId = supplier.PortfolioId,
+                            SecondaryContactNumber = supplier.SecondaryContactNumber,
+                            AddressLine1 = supplier.AddressLine1,
+                            AddressLine3 = supplier.AddressLine3,
+                            AddressLine2 = supplier.AddressLine2,
+                            TownOrCity = supplier.TownOrCity,
+                            PostCode = supplier.PostCode,
+                            MainContactNumber = supplier.MainContactNumber
+                        },
                         Lines = invoiceLinesJoin.Select(c => new InvoiceLineViewModel
                         {
                             Id = c.Id,
@@ -70,7 +83,6 @@
                     select new InvoiceViewModel
                     {
                         Id = invoice.Id,
-                        Supplier = new SupplierViewModel(supplier),
                         Date = invoice.Date,
                         Total = invoice.Total,
                         VAT = invoice.VAT,
@@ -78,6 +90,20 @@
                         Number = invoice.Number,
                         PoNumber = invoice.PoNumber,
                         SubTotal = invoice.SubTotal,
+                        Supplier = new SupplierViewModel
+                        {
+                            Id = supplier.Id,
+                            Name = supplier.Name,
+                            EmailAddress = supplier.EmailAddress,
+                            PortfolioId = supplier.PortfolioId,
+                            SecondaryContactNumber = supplier.SecondaryContactNumber,
+                            AddressLine1 = supplier.AddressLine1,
+                            AddressLine3 = supplier.AddressLine3,
+                            AddressLine2 = supplier.AddressLine2,
+                            TownOrCity = supplier.TownOrCity,
+                            PostCode = supplier.PostCode,
+                            MainContactNumber = supplier.MainContactNumber
+                        },
                         Lines = invoiceLinesJoin.Select(c => new InvoiceLineViewModel
                         {
                             Id = c.Id,
