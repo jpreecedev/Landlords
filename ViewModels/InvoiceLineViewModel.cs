@@ -31,12 +31,22 @@
 
         public string Description { get; set; }
 
-        public string UnitCost { get; set; }
+        public decimal UnitCost { get; set; }
 
-        public string Quantity { get; set; }
+        public decimal Quantity { get; set; }
 
         public decimal VAT { get; set; }
 
         public decimal Total { get; set; }
+
+        public bool IsDeleted { get; set; }
+
+        public bool IsLineEmpty()
+        {
+            return string.IsNullOrEmpty(Item) &&
+                   string.IsNullOrEmpty(Description) &&
+                   UnitCost == 0 &&
+                   Quantity == 0;
+        }
     }
 }

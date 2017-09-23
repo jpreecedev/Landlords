@@ -7,148 +7,154 @@
     </header>
 
     <loader :loading="isLoading"></loader>
+    <transition appear name="fade">
+      <form @submit.prevent="validateBeforeSubmit" role="form" novalidate
+            v-if="!isLoading">
+        <fieldset :disabled="!permissions.IN_SaveInvoice">
+          <v-card>
+            <v-card-text>
+              <div class="row">
+                <div class="col-xs-12 col-md-4">
+                  <supplier v-model="invoice.supplier"
+                            @supplierAdded = "supplierAdded"
+                            @input="supplierChanged"
+                            :canAddSupplier = "permissions.SU_SaveSupplier == true"
+                            :suppliers="suppliers">
+                  </supplier>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                  <date-picker v-model="invoice.date"
+                              label="Invoice date"
+                              :rules="[$validation.rules.required]">
+                  </date-picker>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                  <text-field v-model="invoice.number"
+                              label="Invoice Number"
+                              :rules="[$validation.rules.required]">
+                  </text-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-md-offset-4 col-md-4">
+                  <date-picker v-model="invoice.dueDate"
+                              label="Due date"
+                              :rules="[$validation.rules.required]">
+                  </date-picker>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                  <text-field v-model="invoice.poNumber"
+                              label="Purchase Order Number">
+                  </text-field>
+                </div>
+              </div>
 
-    <form @submit.prevent="validateBeforeSubmit" role="form" novalidate>
-      <fieldset :disabled="!permissions.IN_SaveInvoice">
-        <v-card>
-          <v-card-text>
-            <div class="row">
-              <div class="col-xs-12 col-md-4">
-                <supplier v-model="invoice.supplier"
-                          @supplierAdded = "supplierAdded"
-                          @input="supplierChanged"
-                          :canAddSupplier = "permissions.SU_SaveSupplier == true"
-                          :suppliers="suppliers">
-                </supplier>
-              </div>
-              <div class="col-xs-12 col-md-4">
-                <date-picker v-model="invoice.date"
-                            label="Invoice date"
-                            :rules="[$validation.rules.required]">
-                </date-picker>
-              </div>
-              <div class="col-xs-12 col-md-4">
-                <text-field v-model="invoice.number"
-                            label="Invoice Number"
-                            :rules="[$validation.rules.required]">
-                </text-field>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-12 col-md-offset-4 col-md-4">
-                <date-picker v-model="invoice.dueDate"
-                            label="Due date"
-                            :rules="[$validation.rules.required]">
-                </date-picker>
-              </div>
-              <div class="col-xs-12 col-md-4">
-                <text-field v-model="invoice.poNumber"
-                            label="Purchase Order Number">
-                </text-field>
-              </div>
-            </div>
+              <table class="app-table elevation-1">
+                <thead>
+                  <tr>
+                    <th>Item</th>
+                    <th>Description</th>
+                    <th>Unit Cost</th>
+                    <th>Quantity</th>
+                    <th>Line Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="line in invoice.lines"
+                      :key="line.id">
+                    <td>
+                      <text-field v-model="line.item"
+                                  @blur="manageAdditionalLines()"
+                                  :rules="[$validation.rules.required]"
+                                  :box="true">
+                      </text-field>
+                    </td>
+                    <td>
+                      <text-field v-model="line.description"
+                                  @blur="manageAdditionalLines()"
+                                  :multiline="true"
+                                  :rows="1"
+                                  :rules="[$validation.rules.required]"
+                                  :box="true">
+                      </text-field>
+                    </td>
+                    <td>
+                      <text-field v-model="line.unitCost"
+                                  @blur="manageAdditionalLines()"
+                                  :value="line.unitCost"
+                                  :rules="[$validation.rules.required, $validation.rules.min_value(line.unitCost, 0), $validation.rules.max_value(line.unitCost, 1000000)]"
+                                  :box="true"
+                                  class="text-right"
+                                  type="number"
+                                  min="0"
+                                  max="1000000"
+                                  step="1">
+                      </text-field>
+                    </td>
+                    <td>
+                      <text-field v-model="line.quantity"
+                                  @blur="manageAdditionalLines()"
+                                  :value="line.quantity"
+                                  :rules="[$validation.rules.required, $validation.rules.min_value(line.quantity, 0), $validation.rules.max_value(line.quantity, 10000)]"
+                                  :box="true"
+                                  class="text-right"
+                                  type="number"
+                                  min="0"
+                                  max="10000"
+                                  step="1">
+                      </text-field>
+                    </td>
+                    <td class="text-right">
+                      {{ getLineTotal(line) | currency('£') }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
 
-            <table class="app-table elevation-1">
-              <thead>
-                <tr>
-                  <th>Item</th>
-                  <th>Description</th>
-                  <th>Unit Cost</th>
-                  <th>Quantity</th>
-                  <th>Line Total</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="line in invoice.lines"
-                    :key="line.id">
-                  <td>
-                    <text-field v-model="line.item"
-                                :rules="[$validation.rules.required]"
-                                :box="true">
-                    </text-field>
-                  </td>
-                  <td>
-                    <text-field v-model="line.description"
-                                :multiline="true"
-                                :rows="1"
-                                :rules="[$validation.rules.required]"
-                                :box="true">
-                    </text-field>
-                  </td>
-                  <td>
-                    <text-field v-model="line.unitCost"
-                                :value="line.unitCost"
-                                :rules="[$validation.rules.required, $validation.rules.min_value(line.unitCost, 0), $validation.rules.max_value(line.unitCost, 1000000)]"
-                                :box="true"
-                                class="text-right"
-                                type="number"
-                                min="0"
-                                max="1000000"
-                                step="1">
-                    </text-field>
-                  </td>
-                  <td>
-                    <text-field v-model="line.quantity"
-                                :value="line.quantity"
-                                :rules="[$validation.rules.required, $validation.rules.min_value(line.quantity, 0), $validation.rules.max_value(line.quantity, 10000)]"
-                                :box="true"
-                                class="text-right"
-                                type="number"
-                                min="0"
-                                max="10000"
-                                step="1">
-                    </text-field>
-                  </td>
-                  <td class="text-right">
-                    {{ getLineTotal(line) | currency('£') }}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-
-            <div class="row">
-              <div class="col-xs-12 col-md-offset-8 col-md-4 sub-total">
-                <div class="row">
-                  <div class="col-xs-6">
-                    Sub Total
+              <div class="row">
+                <div class="col-xs-12 col-md-offset-8 col-md-4 sub-total">
+                  <div class="row">
+                    <div class="col-xs-6">
+                      Sub Total
+                    </div>
+                    <div class="col-xs-6 text-right">
+                      {{ getSubTotal() | currency('£') }}
+                    </div>
                   </div>
-                  <div class="col-xs-6 text-right">
-                    {{ getSubTotal() | currency('£') }}
+                </div>
+                <div class="col-xs-12 col-md-offset-8 col-md-4 tax">
+                  <div class="row">
+                    <div class="col-xs-6">
+                      Tax
+                    </div>
+                    <div class="col-xs-6 text-right">
+                      {{ getVAT() | currency('£') }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-md-offset-8 col-md-4 balance-due">
+                  <div class="row">
+                    <div class="col-xs-6">
+                      Balance due
+                    </div>
+                    <div class="col-xs-6 text-right">
+                      {{ getBalanceDue() | currency('£') }}
+                    </div>
                   </div>
                 </div>
               </div>
-              <div class="col-xs-12 col-md-offset-8 col-md-4 tax">
-                <div class="row">
-                  <div class="col-xs-6">
-                    Tax
-                  </div>
-                  <div class="col-xs-6 text-right">
-                    {{ getTax() | currency('£') }}
-                  </div>
-                </div>
-              </div>
-              <div class="col-xs-12 col-md-offset-8 col-md-4 balance-due">
-                <div class="row">
-                  <div class="col-xs-6">
-                    Balance due
-                  </div>
-                  <div class="col-xs-6 text-right">
-                    {{ getBalanceDue() | currency('£') }}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </v-card-text>
-        </v-card>
+            </v-card-text>
+          </v-card>
 
-        <div class="row mt-3">
-          <div class="col-xs-12">
-            <v-btn primary class="no-left-margin" v-if="permissions.IN_SaveInvoice" type="submit" :loading="isSaving">Save</v-btn>
-            <v-btn flat  v-if="permissions.IN_SaveInvoice" @click="reset()">Reset</v-btn>
+          <div class="row mt-3">
+            <div class="col-xs-12">
+              <v-btn primary class="no-left-margin" v-if="permissions.IN_SaveInvoice" type="submit" :loading="isSaving">Save</v-btn>
+              <v-btn flat  v-if="permissions.IN_SaveInvoice" @click="reset()">Reset</v-btn>
+            </div>
           </div>
-        </div>
-      </fieldset>
-    </form>
+        </fieldset>
+      </form>
+    </transition>
   </div>
 </template>
 
@@ -156,12 +162,14 @@
   import { mapState } from 'vuex'
   import utils from 'utils'
 
-  const defaultLine = {
-    id: utils.createNewGuid(),
-    item: null,
-    description: null,
-    unitCost: 0,
-    quantity: 1
+  const getDefaultLine = () => {
+    return {
+      id: utils.createNewGuid(),
+      item: null,
+      description: null,
+      unitCost: 0,
+      quantity: 1
+    }
   }
 
   export default {
@@ -178,7 +186,8 @@
           dueDate: null,
           poNumber: null,
           lines: [
-            Object.assign({}, defaultLine)
+            Object.assign({}, getDefaultLine()),
+            Object.assign({}, getDefaultLine())
           ]
         }
       }
@@ -190,12 +199,15 @@
     },
     mounted () {
       if (this.$route.params.invoiceId) {
+        this.isLoading = true
         this.$http.get(`/api/finances/invoices/${this.$route.params.invoiceId}`)
           .then(response => {
             Object.assign(this, utils.mapEntity(response.data, 'invoice', false))
+            this.manageAdditionalLines()
           })
           .finally(() => {
             this.$validation.commit(this.$children)
+            this.isLoading = false
           })
       } else {
         this.$validation.commit(this.$children)
@@ -208,34 +220,48 @@
     },
     methods: {
       getLineTotal (line) {
-        return line.unitCost * line.quantity
+        line.total = Number.parseFloat(line.unitCost) * Number.parseFloat(line.quantity)
+        return line.total
       },
       getSubTotal () {
         let subTotal = 0
         this.invoice.lines.forEach(line => {
-          subTotal += this.getLineTotal(line)
+          line.subTotal = this.getLineTotal(line)
+          subTotal += line.subTotal
         })
+        this.invoice.subTotal = subTotal
         return subTotal
       },
-      getTax () {
-        let tax = 0
+      getVAT () {
+        let vat = 0
         this.invoice.lines.forEach(line => {
-          tax += this.getLineTotal(line) * 0.2
+          line.vat = this.getLineTotal(line) * 0.2
+          vat += line.vat
         })
-        return tax
+        this.invoice.vat = vat
+        return vat
       },
       getBalanceDue () {
-        return this.getSubTotal() + this.getTax()
+        let balanceDue = this.getSubTotal() + this.getVAT()
+        this.invoice.total = balanceDue
+        return balanceDue
       },
       isLineEmpty (line) {
-        return !(line.item || line.description || line.unitCost || line.quantity !== 1)
+        return !(line.item || line.description || line.unitCost || line.quantity != 1) /* eslint eqeqeq: "off" */
       },
-      addMoreLines () {
-        let newLine = Object.assign({}, defaultLine, {
-          id: String(this.invoice.lines.length + 1)
-        })
+      manageAdditionalLines () {
+        if (this.invoice.lines.length === 1) {
+          this.invoice.lines.push(getDefaultLine())
+        }
 
-        this.invoice.lines.push(newLine)
+        let lastLine = this.invoice.lines[this.invoice.lines.length - 1]
+        let secondLastLine = this.invoice.lines[this.invoice.lines.length - 2]
+
+        if (!this.isLineEmpty(lastLine)) {
+          this.invoice.lines.push(getDefaultLine())
+        } else if (this.isLineEmpty(lastLine) && this.isLineEmpty(secondLastLine)) {
+          this.invoice.lines.splice(this.invoice.lines.length - 1, 1)
+        }
       },
       supplierAdded (newSupplier) {
         this.suppliers.push(newSupplier)

@@ -12,9 +12,9 @@
 
         public string Description { get; set; }
 
-        public string UnitCost { get; set; }
+        public decimal UnitCost { get; set; }
 
-        public string Quantity { get; set; }
+        public decimal Quantity { get; set; }
 
         public decimal VAT { get; set; }
 

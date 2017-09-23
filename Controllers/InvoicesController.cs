@@ -39,7 +39,14 @@
         {
             if (ModelState.IsValid)
             {
-                await _invoicesDataProvider.UpdateAsync(User.GetPortfolioId(), value);
+                if (value.Id.IsDefault())
+                {
+                    await _invoicesDataProvider.AddAsync(User.GetPortfolioId(), value);
+                }
+                else
+                {
+                    await _invoicesDataProvider.UpdateAsync(User.GetPortfolioId(), value);
+                }
                 return Ok();
             }
 

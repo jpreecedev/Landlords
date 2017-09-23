@@ -8,6 +8,7 @@
     using Interfaces;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.EntityFrameworkCore;
+    using Model.Entities;
     using ViewModels;
 
     public class InvoicesDataProvider : BaseDataProvider, IInvoicesDataProvider
@@ -118,15 +119,99 @@
                 .SingleAsync();
         }
 
+        public async Task AddAsync(Guid portfolioId, InvoiceViewModel invoice)
+        {
+            var entity = new Invoice
+            {
+                Created = DateTime.Now,
+                Date = invoice.Date,
+                DueDate = invoice.DueDate,
+                Number = invoice.Number,
+                PoNumber = invoice.PoNumber,
+                PortfolioId = portfolioId,
+                SubTotal = invoice.SubTotal,
+                Total = invoice.Total,
+                VAT = invoice.VAT,
+                SupplierId = invoice.Supplier.Id,
+            };
+
+            await Context.Invoices.AddAsync(entity);
+
+            var invoiceLines = new List<InvoiceLine>();
+            foreach (var invoiceLineViewModel in invoice.Lines)
+            {
+                invoiceLines.Add(new InvoiceLine
+                {
+                    Invoice = entity,
+                    Item = invoiceLineViewModel.Item,
+                    Created = DateTime.Now,
+                    Description = invoiceLineViewModel.Description,
+                    Quantity = invoiceLineViewModel.Quantity,
+                    Total = invoiceLineViewModel.Total,
+                    UnitCost = invoiceLineViewModel.UnitCost,
+                    VAT = invoiceLineViewModel.VAT
+                });
+            }
+            entity.Lines = invoiceLines;
+
+            var supplier = await GetSupplierAsync(portfolioId, invoice);
+            entity.Supplier = supplier;
+
+            if (supplier.IsNewEntity)
+            {
+                await Context.Suppliers.AddAsync(supplier);
+            }
+
+            entity.Supplier = supplier;
+            await Context.SaveChangesAsync();
+        }
+
         public async Task UpdateAsync(Guid portfolioId, InvoiceViewModel invoice)
         {
-            var existingEntity = await Context.Invoices.SingleOrDefaultAsync(c => c.PortfolioId == portfolioId && c.Id == invoice.Id && !c.IsDeleted);
+            var existingInvoice = await Context.Invoices.SingleAsync(c => c.PortfolioId == portfolioId && c.Id == invoice.Id);
+            existingInvoice.MapFrom(invoice);
+
+            existingInvoice.Supplier.MapFrom(invoice.Supplier);
+
+            foreach (var invoiceLineViewModel in invoice.Lines)
+            {
+                var existingLine = existingInvoice.Lines.SingleOrDefault(c => c.InvoiceId == existingInvoice.Id && c.Id == invoiceLineViewModel.Id);
+                if (existingLine != null)
+                {
+                    existingLine.MapFrom(invoiceLineViewModel);
+
+                    if (invoiceLineViewModel.IsDeleted)
+                    {
+                        existingLine.Deleted = DateTime.Now;
+                    }
+                }
+            }
+        }
+
+        private async Task<Supplier> GetSupplierAsync(Guid portfolioId, InvoiceViewModel invoice)
+        {
+            var existingEntity = await Context.Suppliers.SingleOrDefaultAsync(c => c.PortfolioId == portfolioId && c.Id == invoice.Supplier.Id);
             if (existingEntity != null)
             {
-                existingEntity.MapFrom(invoice);
-                Context.Invoices.Update(existingEntity);
-                await Context.SaveChangesAsync();
+                return existingEntity;
             }
+
+            var supplier = invoice.Supplier;
+
+            return new Supplier
+            {
+                Created = DateTime.Now,
+                AddressLine1 = supplier.AddressLine1,
+                AddressLine2 = supplier.AddressLine2,
+                AddressLine3 = supplier.AddressLine3,
+                EmailAddress = supplier.EmailAddress,
+                MainContactNumber = supplier.MainContactNumber,
+                Name = supplier.Name,
+                PortfolioId = portfolioId,
+                PostCode = supplier.PostCode,
+                SecondaryContactNumber = supplier.SecondaryContactNumber,
+                TownOrCity = supplier.TownOrCity
+            };
         }
     }
 }

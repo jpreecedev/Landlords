@@ -16,19 +16,19 @@
         </template>
         <template slot="items" scope="props">
           <td>
-            {{ props.item.supplier }}
+            {{ props.item.supplier.name }}
           </td>
           <td>
             {{ props.item.number }}
           </td>
           <td>
-            {{ props.item.date | formateDate }}
+            {{ props.item.date | formatDate }}
           </td>
           <td>
             {{ props.item.poNumber }}
           </td>
           <td>
-            {{ props.item.total | currency }}
+            {{ props.item.total | currency('£') }}
           </td>
           <td>
             <router-link v-if="permissions.IN_GetById" :to="'/finances/invoice/' + props.item.id">
@@ -108,7 +108,7 @@ export default {
     this.isLoading = true
     this.$http.get('/api/finances/invoices')
       .then(response => {
-        this.data = response.data
+        this.data.invoices = response.data
       })
       .finally(() => {
         this.isLoading = false
