@@ -16,7 +16,12 @@
         </template>
         <template slot="items" scope="props">
           <td>
-            {{ props.item.supplier.name }}
+            <router-link v-if="permissions.IN_GetById" :to="'/finances/invoice/' + props.item.id" class="link">
+              {{ props.item.supplier.name }}
+            </router-link>
+            <span v-else>
+              {{ props.item.supplier.name }}
+            </span>
           </td>
           <td>
             {{ props.item.number }}
@@ -121,3 +126,11 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+
+  td a:not(.link) {
+    text-decoration: none;
+  }
+
+</style>

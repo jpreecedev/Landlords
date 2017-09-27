@@ -8,6 +8,7 @@ import minLength from './rules/min_length'
 import minValue from './rules/min_value'
 import required from './rules/required'
 import match from './rules/match'
+import invoiceLineRequired from './rules/invoiceLineRequired'
 
 function filter (arr, testCallback) {
   let matches = []
@@ -37,7 +38,8 @@ Vue.prototype.$validation = {
     min_length: minLength,
     min_value: minValue,
     match,
-    required
+    required,
+    invoice_line_required: invoiceLineRequired
   },
   validate ($elements) {
     return new Promise((resolve, reject) => {

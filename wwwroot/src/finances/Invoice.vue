@@ -2,8 +2,11 @@
   <div>
     <header>
       <h1 class="headline primary--text">Invoice</h1>
-      <p class="display-2 grey--text text--darken-1">Create or edit your invoice</p>
-      <p class="subheading">Create a new invoice using the form below.</p>
+      <p class="display-2 grey--text text--darken-1">
+        {{ this.$route.params.invoiceId ? 'Make changes to your invoice' : 'Create your invoice' }}
+      </p>
+      <p class="subheading">
+        {{ this.$route.params.invoiceId ? 'Edit you ' : 'Create a new ' }} invoice using the form below.</p>
     </header>
 
     <loader :loading="isLoading"></loader>
@@ -52,6 +55,7 @@
               <table class="app-table elevation-1">
                 <thead>
                   <tr>
+                    <th></th>
                     <th>Item</th>
                     <th>Description</th>
                     <th>Unit Cost</th>
@@ -60,12 +64,18 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="line in invoice.lines"
+                  <tr v-for="(line, index) in filteredInvoiceLines"
                       :key="line.id">
+                      <td>
+                        <v-btn outline fab class="red--text btn--xsmall"
+                               @click="deleteInvoiceLine(line)">
+                          <v-icon dark>remove</v-icon>
+                        </v-btn>
+                      </td>
                     <td>
                       <text-field v-model="line.item"
                                   @blur="manageAdditionalLines()"
-                                  :rules="[$validation.rules.required]"
+                                  :rules="[() => $validation.rules.invoice_line_required(hasBeenSubmitted, line)]"
                                   :box="true">
                       </text-field>
                     </td>
@@ -74,7 +84,7 @@
                                   @blur="manageAdditionalLines()"
                                   :multiline="true"
                                   :rows="1"
-                                  :rules="[$validation.rules.required]"
+                                  :rules="[() => $validation.rules.invoice_line_required(hasBeenSubmitted, line)]"
                                   :box="true">
                       </text-field>
                     </td>
@@ -82,7 +92,7 @@
                       <text-field v-model="line.unitCost"
                                   @blur="manageAdditionalLines()"
                                   :value="line.unitCost"
-                                  :rules="[$validation.rules.required, $validation.rules.min_value(line.unitCost, 0), $validation.rules.max_value(line.unitCost, 1000000)]"
+                                  :rules="[() => $validation.rules.invoice_line_required(hasBeenSubmitted, line), $validation.rules.min_value(line.unitCost, 0), $validation.rules.max_value(line.unitCost, 1000000)]"
                                   :box="true"
                                   class="text-right"
                                   type="number"
@@ -95,7 +105,7 @@
                       <text-field v-model="line.quantity"
                                   @blur="manageAdditionalLines()"
                                   :value="line.quantity"
-                                  :rules="[$validation.rules.required, $validation.rules.min_value(line.quantity, 0), $validation.rules.max_value(line.quantity, 10000)]"
+                                  :rules="[() => $validation.rules.invoice_line_required(hasBeenSubmitted, line), $validation.rules.min_value(line.quantity, 0), $validation.rules.max_value(line.quantity, 10000)]"
                                   :box="true"
                                   class="text-right"
                                   type="number"
@@ -168,7 +178,8 @@
       item: null,
       description: null,
       unitCost: 0,
-      quantity: 1
+      quantity: 0,
+      isDeleted: false
     }
   }
 
@@ -178,6 +189,7 @@
       return {
         isLoading: false,
         isSaving: false,
+        hasBeenSubmitted: false,
         suppliers: [],
         invoice: {
           supplier: null,
@@ -195,7 +207,10 @@
     computed: {
       ...mapState({
         permissions: state => state.permissions
-      })
+      }),
+      filteredInvoiceLines () {
+        return this.invoice.lines.filter(line => !line.isDeleted)
+      }
     },
     mounted () {
       if (this.$route.params.invoiceId) {
@@ -247,7 +262,14 @@
         return balanceDue
       },
       isLineEmpty (line) {
-        return !(line.item || line.description || line.unitCost || line.quantity != 1) /* eslint eqeqeq: "off" */
+        return !(line.item || line.description || line.unitCost || line.quantity != 0) /* eslint eqeqeq: "off" */
+      },
+      deleteInvoiceLine (line) {
+        if (this.invoice.lines.indexOf(line) === 0) {
+          Object.assign(line, getDefaultLine())
+        } else {
+          line.isDeleted = true
+        }
       },
       manageAdditionalLines () {
         if (this.invoice.lines.length === 1) {
@@ -270,6 +292,7 @@
         this.invoice.supplier = newSupplier
       },
       validateBeforeSubmit () {
+        this.hasBeenSubmitted = true
         this.$validation.validate(this.$children)
           .then(() => {
             this.isSaving = true
