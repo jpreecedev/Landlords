@@ -13,8 +13,7 @@
                 <div class="row">
                   <div class="col-xs-12">
                     <date-picker v-model="account.opened"
-                                 label="Date opened"
-                                 :rules="[$validation.rules.required]">
+                                 label="Date opened">
                     </date-picker>
                   </div>
                 </div>

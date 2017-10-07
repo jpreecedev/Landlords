@@ -28,8 +28,7 @@
       <div class="col-xs-12 col-md-6">
         <date-picker v-model="tenancy.startDate"
                      label="Tenancy start date"
-                     @input="updateField(tenancy, 'startDate')"
-                     :rules="[$validation.rules.required]">
+                     @input="updateField(tenancy, 'startDate')">
         </date-picker>
       </div>
     </div>
@@ -37,8 +36,7 @@
       <div class="col-xs-12 col-md-6">
         <date-picker v-model="tenancy.endDate"
                      label="Tenancy end date"
-                     @input="updateField(tenancy, 'endDate')"
-                     :rules="[$validation.rules.required]">
+                     @input="updateField(tenancy, 'endDate')">
         </date-picker>
       </div>
     </div>

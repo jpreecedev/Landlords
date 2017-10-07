@@ -59,7 +59,6 @@
                                label="Furnishings">
                   </select-list>
                   <date-picker v-model="propertyDetails.constructionDate"
-                               :rules="[$validation.rules.required]"
                                label="Construction date">
                   </date-picker>
                 </v-card-text>
@@ -110,8 +109,7 @@
                   <div class="row">
                     <div class="col-xs-12 col-md-6">
                       <date-picker v-model="propertyDetails.purchaseDate"
-                                  label="Purchase date"
-                                  :rules="[$validation.rules.required]">
+                                  label="Purchase date">
                       </date-picker>
                     </div>
                     <div class="col-xs-12 col-md-6">

@@ -27,8 +27,7 @@
                 </div>
                 <div class="col-xs-12 col-md-4">
                   <date-picker v-model="invoice.date"
-                              label="Invoice date"
-                              :rules="[$validation.rules.required]">
+                              label="Invoice date">
                   </date-picker>
                 </div>
                 <div class="col-xs-12 col-md-4">
@@ -41,8 +40,7 @@
               <div class="row">
                 <div class="col-xs-12 col-md-offset-4 col-md-4">
                   <date-picker v-model="invoice.dueDate"
-                              label="Due date"
-                              :rules="[$validation.rules.required]">
+                              label="Due date">
                   </date-picker>
                 </div>
                 <div class="col-xs-12 col-md-4">

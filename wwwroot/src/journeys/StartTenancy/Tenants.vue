@@ -57,8 +57,7 @@
         <div class="row">
           <div class="col-xs-12 col-md-4">
             <date-picker v-model="tenant.dateOfBirth"
-                         label="Date of birth"
-                         :rules="[$validation.rules.required]">
+                         label="Date of birth">
             </date-picker>
           </div>
         </div>

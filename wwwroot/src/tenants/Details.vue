@@ -29,8 +29,7 @@
                               required>
                   </text-field>
                   <date-picker v-model="tenant.dateOfBirth"
-                              label="Date of birth"
-                              :rules="[$validation.rules.required]">
+                              label="Date of birth">
                   </date-picker>
                 </v-card-text>
                 <v-card-title class="title">
