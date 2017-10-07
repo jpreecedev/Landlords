@@ -3,7 +3,9 @@
     using Model.Entities;
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.Linq;
+    using Model.Validation;
 
     public class InvoiceViewModel
     {
@@ -38,17 +40,23 @@
             }
         }
 
+        [Required]
         public SupplierViewModel Supplier { get; set; }
 
+        [Display(Name = "Invoice Lines")]
+        [EnsureMinimumElements(1), InvoiceLineRequired]
         public ICollection<InvoiceLineViewModel> Lines { get; set; }
 
         public Guid Id { get; set; }
 
-        public DateTime? Date { get; set; }
+        [LLDate]
+        public DateTime Date { get; set; }
 
+        [Required]
         public string Number { get; set; }
 
-        public DateTime? DueDate { get; set; }
+        [LLDate]
+        public DateTime DueDate { get; set; }
 
         public string PoNumber { get; set; }
 

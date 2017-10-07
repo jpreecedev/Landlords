@@ -1,7 +1,9 @@
 ﻿namespace Landlords.ViewModels
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
     using Model.Entities;
+    using Model.Validation;
 
     public class InvoiceLineViewModel
     {
@@ -27,10 +29,13 @@
 
         public Guid Id { get; set; }
 
+        [InvoiceLineRequired]
         public string Item { get; set; }
 
+        [InvoiceLineRequired]
         public string Description { get; set; }
 
+        [Display(Name = "Unit Cost")]
         public decimal UnitCost { get; set; }
 
         public decimal Quantity { get; set; }

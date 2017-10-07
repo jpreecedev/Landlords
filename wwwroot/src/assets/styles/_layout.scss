@@ -62,10 +62,11 @@ table.app-table {
   }
 
   tbody {
+    @include font-size(16);
+
     border-right: 1px solid #eaeaea;
     border-left: 1px solid #eaeaea;
     border-bottom: 1px solid #eaeaea;
-    font-size: 16px;
 
     th {
       vertical-align: top;

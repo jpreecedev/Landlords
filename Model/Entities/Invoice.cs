@@ -9,11 +9,11 @@
 
         public Guid SupplierId { get; set; }
 
-        public DateTime? Date { get; set; }
+        public DateTime Date { get; set; }
 
         public string Number { get; set; }
 
-        public DateTime? DueDate { get; set; }
+        public DateTime DueDate { get; set; }
 
         public string PoNumber { get; set; }
 
