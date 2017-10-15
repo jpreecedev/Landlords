@@ -2,71 +2,50 @@
 {
     using Jwt;
     using Microsoft.AspNetCore.Builder;
+    using Microsoft.Extensions.Options;
     using Microsoft.IdentityModel.Tokens;
     using System;
     using System.IdentityModel.Tokens.Jwt;
-    using System.Text;
     using Microsoft.AspNetCore.Antiforgery;
-    using Microsoft.AspNetCore.Authentication;
-    using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Landlords.Services;
 
     public static class StartupExtensions
     {
-        public static JwtValidationResult ToJwtValidationResult(this string accessToken, IConfiguration configuration)
+        private static IOptions<JwtConfiguration> _jwtConfiguration;
+        private static SecurityKey _key;
+
+        public static JwtValidationResult ToJwtValidationResult(this string accessToken)
         {
             JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
-            return new JwtValidationResult(handler.ValidateToken(accessToken, GetTokenValidationParameters(configuration), out SecurityToken token));
+            return new JwtValidationResult(handler.ValidateToken(accessToken, GetTokenValidationParameters(), out SecurityToken token));
         }
 
-        public static TokenValidationParameters GetTokenValidationParameters(IConfiguration configuration)
+        public static TokenValidationParameters GetTokenValidationParameters()
         {
             return new TokenValidationParameters
             {
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["BearerTokens:Key"])),
+                IssuerSigningKey = _key,
                 ValidateIssuer = true,
-                ValidIssuer = configuration["BearerTokens:Issuer"],
+                ValidIssuer = _jwtConfiguration.Value.Issuer,
                 ValidateAudience = true,
-                ValidAudience = configuration["BearerTokens:Audience"],
+                ValidAudience = _jwtConfiguration.Value.Audience,
                 ValidateLifetime = true,
                 ClockSkew = TimeSpan.Zero
             };
         }
 
-        public static AuthenticationBuilder UseJwt(this IServiceCollection services, IConfiguration configuration)
+        public static IApplicationBuilder UseJwt(this IApplicationBuilder app, IOptions<JwtConfiguration> jwtConfiguration, SecurityKey key)
         {
-            return services.AddAuthentication(options =>
-                {
-                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                    options.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
-                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                })
-                .AddJwtBearer(options =>
-                {
-                    options.RequireHttpsMetadata = false;
-                    options.SaveToken = true;
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidIssuer = configuration["BearerTokens:Issuer"],
-                        ValidAudience = configuration["BearerTokens:Audience"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["BearerTokens:Key"])),
-                        ValidateIssuerSigningKey = true,
-                        ValidateLifetime = true,
-                        ClockSkew = TimeSpan.Zero
-                    };
-                    options.Events = new JwtBearerEvents
-                    {
-                        OnTokenValidated = context =>
-                        {
-                            var tokenValidatorService = context.HttpContext.RequestServices.GetRequiredService<ITokenValidatorService>();
-                            return tokenValidatorService.ValidateAsync(context);
-                        },
-                    };
-                });
+            _jwtConfiguration = jwtConfiguration;
+            _key = key;
+
+            return app.UseJwtBearerAuthentication(new JwtBearerOptions
+            {
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true,
+                TokenValidationParameters = GetTokenValidationParameters()
+            });
         }
 
         public static IApplicationBuilder UseXsrf(this IApplicationBuilder app, IAntiforgery antiforgery)

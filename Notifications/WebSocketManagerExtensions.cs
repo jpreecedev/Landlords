@@ -15,7 +15,7 @@
             {
                 if (type.GetTypeInfo().BaseType == typeof(WebSocketHandler))
                 {
-                    services.AddScoped(type);
+                    services.AddSingleton(type);
                 }
             }
 

@@ -1,19 +1,29 @@
 ﻿namespace Model.Database
 {
+    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+    using Model.Entities;
     using System;
     using System.Collections.Generic;
     using System.Text;
-    using Entities;
-    using Microsoft.AspNetCore.Identity;
 
     public class ApplicationUser : IdentityUser<Guid>, IApplicationUser
     {
         public string Title { get; set; }
 
+        public string FirstName { get; set; }
+
         public string MiddleName { get; set; }
 
-        public Guid? AgencyId { get; set; }
+        public string LastName { get; set; }
+        
+        public string SecondaryPhoneNumber { get; set; }
 
+        public DateTime? AvailableFrom { get; set; }
+
+        public DateTime? AvailableTo { get; set; }
+
+        public Guid? AgencyId { get; set; }
+        
         public Agency Agency { get; set; }
 
         public bool IsPermitted { get; set; }
@@ -42,16 +52,6 @@
                 return builder.ToString();
             }
         }
-
-        public string FirstName { get; set; }
-
-        public string LastName { get; set; }
-
-        public string SecondaryPhoneNumber { get; set; }
-
-        public DateTime? AvailableFrom { get; set; }
-
-        public DateTime? AvailableTo { get; set; }
 
         public void MapFrom(object model)
         {

@@ -33,8 +33,7 @@
 
             public async Task OnResourceExecutionAsync(ResourceExecutingContext context, ResourceExecutionDelegate next)
             {
-                var authorizationResult = await _authService.AuthorizeAsync(context.HttpContext.User, context.ActionDescriptor.ToString(), _permissionRequirement);
-                if (!authorizationResult.Succeeded)
+                if (!await _authService.AuthorizeAsync(context.HttpContext.User, context.ActionDescriptor.ToString(), _permissionRequirement))
                 {
                     context.Result = new ChallengeResult();
                 }

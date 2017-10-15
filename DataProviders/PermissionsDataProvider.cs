@@ -39,7 +39,7 @@
 
         public async Task<ICollection<UserViewModel>> GetUsersAsync()
         {
-            return await Context.Users
+            return await Context.Users.Include(x => x.Roles)
                 .Join(Context.UserRoles, user => user.Id, role => role.UserId, (user, role) => new { User = user, Role = role })
                 .Join(Context.Roles, arg => arg.Role.RoleId, role => role.Id, (arg, role) => new { User = arg.User, Role = role })
                 .Where(c => c.Role.Name != ApplicationRoles.SiteAdministrator)

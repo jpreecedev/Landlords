@@ -3,7 +3,7 @@ import router from 'root/routes'
 import store from 'store'
 import utils from '../utils'
 
-const LOGIN_URL = '/login'
+const LOGIN_URL = '/token'
 const PERMISSIONS_URL = '/api/permissions'
 const ROLE_CLAIM = 'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'
 
