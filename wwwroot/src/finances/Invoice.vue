@@ -159,8 +159,8 @@
 
           <v-layout wrap class="mt-3">
             <v-flex>
-              <v-btn primary class="no-left-margin" v-if="permissions.IN_SaveInvoice" type="submit" :loading="isSaving">Save</v-btn>
-              <v-btn flat  v-if="permissions.IN_SaveInvoice" @click="reset()">Reset</v-btn>
+              <v-btn color="primary" class="no-left-margin" v-if="permissions.IN_SaveInvoice" type="submit" :loading="isSaving">Save</v-btn>
+              <v-btn flat v-if="permissions.IN_SaveInvoice" @click="reset()">Reset</v-btn>
             </v-flex>
           </v-layout>
         </fieldset>

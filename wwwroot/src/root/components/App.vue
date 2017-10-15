@@ -4,9 +4,11 @@
     <app-header v-if="$route.path === '/'"></app-header>
     <notification ref="notification"></notification>
     <main :class="{ contained: $route.path !== '/', wide: $route.path.indexOf('/finances/transactions') > -1 }">
-      <transition appear name="fade">
-        <router-view></router-view>
-      </transition>
+      <v-content>
+        <transition appear name="fade">
+          <router-view></router-view>
+        </transition>
+      </v-content>
     </main>
   </v-app>
 </template>

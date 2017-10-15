@@ -17,24 +17,26 @@
         <v-stepper-step step="6" :complete="newTenancy.step > 6">Finished</v-stepper-step>
         <v-divider></v-divider>
       </v-stepper-header>
-      <v-stepper-content ref="content1" step="1">
-        <announcement></announcement>
-      </v-stepper-content>
-      <v-stepper-content ref="content2" step="2">
-        <property :tenancyTypes="viewData.tenancyTypes"></property>
-      </v-stepper-content>
-      <v-stepper-content ref="content3" step="3">
-        <tenants :titles="viewData.titles" :counties="viewData.counties" :countries="viewData.countries"></tenants>
-      </v-stepper-content>
-      <v-stepper-content ref="content4" step="4">
-        <referencing :contactTypes="viewData.tenantContactTypes" :employmentTypes="viewData.employmentTypes"></referencing>
-      </v-stepper-content>
-      <v-stepper-content ref="content5" step="5">
-        <payments :rentalFrequencies="viewData.rentalFrequencies"></payments>
-      </v-stepper-content>
-      <v-stepper-content ref="content6" step="6">
-        <finished></finished>
-      </v-stepper-content>
+      <v-stepper-items>
+        <v-stepper-content ref="content1" step="1">
+          <announcement></announcement>
+        </v-stepper-content>
+        <v-stepper-content ref="content2" step="2">
+          <property :tenancyTypes="viewData.tenancyTypes"></property>
+        </v-stepper-content>
+        <v-stepper-content ref="content3" step="3">
+          <tenants :titles="viewData.titles" :counties="viewData.counties" :countries="viewData.countries"></tenants>
+        </v-stepper-content>
+        <v-stepper-content ref="content4" step="4">
+          <referencing :contactTypes="viewData.tenantContactTypes" :employmentTypes="viewData.employmentTypes"></referencing>
+        </v-stepper-content>
+        <v-stepper-content ref="content5" step="5">
+          <payments :rentalFrequencies="viewData.rentalFrequencies"></payments>
+        </v-stepper-content>
+        <v-stepper-content ref="content6" step="6">
+          <finished></finished>
+        </v-stepper-content>
+      </v-stepper-items>
     </v-stepper>
 
     <div class="row">
@@ -47,7 +49,7 @@
       <div class="col-xs-6 text-right">
         <v-btn @click="next()"
                :loading="isSaving"
-               primary>
+               color="primary">
           <template v-if="newTenancy.step === 5">Finished</template>
           <template v-else-if="newTenancy.step === 6">Exit</template>
           <template v-else>

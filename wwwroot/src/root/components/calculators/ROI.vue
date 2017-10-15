@@ -217,16 +217,16 @@
                  :loading="isPromoting"
                  class="no-left-margin"
                  type="button"
-                 primary>
+                 color="primary">
             Promote
           </v-btn>
           <v-btn v-if="permissions.SP_Update"
                  :loading="isSaving"
                  type="submit"
-                 primary>
+                 color="primary">
             {{ this.shortlistedProperty.shortlistedPropertyId === null ? 'Add to shortlist' : 'Save changes' }}
           </v-btn>
-          <v-btn error flat v-if="permissions.SP_Delete && this.shortlistedProperty.shortlistedPropertyId" type="button" :disabled="isDeleting" @click="deleteShortlistedProperty()">Delete</v-btn>
+          <v-btn color="error" flat v-if="permissions.SP_Delete && this.shortlistedProperty.shortlistedPropertyId" type="button" :disabled="isDeleting" @click="deleteShortlistedProperty()">Delete</v-btn>
         </div>
       </div>
     </form>

@@ -83,14 +83,14 @@
         </div>
         <div class="row mt-3">
           <div class="col-xs-12">
-            <v-btn primary v-if="permissions.FI_Update" type="submit" :loading="isSaving">Save</v-btn>
+            <v-btn color="primary" v-if="permissions.FI_Update" type="submit" :loading="isSaving">Save</v-btn>
             <v-btn flat v-if="permissions.FI_Update" @click="reset()">Reset</v-btn>
           </div>
         </div>
         <div class="row mt-5" v-if="permissions.FI_DeleteAccount">
           <div class="col-xs-12 col-md-4 col-md-offset-8 delete-prompt">
             <p class="red--text">You can delete this account.<br/>Deleting is permanent and cannot be undone!</p>
-            <v-btn error @click="deleteAccount()" :loading="isDeleting">Delete Account</v-btn>
+            <v-btn color="error" @click="deleteAccount()" :loading="isDeleting">Delete Account</v-btn>
           </div>
         </div>
       </fieldset>

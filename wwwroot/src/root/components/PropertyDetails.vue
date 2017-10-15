@@ -202,7 +202,7 @@
           </div>
           <div class="row mt-3">
             <div class="col-xs-12">
-              <v-btn primary class="no-left-margin" v-if="permissions.PD_Update" type="submit" :loading="isSaving">Save</v-btn>
+              <v-btn color="primary" class="no-left-margin" v-if="permissions.PD_Update" type="submit" :loading="isSaving">Save</v-btn>
               <v-btn flat v-if="permissions.PD_Update" @click="reset()">Reset</v-btn>
             </div>
           </div>

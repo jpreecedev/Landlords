@@ -7,14 +7,14 @@
     </header>
     <v-card>
       <v-data-table :headers="headers" :items="data.invoices" :loading="isLoading">
-        <template slot="headers" scope="props">
+        <template slot="headers" slot-scope="props">
           <tr>
             <th v-for="(header, index) in props.headers" :key="index" class="text-xs-left">
               {{ header.text }}
             </th>
           </tr>
         </template>
-        <template slot="items" scope="props">
+        <template slot="items" slot-scope="props">
           <td>
             <router-link v-if="permissions.IN_GetById" :to="'/finances/invoice/' + props.item.id" class="link">
               {{ props.item.supplier.name }}
@@ -41,7 +41,7 @@
             </router-link>
           </td>
         </template>
-        <template slot="pageText" scope="{ pageStart, pageStop }">
+        <template slot="pageText" slot-scope="{ pageStart, pageStop }">
           From {{ pageStart }} to {{ pageStop }}
         </template>
       </v-data-table>
@@ -53,7 +53,7 @@
       </v-btn>
     </v-card>
 
-    <v-btn primary
+    <v-btn color="primary"
            v-if="permissions.IN_SaveInvoice"
            class="mt-4 no-left-margin"
            @click="addInvoice()">

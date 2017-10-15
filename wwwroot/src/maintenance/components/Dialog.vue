@@ -1,7 +1,7 @@
 <template>
   <v-layout row justify-center>
     <v-dialog v-model="dialog"
-              :width="750">
+              :max-width="750">
       <form @submit.prevent="validateBeforeSubmit" role="form" novalidate>
         <v-card>
           <v-card-title>

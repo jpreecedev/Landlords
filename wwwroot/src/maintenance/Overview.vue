@@ -24,7 +24,7 @@
                 </div>
               <div v-if="selectedMaintenanceRequest"
                   class="col-xs-12">
-                <v-btn primary
+                <v-btn color="primary"
                        class="no-left-margin"
                        v-if="permissions.MR_NewEntry"
                        :loading="isAddingMaintenanceEntry"
@@ -60,7 +60,7 @@
           </template>
         </p>
 
-        <v-btn primary
+        <v-btn color="primary"
               class="mt-4 no-left-margin"
               v-if="permissions.MR_New"
               :loading="isSaving"

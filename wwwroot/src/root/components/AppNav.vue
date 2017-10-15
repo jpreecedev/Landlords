@@ -1,9 +1,10 @@
 <template>
   <div>
-    <v-navigation-drawer v-model="drawer"
+    <v-navigation-drawer app
+                         v-model="drawer"
                          light overflow
                          class="hidden-md-and-up">
-      <v-toolbar flat class="transparent">
+      <v-toolbar app flat class="transparent">
         <v-list>
           <v-list-tile>
             <v-list-tile-content>
@@ -24,7 +25,7 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-  <v-toolbar class="primary" :class="auth.isLoggedIn ? '' : 'green'" dark fixed>
+  <v-toolbar app class="primary" :class="auth.isLoggedIn ? '' : 'green'" dark fixed>
     <v-toolbar-side-icon @click.stop="drawer = !drawer"
                          class="hidden-md-and-up toolbar-trigger">
     </v-toolbar-side-icon>
@@ -67,7 +68,7 @@
         Finances
       </v-btn>
 
-      <v-menu class="calculators" transition="v-slide-y-transition" bottom :nudge-right="90" :nudge-top="-10">
+      <v-menu class="calculators" transition="v-slide-y-transition" bottom>
         <v-btn flat class="primary" slot="activator" :class="{'active': $route.path.startsWith('/calculators')}">
           Calculators
         </v-btn>
@@ -91,9 +92,12 @@
       </v-menu>
 
       <template v-if="notifications && notifications.length">
-        <v-menu v-if="auth.isLoggedIn" transition="v-slide-y-transition" bottom :nudge-right="notifications.length > 0 ? 260 : 90" :nudge-top="-10">
+        <v-menu v-if="auth.isLoggedIn" transition="v-slide-y-transition" bottom>
           <v-btn @click="checkNotifications()" icon slot="activator">
-            <v-icon class="red--after notifications" v-badge="{ value: notifications.length }">add_alert</v-icon>
+            <v-badge color="red" class="notifications">
+              <span slot="badge">{{ notifications.length }}</span>
+              <v-icon large color="white">add_alert</v-icon>
+            </v-badge>
           </v-btn>
           <v-list class="notifications-list" two-line v-if="notifications.length > 0">
             <v-subheader>Notifications</v-subheader>
@@ -122,7 +126,7 @@
         </v-menu>
       </template>
 
-      <v-menu v-if="auth.isLoggedIn" class="more" transition="v-slide-y-transition" bottom :nudge-right="85" :nudge-top="-10">
+      <v-menu v-if="auth.isLoggedIn" class="more" transition="v-slide-y-transition">
         <v-btn icon slot="activator">
           <v-icon>more_vert</v-icon>
         </v-btn>
@@ -227,7 +231,7 @@ export default {
   }
 
   .notifications {
-    &::after {
+    span {
       top: -7px;
       right: -10px;
     }

@@ -16,7 +16,7 @@
         There are no suppliers to choose from.
       </p>
       <v-btn class="no-left-margin"
-              @click.stop="addSupplier()">
+             @click.stop="addSupplier()">
         Add Supplier
       </v-btn>
     </div>

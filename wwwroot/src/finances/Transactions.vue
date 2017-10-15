@@ -10,14 +10,14 @@
 
     <v-card>
       <v-data-table :headers="headers" :items="transactions" class="transactions" :pagination.sync="pagination" :loading="isLoading">
-        <template slot="headers" scope="props">
+        <template slot="headers" slot-scope="props">
           <tr>
             <th v-for="(header, index) in props.headers" :key="index" :class="{'text-xs-left': header.left, 'text-xs-right': !header.left}">
               {{ header.text }}
             </th>
           </tr>
         </template>
-        <template slot="items" scope="props">
+        <template slot="items" slot-scope="props">
           <td>
             {{ props.item.date | formatDate }}
           </td>
@@ -48,7 +48,7 @@
             <span>{{ props.item.balance | currency('£') }}</span>
           </td>
         </template>
-        <template slot="pageText" scope="{ pageStart, pageStop }">
+        <template slot="pageText" slot-scope="{ pageStart, pageStop }">
           From {{ pageStart }} to {{ pageStop }}
         </template>
       </v-data-table>

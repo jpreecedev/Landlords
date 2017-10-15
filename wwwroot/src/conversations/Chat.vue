@@ -92,9 +92,10 @@
                   </div>
                   <div class="col-xs-2 send-button">
                     <v-btn :disabled="isSending"
-                          class="blue--text darken-2" outline
-                          @click="sendMessage(currentMessage)">
-                          Send
+                           class="blue--text darken-2"
+                           outline
+                           @click="sendMessage(currentMessage)">
+                           Send
                     </v-btn>
                   </div>
                 </div>

@@ -81,7 +81,7 @@
           </div>
           <div class="row mt-3">
             <div class="col-xs-12">
-              <v-btn primary v-if="permissions.P_Update" type="submit" :loading="isSaving">Save</v-btn>
+              <v-btn color="primary" v-if="permissions.P_Update" type="submit" :loading="isSaving">Save</v-btn>
               <v-btn flat v-if="permissions.P_Update" @click="reset()">Reset</v-btn>
             </div>
           </div>

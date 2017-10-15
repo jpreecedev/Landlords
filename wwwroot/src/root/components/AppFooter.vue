@@ -1,5 +1,5 @@
 <template>
-  <v-footer class="grey lighten-3 black--text">
+  <v-footer app class="grey lighten-3 black--text">
     <div class="container">
       <p class="social">
         <a href="#">

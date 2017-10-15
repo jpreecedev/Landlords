@@ -15,14 +15,14 @@
 
     <v-card>
       <v-data-table :headers="headers" :items="properties" :loading="loading">
-        <template slot="headers" scope="props">
+        <template slot="headers" slot-scope="props">
           <tr>
             <th v-for="(header, index) in props.headers" :key="index" class="text-xs-left">
               {{ header.text }}
             </th>
           </tr>
         </template>
-        <template slot="items" scope="props">
+        <template slot="items" slot-scope="props">
           <td>
             <div class="thumbnail">
               <img class="mt-2 mb-2" v-if="props.item.leadImage" :src="'/static/uploads/' + props.item.portfolioId + '/' + props.item.leadImage.fileName" :alt="props.item.leadImage.fileName">
@@ -45,7 +45,7 @@
             </ul>
           </td>
         </template>
-        <template slot="pageText" scope="{ pageStart, pageStop }">
+        <template slot="pageText" slot-scope="{ pageStart, pageStop }">
           From {{ pageStart }} to {{ pageStop }}
         </template>
       </v-data-table>
@@ -57,7 +57,7 @@
       </v-btn>
     </v-card>
 
-    <v-btn primary v-if="permissions.PD_New" type="button" class="mt-4 no-left-margin" @click="addProperty()" :loading="isAddingProperty">
+    <v-btn color="primary" v-if="permissions.PD_New" type="button" class="mt-4 no-left-margin" @click="addProperty()" :loading="isAddingProperty">
       <v-icon dark>add</v-icon>
       Add a property
     </v-btn>

@@ -10,14 +10,14 @@
         Tenancies
       </v-card-title>
       <v-data-table :headers="headers" :items="data" :loading="isLoading">
-        <template slot="headers" scope="props">
+        <template slot="headers" slot-scope="props">
           <tr>
             <th v-for="(header, index) in props.headers" :key="index" class="text-xs-left">
               {{ header.text }}
             </th>
           </tr>
         </template>
-        <template slot="items" scope="props">
+        <template slot="items" slot-scope="props">
           <td>
             <router-link v-if="permissions.TT_GetById" :to="'/tenancies/details/' + props.item.tenancyId">
               <span>{{ props.item.leadTenant }}</span>
@@ -40,7 +40,7 @@
             {{ props.item.tenancyEndDate | formatDate }}
         </td>
         </template>
-        <template slot="pageText" scope="{ pageStart, pageStop }">
+        <template slot="pageText" slot-scope="{ pageStart, pageStop }">
           From {{ pageStart }} to {{ pageStop }}
         </template>
       </v-data-table>
@@ -52,7 +52,7 @@
       </v-btn>
     </v-card>
 
-    <v-btn primary v-if="permissions.J_StartTenancy" type="button" class="mt-4 no-left-margin" @click="$router.push('/tenancies/new')">
+    <v-btn color="primary" v-if="permissions.J_StartTenancy" type="button" class="mt-4 no-left-margin" @click="$router.push('/tenancies/new')">
       <v-icon dark>add</v-icon>
       Start new tenancy
     </v-btn>

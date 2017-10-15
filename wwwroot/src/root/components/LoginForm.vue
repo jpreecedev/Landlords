@@ -29,7 +29,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn primary flat type="submit" :loading="loggingIn">Log in</v-btn>
+          <v-btn color="primary" flat type="submit" :loading="loggingIn">Log in</v-btn>
           <v-btn flat type="reset" @click="reset()">Reset</v-btn>
         </v-card-actions>
       </v-card>

@@ -12,7 +12,7 @@
           <p class="headline">We will make managing your property portfolio a breeze!</p>
         </li>
         <li>
-          <v-btn primary class="green" @click="$router.push({name: 'registration'})">Go to registration &raquo;</v-btn>
+          <v-btn color="primary" class="green" @click="$router.push({name: 'registration'})">Go to registration &raquo;</v-btn>
         </li>
       </ul>
     </div>

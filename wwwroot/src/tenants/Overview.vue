@@ -10,14 +10,14 @@
         Tenants
       </v-card-title>
       <v-data-table :headers="headers" :items="data" :loading="isLoading">
-        <template slot="headers" scope="props">
+        <template slot="headers" slot-scope="props">
           <tr>
             <th v-for="(header, index) in props.headers" :key="index" class="text-xs-left">
               {{ header.text }}
             </th>
           </tr>
         </template>
-        <template slot="items" scope="props">
+        <template slot="items" slot-scope="props">
           <td>
             <router-link v-if="permissions.TE_GetById" :to="'/tenants/details/' + props.item.id">
               <span>{{ props.item.firstName + ' ' + props.item.lastName }}</span>
@@ -31,7 +31,7 @@
             {{ props.item.emailAddress }}
           </td>
         </template>
-        <template slot="pageText" scope="{ pageStart, pageStop }">
+        <template slot="pageText" slot-scope="{ pageStart, pageStop }">
           From {{ pageStart }} to {{ pageStop }}
         </template>
       </v-data-table>

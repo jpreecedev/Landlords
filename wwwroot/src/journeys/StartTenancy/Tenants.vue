@@ -12,8 +12,8 @@
           <div class="accordion grow"></div>
           <div class="accordion col">
             <v-btn @click.stop="deleteOccupier(index)"
-                    v-if="!tenant.isLeadTenant && !tenant.isDeleted"
-                    icon>
+                   v-if="!tenant.isLeadTenant && !tenant.isDeleted"
+                   icon>
               <v-icon>delete_forever</v-icon>
             </v-btn>
           </div>
@@ -197,7 +197,7 @@
     </v-expansion-panel>
 
     <div class="expansion-panel__buttons">
-      <v-btn primary @click="addOccupier(true)">Add adult tenant</v-btn>
+      <v-btn color="primary" @click="addOccupier(true)">Add adult tenant</v-btn>
       <v-btn @click="addOccupier(false)">Add child</v-btn>
     </div>
 
