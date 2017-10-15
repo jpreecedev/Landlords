@@ -1,30 +1,4 @@
 <template>
-  <div>
-    <v-navigation-drawer app
-                         v-model="drawer"
-                         light overflow
-                         class="hidden-md-and-up">
-      <v-toolbar app flat class="transparent">
-        <v-list>
-          <v-list-tile>
-            <v-list-tile-content>
-              <v-list-tile-title>HomesInOne.co.uk</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-        </v-list>
-      </v-toolbar>
-      <v-list class="pt-0" dense>
-        <v-divider></v-divider>
-        <v-list-tile v-for="item in items" :key="item.title">
-          <v-list-tile-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-      </v-list>
-    </v-navigation-drawer>
   <v-toolbar app class="primary" :class="auth.isLoggedIn ? '' : 'green'" dark fixed>
     <v-toolbar-side-icon @click.stop="drawer = !drawer"
                          class="hidden-md-and-up toolbar-trigger">
@@ -96,7 +70,7 @@
           <v-btn @click="checkNotifications()" icon slot="activator">
             <v-badge color="red" class="notifications">
               <span slot="badge">{{ notifications.length }}</span>
-              <v-icon large color="white">add_alert</v-icon>
+              <v-icon color="white">add_alert</v-icon>
             </v-badge>
           </v-btn>
           <v-list class="notifications-list" two-line v-if="notifications.length > 0">
@@ -147,7 +121,6 @@
     </v-toolbar-items>
 
   </v-toolbar>
-  </div>
 </template>
 
 <script>

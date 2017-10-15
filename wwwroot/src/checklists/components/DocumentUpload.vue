@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="checklistItem.payload">
     <div class="row">
       <div class="col-xs-12 col-md-6">
         <text-field v-model="checklistItem.payload.comments"
@@ -77,8 +77,6 @@ export default {
           relativeFilePath: null
         }
       }
-    } else {
-      this.checklistItem.payload = JSON.parse(this.checklistItem.payload)
     }
   },
   methods: {

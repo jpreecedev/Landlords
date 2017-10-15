@@ -1,5 +1,6 @@
 <template>
-  <div class="row">
+  <div class="row"
+       v-if="checklistItem.payload">
     <div class="col-xs-12">
       <text-field v-model="checklistItem.payload.comments"
                   :multiline="true"
@@ -35,8 +36,6 @@ export default {
       this.checklistItem.payload = {
         comments: null
       }
-    } else {
-      this.checklistItem.payload = JSON.parse(this.checklistItem.payload)
     }
   },
   methods: {

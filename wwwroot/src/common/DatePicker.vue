@@ -6,15 +6,6 @@
           :nudge-left="40"
           :nudge-top="60"
           max-width="290px">
-    <!-- <v-text-field slot="activator"
-                  @input="updateField"
-                  :label="label"
-                  :required="required"
-                  :value="value"
-                  :error-messages="errorMessages"
-                  prepend-icon="date_range"
-                  readonly>
-    </v-text-field> -->
 
     <div class="input-group formatted input-group--dirty input-group--prepend-icon input-group--text-field"
          slot="activator">

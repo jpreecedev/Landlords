@@ -1,5 +1,5 @@
 <template>
-  <div class="header">
+  <header class="header">
     <div class="header-inner flex-center">
       <ul>
         <li>
@@ -9,14 +9,14 @@
           <h1 class="display-3">Hello, landlords!</h1>
         </li>
         <li>
-          <p class="headline">We will make managing your property portfolio a breeze!</p>
+          <p>We will make managing your property portfolio a breeze!</p>
         </li>
         <li>
           <v-btn color="primary" class="green" @click="$router.push({name: 'registration'})">Go to registration &raquo;</v-btn>
         </li>
       </ul>
     </div>
-  </div>
+  </header>
 </template>
 
 <style lang="scss" scoped>
@@ -24,12 +24,10 @@
     background: url("../../assets/images/landing-page-bg.jpg") no-repeat center center fixed;
     background-size: cover;
     height: 100%;
-    overflow: hidden;
     position: relative;
     cursor: default;
 
     .header-inner {
-      position: absolute;
       overflow: hidden;
       left: 0;
       height: 100%;

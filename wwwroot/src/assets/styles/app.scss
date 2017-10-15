@@ -5,9 +5,13 @@
 @import 'layout';
 @import '../../../node_modules/flexboxgrid/dist/flexboxgrid.min.css';
 
+:root {
+  font-size: 16px;
+}
+
 html,
 body {
-  height: 100%;
+  font-size: 1rem;
 }
 
 .pointer {
@@ -21,10 +25,10 @@ main {
     max-width: 100%;
     position: relative;
     width: 1140px;
-    padding: 6rem 1rem 6rem 1rem;
+    padding: 2rem 1rem;
 
     @include tablet {
-      padding: 8rem 1rem 6rem 1rem;
+      padding: 4rem 0;
     }
 
     &.wide {
@@ -347,6 +351,9 @@ textarea {
 
 .accordion {
   &.col {
+    &:last-child {
+      white-space: nowrap;
+    }
     .display-text {
       transform: translateY(6px);
       padding: 0 0 0 1rem;

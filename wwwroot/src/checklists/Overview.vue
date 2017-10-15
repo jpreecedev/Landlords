@@ -39,7 +39,7 @@
       </div>
     </div>
 
-    <div class="mt-3" v-if="permissions.CL_Archived && !hasArchivedLists">
+    <div class="mt-3" v-if="permissions.CL_Archived && hasArchivedLists">
       <v-btn color="primary" @click="getArchived()" :loading="isLoadingArchived" class="no-left-margin">
         Show Archived
       </v-btn>

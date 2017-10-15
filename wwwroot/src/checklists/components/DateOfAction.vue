@@ -1,5 +1,6 @@
 <template>
-  <div class="card-block">
+  <div class="card-block"
+       v-if="checklistItem.payload">
     <div class="row">
       <div class="col-xs-12 col-md-6">
         <date-picker v-model="checklistItem.payload.actioned"
@@ -35,8 +36,6 @@ export default {
       this.checklistItem.payload = {
         actioned: null
       }
-    } else {
-      this.checklistItem.payload = JSON.parse(this.checklistItem.payload)
     }
   },
   methods: {

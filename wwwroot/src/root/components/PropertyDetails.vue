@@ -22,7 +22,7 @@
               <div class="property-image-thumbnail">
                 <img v-if="propertyImage.fileName" :src="'/static/uploads/' + propertyDetails.portfolioId + '/' + propertyImage.fileName" :alt="propertyImage.fileName">
                 <div v-if="permissions.PI_Delete" class="property-image-overlay">
-                  <v-btn warning type="button" @click="deleteImage(propertyImage)">Delete</v-btn>
+                  <v-btn color="warning" type="button" @click="deleteImage(propertyImage)">Delete</v-btn>
                 </div>
               </div>
             </div>

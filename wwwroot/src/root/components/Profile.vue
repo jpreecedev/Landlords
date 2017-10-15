@@ -44,7 +44,7 @@
                   </div>
                   <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn warning flat v-if="!profile.emailConfirmed" @click="resendVerificationEmail()">Re-send verification email</v-btn>
+                    <v-btn color="warning" flat v-if="!profile.emailConfirmed" @click="resendVerificationEmail()">Re-send verification email</v-btn>
                   </v-card-actions>
                 </v-card-text>
               </v-card>
