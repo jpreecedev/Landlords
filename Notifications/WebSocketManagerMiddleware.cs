@@ -2,22 +2,23 @@
 {
     using System;
     using System.IO;
-    using System.Linq;
     using System.Net.WebSockets;
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
     using Landlords.Core;
+    using Microsoft.Extensions.Configuration;
 
     public class WebSocketManagerMiddleware
     {
         private readonly RequestDelegate _next;
+        private readonly IConfiguration _configuration;
 
-        public WebSocketManagerMiddleware(RequestDelegate next,
-            WebSocketHandler webSocketHandler)
+        public WebSocketManagerMiddleware(RequestDelegate next, WebSocketHandler webSocketHandler, IConfiguration configuration)
         {
             _next = next;
+            _configuration = configuration;
             _webSocketHandler = webSocketHandler;
         }
 
@@ -29,7 +30,7 @@
                 return;
 
             var accessToken = context.Request.GetAccessToken();
-            var validationResult = accessToken.ToJwtValidationResult();
+            var validationResult = accessToken.ToJwtValidationResult(_configuration);
             if (!validationResult.IsValid)
             {
                 throw new UnauthorizedAccessException();

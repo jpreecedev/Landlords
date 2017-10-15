@@ -28,8 +28,8 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/token': {
-        target: 'http://localhost:52812/oauth',
+      '/login': {
+        target: 'http://localhost:52812/api/account/login',
         changeOrigin: true,
         ws: true
       },

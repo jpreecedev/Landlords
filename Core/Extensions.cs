@@ -35,7 +35,7 @@
 
         public static string GetAccessToken(this HttpRequest request)
         {
-            return request.Query["access_token"].FirstOrDefault();
+            return request.Headers["Authorization"].FirstOrDefault();
         }
 
         public static DateTime StartOfMonth(this DateTime dateTime)
@@ -239,7 +239,6 @@
                 .AddScoped<IChecklistInstanceDataProvider, ChecklistInstanceDataProvider>()
                 .AddScoped<IChecklistItemDataProvider, ChecklistItemDataProvider>()
                 .AddScoped<IFinancesDataProvider, FinancesDataProvider>()
-                .AddScoped<INotificationsDataProvider, NotificationsDataProvider>()
                 .AddScoped<ITransactionsDataProvider, TransactionsDataProvider>()
                 .AddScoped<IUserRepository, UserRepository>()
                 .AddScoped<ILLDbContext, LLDbContext>()
@@ -252,6 +251,9 @@
                 .AddScoped<IMaintenanceRequestsDataProvider, MaintenanceRequestsDataProvider>()
                 .AddScoped<IInvoicesDataProvider, InvoicesDataProvider>()
                 .AddScoped<ISuppliersDataProvider, SuppliersDataProvider>()
+                .AddScoped<INotificationsDataProvider, NotificationsDataProvider>()
+                .AddScoped<ITokenValidatorService, TokenValidatorService>()
+                .AddScoped<IDbInitializerService, DbInitializerService>()
                 .AddTransient<IEmailSender, EmailSender>();
 
             return serviceCollection;

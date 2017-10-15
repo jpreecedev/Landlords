@@ -4,7 +4,6 @@
     using Database;
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.DependencyInjection;
     using Model;
     using Model.Database;
     using System.Threading;
@@ -17,11 +16,8 @@
 
     public static class SeedExtensions
     {
-        public static void Seed(this LLDbContext context, IServiceProvider serviceProvider)
+        public static void SeedDatabase(this LLDbContext context, ApplicationRoleManager roleManager, ApplicationUserManager userManager)
         {
-            var roleManager = serviceProvider.GetService<ApplicationRoleManager>();
-            var userManager = serviceProvider.GetService<ApplicationUserManager>();
-
             CreatePermissions(context);
             AsyncHelpers.RunSync(() => CreateEmails(context));
             AsyncHelpers.RunSync(() => CreateRoles(context, roleManager));

@@ -1,7 +1,6 @@
 ﻿namespace Landlords
 {
     using System;
-    using System.Text;
     using Core;
     using Database;
     using Jwt;
@@ -9,92 +8,91 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Mvc.Authorization;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
-    using Microsoft.Extensions.Options;
-    using Microsoft.IdentityModel.Tokens;
     using Model.Database;
     using Services;
     using Landlords.Notifications;
+    using Microsoft.AspNetCore.Identity;
 
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
+        public Startup(IConfiguration configuration)
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", false, true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true)
-                .AddEnvironmentVariables();
-
-            Configuration = builder.Build();
+            Configuration = configuration;
         }
 
-        public IConfigurationRoot Configuration { get; }
+        public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(config =>
-                {
-                    var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
-                    config.Filters.Add(new AuthorizeFilter(policy));
-                });
+            services.Configure<BearerTokensOptions>(options => Configuration.GetSection("BearerTokens").Bind(options));
+            services.RegisterDI();
 
-            services.AddCors();
-            services.AddWebSocketManager();
+            services.AddDbContext<LLDbContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("LLDbContext"),
+                    optionsBuilder =>
+                    {
+                        optionsBuilder.CommandTimeout((int)TimeSpan.FromMinutes(3).TotalSeconds);
+                        optionsBuilder.EnableRetryOnFailure();
+                    });
+            });
+            
+            services.AddAuthorization(config => config.DefaultPolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build());
 
-            var sqlConnectionString = Configuration.GetConnectionString("LLDbContext");
-            services.AddDbContext<LLDbContext>(options => options.UseSqlServer(sqlConnectionString));
+            services.UseJwt(Configuration);
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials());
+            });
 
             services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN")
-                .RegisterDI()
                 .AddOptions()
-                .Configure<JwtConfiguration>(Configuration.GetSection("Jwt"))
                 .Configure<EmailConfiguration>(Configuration.GetSection("Email"));
+            
+            services.AddWebSocketManager();
 
             services
                 .AddIdentity<ApplicationUser, ApplicationRole>(options => { options.Password.RequireNonAlphanumeric = false; })
-                .AddEntityFrameworkStores<LLDbContext, Guid>()
+                .AddEntityFrameworkStores<LLDbContext>()
+                .AddDefaultTokenProviders()
                 .AddUserManager<ApplicationUserManager>()
                 .AddUserStore<ApplicationUserStore>()
-                .AddRoleManager<ApplicationRoleManager>()
-                .AddDefaultTokenProviders();
+                .AddRoleManager<ApplicationRoleManager>();
+
+            services.AddMvc();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, 
-                              IOptions<JwtConfiguration> jwtConfiguration, IAntiforgery antiforgery, IServiceProvider serviceProvider)
+            IServiceProvider serviceProvider, IAntiforgery antiforgery)
         {
-#if DEBUG
-            app.UseCors(builder => builder.WithOrigins("http://localhost:8080").AllowAnyHeader().AllowAnyMethod());
-#endif
+            app.UseTokenExceptionHandler()
+                .UseWebSockets();
 
-            app.UseWebSockets();
             app.MapWebSocketManager("/notifications", serviceProvider.GetService<NotificationsMessageHandler>());
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+            
+            app.UseAuthentication()
+                .UseXsrf(antiforgery);
 
-            using (var scope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            var scopeFactory = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>();
+            using (var scope = scopeFactory.CreateScope())
             {
-                var context = scope.ServiceProvider.GetRequiredService<LLDbContext>();
-                context.Database.Migrate();
-                context.Seed(app.ApplicationServices);
+                var dbInitializer = scope.ServiceProvider.GetService<IDbInitializerService>();
+                dbInitializer.Initialize();
+                dbInitializer.SeedData();
             }
-
-            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtConfiguration.Value.Secret));
-
-            app.UseJwt(jwtConfiguration, signingKey)
-                .UseXsrf(antiforgery)
-                .UseMiddleware<TokenProviderMiddleware>(Options.Create(new TokenProviderOptions
-                {
-                    Audience = jwtConfiguration.Value.Audience,
-                    Issuer = jwtConfiguration.Value.Issuer,
-                    SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256)
-                }));
-
+            
             app.UseMvc();
         }
     }

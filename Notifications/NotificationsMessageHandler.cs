@@ -9,17 +9,20 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Security.Claims;
+    using Microsoft.Extensions.Configuration;
 
     public class NotificationsMessageHandler : WebSocketHandler
     {
         private readonly INotificationsDataProvider _notificationsDataProvider;
         private readonly IAuthorizationService _authService;
+        private readonly IConfiguration _configuration;
 
-        public NotificationsMessageHandler(INotificationsDataProvider notificationsDataProvider, IAuthorizationService authService, WebSocketConnectionManager webSocketConnectionManager)
+        public NotificationsMessageHandler(INotificationsDataProvider notificationsDataProvider, IAuthorizationService authService, IConfiguration configuration, WebSocketConnectionManager webSocketConnectionManager)
             : base(webSocketConnectionManager)
         {
             _notificationsDataProvider = notificationsDataProvider;
             _authService = authService;
+            _configuration = configuration;
         }
 
         public async Task GetAllNotificationsAsync(ClaimsPrincipal user)
@@ -40,7 +43,7 @@
 
         public async Task GetAllNotifications(string accessToken, string connectionId)
         {
-            var tokenValidation = accessToken.ToJwtValidationResult();
+            var tokenValidation = accessToken.ToJwtValidationResult(_configuration);
             if (!tokenValidation.IsValid)
             {
                 throw new UnauthorizedAccessException();
