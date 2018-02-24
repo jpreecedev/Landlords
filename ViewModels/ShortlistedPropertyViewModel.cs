@@ -33,7 +33,7 @@
             Insurance = shortlistedProperty.Insurance;
         }
         
-        public Guid ShortlistedPropertyId { get; set; }
+        public Guid? ShortlistedPropertyId { get; set; }
 
         [Required, MaxLength(255)]
         public string Reference { get; set; }
